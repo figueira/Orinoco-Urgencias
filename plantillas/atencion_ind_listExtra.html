@@ -1,0 +1,57 @@
+<h4>Informacion Adicional</h4>
+{% if tipo_ind == 'dieta'%}
+<ul>
+	<li><b>Observaciones: </b> {{extra.observacion}} </li>
+</ul>
+{% elif tipo_ind == 'hidrata'%}
+<ul>
+	<li><b>Volumen: </b> {{extra.volumen}} cc</li>
+	<li><b>Velocidad de infusi&oacute;n: </b> {{extra.vel_infusion}} gotas por segundo</li>
+	<li><b>Complementos: </b> {{extra.complementos}}</li>
+	{% if extra2 %}
+	<li><b>Tipo de Soluci&oacute;n a combinar: </b> {{extra2.hidratacion2}}</li>
+	{% endif %}
+</ul>
+{% elif tipo_ind == 'medicamento'%}
+<ul>
+	<li><b>Dosis: </b> {{extra.dosis}} {{extra.tipo_conc}}</li>
+	<!-- <li><b>Tipo de Concentraci&oacute;n: </b> {{extra.tipo_conc}}</li> -->
+	<li><b>Frecuencia: </b> {{extra.frecuencia}}</li>
+	<li><b>Tipo de Frecuencia: </b> {{extra.tipo_frec}}</li>
+		{% if extra.via_admin == 'endov'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> Endovenosa </li>
+		{% elif extra.via_admin == 'neb'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> Nebulizaci&oacute;n </li>
+		{% elif extra.via_admin == 'oral'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> Oral </li>
+		{% elif extra.via_admin == 'rect'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> Rectal </li>
+		{% elif extra.via_admin == 'subc'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> Subcut&aacute;nea </li>
+		{% elif extra.via_admin == 'top'%}
+		<li><b>V&iacute;a de Administraci&oacute;n: </b> T&oacute;pica </li>
+		{% endif %}
+	{% if extra2 %}
+	<li><b>  Situaci&oacute;n: </b> {{extra2.situacion}}</li>
+	<li><b>  Comentario: </b> {{extra2.comentario}}</li>
+	{% endif %}
+</ul>
+{% elif tipo_ind == 'imagen'%}
+<ul>
+	<li><b>Subcategor&iacute;a: </b> Imagenolog&iacute;a</li>
+	<li><b>Partes del Cuerpo: </b> {{extra.parte_cuerpo}}</li>
+</ul>
+{% else%}
+<ul>
+	{% if tipo_ind == 'lab'%}
+	<li><b>Subcategor&iacute;a: </b> Ex&aacute;menes de Laboratorio</li>
+	{% elif tipo_ind == 'endoscopico'%}
+	<li><b>Subcategor&iacute;a: </b> Estudio Endosc&oacute;pico</li>
+	{% elif tipo_ind == 'valora'%}
+	<li><b>Subcategor&iacute;a: </b> Valoraci&oacute;n Especializada</li>
+	{% elif tipo_ind == 'otros'%}
+	<li><b>Subcategor&iacute;a: </b> Otros Procedimientos</li>
+	{% endif %}
+	<li><b>No hay informaci&oacute;n Adicional </b></li>
+</ul>
+{% endif %}

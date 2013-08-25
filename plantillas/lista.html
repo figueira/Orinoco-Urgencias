@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+<script src ="/static/scripts/esperas.js"> </script>
+<style>
+  a.espera:link, a.espera:visited, a.espera:active { text-decoration: none }
+  .s1 {
+  width:57px;
+}
+.nombreLista {
+    text-transform: uppercase;
+}
+</style>
+<div class="container row">
+  <div class="span12">
+    <h4>Lista  de Pacientes {{titulo}}</h4>
+    <div class="text-right">
+      <a href="/emergencia/buscar">Buscar Paciente</a> | 
+      <a href="/emergencia/listar/todas">&Aacute;rea de Emergencias</a> | 
+      <a href="/emergencia/listar/triage">&Aacute;rea de Triage</a> | 
+      <a href="/emergencia/listar/sinclasificar">Pacientes por Clasificar</a> |
+      <a href="/emergencia/listar/clasificados">Pacientes Clasificados</a> |
+      <a href="/emergencia/listar/atencion">&Aacute;rea de Atenci&oacute;n</a> 
+    </div>
+
+    {% if lista %}
+    <table class="table table-bordered table-striped">
+      <tr>
+	<th>Cub&iacute;culo</th>
+	<th>Nombre</th>
+	<th>Acciones</th>
+	<th>IDE</th>
+	<th>Causas Espera</th>
+	<th>Alarma</th>
+      </tr>
+      {% for l in lista %}
+      <tr>
+        <td>
+          <center>
+          <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
+            <option value="nada">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5A">5A</option>
+            <option value="5B">5B</option>
+            <option value="5C">5C</option>
+            <option value="5D">5D</option>
+            <option value="5E">5E</option>
+            <option value="6A">6A</option>
+            <option value="6B">6B</option>
+            <option value="6C">6C</option>
+            <option value="6D">6D</option>
+            <option value="6E">6E</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select>
+          <button class="btn btn-mini btn-primary" type="button">Agregar</button>
+        </center>
+        </td>
+        <td><span class="nombreLista"><a a href='/paciente/{{ l.id }}'>{{l.paciente}}</a></span></td>
+        {% if l.triage != 0 %}
+        <td>
+          <a href="/emergencia/{{l.id}}/t1">
+            <img src="/static/img/estados/triage.png" title="Recalcular"/>
+          </a>
+          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="right" 
+          title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
+            <img src="/static/img/Atencion/espera.png" title="Esperas"/>
+            <span style='margin-left:-10px;color:white;background:rgba(255,0,0,1);border-radius:6px;'>
+              <b>
+                <font id="texto{{l.id}}" size=2 texto='{{l.numEsperasNoAtendidas}}'> &nbsp;{{l.numEsperasNoAtendidas}}&nbsp;&nbsp;</font>
+              </b>
+            </span>
+          </a>
+        </td>
+        {% else %}
+        <td>
+          <a href="/emergencia/{{l.id}}/t1"><img src="/static/img/estados/esi1.png" title="Colocar en Nivel 1"/></a>
+          <a href="/emergencia/{{l.id}}/t2"><img src="/static/img/estados/esi2.png" title="Colocar en Nivel 2"/></a>
+          <a href="/emergencia/{{l.id}}/triage/calcular"><img src="/static/img/estados/triage.png" title="Realizar Triage"/></a>
+        </td>
+        {% endif %}
+        <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
+	<td>
+	  <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>
+	  <img id="imagen_{{l.id}}" src="/static/img/estados/alarmaVerde.png" /> -->
+	</td>
+	<td>
+	  <div class="progress progress-striped active">
+	    <div id="barra_verde_{{l.id}}" class="bar bar-success">
+       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
+      </div>
+	    <div id="barra_amarilla_{{l.id}}" class="bar bar-warning">
+       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
+      </div>
+	    <div id="barra_roja_{{l.id}}" class="bar bar-danger">
+       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
+      </div>
+	    <div id="barra_negra_{{l.id}}" class="bar bar-inverse">
+       <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span> 
+      </div>
+	  </div>
+
+	</td>
+      </tr>	
+      {% endfor %}
+    </table>
+    {% else %}
+    No hay pacientes en esta area
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts2 %}
+<script>
+  $('.dropdown-toggle').dropdown()
+  var myVar=setInterval(function(){myTimer()},1000);
+  var tiempoMax = 120;
+  function myTimer() {
+  {% for l in lista %}
+  var tiempo=$("#tiempo_{{l.id}}").html();
+  tiempo = tiempo.split(":");
+  dias = parseInt(tiempo[0]);
+  hors = parseInt(tiempo[1]);
+  mins = parseInt(tiempo[2]);
+  segs = parseInt(tiempo[3]);
+  segs += 1;
+  if (segs >= 60) {
+  segs = segs%60;
+  mins = mins + Math.floor(segs/60);
+  if (mins >= 60) {
+  mins = mins%60;
+  hors = hors * Math.floor(mins/60);
+  if (hors >= 24) {
+  hors = hors % 24;
+  dias = dias + Math.floor(hors/24)
+  }
+  }
+  }
+  if (segs < 10) segs = "0"+segs;
+	     if (mins < 10) mins = "0"+mins;
+			if (hors < 10) hors = "0"+hors;
+				   if (dias < 10) dias = "0"+dias;
+
+					      tiempo = dias+":"+hors+":"+mins+":"+segs;
+					      $("#tiempo_{{l.id}}").html(tiempo);
+
+					      tiempo = (dias*24*60)+(hors*60)+mins;
+
+					      tExc = tiempoMax;
+					      tRoj = tiempoMax * .66;
+					      tAma = tiempoMax * .33;
+					      if (tiempo  > tExc) {
+				   var alarma = $("#imagen_{{l.id}}").attr("src");
+				   if (alarma != "/static/img/estados/alarmaNegra.png") {
+				   $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");          
+				   }
+				   } else if (tiempo > tRoj) {
+			$("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
+			} else if (tiempo > tAma) {
+             $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
+	     }
+
+	     t = Math.floor((tiempo /tiempoMax)*100);
+	     if (t >= 100) {
+        $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
+        $("#barra_verde_{{l.id}}").css({"width":"0%"});
+        $("#barra_roja_{{l.id}}").css({"width":"0%"});
+        $("#barra_negra_{{l.id}}").css({"width":"100%"});
+    } else if (t < 100 && t >= 66) {
+      // t -= 66;
+      // $("#barra_verde_{{l.id}}").css({"width":"33%"});
+      // $("#barra_amarilla_{{l.id}}").css({"width":"33%"});
+      // $("#barra_roja_{{l.id}}").css({"width":t+"%"});
+      $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
+      $("#barra_verde_{{l.id}}").css({"width":"0%"});
+      $("#barra_roja_{{l.id}}").css({"width":"100%"});
+      $("#barra_negra_{{l.id}}").css({"width":"0%"});
+      } else if (t < 66 && t >= 33) {
+        // t -= 33;
+        // $("#barra_verde_{{l.id}}").css({"width":"33%"});
+        // $("#barra_amarilla_{{l.id}}").css({"width":t+"%"});
+        $("#barra_amarilla_{{l.id}}").css({"width":"100%"});
+        $("#barra_verde_{{l.id}}").css({"width":"0%"});
+        $("#barra_roja_{{l.id}}").css({"width":"0%"});
+        $("#barra_negra_{{l.id}}").css({"width":"0%"});
+      } else {
+        // $("#barra_verde_{{l.id}}").css({"width":t+"%"});
+        $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
+        $("#barra_verde_{{l.id}}").css({"width":"100%"});
+        $("#barra_roja_{{l.id}}").css({"width":"0%"});
+        $("#barra_negra_{{l.id}}").css({"width":"0%"});
+      }
+	
+	{% endfor %}
+	}
+</script>
+
+{% endblock %}

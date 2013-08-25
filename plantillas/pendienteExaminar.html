@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+{% if mensaje %}
+{{mensaje}}
+{% endif %}
+<div class="container row">
+  <div class="span12">
+  	<h4>Examinar Usuario</h4>
+  	<div class="span5 offset1" >
+			<p class ="categoria"> C&eacute;dula de Identidad:</p> 
+			<p> {{usuario.cedula}}</p></br>
+	    <p class ="categoria"> Nombre: </p>
+	    <p> {{usuario.first_name}} {{usuario.last_name}}</p></br>
+			<p class ="categoria"> Sexo: </p>
+	    <p> {{usuario.sexoR}}</p></br>
+			<p class ="categoria"> Tipo de Usuario: </p>
+	    <p> {{usuario.tipoR}}</p></br>
+			</div>	
+  		<div class="span4">
+			<p class ="categoria"> Direcci&oacute;n: </p>
+	    <p> {{usuario.direccion}}</p></br>
+			<p class ="categoria"> Email: </p>
+	    <p> {{usuario.email}}</p></br>
+			<p class ="categoria"> Tel&eacute;fonos: </p>
+	    <p> M&oacute;vil: {{usuario.tlf_cel}} </p>
+			<p> Casa: {{usuario.tlf_casa}} </p>
+			<div class="iconos">
+				<a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobar" ><img src="/static/img/usuarios/aprobar.png" title="Autorizar"/></a>
+				<a href="/usuario/pendientes/{{l.usuario.cedula}}/rechazar"><img src="/static/img/usuarios/negar.png" title="Rechazar"/></a>
+				<a href="/usuario/pendientes"><img src="/static/img/usuarios/lista.png" title="Regresar a Lista de Pendientes"/></a>
+			</div>	
+		</div>				
+  </div>
+</div>
+{% endblock %}

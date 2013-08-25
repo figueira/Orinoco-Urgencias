@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+<!--Datetime Picker -->
+<script type="text/javascript" src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table, 
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+  // Create the data table.
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Topping');
+  data.addColumn('number', 'Slices');
+  data.addRows([
+  
+  {% for nivel,cantidad in triages %}
+  ['Nivel {{nivel}}',{{cantidad}}],
+  {% endfor %}
+  ]);
+
+  // Set chart options
+
+  var options = {'width':300,
+  'colors':['red','orange','yellow','green','blue'],
+  'height':200};
+  
+
+  var data2 = google.visualization.arrayToDataTable([
+  ['fecha' {% for ascii, cantidad in egresos %}, '{{ascii}}'{% endfor %}],
+  ['hoy'  {% for ascii, cantidad in egresos %}, {{cantidad}} {% endfor %}],
+  ]);
+
+  var options2 = {
+  title: 'Total de Egresos',
+  'colors':['blue','green','yellow','red','black'],
+  'width':500,
+  };
+
+  // Instantiate and draw our chart, passing in some options.
+  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+
+  function selectHandler() {
+  var selectedItem = chart.getSelection()[0];
+  if (selectedItem) {
+  var topping = data.getValue(selectedItem.row, 0);
+  alert('The user selected ' + topping);
+  }
+  }
+
+  google.visualization.events.addListener(chart, 'select', selectHandler);    
+  chart.draw(data, options);
+  chart2.draw(data2,options2);
+  }
+
+</script>
+{% endblock %}
+
+{% block cuerpo %}
+<div class="span12">
+  <div class="text-right">
+    <a href="/estadisticas/{{inicio.day}}-{{inicio.month}}-{{inicio.year}}">Ver Semana Anterior</a> |
+    <a href="/estadisticas/">Ver Semana Actual </a> |
+    <a href="/estadisticas/{{sig.day}}-{{sig.month}}-{{sig.year}}"> Siguiente Semana </a>
+  </div>
+</div>
+<div class="span12">
+  <div class="span5">
+    <h3>B&uacute;squeda Espec&iacute;fica</h3>
+    Desde:
+    <span id="fecha_inicio" class="input-append">
+      <input data-format="dd-MM-yyyy" placeholder="dd/mm/aaaa" id="inicio" type="text"></input>
+      <span class="add-on">
+	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+	</i>
+      </span>
+    </span>
+    <br/>
+    <script type="text/javascript">
+      $(function() {
+      $('#fecha_inicio').datetimepicker({
+      pickTime: false
+      });
+      });
+    </script>
+    Hasta:
+    <span id="fecha_fin" class="input-append">
+      <input data-format="dd-MM-yyyy" placeholder="dd/mm/yyyy" id="fin" type="text"></input>
+      <span class="add-on">
+	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+	</i>
+      </span>
+    </span>
+    <br/>
+    <script type="text/javascript">
+      $(function() {
+      $('#fecha_fin').datetimepicker({
+      pickTime: false
+      });
+      });
+    </script>
+
+    </script>
+    <div class="der">
+      <a id="ir_est" href="#" class="btn btn-primary">Ver Per&iacute;odo</a>
+    <script>
+$("#ir_est").click(function(){
+  $("#ir_est").attr("href","/estadisticas/"+$("#inicio").val()+"/"+$("#fin").val());
+});      
+    </script>
+    </div>
+  </div>
+  <div class="span5">
+    <h5> Datos Generales </h5>
+    Generado: <strong>{{fecha}}</strong><br/>
+    Primer D&iacute;a: <strong>{{inicio}}</strong><br/>
+    &Uacute;ltimo D&iacute;a: <strong>{{fin}}</strong><br/>
+    Emergencias Ingresadas: <strong>{{total_ingresos}}</strong><br/>
+    Emergencias Completadas: <strong>{{total_egresos}}</strong><br/>
+  </div>
+</div>
+<div class="span3">
+  <h5>Triages Realizados</h5>
+  <ul>
+    {% for nivel,cantidad in triages %}
+    <strong>Nivel {{nivel}}:</strong> {{cantidad}}<br/>
+    {% endfor %}
+  </ul>
+</div>
+<div class="span6">
+  <h5>Gr&aacute;fica de Triage</h5>
+  <div id="chart_div">
+  </div>
+</div>
+<div class="span3">
+  <h5>Egresos Realizados</h5>
+  <ul>
+    {% for nivel,cantidad in egresos %}
+    <strong>{{nivel}}:</strong> {{cantidad}}<br/>
+    {% endfor %}
+  </ul>
+</div>
+<div class="span6">
+  <h5>Gr&aacute;fica de Egresos</h5>
+  <div id="chart_div2">
+  </div>
+</div>
+{% endblock %}

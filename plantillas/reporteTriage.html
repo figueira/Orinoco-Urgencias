@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <title> Reporte Triage </title>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="/static/libs/js/jquery.min.js"></script>
+
+    <!-- Propios -->
+    <link rel="stylesheet" href="/static/css/estilo.css">
+    <link type="image/x-icon" href="/static/img/icono.ico" rel="icon" />
+		<style type="text/css">
+			body {
+				font-size: 12px;
+				margin: 20px;
+				font-family: 'Raleway', sans-serif;
+			}
+
+			.titulo {
+				font-size: 27px;
+				text-align: center;
+				font-weight: bold;
+				color: #A9D0F5;
+			}
+
+			.subtitulos {
+				font-size: 16px;
+				background-color: #A9D0F5;
+			}
+
+			.fecha {
+				text-align: right;
+			}
+		</style>
+	</head>  
+	<body>  
+		<img src="/static/img/logo.png"/><p class= "titulo">Reporte Triage</p>
+		<div class="container row">
+			<div class="cuerpo">
+				<p class = "fecha"> Fecha y hora de la evaluaci&oacute;n: {{ea.fecha_triage}}</p><br/>
+				<div class="izquierda">
+					<br/><p class = "subtitulos">Paciente</p>
+					<strong> Nombres:</strong> {{p.nombres}}<br/>
+					<strong> Apellidos:</strong>  {{p.apellidos}}<br/>
+					<strong> Sexo:</strong>  {{p.sexoR}}<br/>
+					<strong> Edad:</strong>  {{p.edad}}<br/><br/>
+					<p class = "subtitulos"> Médico</p>
+					{% for e in es %}
+				    {% for t in e.triages %}
+							<strong> Nombres: </strong> {{t.medico.first_name}}<br/>
+							<strong> Apellidos: </strong> {{t.medico.last_name}}<br/><br/>
+				      <p class = "subtitulos"> Resultado del Triage </p><h2 >NIVEL {{t.nivel}}</h2>
+				    {% endfor %}
+		      {% endfor %}
+				</div>
+				<div class="derecha">
+					<p class = "subtitulos">Respuestas</p>
+					{% for e in es %}
+				    {% for t in e.triages %}
+							<p>
+								<strong>El paciente requiere Atenci&oacute;n Inmediata: </strong>
+      					{% if t.atencion %}
+									Si
+					      {% else %}
+									No
+				      {% endif %}
+							</p>
+							<p>
+								<strong>El paciente puede esperar: </strong>
+      					{% if t.esperar %}
+									Si
+					      {% else %}
+									No
+				      {% endif %}
+							</p>
+							<p><strong>Recursos que necesita: </strong>{{t.recursos}}</p>
+							<p><strong>Motivo de Ingreso: </strong>{{t.motivo}}</p>
+							<p><strong>Temperatura: </strong>{{t.signos_tmp}} &deg; Centigrados</p>
+							<p><strong>Frecuencia Card&iacute;aca: </strong>{{t.signos_fc}} por minuto</p>
+							<p><strong>Frecuencia Respiratoria: </strong>{{t.signos_fr}} por  minuto</p>
+							<p><strong>Presi&oacute;n Sist&oacute;lica: </strong>{{t.signos_pa}} mmHg </p>
+							<p><strong>Presi&oacute;n Diast&oacute;lica: </strong>{{t.signos_pb}} mmHg</p>
+							<p><strong>Saturaci&oacute;n de Ox&iacute;geno: </strong>{{t.signos_saod}} %</p>
+							<p><strong>Escala AVPU: </strong>{{t.signos_avpu}}</p>
+							<p><strong>Dolor: </strong>{{t.signos_dolor}}</p>
+				    {% endfor %}
+		      {% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+

@@ -1,0 +1,61 @@
+<script>
+function envia2(pag){ 
+  $("#d_Ind").load(pag);
+}
+</script>
+
+<div id="aparece" class="btn-toolbar">
+  <center>
+    <div class="btn-group">
+      <button id="diet" class="btn btn-info" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/dieta')">Dietas</button>
+    </div>
+    <div class="btn-group">
+      <button id="hid" class="btn btn-info" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/hidrata')">Hidrataci&oacute;n</button>
+    </div>
+    <div class="btn-group">
+      <button id="med" class="btn btn-info" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/medicamento')" >Medicaci&oacute;n</button>
+    </div>
+    <div class="btn-group">
+      <button id="diag" class="btn btn-info">Diagn&oacute;sticos</button>
+    </div>
+    <div class="btn-group">
+      <button id="ter" class="btn btn-info" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/terapeutico')">Terap&eacute;uticos</button>
+    </div>
+    <div class="btn-group">
+      <button id="tod"class="btn btn-info" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/listar')">Todos</button>
+    </div>
+  </center>
+</div>
+
+<div id="aparece2" class="btn-toolbar offset2" style="display: none;">
+    <div class="btn-group">
+      <button class="btn btn-mini btn-primary" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/lab')">Laboratorio</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-mini btn-primary" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/imagen')">Imagenoloǵ&iacute;a</button>
+      
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-mini btn-primary" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/endoscopico')">Estudios Endosc&oacute;picos</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-mini btn-primary" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/valora')">Valoraci&oacute;n Especializada</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-mini btn-primary" onClick= "envia2('/emergencia/indicaciones/{{emergencia.id}}/otros')">Otros</button>
+    </div>
+</div>
+<br/><br/>
+
+<script>
+$(document).ready(
+    function(){
+      $("#diag").click(function () {
+            $("#aparece2").toggle();
+        });
+
+        $("#diet,#hid,#med,#tod,#ter").click(function () {
+            $("#aparece2").hide();
+        });
+    });
+</script>

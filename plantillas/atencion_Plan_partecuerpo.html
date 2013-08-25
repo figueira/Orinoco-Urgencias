@@ -1,0 +1,73 @@
+<script src ="/static/scripts/efectos_info_cuerpo.js"> </script>
+<script src ="/static/scripts/atencion_Plan_partecuerpo.js"> </script>
+<link rel="stylesheet" type="text/css" href="/static/css/Atencion/atencion.css" />  
+ <script>
+  $(document).ready(function () {
+    botones_sintomas();
+  });
+</script>
+<div>
+  <button class="btn btn-info btn-mini" onClick="cargar('{{emergencia.id}}','{{parte_cuerpo}}');"> Guardar</button>
+</div>
+<form id='formularioCuerpo' name="cuerpo" method="post" action="/emergencia/enviarcuerpo/{{emergencia.id}}/{{parte_cuerpo}}">
+  {% csrf_token %}
+<div id='div_de_tabla_cuerpo'>
+  <table class='table table-bordered' style='width:350px'>
+    <thead>
+      <tr class='btn-info'>
+      <th style="width:210px;">
+        {% if parte_cuerpo == 'CABEZA_Y_ROSTRO' %}
+          CABEZA&nbsp;Y&nbsp;ROSTRO
+        {% elif parte_cuerpo == 'EXTREMIDADES_SUPERIORES' %}
+          EXTREMIDADES&nbsp;SUPERIORES
+        {% elif parte_cuerpo == 'EXTREMIDADES_INFERIORES' %}
+          EXTREMIDADES&nbsp;INFERIORES
+        {% elif parte_cuerpo == 'GENITALES_MASCULINOS' %}
+          GENITALES&nbsp;MASCULINOS&nbsp;
+        {% elif parte_cuerpo == 'GENITALES_FEMENINOS' %}
+          GENITALES&nbsp;FEMENINOS
+        {% elif parte_cuerpo == 'EXAMEN_DE_MAMA'%}
+          EXAMEN&nbsp;DE&nbsp;MAMA
+        {% elif parte_cuerpo == 'EXAMEN_RECTAL' %}
+          EXAMEN&nbsp;RECTAL
+        {% else %}
+          {{parte_cuerpo}}
+        {% endif %}
+
+      </th>
+      <th style="width:90px">
+        <center>
+          <button id="b{{parte.id}}1" class='BNAD' style="width: 40px;">NAD</button>
+          <button id="b{{parte.id}}2" class='BABN' style="width: 40px;">ABN</button>
+        </center>
+      </th>
+      </tr>
+    </thead>
+    <tbody >
+
+    {% for asp_ante in aspectoAtencion %}
+      <tr class='well' style="width:150px;">
+        <td>
+            {{asp_ante.aspecto.nombre}}
+        </td>
+        <td>
+          <input type="hidden" id="{{asp_ante.aspecto.id}}" name="{{asp_ante.aspecto.id}}" value='{{asp_ante.estadoR}}N'>
+          <center>
+            <button id='p{{asp_ante.aspecto.id}}1' 
+                class='NAD' style="width:40px;" input='{{asp_ante.aspecto.id}}' >NAD</button>
+            <button id='p{{asp_ante.aspecto.id}}2' 
+                class='ABN' style="width:40px;" input='{{asp_ante.aspecto.id}}'>ABN</button>
+          </center>
+        </td>
+      </tr>
+      <tr id="A{{asp_ante.aspecto.id}}" class='hide' >
+        <td>
+          <input type="text" name='A{{asp_ante.aspecto.id}}' value="{{asp_ante.anomaliaR}}" style="width:130px;height:12px">
+        </td>
+        <td></td>
+      <tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+</form>  

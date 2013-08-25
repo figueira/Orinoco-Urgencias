@@ -1,0 +1,46 @@
+/* atencion_Plan */
+#spinCuerpo{
+	position:fixed;
+	margin-top:15px;
+	margin-left:200px;
+}
+
+#div_general{
+	margin-top:5px;
+	margin-left:5px;
+}
+
+
+/* atencion_Plan_partecuerpo */
+#div_boton1{
+	margin:5px;
+	text-align: right;
+}
+
+#Parte_Cuerpo_Guardar{
+	margin-top:4px;
+	height:425px;
+}
+
+#div_Parte_Cuerpo{
+	display:inline-table;
+	width:380px;
+	height:64%;
+	padding:3px 0px 0px 5px;
+	OVERFLOW: auto;
+}
+
+/* atencion_Plan_partecuerpo */
+
+#div_de_tabla_cuerpo{
+	height:400px;
+	padding:3px 0px 0px 5px;
+	OVERFLOW: auto;
+}
+
+/* atencion_ant_medica */
+
+#div_de_tabla_atecedente{
+	height:440px;
+	OVERFLOW: auto;
+}

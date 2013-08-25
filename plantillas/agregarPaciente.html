@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block scripts %}
+<!--Datetime Picker -->
+<script type="text/javascript" src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+{% endblock %}
+{% block cuerpo %}
+<div class="row">
+  <div class="cuadroGrande span12 centrar">
+    <h4>Agregar Paciente</h4>
+    <form class= "tablaAgregar" method="post" action="/emergencia/agregar">
+      {% csrf_token %}
+      <table>
+	{% for e in form %}
+	<tr>
+          {% if e.label == "Hora y Fecha de Ingreso" %}
+	  <td>{{e.label}}</td>
+	  <td>
+
+
+	    <div id="ingreso_picker" class="input-append">
+              {{e}}
+	      <span id="ahora" class="btn">Ahora</span>
+	      <span class="add-on">
+		<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+		</i>
+	      </span>
+	    </div>
+	    <script type="text/javascript">
+	      $(function() {
+	      $('#ingreso_picker').datetimepicker({
+	      language: 'pt-BR'
+	      });
+	      });
+	    </script>
+          </td>
+	  <td>{{e.errors}}</td>
+          {% else %}
+	  <td>{{e.label}}</td>
+	  <td>{{e}}</td>
+	  <td>{{e.errors}}</td>
+          {% endif %}
+	</tr>	  
+	{% endfor %}
+	<tr>
+	  <td></td>
+	  <td><input class="btn btn-primary" type="submit" value="Ingresar" /></td>
+	  <td></td>
+	</tr>
+      </table>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts2 %}
+<script>
+  $(document).ready(function() {
+  $("#ahora").click(function() {
+  var currentTime = new Date()
+  var mes = currentTime.getMonth() + 1;
+  var dia = currentTime.getDate();
+  var año = currentTime.getFullYear();
+  
+  var horas    = currentTime.getHours()
+  var minutos  = currentTime.getMinutes()
+  var segundos = currentTime.getSeconds()
+  $("#id_ingreso").val(dia+"/"+mes+"/"+año+" "+horas+":"+minutos+":"+segundos)
+  });
+  });
+</script>
+{% endblock %}

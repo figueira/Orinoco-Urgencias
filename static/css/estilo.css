@@ -1,0 +1,70 @@
+body {
+  margin-top:65px;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 70px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+}
+
+.navbar .brand {
+  padding: 15px 10px 10px;
+}
+.navbar .nav>li>a {
+  padding: 20px 5px;
+}
+
+td img {
+  width:24px;
+}
+
+.usuario {
+  margin-top:15px;
+  color: #008ebc;
+  font-weight:bold;
+}
+
+.usuario a {
+  color: #08c;
+  text-decoration: none;
+  font-weight:normal;
+}
+
+.usuario a:hover, .usuario a:focus {
+  color: #005580;
+  text-decoration: underline;
+}
+
+.categoria {
+	font-weight: bold;
+}
+
+.botones {
+	margin-top: 20px;
+}
+
+td li {
+  list-style:none;
+}
+
+.separador {
+	height: 3px;
+	width: auto;
+	background-color: grey;
+}
+
+.oculto {
+  visibilty:hidden;
+}
+
+.bar-inverse{
+  background-color:#010101 !important;
+}
+
+.picker-switch {
+  list-style:none;
+  text-align:center;
+}
