@@ -65,8 +65,7 @@ function modificar(emer){
             else{indexNasig = indexNasig.split(",");}
 
             var tamano1 = esperasAsig.length +esperasNasig.length;
-            if (tamano1 != 6){alert("tamano malo = "+tamano1+"\n"+"data1 = "+esperasAsig.length+"\n"+esperasAsig+"\ndata2 = "+esperasNasig.length+"\n"+esperasNasig);}
-
+          
             var i = 0;
             var contenido = "";
             var menos     = '<img src="/static/img/Atencion/menosim.png" title="-" onClick="eliminar('+emer+',';
