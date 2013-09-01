@@ -499,8 +499,6 @@ def emergencia_espera_idN(request,id_emergencia):
 def emergencia_guardar_cubi(request,id_emergencia):
     print "veo id de emergencia q entro como parametro",id_emergencia
     emer = get_object_or_404(Emergencia,id=id_emergencia)
-    paci = Paciente.objects.filter(emergencia__id=id_emergencia)
-    paci = paci[0]
     mensaje = "Cubiculo guardado Exitosamente"
     info = {'mensaje':mensaje}
     print "Entre a guardar cubi"

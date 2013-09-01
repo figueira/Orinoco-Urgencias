@@ -48,7 +48,7 @@
             <ul class="nav">
 
 	      {% if user.is_authenticated %}
-	      <li class="dropdown">
+        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Paciente<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/emergencia/agregar">Agregar</a></li>
@@ -69,6 +69,15 @@
                   <li><a href="/emergencia/listar/clasificados">Pacientes por Atencion</a></li>
                 </ul>
               </li>
+
+        <li class="dropdown">
+          <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        </li>
+
+        <li class="dropdown">
+          <h3 class="tit_list"></h3>
+        </li>
+
 	      {% if user.is_staff %}
 	      <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
