@@ -103,8 +103,10 @@ class Emergencia(models.Model):
     hora_egresoReal  = models.DateTimeField(blank=True,null=True)
     egreso           = models.ForeignKey(Usuario,related_name="De alta por",blank=True,null=True)
     destino          = models.ForeignKey(Destino,blank=True,null=True)
+    cubiculo         = models.CharField(max_length=10,blank=True)
+
     def __unicode__(self):
-        return "%s - %s" % (self.id,self.paciente)
+        return "%s - %s - %s" % (self.id,self.paciente,self.cubiculo)
 
     def triages(self):
         triages = Triage.objects.filter(emergencia=self.id).order_by("fechaReal")
@@ -296,7 +298,6 @@ class Asignar(models.Model):
     fecha      = models.DateTimeField()
     fechaReal  = models.DateTimeField()
     status     = models.IntegerField(choices=AFIRMACION)
-    # status     = models.IntegerField(choices=STATUS)
     
     def __unicode__(self):
         return "Paciente:%s- Nombre:%s- Tipo:%s - Status:%s" % (self.emergencia.paciente.apellidos,self.indicacion.nombre,self.indicacion.tipo,self.status)
