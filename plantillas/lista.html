@@ -1,6 +1,30 @@
 {% extends "base.html" %}
 {% block cuerpo %}
 <script src ="/static/scripts/esperas.js"> </script>
+<script>
+function enviaA(emercy){
+  $(function() {
+      $('#'+emercy+'cub').change(function() {
+        this.form.submit();
+      });
+    });
+}
+
+function actualizar(emer){
+  $(function() {
+    // $('#cubDir_'+emer).hide();
+    // alert("Veo si entre a actualizar: "+emer);
+    $('#formCubA_'+emer).show();
+    $('#cubDir_'+emer).replaceWith($('#formCubA_'+emer));
+  });
+}
+
+$(document).ready(
+    function(){
+      $(".formCubA").css("display","none");
+      $("[rel='tooltip']").tooltip();
+  });
+</script>
 <style>
   a.espera:link, a.espera:visited, a.espera:active { text-decoration: none }
   .s1 {
@@ -11,55 +35,94 @@
 }
 </style>
 <div class="container row">
-  <div class="span12">
-    <h4>Lista  de Pacientes {{titulo}}</h4>
-    <div class="text-right">
-      <a href="/emergencia/buscar">Buscar Paciente</a> | 
-      <a href="/emergencia/listar/todas">&Aacute;rea de Emergencias</a> | 
-      <a href="/emergencia/listar/triage">&Aacute;rea de Triage</a> | 
-      <a href="/emergencia/listar/sinclasificar">Pacientes por Clasificar</a> |
-      <a href="/emergencia/listar/clasificados">Pacientes Clasificados</a> |
-      <a href="/emergencia/listar/atencion">&Aacute;rea de Atenci&oacute;n</a> 
-    </div>
-
-    {% if lista %}
+  <h4>Lista  de Pacientes {{titulo}}</h4>
+  {% if lista %}
     <table class="table table-bordered table-striped">
       <tr>
-	<th>Cub&iacute;culo</th>
-	<th>Nombre</th>
-	<th>Acciones</th>
-	<th>IDE</th>
-	<th>Causas Espera</th>
-	<th>Alarma</th>
+        <th>Cub&iacute;culo</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+        <th>ISE</th>
+        <th>Causas de Espera</th>
+        <th>
+          <center>
+            <button class="btn btn-mini btn-primary" rel="tooltip" data-toggle="tooltip" data-original-title="Actualizar"><i class="icon-repeat icon-white"></i></button>
+          </center>
+        </th>
       </tr>
       {% for l in lista %}
       <tr>
         <td>
+          
+          {% if l.cubiculo != '' %}
+          <div id="cubDir_{{l.id}}" ondblclick="actualizar('{{l.id}}')">
           <center>
-          <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
-            <option value="nada">--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5A">5A</option>
-            <option value="5B">5B</option>
-            <option value="5C">5C</option>
-            <option value="5D">5D</option>
-            <option value="5E">5E</option>
-            <option value="6A">6A</option>
-            <option value="6B">6B</option>
-            <option value="6C">6C</option>
-            <option value="6D">6D</option>
-            <option value="6E">6E</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-          </select>
-          <button class="btn btn-mini btn-primary" type="button">Agregar</button>
+            {{l.cubiculo}}
+          </center>
+          </div>
+          <div id="formCubA_{{l.id}}" class="formCubA">
+            <center>
+              <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}">
+                {% csrf_token %}
+                <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
+                  <option value="nada">--</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5A">5A</option>
+                  <option value="5B">5B</option>
+                  <option value="5C">5C</option>
+                  <option value="5D">5D</option>
+                  <option value="5E">5E</option>
+                  <option value="6A">6A</option>
+                  <option value="6B">6B</option>
+                  <option value="6C">6C</option>
+                  <option value="6D">6D</option>
+                  <option value="6E">6E</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                </select>
+                <button class="btn btn-mini btn-primary" onClick="enviaA('{{l.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Actualizar"><i class="icon-refresh icon-white"></i>
+                </button>
+              </form>
+            </center>
+          </div>
+          {% else %}
+          <div id="formCub">
+          <center>
+          <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}">
+            {% csrf_token %}
+            <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
+                <option value="nada">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5A">5A</option>
+                <option value="5B">5B</option>
+                <option value="5C">5C</option>
+                <option value="5D">5D</option>
+                <option value="5E">5E</option>
+                <option value="6A">6A</option>
+                <option value="6B">6B</option>
+                <option value="6C">6C</option>
+                <option value="6D">6D</option>
+                <option value="6E">6E</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+              </select>
+              <button class="btn btn-mini btn-primary" onClick="enviaA('{{l.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Guardar"><i class="icon-plus-sign icon-white"></i></button>
+            </form>
         </center>
+        </div>
+        {% endif %}
         </td>
         <td><span class="nombreLista"><a a href='/paciente/{{ l.id }}'>{{l.paciente}}</a></span></td>
         {% if l.triage != 0 %}
@@ -67,7 +130,7 @@
           <a href="/emergencia/{{l.id}}/t1">
             <img src="/static/img/estados/triage.png" title="Recalcular"/>
           </a>
-          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="right" 
+          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom" 
           title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
             <img src="/static/img/Atencion/espera.png" title="Esperas"/>
             <span style='margin-left:-10px;color:white;background:rgba(255,0,0,1);border-radius:6px;'>
@@ -86,29 +149,23 @@
         {% endif %}
         <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
 	<td>
-	  <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>
-	  <img id="imagen_{{l.id}}" src="/static/img/estados/alarmaVerde.png" /> -->
+    <div id="esperaGraf_{{l.id}}">
+      <img id="imagen_{{l.id}}" src="/static/img/estados/alarmaVerde.png" />
+    </div>
 	</td>
 	<td>
-	  <div class="progress progress-striped active">
-	    <div id="barra_verde_{{l.id}}" class="bar bar-success">
-       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
-      </div>
-	    <div id="barra_amarilla_{{l.id}}" class="bar bar-warning">
-       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
-      </div>
-	    <div id="barra_roja_{{l.id}}" class="bar bar-danger">
-       <!-- <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span>  -->
-      </div>
-	    <div id="barra_negra_{{l.id}}" class="bar bar-inverse">
+      <div class="progress progress-striped active">
+      <div id="barra_{{l.id}}" class="" style="width:100%;">
        <span id="tiempo_{{l.id}}">{{l.tiempo_esperaR}}</span> 
       </div>
-	  </div>
+    </div>
+
 
 	</td>
       </tr>	
       {% endfor %}
     </table>
+    
     {% else %}
     No hay pacientes en esta area
     {% endif %}
@@ -118,7 +175,9 @@
 
 {% block scripts2 %}
 <script>
-  $('.dropdown-toggle').dropdown()
+
+  $(document).ready(function() {
+  $('.dropdown-toggle').dropdown();
   var myVar=setInterval(function(){myTimer()},1000);
   var tiempoMax = 120;
   function myTimer() {
@@ -158,7 +217,7 @@
 					      if (tiempo  > tExc) {
 				   var alarma = $("#imagen_{{l.id}}").attr("src");
 				   if (alarma != "/static/img/estados/alarmaNegra.png") {
-				   $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");          
+				   $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");
 				   }
 				   } else if (tiempo > tRoj) {
 			$("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
@@ -168,37 +227,18 @@
 
 	     t = Math.floor((tiempo /tiempoMax)*100);
 	     if (t >= 100) {
-        $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
-        $("#barra_verde_{{l.id}}").css({"width":"0%"});
-        $("#barra_roja_{{l.id}}").css({"width":"0%"});
-        $("#barra_negra_{{l.id}}").css({"width":"100%"});
-    } else if (t < 100 && t >= 66) {
-      // t -= 66;
-      // $("#barra_verde_{{l.id}}").css({"width":"33%"});
-      // $("#barra_amarilla_{{l.id}}").css({"width":"33%"});
-      // $("#barra_roja_{{l.id}}").css({"width":t+"%"});
-      $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
-      $("#barra_verde_{{l.id}}").css({"width":"0%"});
-      $("#barra_roja_{{l.id}}").css({"width":"100%"});
-      $("#barra_negra_{{l.id}}").css({"width":"0%"});
+        $("#barra_{{l.id}}").attr("class","bar bar-inverse");
+      } else if (t < 100 && t >= 66) {
+        $("#barra_{{l.id}}").attr("class","bar bar-danger");
       } else if (t < 66 && t >= 33) {
-        // t -= 33;
-        // $("#barra_verde_{{l.id}}").css({"width":"33%"});
-        // $("#barra_amarilla_{{l.id}}").css({"width":t+"%"});
-        $("#barra_amarilla_{{l.id}}").css({"width":"100%"});
-        $("#barra_verde_{{l.id}}").css({"width":"0%"});
-        $("#barra_roja_{{l.id}}").css({"width":"0%"});
-        $("#barra_negra_{{l.id}}").css({"width":"0%"});
+        $("#barra_{{l.id}}").attr("class","bar bar-warning");
       } else {
-        // $("#barra_verde_{{l.id}}").css({"width":t+"%"});
-        $("#barra_amarilla_{{l.id}}").css({"width":"0%"});
-        $("#barra_verde_{{l.id}}").css({"width":"100%"});
-        $("#barra_roja_{{l.id}}").css({"width":"0%"});
-        $("#barra_negra_{{l.id}}").css({"width":"0%"});
+        $("#barra_{{l.id}}").attr("class","bar bar-success");
       }
 	
 	{% endfor %}
 	}
+  });
 </script>
 
 {% endblock %}

@@ -488,6 +488,32 @@ def emergencia_espera_idN(request,id_emergencia):
         esp = esp+i+","
     return HttpResponse(esp)
 
+
+#########################################################
+#                                                       #
+#             Guardar/ Actualizar Cubiculo              #
+#                                                       #
+#########################################################
+
+#------------------------------------------ Funciones para agregar un cubiculo
+def emergencia_guardar_cubi(request,id_emergencia):
+    print "veo id de emergencia q entro como parametro",id_emergencia
+    emer = get_object_or_404(Emergencia,id=id_emergencia)
+    paci = Paciente.objects.filter(emergencia__id=id_emergencia)
+    paci = paci[0]
+    mensaje = "Cubiculo guardado Exitosamente"
+    info = {'mensaje':mensaje}
+    print "Entre a guardar cubi"
+    print "verifico name del select",str(id_emergencia)+"cub"
+    cubi  = request.POST[str(emer.id)+"cub"]
+    print "CUbi elegido",cubi
+    print "verificar emergencia a la que voy a ingresar el cubiculo",emer
+    emer.cubiculo = cubi
+    emer.save()
+    return redirect('/emergencia/listar/todas')
+
+
+
 #########################################################
 #                                                       #
 #          Views para Casos de Uso de Atencion          #

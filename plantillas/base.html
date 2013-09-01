@@ -48,16 +48,15 @@
             <ul class="nav">
 
 	      {% if user.is_authenticated %}
-	      <li><a href="/emergencia/listar/todas">Ver Emergencias</a></li>
 	      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emergencia<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Paciente<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/emergencia/agregar">Agregar</a></li>
             <li><a href="/emergencia/buscar">Buscar</a></li>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas Especializadas<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
 		  <li class="divider"></li>
@@ -109,15 +108,13 @@
 	  </div>
 	  {% else %}
           <form method='POST' action="/sesion/iniciar/" class="navbar-form pull-right">
-	    {% csrf_token %}
-	    {{ form.unombre }}
-	    {{ form.uclave }}
-	    <input class="btn btn-primary" type="submit" value="Iniciar Sesi&oacute;n" /><br>
-	    <a href="/usuario/restablecer">Recuperar Clave</a> | 
-	    <a href="/usuario/solicitar">Solicitar Cuenta</a>
-	    
-	    
-          </form>
+            {% csrf_token %}
+            {{ form.unombre }}
+            {{ form.uclave }}
+            <input class="btn btn-primary" type="submit" value="Iniciar Sesi&oacute;n" /><br>
+            <a href="/usuario/restablecer">Recuperar Clave</a> | 
+	       <a href="/usuario/solicitar">Solicitar Cuenta</a>
+        </form>
 	  {% endif %}
 	</div>
       </div>
