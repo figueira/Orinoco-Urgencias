@@ -39,6 +39,7 @@ $(document).ready(
   {% if lista %}
     <table class="table table-bordered table-striped">
       <tr>
+
         <th>Cub&iacute;culo</th>
         <th>Nombre</th>
         <th>Acciones</th>
@@ -49,6 +50,7 @@ $(document).ready(
             <button class="btn btn-mini btn-primary" rel="tooltip" data-toggle="tooltip" data-original-title="Actualizar"><i class="icon-repeat icon-white"></i></button>
           </center>
         </th>
+
       </tr>
       {% for l in lista %}
       <tr>
@@ -148,6 +150,7 @@ $(document).ready(
         </td>
         {% endif %}
         <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
+
 	<td>
     <div id="esperaGraf_{{l.id}}">
       <img id="imagen_{{l.id}}" src="/static/img/estados/alarmaVerde.png" />
@@ -160,9 +163,8 @@ $(document).ready(
       </div>
     </div>
 
-
-	</td>
-      </tr>	
+  </td>
+      </tr> 
       {% endfor %}
     </table>
     
@@ -181,6 +183,7 @@ $(document).ready(
   var myVar=setInterval(function(){myTimer()},1000);
   var tiempoMax = 120;
   function myTimer() {
+
   {% for l in lista %}
   var tiempo=$("#tiempo_{{l.id}}").html();
   tiempo = tiempo.split(":");
@@ -202,28 +205,28 @@ $(document).ready(
   }
   }
   if (segs < 10) segs = "0"+segs;
-	     if (mins < 10) mins = "0"+mins;
-			if (hors < 10) hors = "0"+hors;
-				   if (dias < 10) dias = "0"+dias;
+       if (mins < 10) mins = "0"+mins;
+      if (hors < 10) hors = "0"+hors;
+           if (dias < 10) dias = "0"+dias;
 
-					      tiempo = dias+":"+hors+":"+mins+":"+segs;
-					      $("#tiempo_{{l.id}}").html(tiempo);
+                tiempo = dias+":"+hors+":"+mins+":"+segs;
+                $("#tiempo_{{l.id}}").html(tiempo);
 
-					      tiempo = (dias*24*60)+(hors*60)+mins;
-
-					      tExc = tiempoMax;
-					      tRoj = tiempoMax * .66;
-					      tAma = tiempoMax * .33;
-					      if (tiempo  > tExc) {
-				   var alarma = $("#imagen_{{l.id}}").attr("src");
-				   if (alarma != "/static/img/estados/alarmaNegra.png") {
-				   $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");
-				   }
-				   } else if (tiempo > tRoj) {
-			$("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
-			} else if (tiempo > tAma) {
+                tiempo = (dias*24*60)+(hors*60)+mins;
+                tExc = tiempoMax;
+                tRoj = tiempoMax * .66;
+                tAma = tiempoMax * .33;
+                if (tiempo  > tExc) {
+           var alarma = $("#imagen_{{l.id}}").attr("src");
+           if (alarma != "/static/img/estados/alarmaNegra.png") {
+           $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");          
+           }
+           } else if (tiempo > tRoj) {
+      $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
+      } else if (tiempo > tAma) {
              $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
-	     }
+       }
+
 
 	     t = Math.floor((tiempo /tiempoMax)*100);
 	     if (t >= 100) {

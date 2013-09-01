@@ -45,7 +45,6 @@ function modificar(emer){
         $.get("/emergencia/espera_id/"+emer,function (data4){
           $.get("/emergencia/espera_idN/"+emer,function (data5){
             var esperasAsig   = data.substring(0,data.length-1);
-            // alert("Esperas Asignadas: "+esperasAsig);
             if(esperasAsig ==""){esperasAsig = [];}
             else{esperasAsig  = esperasAsig.split(",");}
             
@@ -66,8 +65,7 @@ function modificar(emer){
             else{indexNasig = indexNasig.split(",");}
 
             var tamano1 = esperasAsig.length +esperasNasig.length;
-            if (tamano1 != 10){alert("tamano malo = "+tamano1+"\n"+"data1 = "+esperasAsig.length+"\n"+esperasAsig+"\ndata2 = "+esperasNasig.length+"\n"+esperasNasig);}
-
+          
             var i = 0;
             var contenido = "";
             var menos     = '<img src="/static/img/Atencion/menosim.png" title="-" onClick="eliminar('+emer+',';
@@ -106,7 +104,7 @@ $(document).ready(function () {
   $('.espera').popover('hide');
   
   $('.espera').each(function(index,valor){
-    contenido|($(this).attr('idEmer'));
+    contenido($(this).attr('idEmer'));
   });
 
   $('.espera').click(function(){
