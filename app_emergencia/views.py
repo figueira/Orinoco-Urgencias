@@ -414,9 +414,16 @@ def estadisticas(request):
 #          Views para Casos de Uso de Esperas           #
 #                                                       #
 #########################################################
+def emergencia_espera_mantener(request,id_emergencia):
+    emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
+    return HttpResponse()
 
 def emergencia_espera_agregar(request,id_emergencia,id_espera):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
     espe   = get_object_or_404(Espera,id=id_espera)
     espera = EsperaEmergencia(emergencia=emer,espera=espe,estado='0')
     espera.save()
@@ -424,16 +431,20 @@ def emergencia_espera_agregar(request,id_emergencia,id_espera):
 
 def emergencia_espera_eliminar(request,id_emergencia,id_espera):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
     espe   = get_object_or_404(Espera,id=id_espera)
     espera = EsperaEmergencia.objects.get(emergencia=emer,espera=espe)
     espera.delete() 
     return HttpResponse()
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
-    emer        = get_object_or_404(Emergencia,id=id_emergencia)
-    espe        = get_object_or_404(Espera,id=id_espera)
-    espera1        = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
-    espera1.estado = str(espera)
+    emer               = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
+    espe               = get_object_or_404(Espera,id=id_espera)
+    espera1            = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
+    espera1.estado     = str(espera)
     espera1.save() 
     return HttpResponse()
 

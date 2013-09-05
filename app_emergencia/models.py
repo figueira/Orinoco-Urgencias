@@ -98,6 +98,7 @@ class Emergencia(models.Model):
     responsable      = models.ForeignKey(Usuario,related_name="A cargo")
     ingreso          = models.ForeignKey(Usuario,related_name="Ingresado por")
     hora_ingreso     = models.DateTimeField()
+    fecha_Esp_act    = models.DateTimeField(auto_now_add=True)
     hora_ingresoReal = models.DateTimeField(auto_now_add=True)
     hora_egreso      = models.DateTimeField(blank=True,null=True)
     hora_egresoReal  = models.DateTimeField(blank=True,null=True)
@@ -148,13 +149,24 @@ class Emergencia(models.Model):
         return NoAten
     
     def tiempo_espera(self):
-        triages = self.triages()
+        """triages = self.triages()
         if triages:
             triage = triages[0]
             tiempo = triage.fecha.replace(tzinfo=None)
         else:
             tiempo = self.hora_ingreso.replace(tzinfo=None)
+        """
+        tiempo = self.hora_ingreso.replace(tzinfo=None)
         tiempo = datetime.now() - tiempo
+        return ceil(tiempo.total_seconds())
+
+    def tiempo_espera_causas(self):
+        triages = self.triages()
+        tiempo  = self.fecha_Esp_act.replace(tzinfo=None)
+        if self.fecha_Esp_act:      
+            tiempo  = datetime.now() - tiempo
+        else:
+            tiempo  = datetime.now()
         return ceil(tiempo.total_seconds())
 
     def tiempo_esperaR(self):
@@ -166,6 +178,17 @@ class Emergencia(models.Model):
         minutos = int(floor(tiempo3/60))
         segundos = int(floor(tiempo3%60))        
         return str(dias)+":"+str(horas)+":"+str(minutos)+":"+str(segundos)
+
+    def tiempo_espera_causasR(self):
+        tiempo = self.tiempo_espera_causas()
+        dias = int(floor(((tiempo/60)/60)/24))
+        tiempo2 = tiempo - (dias*24*60*60)
+        horas = int(floor((tiempo2/60)/60))
+        tiempo3 = tiempo2 - (horas*60*60)
+        minutos = int(floor(tiempo3/60))
+        segundos = int(floor(tiempo3%60))        
+        return str(dias)+":"+str(horas)+":"+str(minutos)+":"+str(segundos)
+
 
     def tiempo_emergencia(self):
         tiempo = self.hora_egreso - self.hora_ingreso
