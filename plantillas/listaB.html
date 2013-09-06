@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+<style>
+  a.espera:link, a.espera:visited, a.espera:active { text-decoration: none }
+</style>
+<div class="container row">
+  <div class="span12">
+    {% if lista %}
+    <table class="table table-bordered table-striped" style="font-size: 22px;">
+      <tr>
+	<th>N&uacute;mero</th>
+	<th>Nombre</th>
+  <th>ISE</th>
+	<th>Tiempo de Espera Total</th>
+	<th>&Uacute;ltima Fecha de Ingreso</th>
+      </tr>
+      {% for l in lista %}
+      <tr>
+        <td>{{l.id}}</td>
+        <td><span class="nombreLista"><a a href='/paciente/{{ l.id }}'>{{l.paciente}}</a></span></td>
+        <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
+	<td>
+	  {{l.tiempo_emergenciaT}}
+	  
+	</td>
+	<td>
+	  {{l.horaR}}
+
+	</td>
+      </tr>	
+      {% endfor %}
+    </table>
+    {% else %}
+    No hay pacientes en esta area
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

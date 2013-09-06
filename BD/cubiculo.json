@@ -1,0 +1,154 @@
+[
+{
+    "pk": 1, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "1", 
+        "area": 2
+    }
+},
+{
+    "pk": 2, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "2", 
+        "area": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "3", 
+        "area": 2
+    }
+},
+{
+    "pk": 4, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "4", 
+        "area": 2
+    }
+},
+{
+    "pk": 5, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "7", 
+        "area": 2
+    }
+},
+{
+    "pk": 6, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "8", 
+        "area": 2
+    }
+},
+{
+    "pk": 7, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "9", 
+        "area": 2
+    }
+},
+{
+    "pk": 8, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "10", 
+        "area": 2
+    }
+},
+{
+    "pk": 9, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "11", 
+        "area": 2
+    }
+},
+{
+    "pk": 10, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "5A", 
+        "area": 1
+    }
+},
+{
+    "pk": 11, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "5B", 
+        "area": 1
+    }
+},
+{
+    "pk": 12, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "5C", 
+        "area": 1
+    }
+},
+{
+    "pk": 13, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "5D", 
+        "area": 1
+    }
+},
+{
+    "pk": 14, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "5E", 
+        "area": 1
+    }
+},
+{
+    "pk": 15, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "6A", 
+        "area": 1
+    }
+},
+{
+    "pk": 16, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "6B", 
+        "area": 1
+    }
+},
+{
+    "pk": 17, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "6C", 
+        "area": 1
+    }
+},
+{
+    "pk": 18, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "6D", 
+        "area": 1
+    }
+},
+{
+    "pk": 19, 
+    "model": "app_emergencia.cubiculo", 
+    "fields": {
+        "nombre": "6E", 
+        "area": 1
+    }
+}
+]

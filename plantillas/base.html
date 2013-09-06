@@ -62,23 +62,14 @@
 		  <li class="divider"></li>
 		  <li class="nav-header">Por Area</li>
                   <li><a href="/emergencia/listar/triage">Pacientes en Triage</a></li>
-                  <li><a href="/emergencia/listar/atencion">Pacientes en Atención</a></li>
+                  <li><a href="/emergencia/listar/atencion/nada">Pacientes en Atención</a></li>
 		  <li class="divider"></li>
 		  <li class="nav-header">Sub Areas de Triage</li>
-                  <li><a href="/emergencia/listar/sinclasificar">Pacientes por Clasificar</a></li>
-                  <li><a href="/emergencia/listar/clasificados">Pacientes por Atencion</a></li>
+                  <li><a href="/emergencia/listar/sinclasificar">Pacientes sin Clasificar</a></li>
+                  <li><a href="/emergencia/listar/clasificados">Pacientes Clasificados</a></li>
                 </ul>
               </li>
-
-        <li class="dropdown">
-          <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-        </li>
-
-        <li class="dropdown">
-          <h3 class="tit_list"></h3>
-        </li>
-
-	      {% if user.is_staff %}
+        {% if user.is_staff %}
 	      <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
 		<ul class="dropdown-menu">
@@ -108,6 +99,12 @@
 		</ul>
 	      </li>
 	      {% endif %}
+        <li class="dropdown">
+          <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        </li>
+        <li class="dropdown">
+          <h3 class="tit_list"></h3>
+        </li>
             </ul>
 	  </div>
 

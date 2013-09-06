@@ -93,6 +93,7 @@ class Motivo(models.Model):
     def __unicode__(self):
         return "%s" % self.nombre
 
+
 class Emergencia(models.Model):
     paciente         = models.ForeignKey(Paciente)
     responsable      = models.ForeignKey(Usuario,related_name="A cargo")
@@ -103,10 +104,9 @@ class Emergencia(models.Model):
     hora_egresoReal  = models.DateTimeField(blank=True,null=True)
     egreso           = models.ForeignKey(Usuario,related_name="De alta por",blank=True,null=True)
     destino          = models.ForeignKey(Destino,blank=True,null=True)
-    cubiculo         = models.CharField(max_length=10,blank=True)
-
+    
     def __unicode__(self):
-        return "%s - %s - %s" % (self.id,self.paciente,self.cubiculo)
+        return "%s - %s " % (self.id,self.paciente)
 
     def triages(self):
         triages = Triage.objects.filter(emergencia=self.id).order_by("fechaReal")
@@ -171,6 +171,10 @@ class Emergencia(models.Model):
         tiempo = self.hora_egreso - self.hora_ingreso
         return tiempo.total_seconds()
 
+    def tiempo_emergenciaT(self):
+        tiempo = self.hora_egreso - self.hora_ingreso
+        return tiempo
+
     def tiempoEspera(self):
         triages = Triage.objects.filter(emergencia=self.id).order_by("fechaReal")
         if triages:
@@ -190,6 +194,18 @@ class Emergencia(models.Model):
         segundos = (tiempo%60)%60
         return str(horas)+":"+str(minutos)+":"+str(segundos)
 
+    def cubi(self):
+        result = AsignarCub.objects.filter(emergencia=self)
+        if result:
+            return "%s" %(result[0].cubiculo)
+        else: 
+            return "%s" % ("")
+
+class AsignarCub(models.Model):
+    emergencia = models.ForeignKey(Emergencia)
+    cubiculo   = models.ForeignKey(Cubiculo)
+    def __unicode__(self):
+        return "emer: %s-cubi: %s" % (self.emergencia,self.cubiculo)
 
 class Espera(models.Model):
     nombre = models.CharField(max_length=48)

@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% block cuerpo %}
+{% if "Exitosamente" in mensaje %} 
+<div class= "alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+{{mensaje}}
+</div>
+{% elif "cubiculo" in mensaje %}
+    <div class= "alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{mensaje}}
+    </div>
+{% endif %}
 <script src ="/static/scripts/esperas.js"> </script>
 <script>
 function enviaA(emercy){
@@ -44,7 +55,6 @@ $(document).ready(
 }
 </style>
 <div class="container row">
-  <!-- <h4>{{titulo}}</h4> -->
   {% if lista %}
     <table class="table table-bordered table-striped" style="font-size: 22px;">
       <tr>
@@ -55,24 +65,22 @@ $(document).ready(
         <th>ISE</th>
         <th>Causas de Espera</th>
         <th>
-          <center>
-            <button class="btn btn-mini btn-primary" rel="tooltip" data-toggle="tooltip" data-original-title="Ordenar"><i class="icon-repeat icon-white"></i></button>
-          </center>
         </th>
 
       </tr>
       {% for l in lista %}
       <tr>
         <td>
-          {% if l.cubiculo != '' %}
+          {% if l.atendido == True %}
+          {% if l.cubi != '' %}
           <div class="cubi" id="cubDir_{{l.id}}" ondblclick="actualizar('{{l.id}}')">
           <center>
-            {{l.cubiculo}}
+            {{l.cubi}}
           </center>
           </div>
           <div id="formCubA_{{l.id}}" class="formCubA">
             <center>
-              <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}">
+              <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}/actualizar">
                 {% csrf_token %}
                 <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                   <option value="nada">--</option>
@@ -104,7 +112,7 @@ $(document).ready(
           {% else %}
           <div id="formCub">
           <center>
-          <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}">
+          <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}/guardar">
             {% csrf_token %}
             <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                 <option value="nada">--</option>
@@ -133,24 +141,49 @@ $(document).ready(
         </center>
         </div>
         {% endif %}
+
+        {% else %}
+        <center>No aplica</center>
+
+        {% endif %}
+
         </td>
-        <td><span class="nombreLista"><a a href='/paciente/{{ l.id }}'>{{l.paciente}}</a></span></td>
-        {% if l.triage != 0 %}
+        <td><span class="nombreLista"><a a href='/paciente/{{ l.paciente.id }}'>{{l.paciente}}</a></span></td>
+        {% if l.triage != 0 and l.atendido == False  %}
         <td>
           <a href="/emergencia/{{l.id}}/t1" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
-            <!-- <img src="/static/img/estados/triage.png" title="Recalcular"/> -->
             <img src="/static/img/estados/triage.png"/>
           </a>
           <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom" 
           title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
-            <!-- <img src="/static/img/Atencion/espera.png" title="Esperas"/> -->
-            <!-- <span style='margin-left:5px;color:white;background:rgba(255,0,0,1);border-radius:6px;'> -->
             <span style='margin-left:5px;color:white;background:rgba(0, 61, 255, 1);border-radius:6px;'rel="tooltip" data-toggle="tooltip" data-original-title="Esperas">
-              <!-- <span style='margin-left:5px;color:white;background:rgba(0, 61, 255, 1);border-radius:6px;' title="Esperas"> -->
               <b>
                 <font id="texto{{l.id}}" size=2 texto='{{l.numEsperasNoAtendidas}}'> &nbsp;{{l.numEsperasNoAtendidas}}&nbsp;&nbsp;</font>
               </b>
             </span>
+          </a>
+          <a href='/emergencia/atencion/{{ l.id }}/listado' rel="tooltip" data-toggle="tooltip" data-original-title="Ingreso a Atención">
+            <img style="margin-left: 5px;" src="/static/img/pastillas.png"/>
+          </a>
+          <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
+            <img style="margin-left: 5px;" src="/static/img/alta.png"/>
+          </a>
+        </td>
+        {% elif l.triage != 0 and l.atendido == True %}
+        <td>
+          <a href="/emergencia/{{l.id}}/t1" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
+            <img src="/static/img/estados/triage.png"/>
+          </a>
+          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom" 
+          title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
+            <span style='margin-left:5px;color:white;background:rgba(0, 61, 255, 1);border-radius:6px;'rel="tooltip" data-toggle="tooltip" data-original-title="Esperas">
+              <b>
+                <font id="texto{{l.id}}" size=2 texto='{{l.numEsperasNoAtendidas}}'> &nbsp;{{l.numEsperasNoAtendidas}}&nbsp;&nbsp;</font>
+              </b>
+            </span>
+          </a>
+          <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
+            <img style="margin-left: 5px;" src="/static/img/alta.png"/>
           </a>
         </td>
         {% else %}
@@ -222,7 +255,6 @@ $(document).ready(
 
                 tiempo = dias+":"+hors+":"+mins+":"+segs;
                 $("#tiempo_{{l.id}}").html(tiempo);
-
                 tiempo = (dias*24*60)+(hors*60)+mins;
                 tExc = tiempoMax;
                 tRoj = tiempoMax * .66;

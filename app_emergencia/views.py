@@ -34,7 +34,7 @@ from app_enfermedad.models import *
 
 def emergencia_buscar(request):
     mensaje = ""
-    titulo = "Busqueda de Pacientes"
+    titulo = "Búsqueda de Pacientes"
     boton = "Buscar"
     info = {}
     form = IniciarSesionForm()
@@ -82,7 +82,7 @@ def emergencia_buscar(request):
                     lista.append(e)
                     
         info = {'form':form,'lista':lista,'titulo':titulo}
-        return render_to_response('lista.html',info,context_instance=RequestContext(request))
+        return render_to_response('listaB.html',info,context_instance=RequestContext(request))
     else:
         busqueda = BuscarEmergenciaForm()
     
@@ -120,17 +120,21 @@ def emergencia_listar_clasificados(request):
     info = {'lista':lista,'form':form,'titulo':titulo}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
-def emergencia_listar_atencion(request):
+def emergencia_listar_atencion(request,mensaje):
+    print "ver mensaje con el que entra a listar atencion: ",mensaje
     lista = Emergencia.objects.filter(hora_egreso=None)
     lista = [i for i in lista if i.atendido() == True]
     form = IniciarSesionForm()
-    titulo = "Área de Atención"
-    info = {'lista':lista,'form':form,'titulo':titulo}
+    titulo = "Atendidos"
+    info = {'lista':lista,'form':form,'titulo':titulo,'mensaje':mensaje}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def emergencia_agregar(request):
     mensaje = ""
+    msj_tipo = ""
+    msj_info = ""
+
     if request.method == 'POST':
         form = AgregarEmergenciaForm(request.POST)
         if form.is_valid():
@@ -191,6 +195,14 @@ def emergencia_darAlta(request,idE):
                 emergencia.hora_egresoReal=datetime.now()
                 emergencia.destino=f_destino
                 emergencia.save()
+
+                # Aqui libero el cubiculo
+                asigCA  = AsignarCub.objects.filter(emergencia = emergencia)
+                if asigCA:
+                    asigCA.delete()
+                else:
+                    print "Entre a dar de alta por otro lado"
+
             else:
                 info = {'form':form,'emergencia':emergencia}
                 return render_to_response('darAlta.html',info,context_instance=RequestContext(request))
@@ -224,7 +236,8 @@ def emergencia_aplicarTriage(request,idE,vTriage):
                 esperar = True
             t = Triage(emergencia = emergencia,medico=medico,fecha=fechaReal,motivo=motivo,atencion=atencion,esperar=esperar,areaAtencion=area,recursos=recursos,nivel=vTriage)
             t.save()
-            return redirect("/paciente/"+str(emergencia.paciente.id))
+            # return redirect("/paciente/"+str(emergencia.paciente.id))
+            return redirect("/emergencia/listar/clasificados")
     return redirect("/")
 
 @login_required(login_url='/')
@@ -496,19 +509,129 @@ def emergencia_espera_idN(request,id_emergencia):
 #########################################################
 
 #------------------------------------------ Funciones para agregar un cubiculo
-def emergencia_guardar_cubi(request,id_emergencia):
+def emergencia_guardar_cubi(request,id_emergencia,accion):
     print "veo id de emergencia q entro como parametro",id_emergencia
     emer = get_object_or_404(Emergencia,id=id_emergencia)
-    mensaje = "Cubiculo guardado Exitosamente"
-    info = {'mensaje':mensaje}
     print "Entre a guardar cubi"
     print "verifico name del select",str(id_emergencia)+"cub"
     cubi  = request.POST[str(emer.id)+"cub"]
     print "CUbi elegido",cubi
     print "verificar emergencia a la que voy a ingresar el cubiculo",emer
-    emer.cubiculo = cubi
-    emer.save()
-    return redirect('/emergencia/listar/todas')
+    # Antes lo hacia agregando el cubi como atributo:
+    # emer.cubiculo = cubi
+    # emer.save()
+    # Ahora con las relaciones:
+    asic = Cubiculo.objects.filter(asignarcub__cubiculo__nombre = cubi)
+    print "ver cubiculos asignados",asic
+    if asic:
+        mensaje = "El cubiculo "+cubi+" esta asignado a otro paciente"
+        # mensaje = "El cubiculo esta asignado a otro paciente"
+        return emergencia_listar_atencion(request, mensaje)
+    else:
+        if accion=='guardar':
+            mensaje = "Cubiculo "+cubi+" asignado Exitosamente"
+            cubN  = Cubiculo.objects.get(nombre = cubi)
+            asigC = AsignarCub(emergencia=emer,cubiculo=cubN)
+            asigC.save()
+            return emergencia_listar_atencion(request, mensaje)
+        else:
+            mensaje = "Cubiculo "+cubi+" actualizado Exitosamente"
+            cubN  = Cubiculo.objects.get(nombre = cubi)
+            asigCA  = AsignarCub.objects.get(emergencia = emer)
+            asigCA.cubiculo = cubN
+            asigCA.save()
+            return emergencia_listar_atencion(request, mensaje)
+
+
+#########################################################
+#                                                       #
+#                  Ordenar Pacientes                    #
+#                                                       #
+#########################################################
+
+def emergencia_ordenar_pacientes(request,tipo):
+    if tipo == 'sc':
+        lista = Emergencia.objects.filter(hora_egreso=None)
+        lista = [i for i in lista if i.triage() == 0]
+        print "lista sin clasificar",lista
+        for i in lista:
+            tiempo = i.hora_ingreso.replace(tzinfo=None)
+            tiempo = datetime.now() - tiempo
+            t = ceil(tiempo.total_seconds())
+            i.t_sc = t
+            i.save()
+            print "Para la emergencia de ID: ",i.id
+            print "Tiempo que acabo de guardar en sin clas",i.t_sc
+        
+        lista = Emergencia.objects.exclude(triage__isnull=False).order_by('-t_sc')
+        print "lista ordenada supuestamente: ",lista
+        form = IniciarSesionForm()
+        titulo = "Sin Clasificar"
+        info = {'lista':lista,'form':form,'titulo':titulo}
+        return render_to_response('lista.html',info,context_instance=RequestContext(request))
+
+    elif tipo == 'c':
+        lista = Emergencia.objects.filter(hora_egreso=None)
+        lista = [i for i in lista if i.triage() != 0 and i.atendido() == False]
+        print "lista clasificados",lista
+        for i in lista:
+            triages = Triage.objects.filter(emergencia=i.id)
+            print "Veo los triages, es decir lo q acabo de clasificar",triages
+            i_triage = triages[0]
+            print "Veo el primer triage",i_triage
+            i_ttriage = i_triage.fecha
+            i_ttriage2 = i_triage.fechaReal
+            print "Veo primer triage: ", i_triage
+            print "veo tiempo cuando se clasifico por primera vez", i_ttriage
+            print "veo tiempo cuando se clasifico como real", i_ttriage2
+            tiempo = i_ttriage.replace(tzinfo=None)
+            tiempo = datetime.now() - tiempo
+            print "veo tiempo transcurrido", tiempo
+            t = ceil(tiempo.total_seconds())
+            print "veo tiempo transcurrido en segundos", t
+            i.t_c = t
+            i.save()
+            print "Tiempo que acabo de guardar en sin clas",i.t_sc
+            
+        lista2 = Emergencia.objects.exclude(triage__isnull=True).exclude(atencion__isnull=False).order_by('-t_c')
+        print "lista ordenada clasificados: ",lista2
+        form = IniciarSesionForm()
+        titulo = "Clasificados"
+        info = {'lista':lista2,'form':form,'titulo':titulo}
+        return render_to_response('lista.html',info,context_instance=RequestContext(request))
+        
+
+    elif tipo == 'at':
+        # consultas
+        lista = Emergencia.objects.filter(hora_egreso=None)
+        lista = [i for i in lista if i.atendido() == True]
+        print "lista en atencion",lista
+        for i in lista:
+            print "Veo si esta atendido o no",i.atendido
+            lista_at = Atencion.objects.filter(emergencia=i.id)
+            print "Veo las atenciones hechas",lista_at
+            i_at = lista_at[0]
+            i_tat = i_at.fecha
+            i_tat2 = i_at.fechaReal
+            print "Veo primera atencion: ", i_at
+            # print "veo tiempo cuando se clasifico por primera vez", i_tat
+            # print "veo tiempo cuando se clasifico como real", i_tat2
+            tiempo = i_tat.replace(tzinfo=None)
+            tiempo = datetime.now() - tiempo
+            # print "veo tiempo transcurrido", tiempo
+            t = ceil(tiempo.total_seconds())
+            print "veo tiempo transcurrido en segundos", t
+            i.t_at = t
+            i.save()
+            print "Tiempo que acabo de guardar en sin clas",i.t_at
+
+        # lista2 = Emergencia.objects.exclude(atencion__isnull=True).exclude(egreso__isnull=False).order_by('-t_at')
+        lista2 = Emergencia.objects.exclude(atencion__isnull=True).order_by('-t_at')
+        form = IniciarSesionForm()
+        titulo = "Atendidos"
+        # titulo = "Área de Atención"
+        info = {'lista':lista2,'form':form,'titulo':titulo}
+        return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 
 
@@ -575,10 +698,10 @@ def emergencia_enfermedad_actual(request,id_emergencia):
     ya=""
     atList = Atencion.objects.filter(emergencia=id_emergencia)
     
-    if len(atList) == 0:
-        atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
-        atencion.save()
-        atList = Atencion.objects.filter(emergencia=id_emergencia)
+    # if len(atList) == 0:
+    #     atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
+    #     atencion.save()
+    #     atList = Atencion.objects.filter(emergencia=id_emergencia)
     
     if request.method == 'POST':
         form = AgregarEnfActual(request.POST)
@@ -620,12 +743,26 @@ def emergencia_enfermedad_actual(request,id_emergencia):
 # --- RGV
 
 @login_required(login_url='/')
-def emergencia_atencion(request,id_emergencia):
+def emergencia_atencion(request,id_emergencia,tipo):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage = triage[0]
     ctx    = {'emergencia':emer,'triage':triage}
-    return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
+
+    paci = Paciente.objects.filter(emergencia__id=id_emergencia)
+    paci = paci[0]
+    atList = Atencion.objects.filter(emergencia=id_emergencia)
+    
+    if len(atList) == 0:
+        atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
+        atencion.save()
+        atList = Atencion.objects.filter(emergencia=id_emergencia)
+
+    if tipo == "listado":
+        return redirect('/emergencia/listar/atencion')
+    elif tipo == "historia":
+        return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
+    
 
 def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     emer    = get_object_or_404(Emergencia,id=id_emergencia)

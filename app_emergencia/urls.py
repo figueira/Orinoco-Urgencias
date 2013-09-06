@@ -15,15 +15,19 @@ urlpatterns = patterns('app_emergencia.views',
     url('^emergencia/espera_idN/(?P<id_emergencia>.*)$','emergencia_espera_idN'),
 
     # Agregar/Modificar Cubiculo:
-    url('^emergencia/guardar_cubi/(?P<id_emergencia>.*)$','emergencia_guardar_cubi'),
+    url('^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<accion>.*)$','emergencia_guardar_cubi'),
     
+    # Ordenar Pacientes:
+    # url('^emergencia/ordenar_pac$','emergencia_ordenar_pacientes'),
+    url('^emergencia/ordenar_pac/(?P<tipo>.*)$','emergencia_ordenar_pacientes'),
+
     # Funciones de acceso a subfases de atencion
 
     # Acceso a Enfermedad Actual
     url('^emergencia/enf_actual/(?P<id_emergencia>.*)$','emergencia_enfermedad_actual'),
     
     # Acceso a Atencion
-    url('^emergencia/atencion/(?P<id_emergencia>.*)$','emergencia_atencion'),
+    url('^emergencia/atencion/(?P<id_emergencia>.*)/(?P<tipo>.*)$','emergencia_atencion'),
     
     # Acciones Antecedentes
     url('^emergencia/antecedentes/(?P<id_emergencia>.*)/(?P<tipo_ant>.*)/agregar$','emergencia_antecedentes_agregar'),

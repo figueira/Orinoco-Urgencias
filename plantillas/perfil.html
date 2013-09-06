@@ -39,7 +39,7 @@
   <div class="span12">  
   <h3>Acciones</h3>
     {% if ea.triage == 0 %}<a href="#" class="btn btn-primary">Aplicar Triage</a>{% endif %}
-    <a href='/emergencia/atencion/{{ ea.id }}' class="btn btn-primary">Realizar Atenci&oacute;n </a> 
+    <a href='/emergencia/atencion/{{ ea.id }}/historia' class="btn btn-primary">Realizar Atenci&oacute;n </a>
     <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">Ver Informe Triage</a> 
     <a href="/emergencia/{{ea.id}}/daralta" class="btn btn-primary">Egreso</a> 
   </div>
