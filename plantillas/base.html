@@ -128,7 +128,10 @@
       	</div>
       </div>
       {% endif %}
+      {% if not user.is_authenticated %}
+
       <h3 class="tit_list"></h3>
+      {% endif %}
 
       {% block cuerpo %}
       {% endblock %}
