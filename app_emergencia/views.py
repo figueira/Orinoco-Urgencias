@@ -158,6 +158,7 @@ def emergencia_agregar(request):
                 p.save()
             else:
                 p = prueba[0]
+
             e_activa = len(Emergencia.objects.filter(paciente=p).filter(hora_egreso__isnull=True))
             if e_activa == 0:
                 e_ingreso = Usuario.objects.get(username=request.user)
@@ -176,6 +177,30 @@ def emergencia_agregar(request):
     form = AgregarEmergenciaForm()
     info = {'form':form}
     return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def emergencia_agrega_emer(request,id_emergencia):
+    emergencia = get_object_or_404(Emergencia,id=id_emergencia)
+    p = Paciente.objects.filter(id=emergencia.paciente.id)
+    e_activa = len(Emergencia.objects.filter(paciente=p[0]).filter(hora_egreso__isnull=True))
+    if e_activa == 0:
+        e_ingreso = Usuario.objects.get(username=request.user)
+        e_responsable= e_ingreso
+        e_horaIngreso = datetime.now()
+        e_horaIngresoReal = datetime.now()
+        e = Emergencia(paciente=p[0],responsable=e_responsable,ingreso=e_ingreso,hora_ingreso=e_horaIngreso,hora_ingresoReal=e_horaIngresoReal,hora_egreso=None)
+        e.save()
+        print "Creando nueva emergencia objeto creado: ",e
+        return redirect('/emergencia/listar/todas')
+    else:
+        msj_tipo = "error"
+        msj_info = "Ya este usuario esta en una emergencia. No puede ingresar a un usuario 2 veces a la emergencia"
+        # mensaje = "Ya este usuario esta en una emergencia. No puede ingresar a un usuario 2 veces a la emergencia"
+        # print " ya este paciente tiene una emergencia activa"
+        # info = {'mensaje':mensaje}
+        # return render_to_response('listaB.html',info,context_instance=RequestContext(request))
+        return redirect('/emergencia/listar/todas')
+        
 
 #@login_required(login_url='/')
 def emergencia_darAlta(request,idE):

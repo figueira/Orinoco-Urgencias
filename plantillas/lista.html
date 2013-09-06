@@ -233,12 +233,15 @@ $(document).ready(
   function myTimer() {
 
   {% for l in lista %}
+  var idE= "{{l.paciente.apellidos}}"
   var tiempo=$("#tiempo_{{l.id}}").html();
   tiempo = tiempo.split(":");
   dias = parseInt(tiempo[0]);
   hors = parseInt(tiempo[1]);
   mins = parseInt(tiempo[2]);
   segs = parseInt(tiempo[3]);
+  var tiempoC = (dias*24*60)+(hors*60)+mins;
+
   segs += 1;
 
   if (segs == 60) {
@@ -312,7 +315,8 @@ $(document).ready(
        }
 
 
-	     t = Math.floor((tiempo /tiempoMax)*100);
+	     t = Math.floor((tiempoC /tiempoMax)*100);
+       console.log("TIEMPO : "+tiempo+ " Tiempo total en porcentaje: "+t+ " de paciente: "+idE);
 	     if (t >= 100) {
         $("#barra_{{l.id}}").attr("class","bar bar-inverse");
       } else if (t < 100 && t >= 66) {

@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 {% block cuerpo %}
+{% if mensaje %} 
+<div class= "alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+{{mensaje}}
+</div>
+{% endif %}
 <style>
   a.espera:link, a.espera:visited, a.espera:active { text-decoration: none }
 </style>
+<script>
+
+$(document).ready(
+    function(){
+      $("[rel='tooltip']").tooltip();
+      $(".tit_list").html("{{titulo}}")
+  });
+</script>
 <div class="container row">
   <div class="span12">
     {% if lista %}
@@ -13,6 +27,7 @@
   <th>ISE</th>
 	<th>Tiempo de Espera Total</th>
 	<th>&Uacute;ltima Fecha de Ingreso</th>
+  <th>Acciones</th>
       </tr>
       {% for l in lista %}
       <tr>
@@ -27,6 +42,14 @@
 	  {{l.horaR}}
 
 	</td>
+  <td>
+    <center>
+    <a href="/emergencia/agrega_emer/{{l.id}}" rel="tooltip" data-toggle="tooltip" data-original-title="Ingresar a Emergencias">
+            <img src="/static/img/acceso.png" style="margin-left: 5px; width:35px; height:35px;"/>
+          </a>
+    </center>
+
+  </td>
       </tr>	
       {% endfor %}
     </table>
