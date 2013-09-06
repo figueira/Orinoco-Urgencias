@@ -20,13 +20,15 @@ function enviaA(emercy){
       });
     });
 }
-
+{% if user.is_authenticated %}
 function actualizar(emer){
   $(function() {
     $('#formCubA_'+emer).show();
     $('#cubDir_'+emer).replaceWith($('#formCubA_'+emer));
   });
 }
+{% endif %}
+
 function manito(emer){
   $(function() {
     $(this).hover("cursor", "hand");
@@ -69,6 +71,7 @@ $(document).ready(
       {% for l in lista %}
       <tr id ="emergencia_{{l.id}}" class="filaEmergencia">
         <td>
+          
           {% if l.atendido == True %}
           {% if l.cubi != '' %}
           <div class="cubi" id="cubDir_{{l.id}}" ondblclick="actualizar('{{l.id}}')">
@@ -144,6 +147,7 @@ $(document).ready(
         <center>No aplica</center>
 
         {% endif %}
+        
 
         </td>
         <td><span class="nombreLista"><a a href='/paciente/{{ l.paciente.id }}'>{{l.paciente}}</a></span></td>

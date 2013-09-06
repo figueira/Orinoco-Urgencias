@@ -31,7 +31,6 @@
     {% block en_scripts %}
     {% endblock %}
     </script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
@@ -42,87 +41,83 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-	  </a>
-	  <a class="brand" href="/"><img src="/static/img/logo.png" /></a>
-	  <div class="nav-collapse">
+          </a>
+          <a class="brand" href="/"><img src="/static/img/logo.png" /></a>
+          <div class="nav-collapse">
             <ul class="nav">
-
-	      {% if user.is_authenticated %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Paciente<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="/emergencia/agregar">Agregar</a></li>
-            <li><a href="/emergencia/buscar">Buscar</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
-		  <li class="divider"></li>
-		  <li class="nav-header">Por Area</li>
+              {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Paciente<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/emergencia/agregar">Agregar</a></li>
+                  <li><a href="/emergencia/buscar">Buscar</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Por Area</li>
                   <li><a href="/emergencia/listar/triage">Pacientes en Triage</a></li>
                   <li><a href="/emergencia/listar/atencion/nada">Pacientes en Atención</a></li>
-		  <li class="divider"></li>
-		  <li class="nav-header">Sub Areas de Triage</li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Sub Areas de Triage</li>
                   <li><a href="/emergencia/listar/sinclasificar">Pacientes sin Clasificar</a></li>
                   <li><a href="/emergencia/listar/clasificados">Pacientes Clasificados</a></li>
                 </ul>
               </li>
-        {% if user.is_staff %}
-	      <li class="dropdown">
+              {% if user.is_staff %}
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
-		<ul class="dropdown-menu">
+		              <ul class="dropdown-menu">
                   <li><a href="/usuario/crear">Crear</a></li>
                   <li><a href="/usuario/listar">Listar</a></li>
                   <li><a href="/usuario/pendientes">Pendientes</a></li>
                 </ul>
               </li>
-	      {% endif %}
-	      {% else %}
-	      
-	      <li><a href="/emergencia/buscar">Paciente</a></li>
-	      <li><a href="/emergencia/listar/todas">Ver Emergencias</a></li>
-	      
-	      <li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas Por Categor&iacute;a<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-		  <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
-		  <li class="divider"></li>
-		  <li class="nav-header">Por &Aacute;rea</li>
-		  <li><a href="/emergencia/listar/triage">Pacientes en Triage</a></li>
-		  <li><a href="/emergencia/listar/atencion">Pacientes en Atención</a></li>
-		  <li class="divider"></li>
-		  <li class="nav-header">Sub &Aacute;reas de Triage</li>
-		  <li><a href="/emergencia/listar/sinclasificar">Pacientes por Clasificar</a></li>
-		  <li><a href="/emergencia/listar/clasificados">Pacientes por Atenci&oacute;n</a></li>
-		</ul>
-	      </li>
-	      {% endif %}
-        <li class="dropdown">
-          <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-        </li>
-        <li class="dropdown">
-          <h3 class="tit_list"></h3>
-        </li>
+              {% endif %}
+              <li class="dropdown">
+                <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+              </li>
+              <li class="dropdown">
+                <h3 class="tit_list"></h3>
+              </li>
+              {% else %}
+              <li><a href="/emergencia/buscar">Paciente</a></li>
+              <li><a href="/emergencia/listar/todas">Ver Emergencias</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas Por Categor&iacute;a<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Por &Aacute;rea</li>
+                  <li><a href="/emergencia/listar/triage">Pacientes en Triage</a></li>
+                  <li><a href="/emergencia/listar/atencion">Pacientes en Atención</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Sub &Aacute;reas de Triage</li>
+                  <li><a href="/emergencia/listar/sinclasificar">Pacientes Sin Clasificar</a></li>
+                  <li><a href="/emergencia/listar/clasificados">Pacientes Clasificados</a></li>
+                </ul>
+              </li>
+              {% endif %}
             </ul>
-	  </div>
-
-	  {% if user.is_authenticated %}
-	  <div class="usuario navbar-form pull-right">
-	    {{user}} (<a href="/sesion/cerrar">Cerrar Sesión</a>)
-	  </div>
-	  {% else %}
+          </div>
+          {% if user.is_authenticated %}
+          <div class="usuario navbar-form pull-right">
+            {{user}} (<a href="/sesion/cerrar">Cerrar Sesión</a>)
+          </div>
+          {% else %}
           <form method='POST' action="/sesion/iniciar/" class="navbar-form pull-right">
             {% csrf_token %}
             {{ form.unombre }}
             {{ form.uclave }}
             <input class="btn btn-primary" type="submit" value="Iniciar Sesi&oacute;n" /><br>
             <a href="/usuario/restablecer">Recuperar Clave</a> | 
-	       <a href="/usuario/solicitar">Solicitar Cuenta</a>
-        </form>
-	  {% endif %}
-	</div>
+            <a href="/usuario/solicitar">Solicitar Cuenta</a>
+          </form>
+          {% endif %}
+        </div>
       </div>
     </div>
     <div id="cuerpo" class="container">
@@ -133,6 +128,7 @@
       	</div>
       </div>
       {% endif %}
+      <h3 class="tit_list"></h3>
 
       {% block cuerpo %}
       {% endblock %}
