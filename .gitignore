@@ -1,0 +1,11 @@
+# Archivos de configuracion #
+#############################
+AM/settings.py
+
+# Compiled source #
+###################
+*.pyc
+
+# Logs and databases #
+######################
+*.sqlite
