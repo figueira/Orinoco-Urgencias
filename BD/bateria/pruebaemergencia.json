@@ -1,0 +1,162 @@
+[
+{
+    "pk": 1, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": 4, 
+        "hora_ingreso": "2013-09-05T20:02:31", 
+        "paciente": 2, 
+        "hora_ingresoReal": "2013-09-05T20:02:34.912", 
+        "hora_egresoReal": "2013-09-05T20:44:02.608", 
+        "egreso": 2, 
+        "fecha_Esp_act": "2013-09-05T20:43:06.216", 
+        "responsable": 2, 
+        "hora_egreso": "2013-09-05T20:44:01", 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 2, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": 5, 
+        "hora_ingreso": "2013-09-05T20:02:44", 
+        "paciente": 1, 
+        "hora_ingresoReal": "2013-09-05T20:02:45.620", 
+        "hora_egresoReal": "2013-09-06T03:03:19.454", 
+        "egreso": 2, 
+        "fecha_Esp_act": "2013-09-06T01:52:42.093", 
+        "responsable": 2, 
+        "hora_egreso": "2013-09-06T03:03:17", 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": 1, 
+        "hora_ingreso": "2013-09-05T20:02:54", 
+        "paciente": 3, 
+        "hora_ingresoReal": "2013-09-05T20:02:55.976", 
+        "hora_egresoReal": "2013-09-05T22:35:20.407", 
+        "egreso": 2, 
+        "fecha_Esp_act": "2013-09-05T21:45:44.879", 
+        "responsable": 2, 
+        "hora_egreso": "2013-09-05T22:35:19", 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 4, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": 5, 
+        "hora_ingreso": "2013-09-05T20:03:05", 
+        "paciente": 4, 
+        "hora_ingresoReal": "2013-09-05T20:03:06.934", 
+        "hora_egresoReal": "2013-09-05T20:25:41.060", 
+        "egreso": 2, 
+        "fecha_Esp_act": "2013-09-05T20:07:37.273", 
+        "responsable": 2, 
+        "hora_egreso": "2013-09-05T20:25:40", 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 5, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": null, 
+        "hora_ingreso": "2013-09-05T21:06:52", 
+        "paciente": 5, 
+        "hora_ingresoReal": "2013-09-05T21:06:54.612", 
+        "hora_egresoReal": null, 
+        "egreso": null, 
+        "fecha_Esp_act": "2013-09-05T21:43:42.894", 
+        "responsable": 2, 
+        "hora_egreso": null, 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 6, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": 3, 
+        "hora_ingreso": "2013-09-05T21:20:35", 
+        "paciente": 6, 
+        "hora_ingresoReal": "2013-09-05T21:20:37.881", 
+        "hora_egresoReal": "2013-09-06T00:37:01.516", 
+        "egreso": 2, 
+        "fecha_Esp_act": "2013-09-05T21:20:37.881", 
+        "responsable": 2, 
+        "hora_egreso": "2013-09-06T00:37:00", 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 7, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": null, 
+        "hora_ingreso": "2013-09-06T00:16:14.668", 
+        "paciente": 2, 
+        "hora_ingresoReal": "2013-09-06T00:16:14.670", 
+        "hora_egresoReal": null, 
+        "egreso": null, 
+        "fecha_Esp_act": "2013-09-06T03:06:05.633", 
+        "responsable": 2, 
+        "hora_egreso": null, 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 8, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": null, 
+        "hora_ingreso": "2013-09-06T00:34:22.726", 
+        "paciente": 3, 
+        "hora_ingresoReal": "2013-09-06T00:34:22.728", 
+        "hora_egresoReal": null, 
+        "egreso": null, 
+        "fecha_Esp_act": "2013-09-06T00:34:22.727", 
+        "responsable": 2, 
+        "hora_egreso": null, 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 9, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": null, 
+        "hora_ingreso": "2013-09-06T01:06:25.262", 
+        "paciente": 4, 
+        "hora_ingresoReal": "2013-09-06T01:06:25.264", 
+        "hora_egresoReal": null, 
+        "egreso": null, 
+        "fecha_Esp_act": "2013-09-06T01:06:25.264", 
+        "responsable": 2, 
+        "hora_egreso": null, 
+        "ingreso": 2
+    }
+},
+{
+    "pk": 10, 
+    "model": "app_emergencia.emergencia", 
+    "fields": {
+        "destino": null, 
+        "hora_ingreso": "2013-09-06T03:01:42.319", 
+        "paciente": 6, 
+        "hora_ingresoReal": "2013-09-06T03:01:42.321", 
+        "hora_egresoReal": null, 
+        "egreso": null, 
+        "fecha_Esp_act": "2013-09-06T03:06:16.304", 
+        "responsable": 2, 
+        "hora_egreso": null, 
+        "ingreso": 2
+    }
+}
+]
