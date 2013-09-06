@@ -427,9 +427,16 @@ def estadisticas(request):
 #          Views para Casos de Uso de Esperas           #
 #                                                       #
 #########################################################
+def emergencia_espera_mantener(request,id_emergencia):
+    emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
+    return HttpResponse()
 
 def emergencia_espera_agregar(request,id_emergencia,id_espera):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
     espe   = get_object_or_404(Espera,id=id_espera)
     espera = EsperaEmergencia(emergencia=emer,espera=espe,estado='0')
     espera.save()
@@ -437,16 +444,20 @@ def emergencia_espera_agregar(request,id_emergencia,id_espera):
 
 def emergencia_espera_eliminar(request,id_emergencia,id_espera):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
     espe   = get_object_or_404(Espera,id=id_espera)
     espera = EsperaEmergencia.objects.get(emergencia=emer,espera=espe)
     espera.delete() 
     return HttpResponse()
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
-    emer        = get_object_or_404(Emergencia,id=id_emergencia)
-    espe        = get_object_or_404(Espera,id=id_espera)
-    espera1        = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
-    espera1.estado = str(espera)
+    emer               = get_object_or_404(Emergencia,id=id_emergencia)
+    emer.fecha_Esp_act = datetime.now()
+    emer.save()
+    espe               = get_object_or_404(Espera,id=id_espera)
+    espera1            = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
+    espera1.estado     = str(espera)
     espera1.save() 
     return HttpResponse()
 
@@ -517,10 +528,7 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
     cubi  = request.POST[str(emer.id)+"cub"]
     print "CUbi elegido",cubi
     print "verificar emergencia a la que voy a ingresar el cubiculo",emer
-    # Antes lo hacia agregando el cubi como atributo:
-    # emer.cubiculo = cubi
-    # emer.save()
-    # Ahora con las relaciones:
+    # Buscamos si el cubiculo seleccionado esta asociado a alguna emergencia
     asic = Cubiculo.objects.filter(asignarcub__cubiculo__nombre = cubi)
     print "ver cubiculos asignados",asic
     if asic:
@@ -541,98 +549,6 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
             asigCA.cubiculo = cubN
             asigCA.save()
             return emergencia_listar_atencion(request, mensaje)
-
-
-#########################################################
-#                                                       #
-#                  Ordenar Pacientes                    #
-#                                                       #
-#########################################################
-
-def emergencia_ordenar_pacientes(request,tipo):
-    if tipo == 'sc':
-        lista = Emergencia.objects.filter(hora_egreso=None)
-        lista = [i for i in lista if i.triage() == 0]
-        print "lista sin clasificar",lista
-        for i in lista:
-            tiempo = i.hora_ingreso.replace(tzinfo=None)
-            tiempo = datetime.now() - tiempo
-            t = ceil(tiempo.total_seconds())
-            i.t_sc = t
-            i.save()
-            print "Para la emergencia de ID: ",i.id
-            print "Tiempo que acabo de guardar en sin clas",i.t_sc
-        
-        lista = Emergencia.objects.exclude(triage__isnull=False).order_by('-t_sc')
-        print "lista ordenada supuestamente: ",lista
-        form = IniciarSesionForm()
-        titulo = "Sin Clasificar"
-        info = {'lista':lista,'form':form,'titulo':titulo}
-        return render_to_response('lista.html',info,context_instance=RequestContext(request))
-
-    elif tipo == 'c':
-        lista = Emergencia.objects.filter(hora_egreso=None)
-        lista = [i for i in lista if i.triage() != 0 and i.atendido() == False]
-        print "lista clasificados",lista
-        for i in lista:
-            triages = Triage.objects.filter(emergencia=i.id)
-            print "Veo los triages, es decir lo q acabo de clasificar",triages
-            i_triage = triages[0]
-            print "Veo el primer triage",i_triage
-            i_ttriage = i_triage.fecha
-            i_ttriage2 = i_triage.fechaReal
-            print "Veo primer triage: ", i_triage
-            print "veo tiempo cuando se clasifico por primera vez", i_ttriage
-            print "veo tiempo cuando se clasifico como real", i_ttriage2
-            tiempo = i_ttriage.replace(tzinfo=None)
-            tiempo = datetime.now() - tiempo
-            print "veo tiempo transcurrido", tiempo
-            t = ceil(tiempo.total_seconds())
-            print "veo tiempo transcurrido en segundos", t
-            i.t_c = t
-            i.save()
-            print "Tiempo que acabo de guardar en sin clas",i.t_sc
-            
-        lista2 = Emergencia.objects.exclude(triage__isnull=True).exclude(atencion__isnull=False).order_by('-t_c')
-        print "lista ordenada clasificados: ",lista2
-        form = IniciarSesionForm()
-        titulo = "Clasificados"
-        info = {'lista':lista2,'form':form,'titulo':titulo}
-        return render_to_response('lista.html',info,context_instance=RequestContext(request))
-        
-
-    elif tipo == 'at':
-        # consultas
-        lista = Emergencia.objects.filter(hora_egreso=None)
-        lista = [i for i in lista if i.atendido() == True]
-        print "lista en atencion",lista
-        for i in lista:
-            print "Veo si esta atendido o no",i.atendido
-            lista_at = Atencion.objects.filter(emergencia=i.id)
-            print "Veo las atenciones hechas",lista_at
-            i_at = lista_at[0]
-            i_tat = i_at.fecha
-            i_tat2 = i_at.fechaReal
-            print "Veo primera atencion: ", i_at
-            # print "veo tiempo cuando se clasifico por primera vez", i_tat
-            # print "veo tiempo cuando se clasifico como real", i_tat2
-            tiempo = i_tat.replace(tzinfo=None)
-            tiempo = datetime.now() - tiempo
-            # print "veo tiempo transcurrido", tiempo
-            t = ceil(tiempo.total_seconds())
-            print "veo tiempo transcurrido en segundos", t
-            i.t_at = t
-            i.save()
-            print "Tiempo que acabo de guardar en sin clas",i.t_at
-
-        # lista2 = Emergencia.objects.exclude(atencion__isnull=True).exclude(egreso__isnull=False).order_by('-t_at')
-        lista2 = Emergencia.objects.exclude(atencion__isnull=True).order_by('-t_at')
-        form = IniciarSesionForm()
-        titulo = "Atendidos"
-        # titulo = "Área de Atención"
-        info = {'lista':lista2,'form':form,'titulo':titulo}
-        return render_to_response('lista.html',info,context_instance=RequestContext(request))
-
 
 
 #########################################################

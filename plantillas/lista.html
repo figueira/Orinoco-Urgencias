@@ -23,8 +23,6 @@ function enviaA(emercy){
 
 function actualizar(emer){
   $(function() {
-    // $('#cubDir_'+emer).hide();
-    // alert("Veo si entre a actualizar: "+emer);
     $('#formCubA_'+emer).show();
     $('#cubDir_'+emer).replaceWith($('#formCubA_'+emer));
   });
@@ -56,20 +54,20 @@ $(document).ready(
 </style>
 <div class="container row">
   {% if lista %}
-    <table class="table table-bordered table-striped" style="font-size: 22px;">
+    <table class="table table-bordered" style="font-size: 22px;">
       <tr>
 
-        <th>Cub&iacute;culo</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-        <th>ISE</th>
-        <th>Causas de Espera</th>
+        <th><center>Cub&iacute;culo</center></th>
+        <th><center>Nombre</center></th>
+        <th><center>Acciones</center></th>
+        <th><center>ISE</center></th>
+        <th><center>Causas de Espera</center></th>
         <th>
         </th>
 
       </tr>
       {% for l in lista %}
-      <tr>
+      <tr id ="emergencia_{{l.id}}" class="filaEmergencia">
         <td>
           {% if l.atendido == True %}
           {% if l.cubi != '' %}
@@ -152,10 +150,9 @@ $(document).ready(
         {% if l.triage != 0 and l.atendido == False  %}
         <td>
           <a href="/emergencia/{{l.id}}/t1" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
-            <img src="/static/img/estados/triage.png"/>
+            <img src="/static/img/estados/triage.png" style="margin-left: 5px; width:35px; height:35px;"/>
           </a>
-          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom" 
-          title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
+          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom"title="" data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" idEmer="{{l.id}}" >
             <span style='margin-left:5px;color:white;background:rgba(0, 61, 255, 1);border-radius:6px;'rel="tooltip" data-toggle="tooltip" data-original-title="Esperas">
               <b>
                 <font id="texto{{l.id}}" size=2 texto='{{l.numEsperasNoAtendidas}}'> &nbsp;{{l.numEsperasNoAtendidas}}&nbsp;&nbsp;</font>
@@ -163,19 +160,18 @@ $(document).ready(
             </span>
           </a>
           <a href='/emergencia/atencion/{{ l.id }}/listado' rel="tooltip" data-toggle="tooltip" data-original-title="Ingreso a Atención">
-            <img style="margin-left: 5px;" src="/static/img/pastillas.png"/>
+            <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/pastillas.png"/>
           </a>
           <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
-            <img style="margin-left: 5px;" src="/static/img/alta.png"/>
+            <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
           </a>
         </td>
         {% elif l.triage != 0 and l.atendido == True %}
         <td>
           <a href="/emergencia/{{l.id}}/t1" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
-            <img src="/static/img/estados/triage.png"/>
+            <img src="/static/img/estados/triage.png" style="margin-left: 5px; width:35px; height:35px;"/>
           </a>
-          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom" 
-          title="" data-original-title="Lista De Esperas" idEmer="{{l.id}}" >
+          <a id='espera{{l.id}}' class='espera' data-html="true" href="#" data-toggle="popover" data-placement="bottom"title="" data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" idEmer="{{l.id}}" >
             <span style='margin-left:5px;color:white;background:rgba(0, 61, 255, 1);border-radius:6px;'rel="tooltip" data-toggle="tooltip" data-original-title="Esperas">
               <b>
                 <font id="texto{{l.id}}" size=2 texto='{{l.numEsperasNoAtendidas}}'> &nbsp;{{l.numEsperasNoAtendidas}}&nbsp;&nbsp;</font>
@@ -183,27 +179,26 @@ $(document).ready(
             </span>
           </a>
           <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
-            <img style="margin-left: 5px;" src="/static/img/alta.png"/>
+            <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
           </a>
         </td>
         {% else %}
         <td>
-          <a href="/emergencia/{{l.id}}/t1"><img src="/static/img/estados/esi1.png" title="Colocar en Nivel 1"/></a>
-          <a href="/emergencia/{{l.id}}/t2"><img src="/static/img/estados/esi2.png" title="Colocar en Nivel 2"/></a>
-          <a href="/emergencia/{{l.id}}/triage/calcular"><img src="/static/img/estados/triage.png" title="Realizar Triage"/></a>
+          <a href="/emergencia/{{l.id}}/t1"><img src="/static/img/estados/esi1.png" style="margin-left: 5px; width:35px; height:35px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 1"/></a>
+          <a href="/emergencia/{{l.id}}/t2"><img src="/static/img/estados/esi2.png" style="margin-left: 5px; width:35px; height:35px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 2"/></a>
+          <a href="/emergencia/{{l.id}}/triage/calcular"><img src="/static/img/estados/triage.png" style="margin-left: 5px; width:35px; height:35px;" rel="tooltip" data-toggle="tooltip" data-original-title="Realizar Triage"/></a>
         </td>
         {% endif %}
-        <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
+        <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" style="margin-left: 5px; width:35px; height:35px;" title="Nivel {{ l.triage }}"/>{% endif %}</td>
 
 	<td>
-    <div id="esperaGraf_{{l.id}}">
-      <img id="imagen_{{l.id}}" src="/static/img/estados/alarmaVerde.png" />
-    </div>
+    <span id="causas_{{l.id}}">
+    </span>
 	</td>
 	<td>
       <div class="progress progress-striped active">
       <div id="barra_{{l.id}}" class="" style="width:100%;">
-       <span id="tiempo_{{l.id}}" style="font-size: 22px;">{{l.tiempo_esperaR}}</span> 
+       <span id="tiempo_{{l.id}}" style="font-size: 22px;">{{l.tiempo_esperaR}}</span>
       </div>
     </div>
 
@@ -224,8 +219,13 @@ $(document).ready(
 
   $(document).ready(function() {
   $('.dropdown-toggle').dropdown();
+
+  {% for l in lista %}
+    $("#emergencia_{{l.id}}").data("tiempoEsp","{{l.tiempo_espera_causasR}}");
+  {% endfor %}  
+
   var myVar=setInterval(function(){myTimer()},1000);
-  var tiempoMax = 120;
+  var tiempoMax = 360;
   function myTimer() {
 
   {% for l in lista %}
@@ -236,18 +236,20 @@ $(document).ready(
   mins = parseInt(tiempo[2]);
   segs = parseInt(tiempo[3]);
   segs += 1;
-  if (segs >= 60) {
-  segs = segs%60;
-  mins = mins + Math.floor(segs/60);
-  if (mins >= 60) {
-  mins = mins%60;
-  hors = hors * Math.floor(mins/60);
-  if (hors >= 24) {
-  hors = hors % 24;
-  dias = dias + Math.floor(hors/24)
+
+  if (segs == 60) {
+    segs = segs%60;
+    mins = mins +1;
+    if (mins == 60) {
+      mins = mins%60;
+      hors = hors + 1;
+      if (hors == 24) {
+        hors = hors % 24;
+        dias = dias + 1;
+      }
+    }
   }
-  }
-  }
+
   if (segs < 10) segs = "0"+segs;
        if (mins < 10) mins = "0"+mins;
       if (hors < 10) hors = "0"+hors;
@@ -255,6 +257,41 @@ $(document).ready(
 
                 tiempo = dias+":"+hors+":"+mins+":"+segs;
                 $("#tiempo_{{l.id}}").html(tiempo);
+                // console.log($("#emergencia_{{l.id}}").data("tiempoEsp"));
+                //    if ($("#emergencia_{{l.id}}").data("tiempo_espera_inicio") != "1"){
+                //if (dias  == 0 && hors == 2 && mins == 0  && segs == 0){
+                    tiempoEsp = $("#emergencia_{{l.id}}").data("tiempoEsp").split(":");
+                    console.log($("#emergencia_{{l.id}}").data("tiempoEsp"));
+                    diasEsp = parseInt(tiempoEsp[0]);
+                    horsEsp = parseInt(tiempoEsp[1]);
+                    minsEsp = parseInt(tiempoEsp[2]);
+                    segsEsp = parseInt(tiempoEsp[3]);
+                  //$("#emergencia_{{l.id}}").data("tiempo_espera","0");
+                 //{{l.tiempo_espe_act}}
+                //  $("#emergencia_{{l.id}}").data("tiempo_espera_inicio","1");
+               // }
+                
+                //if (dias > 0 || hors > 1 || ){
+                  console.log("dias: "+diasEsp+", hora:"+horsEsp+", min: "+minsEsp+"segsEsp: "+segsEsp);
+                    segsEsp += 1;
+                    if (segsEsp == 60) {
+                      segsEsp = segsEsp%60;
+                      minsEsp = minsEsp +1;
+                      if (minsEsp == 60) {
+                        minsEsp = minsEsp%60;
+                        horsEsp = horsEsp + 1;
+                        if (horsEsp == 24) {
+                          horsEsp = horsEsp % 24;
+                          diasEsp = diasEsp + 1;
+                        }
+                      }
+                    }
+                    $("#emergencia_{{l.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
+                    //if (minsEsp == 30 && segsEsp == 0){
+                    if (diasEsp > 0 || horsEsp> 0 || minsEsp > 0){
+                      $('#emergencia_{{l.id}}').css("background","rgba(230, 230, 230, 0.5)");
+                    }
+
                 tiempo = (dias*24*60)+(hors*60)+mins;
                 tExc = tiempoMax;
                 tRoj = tiempoMax * .66;
