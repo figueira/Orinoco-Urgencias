@@ -15,6 +15,9 @@ urlpatterns = patterns('app_emergencia.views',
     url('^emergencia/espera_id/(?P<id_emergencia>.*)$','emergencia_espera_id'),
     url('^emergencia/espera_idN/(?P<id_emergencia>.*)$','emergencia_espera_idN'),
 
+    # Agregar emergencia de paciente existente
+    url('^emergencia/agrega_emer/(?P<id_emergencia>.*)$','emergencia_agrega_emer'),
+
     # Agregar/Modificar Cubiculo:
     url('^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<accion>.*)$','emergencia_guardar_cubi'),
     

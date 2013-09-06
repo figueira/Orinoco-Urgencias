@@ -32,7 +32,7 @@ $(document).ready(
       {% for l in lista %}
       <tr>
         <td>{{l.id}}</td>
-        <td><span class="nombreLista"><a a href='/paciente/{{ l.id }}'>{{l.paciente}}</a></span></td>
+        <td><span class="nombreLista"><a a href='/paciente/{{ l.paciente.id }}'>{{l.paciente}}</a></span></td>
         <td>{% if l.triage != 0 %}<img src="/static/img/estados/nivel{{ l.triage }}.png" title="Nivel {{ l.triage }}"/>{% endif %}</td>
 	<td>
 	  {{l.tiempo_emergenciaT}}

@@ -27,7 +27,10 @@ from django.http import HttpResponse
 def paciente_perfil(request,idP):
     p = get_object_or_404(Paciente,pk=idP)
     ea = Emergencia.objects.filter(paciente=p)
-    ea = ea[0]
+    print "emergencia en perfil",ea
+    tam = len(ea)
+    ea = ea[tam-1]
+    # ea = ea[0]
     es = Emergencia.objects.filter(paciente=p)
     info = {'p':p,'ea':ea,'es':es}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))

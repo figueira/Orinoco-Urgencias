@@ -117,7 +117,10 @@ class Emergencia(models.Model):
         triage = 0
         triages = self.triages()
         if triages:
-            triage = triages[0].nivel
+            # triage = triages[0].nivel
+            # triage = triages.pop().nivel
+            tam = len(triages)
+            triage = triages[tam-1].nivel
         return triage
 
     def fecha_triage(self):
