@@ -122,19 +122,36 @@ def emergencia_listar_clasificados(request):
 
 def emergencia_listar_atencion(request,mensaje):
     print "ver mensaje con el que entra a listar atencion: ",mensaje
-    lista = Emergencia.objects.filter(hora_egreso=None)
+    lista = Emergencia.objects.filter(hora_egreso=None).order_by('-hora_ingreso')
     lista = [i for i in lista if i.atendido() == True]
     form = IniciarSesionForm()
     titulo = "Atendidos"
     info = {'lista':lista,'form':form,'titulo':titulo,'mensaje':mensaje}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
+def emergencia_listar_observacion(request):
+    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    lista = [i for i in lista if i.atendido() == True and i.triage() <= 3]
+    form = IniciarSesionForm()
+    titulo = "Atendidos"
+    info = {'lista':lista,'form':form,'titulo':titulo}
+    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+
+def emergencia_listar_ambulatoria(request):
+    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    lista = [i for i in lista if i.atendido() == True and i.triage() > 3]
+    form = IniciarSesionForm()
+    titulo = "Atendidos"
+    info = {'lista':lista,'form':form,'titulo':titulo}
+    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+
+
+
 @login_required(login_url='/')
 def emergencia_agregar(request):
     mensaje = ""
     msj_tipo = ""
     msj_info = ""
-
     if request.method == 'POST':
         form = AgregarEmergenciaForm(request.POST)
         if form.is_valid():
@@ -143,18 +160,22 @@ def emergencia_agregar(request):
             p_nombres          = pcd['nombres']
             p_apellidos        = pcd['apellidos']
             p_sexo             = pcd['sexo']
+            #p_dia              = pcd['dia']
+            #p_mes              = pcd['mes']
+            #p_ano              = pcd['ano']
             p_fecha_nacimiento = pcd['fecha_nacimiento']
-            p_cel              = pcd['cel']
-            p_email            = pcd['email']
-            p_direccion        = pcd['direccion']
-            p_tlf_casa         = pcd['tlf_casa']
-            p_contacto_rel     = pcd['contacto_rel']
-            p_contacto_nombre  = pcd['contacto_nombre']
-            p_contacto_tlf     = pcd['contacto_tlf']
+            #p_cel              = pcd['cel']
+            #p_email            = pcd['email']
+            #p_direccion        = pcd['direccion']
+            #p_tlf_casa         = pcd['tlf_casa']
+            #p_contacto_rel     = pcd['contacto_rel']
+            #p_contacto_nombre  = pcd['contacto_nombre']
+            #p_contacto_tlf     = pcd['contacto_tlf']
+            #p_fecha_nacimiento = p_dia+"/"+p_mes+"/"+p_ano
             prueba = Paciente.objects.filter(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos)
-
             if len(prueba) == 0:
-                p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel=p_cel,email=p_email,direccion=p_direccion,tlf_casa=p_tlf_casa,contacto_rel=p_contacto_rel,contacto_nom=p_contacto_nombre,contacto_tlf=p_contacto_tlf)
+                p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel="",email="",direccion="",tlf_casa="",contacto_rel=11,contacto_nom="",contacto_tlf="")
+                #p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel=p_cel,email=p_email,direccion=p_direccion,tlf_casa=p_tlf_casa,contacto_rel=p_contacto_rel,contacto_nom=p_contacto_nombre,contacto_tlf=p_contacto_tlf)
                 p.save()
             else:
                 p = prueba[0]
@@ -494,7 +515,8 @@ def emergencia_espera_asignadas(request,id_emergencia):
         esp = esp+str(i.espera.nombre)+","
     return HttpResponse(esp)
 
-def emergencia_espera_noAsignadas(request,id_emergencia):
+def emergencia_espera_noAsignadas(request,id_emergencia):   
+
     emer = get_object_or_404(Emergencia,id=id_emergencia)
     esperasEmer = EsperaEmergencia.objects.filter(emergencia=emer)
     esperasEmer = [str(i.espera.nombre) for i in esperasEmer]
@@ -546,22 +568,27 @@ def emergencia_espera_idN(request,id_emergencia):
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_guardar_cubi(request,id_emergencia,accion):
-    print "veo id de emergencia q entro como parametro",id_emergencia
     emer = get_object_or_404(Emergencia,id=id_emergencia)
-    print "Entre a guardar cubi"
-    print "verifico name del select",str(id_emergencia)+"cub"
     cubi  = request.POST[str(emer.id)+"cub"]
-    print "CUbi elegido",cubi
-    print "verificar emergencia a la que voy a ingresar el cubiculo",emer
-    # Buscamos si el cubiculo seleccionado esta asociado a alguna emergencia
     asic = Cubiculo.objects.filter(asignarcub__cubiculo__nombre = cubi)
-    print "ver cubiculos asignados",asic
     if asic:
         mensaje = "El cubiculo "+cubi+" esta asignado a otro paciente"
-        # mensaje = "El cubiculo esta asignado a otro paciente"
         return emergencia_listar_atencion(request, mensaje)
     else:
         if accion=='guardar':
+
+            emer.fecha_Esp_act = datetime.now()
+            emer.save()
+            espe               = get_object_or_404(Espera,nombre='Ubicacion')
+            espera1            = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
+            espera1.estado     = "1"
+            espera1.save()
+            triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
+            triage = triage[0]
+
+            atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
+            atencion.save()
+
             mensaje = "Cubiculo "+cubi+" asignado Exitosamente"
             cubN  = Cubiculo.objects.get(nombre = cubi)
             asigC = AsignarCub(emergencia=emer,cubiculo=cubN)
@@ -575,6 +602,20 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
             asigCA.save()
             return emergencia_listar_atencion(request, mensaje)
 
+
+
+
+#------------------------------------------ Funciones para agregar un cubiculo
+def emergencia_tiene_cubiculo(request,id_emergencia):
+    emer = get_object_or_404(Emergencia,id=id_emergencia)
+    cubi  = request.POST[str(emer.id)+"cub"]
+    asic = Cubiculo.objects.filter(asignarcub__cubiculo__nombre = cubi)
+    if asic:
+        mensaje = "si"
+        return HttpResponse(mensaje)
+    else:
+        mensaje = "no"
+        return HttpResponse(mensaje)
 
 #########################################################
 #                                                       #

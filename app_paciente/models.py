@@ -4,8 +4,8 @@ from django.db import models
 from django.utils import timezone
 
 SEXO = (
-    (1,'Hombre'),
-    (2,'Mujer'),
+    (1,'Masculino'),
+    (2,'Femenino'),
 )
 
 RELACION = (

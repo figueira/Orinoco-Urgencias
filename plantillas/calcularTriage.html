@@ -15,13 +15,13 @@
 
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs" id="myTab">
-    <li id="litab1" class="active"><a href="#tab1" data-toggle="tab">Pregunta 1</a></li>
+  	<li id="litab4" class="active" ><a href="#tab4" data-toggle="tab">Evaluaci&oacute;n</a></li>
+    <li id="litab1" ><a href="#tab1" data-toggle="tab">Pregunta 1</a></li>
     <li id="litab2"><a href="#tab2" data-toggle="tab">Pregunta 2</a></li>
     <li id="litab3"><a href="#tab3" data-toggle="tab">Pregunta 3</a></li>
-    <li id="litab4"><a href="#tab4" data-toggle="tab">Evaluaci&oacute;n</a></li>
   </ul>
   <div class="tab-content">
-    <div class="tab-pane text-center active" id="tab1">
+    <div class="tab-pane text-center" id="tab1">
       <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
       <a class="btn btn-danger" href="/emergencia/{{idE}}/t1">Si</a>
       <a id="no_inmediata" class="btn" href="#">No</a>
@@ -37,10 +37,10 @@
       <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
       <a class="btn btn-primary" href="/emergencia/{{idE}}/t5">Ninguno</a>
       <a class="btn btn-success" href="/emergencia/{{idE}}/t4">Uno</a>
-      <a id="recursos" class="btn btn-warning" href="#">Muchos</a>     
+      <a id="recursos" class="btn btn-warning" href="#">Varios</a>     
     </div>
 
-    <div class="tab-pane" id="tab4">
+    <div class="tab-pane active" id="tab4">
     <form name="calcularTriage" class="tablaAgregar" method="post" action="/emergencia/{{idE}}/triage/calcular">
       {% csrf_token %}
       <table>

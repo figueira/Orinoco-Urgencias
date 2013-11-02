@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 SEXO = (
-    ('1','Hombre'),
-    ('2','Mujer'),
+    ('1','Masculino'),
+    ('2','Femenino'),
 )
 
 USUARIO = (
