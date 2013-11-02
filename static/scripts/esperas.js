@@ -27,7 +27,6 @@ function estado(emer,i){
 }
 
 function eliminar(emer,i){
-
   var num = parseInt($('#texto'+emer).attr("texto"));
   if(!$("#"+emer+'-'+i).find('input').is(':checked')){
     num = num-1;
@@ -41,18 +40,14 @@ function eliminar(emer,i){
   $('#'+emer+'-'+i).find('input').remove();
   $.get("/emergencia/espera_eliminar/"+emer+"/"+i);
 
-
   $('#img_'+emer+'_'+i).remove();
   $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
   $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
   $('#emergencia_'+emer).css("background","white");
 
-
-
 }
 
 function agregar(emer,i){
-
   var num = parseInt($('#texto'+emer).attr("texto"))+1;
   $('#texto'+emer).attr("texto",num);
   $('#texto'+emer).html(""+num+"");
@@ -70,8 +65,6 @@ function agregar(emer,i){
   $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
   $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
   $('#emergencia_'+emer).css("background","white");
-
-
 }
 
 function modificar(emer){
@@ -150,10 +143,10 @@ $(document).ready(function () {
     //modificar($(this).attr('idEmer'));
   });
 
-  $('.espera').click(function(){
+  $('.espera').click(function(e){
     var emer    = $(this).attr('idEmer');
     var numFila = parseInt($("#emergencia_"+emer).data("fila")); 
     contenido(emer);
-    if (numFila>3){$("body").animate({scrollTop:70*numFila},"300");}
+    if (numFila>3){$("body").animate({scrollTop:e.pageY -200},"300");}
   });
 });
