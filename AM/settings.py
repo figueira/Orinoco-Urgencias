@@ -53,11 +53,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-<<<<<<< HEAD
 MEDIA_ROOT = '/home/carlos/MiniProyecto/media/'
-=======
-MEDIA_ROOT = '/home/thoncats/Escritorio/TDScopia/media/'
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -76,11 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-<<<<<<< HEAD
     '/home/carlos/MiniProyecto/static/',
-=======
-    '/home/thoncats/Escritorio/TDScopia/static/',
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -120,11 +112,7 @@ ROOT_URLCONF = 'AM.urls'
 WSGI_APPLICATION = 'AM.wsgi.application'
 
 TEMPLATE_DIRS = (
-<<<<<<< HEAD
     "/home/carlos/MiniProyecto/plantillas/",
-=======
-    "/home/thoncats/Escritorio/TDScopia/plantillas/",
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
