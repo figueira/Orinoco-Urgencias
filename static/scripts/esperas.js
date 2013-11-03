@@ -22,7 +22,7 @@ function estado(emer,i){
   $('#emergencia_'+emer).css("background","white");
 
   $('#texto'+emer).attr("texto",num);
-  $('#texto'+emer).html("&nbsp;"+num+"&nbsp;&nbsp;"); 
+  $('#texto'+emer).html(""+num+""); 
   $.get("/emergencia/espera_estado/"+emer+"/"+i+"/"+estado);
 }
 
@@ -31,7 +31,7 @@ function eliminar(emer,i){
   if(!$("#"+emer+'-'+i).find('input').is(':checked')){
     num = num-1;
     $('#texto'+emer).attr("texto",num);
-    $('#texto'+emer).html("&nbsp;"+num+"&nbsp;&nbsp;");
+    $('#texto'+emer).html(""+num+"");
   }
   
   $('#'+emer+'-'+i).insertAfter($('#hr'+emer));
@@ -39,7 +39,6 @@ function eliminar(emer,i){
   $('#'+emer+'-'+i).find('.imagenIcono').attr('onClick','agregar('+emer+','+i+')');
   $('#'+emer+'-'+i).find('input').remove();
   $.get("/emergencia/espera_eliminar/"+emer+"/"+i);
-
 
   $('#img_'+emer+'_'+i).remove();
   $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
@@ -51,22 +50,21 @@ function eliminar(emer,i){
 function agregar(emer,i){
   var num = parseInt($('#texto'+emer).attr("texto"))+1;
   $('#texto'+emer).attr("texto",num);
-  $('#texto'+emer).html("&nbsp;"+num+"&nbsp;&nbsp;");
+  $('#texto'+emer).html(""+num+"");
 
   $('#'+emer+'-'+i).insertBefore($('#hr'+emer));
   $('#'+emer+'-'+i).find('.imagenIcono').attr('src','/static/img/Atencion/menosim.png');
   $('#'+emer+'-'+i).find('.imagenIcono').attr('onClick','eliminar('+emer+','+i+')');
 
   $('#'+emer+'-'+i).find('input').show();
-  $('#'+emer+'-'+i).find('a').after('<input type="checkbox" onchange="estado('+emer+','+i+')" name="check" value="{{i.antecedente.id}}" />');
+  $('#'+emer+'-'+i).find('span').after('<input type="checkbox" onchange="estado('+emer+','+i+')" name="check" value="{{i.antecedente.id}}" />');
   $.get("/emergencia/espera_agregar/"+emer+"/"+i);
 
   $('img_'+emer+'_'+i).remove();
-  $('#causas_'+emer).after('<img id="img_'+emer+'_'+i+'" class = "esperaC_'+emer+'" style="width:50px;height:50px;" src="/static/img/esperas/espera_'+i+'.png"/>');
+  $('#causas_'+emer).before('<img id="img_'+emer+'_'+i+'" class = "esperaC_'+emer+'" style="width:50px;height:50px;" src="/static/img/esperas/espera_'+i+'.png"/>');
   $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
   $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
   $('#emergencia_'+emer).css("background","white");
-
 }
 
 function modificar(emer){
@@ -112,16 +110,16 @@ function modificar(emer){
             });
             for (i = 0;i<esperasAsig.length;i++){
               if (esperasChecki[i]  == "0"){
-                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<a href="#">'+menos+indexAsig[i]+')"/>'+'</a>'+checkbox+indexAsig[i]+check+imagenIni+indexAsig[i]+imagenFin+indexAsig[i]+finImagen+" "+esperasAsig[i]+"</li>";
-                $('#causas_'+emer).after('<img id="img_'+emer+'_'+indexAsig[i]+'" style="width:50px;height:50px;" class = "esperaC_'+emer+'" src="/static/img/esperas/espera_'+indexAsig[i]+'.png"/>');
+                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<span>'+menos+indexAsig[i]+')"/>'+'</span>'+checkbox+indexAsig[i]+check+imagenIni+indexAsig[i]+imagenFin+indexAsig[i]+finImagen+" "+esperasAsig[i]+"</li>";
+                $('#causas_'+emer).before('<img id="img_'+emer+'_'+indexAsig[i]+'" style="width:50px;height:50px;" class = "esperaC_'+emer+'" src="/static/img/esperas/espera_'+indexAsig[i]+'.png"/>');
               }else if(esperasChecki[i] == "1"){
-                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<a href="#">'+menos+indexAsig[i]+')"/>'+'</a>'+checkbox2+indexAsig[i]+check2+" "+esperasAsig[i]+"</li>";
+                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<span>'+menos+indexAsig[i]+')"/>'+'</span>'+checkbox2+indexAsig[i]+check2+imagenIni+indexAsig[i]+imagenFin+indexAsig[i]+finImagen+" "+esperasAsig[i]+"</li>";
               }
             }
             contenido=contenido+'<hr id="hr'+emer+'">';
             var  j = 0;
             for (j = 0;j<esperasNasig.length;j++){
-              contenido = contenido + '<li id="'+emer+'-'+indexNasig[j]+'">'+'<a href="#">'+mas+indexNasig[j]+')"/>'+'</a>'+imagenIni+indexNasig[j]+imagenFin+indexNasig[j]+finImagen+" "+esperasNasig[j]+"</li>";
+              contenido = contenido + '<li id="'+emer+'-'+indexNasig[j]+'">'+'<span>'+mas+indexNasig[j]+')"/>'+'</span>'+imagenIni+indexNasig[j]+imagenFin+indexNasig[j]+finImagen+" "+esperasNasig[j]+"</li>";
               i++;
             }
             $("#espera"+emer).attr('data-content',contenido);
@@ -141,9 +139,14 @@ $(document).ready(function () {
   
   $('.espera').each(function(index,valor){
     contenido($(this).attr('idEmer'));
+
+    //modificar($(this).attr('idEmer'));
   });
 
-  $('.espera').click(function(){
-    contenido($(this).attr('idEmer'));  
+  $('.espera').click(function(e){
+    var emer    = $(this).attr('idEmer');
+    var numFila = parseInt($("#emergencia_"+emer).data("fila")); 
+    contenido(emer);
+    if (numFila>3){$("body").animate({scrollTop:e.pageY -200},"300");}
   });
 });

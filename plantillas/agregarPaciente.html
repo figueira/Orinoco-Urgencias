@@ -8,16 +8,14 @@
 <div class="row">
   <div class="cuadroGrande span12 centrar">
     <h4>Agregar Paciente</h4>
-    <form class= "tablaAgregar" method="post" action="/emergencia/agregar">
+    <form id ="formulario" class= "tablaAgregar" method="post" action="/emergencia/agregar">
       {% csrf_token %}
       <table>
 	{% for e in form %}
 	<tr>
-          {% if e.label == "Hora y Fecha de Ingreso" %}
+          {% if e.label == "FECHA Y HORA DE INGRESO" %}
 	  <td>{{e.label}}</td>
 	  <td>
-
-
 	    <div id="ingreso_picker" class="input-append">
               {{e}}
 	      <span id="ahora" class="btn">Ahora</span>
@@ -34,7 +32,55 @@
 	      });
 	    </script>
           </td>
-	  <td>{{e.errors}}</td>
+	  	  <td>{{e.errors}}</td>
+	  	  {% elif e.label == "DOCUMENTO DE IDENTIDAD" %}
+		  	  <td>{{e.label}}</td>
+	  		  <td>
+	  		  	<select id="id_cedula1" name="dia" style="width:55px" onchange="cambioFecha()">
+					<option value='V'>V</option>
+					<option value='E'>E</option>
+					<option value='P'>P</option>
+                </select>&nbsp;&nbsp;
+                <input id="id_cedula2" maxlength="9" name="cedula" type="text" style="width:140px" onblur="documentoId()" onkeypress="return justNumbers(event);" />
+	  		  	<input id="id_cedula" maxlength="9" name="cedula" type="hidden"/>
+	  		  </td>
+	  		  <td>{{e.errors}}</td>
+          {% elif e.label == "NOMBRE" %}
+		  <td>{{e.label}}</td>	  
+		  <td>
+		  	<input id="id_nombres" maxlength="64" name="nombres" type="text" onkeyup="this.value=this.value.toUpperCase()"/>
+		  </td>
+	  	  <td>{{e.errors}}</td>
+	  	  {% elif e.label == "APELLIDO" %}
+	  	  <td>{{e.label}}</td>	  
+		  <td>
+		  	<input id="id_apellidos" maxlength="64" name="apellidos" type="text" onkeyup="this.value=this.value.toUpperCase()"/>
+		  </td>
+	  	  <td>{{e.errors}}</td>
+	  	  {% elif e.label == "FECHA DE NACIMIENTO" %}
+	  	  <td>
+          </td>
+          <td>
+          	<span class="label label-info">DIA</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  	<span class="label label-info">MES</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="label label-info">AÑO</span>&nbsp;&nbsp;
+          </td>
+          <td></td>
+          </tr>
+            <tr>
+		  	<td>{{e.label}}</td>
+	  		<td>
+				<select id="dia" name="dia" style="width:65px" onchange="cambioFecha()">
+		
+                </select>&nbsp;&nbsp;
+                <select id="mes" name="mes" style="width:65px;" onchange="cambioFecha()">
+                </select>
+                &nbsp;&nbsp;
+                <select id="ano" name="ano" style="width:80px;" onchange="cambioFecha()">
+                </select>
+                <input id="id_fecha_nacimiento" name="fecha_nacimiento" type="hidden">
+	  		</td>
+	  		<td>{{e.errors}}</td>
           {% else %}
 	  <td>{{e.label}}</td>
 	  <td>{{e}}</td>
@@ -55,18 +101,64 @@
 
 {% block scripts2 %}
 <script>
-  $(document).ready(function() {
-  $("#ahora").click(function() {
-  var currentTime = new Date()
-  var mes = currentTime.getMonth() + 1;
-  var dia = currentTime.getDate();
-  var año = currentTime.getFullYear();
-  
-  var horas    = currentTime.getHours()
-  var minutos  = currentTime.getMinutes()
-  var segundos = currentTime.getSeconds()
-  $("#id_ingreso").val(dia+"/"+mes+"/"+año+" "+horas+":"+minutos+":"+segundos)
-  });
-  });
+	function documentoId(){
+		var tipo = $("#id_cedula1").val();
+		var documento = $("#id_cedula2").val();
+		if (documento != ""){
+			$("#id_cedula").attr("value",tipo+"-"+documento);
+		}else{
+			$("#id_cedula").attr("value","");
+		}
+	}
+
+	function justNumbers(e){
+		var keynum = window.event ? window.event.keyCode : e.which;
+		if ((keynum == 8) || (keynum == 46)) return true;	 
+		return /\d/.test(String.fromCharCode(keynum));
+	}
+
+	function cambioFecha(){
+		var dia = $("#dia").val();
+  		var mes = $("#mes").val();
+  	 	var ano = $("#ano").val();
+  	 //if (dia != "nada" && mes != "nada" && ano != "nada"){  
+  	// 	alert(dia+"/"+mes+"/"+ano);
+  	 	$("#id_fecha_nacimiento").attr("value",dia+"/"+mes+"/"+ano);
+  	 //}else if (dia != "nada" || mes != "nada" || ano != "nada"){
+  	 //	$("#id_fecha_nacimiento").attr("value","");
+  	 //}
+  }
+
+$(document).ready(function() {  
+	$("#ahora").click(function() {
+		var currentTime = new Date();
+		var mes = currentTime.getMonth() + 1;
+		var dia = currentTime.getDate();
+		var año = currentTime.getFullYear();
+
+		var horas    = currentTime.getHours()
+		var minutos  = currentTime.getMinutes()
+		var segundos = currentTime.getSeconds()
+		$("#id_ingreso").val(dia+"/"+mes+"/"+año+" "+horas+":"+minutos+":"+segundos)});
+	});		
+	var dia  = 1,mes = 1,ano = 1990;
+	$("#dia").html("<option value='nada'>--</option>");
+	$("#dia > option[value='nada']").after("<option value='"+1+"'>"+1+"</option>");
+	for (dia =2;dia<=31;dia++){
+		$("#dia > option[value='"+(dia-1)+"']").after("<option value='"+dia+"'>"+dia+"</option>");		  
+	}
+	$("#mes").html("<option value='nada'>--</option>");
+	$("#mes > option[value='nada']").after("<option value='"+1+"'>"+1+"</option>");
+	for (mes =2;mes<=12;mes++){
+		$("#mes > option[value='"+(mes-1)+"']").after("<option value='"+mes+"'>"+mes+"</option>");		  
+	}
+	var currentTime = new Date();
+	$("#ano").html("<option value='nada'>--</option>");
+	//alert(currentTime.getFullYear());
+	$("#ano > option[value='nada']").after("<option value='"+currentTime.getFullYear()+"'>"+currentTime.getFullYear()+"</option>");
+	for (ano =currentTime.getFullYear();ano>=1900;ano--){
+		$("#ano > option[value='"+(ano+1)+"']").after("<option value='"+ano+"'>"+ano+"</option>");
+	}
+
 </script>
 {% endblock %}

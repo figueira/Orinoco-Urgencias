@@ -33,6 +33,11 @@ urlpatterns = patterns('',
     url('^emergencia/listar/sinclasificar$','app_emergencia.views.emergencia_listar_sinclasificar'),
     url('^emergencia/listar/clasificados$','app_emergencia.views.emergencia_listar_clasificados'),
     url('^emergencia/listar/triage$','app_emergencia.views.emergencia_listar_triage'),
+
+    url('^emergencia/listar/ambulatoria$','app_emergencia.views.emergencia_listar_ambulatoria'),
+    url('^emergencia/listar/observacion$','app_emergencia.views.emergencia_listar_observacion'),
+
+
     url('^emergencia/listar/atencion/(?P<mensaje>.*)$','app_emergencia.views.emergencia_listar_atencion'),
     url('^emergencia/(?P<idE>\d+)/t(?P<vTriage>\d+)$','app_emergencia.views.emergencia_aplicarTriage'),
     url('^emergencia/(?P<idE>\d+)/triage/calcular$','app_emergencia.views.emergencia_calcularTriage'),   

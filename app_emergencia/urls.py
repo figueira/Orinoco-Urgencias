@@ -20,6 +20,7 @@ urlpatterns = patterns('app_emergencia.views',
 
     # Agregar/Modificar Cubiculo:
     url('^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<accion>.*)$','emergencia_guardar_cubi'),
+    url('^emergencia/tiene_cubi/(?P<id_emergencia>.*)$','emergencia_tiene_cubiculo'),
     
     # Funciones de acceso a subfases de atencion
 

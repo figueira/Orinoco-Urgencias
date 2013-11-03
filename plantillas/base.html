@@ -34,7 +34,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
+    <div id ="lista" class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/"><img src="/static/img/logo.png" /></a>
+          <a class="brand" href="/"><img src="/static/img/logo.png"  style="margin-left: 5px; width:70px; height:39px;" /></a>
           <div class="nav-collapse">
             <ul class="nav">
               {% if user.is_authenticated %}
@@ -56,15 +56,14 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Listas<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="/emergencia/listar/todas">Pacientes en Emergencia</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Por Area</li>
-                  <li><a href="/emergencia/listar/triage">Pacientes en Triage</a></li>
-                  <li><a href="/emergencia/listar/atencion/nada">Pacientes en Atención</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Sub Areas de Triage</li>
-                  <li><a href="/emergencia/listar/sinclasificar">Pacientes sin Clasificar</a></li>
-                  <li><a href="/emergencia/listar/clasificados">Pacientes Clasificados</a></li>
+                  <li><a href="/emergencia/listar/todas">Listado General</a></li>
+                  <li class="nav-header">Listado por Area</li>
+                  <li><a href="/emergencia/listar/triage">&nbsp;&nbsp;&nbsp;&nbsp;Triage</a></li>
+                  <li><a href="/emergencia/listar/sinclasificar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pacientes por Clasificar</a></li>
+                  <li><a href="/emergencia/listar/clasificados">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pacientes Clasificados</a></li>
+                  <li><a href="/emergencia/listar/atencion/nada">&nbsp;&nbsp;&nbsp;&nbsp;Atencion</a></li>
+                  <li><a href="/emergencia/listar/observacion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&Aacute;rea de Observaci&oacute;n</a></li>
+                  <li><a href="/emergencia/listar/ambulatoria">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&Aacute;rea de atenci&oacute;n ambulatoria</a></li>
                 </ul>
               </li>
               {% if user.is_staff %}
@@ -135,11 +134,11 @@
 
       {% block cuerpo %}
       {% endblock %}
-      
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
     <div id="footer">
       <div class="container">
-        <p class="muted credit">&reg;P&aacute;gina desarrollada en la <a href="http://www.usb.ve/">Universidad Sim&oacute;n Bol&iacute;var</a> para el <a href="http://www.centromedicodecaracas.com.ve/">Centro M&eacute;dico de Caracas</a>.</p>
+        <p class="muted credit">MEDMATRIC. VERSION 1.0. Derechos reservados</p>
       </div>
     </div>
     <script>
