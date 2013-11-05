@@ -12,6 +12,7 @@ function estado(emer,i){
   if($("#"+emer+'-'+i).find('input').is(':checked')) {
     num = num-1;estado ="1";
     $('#img_'+emer+'_'+i).remove();
+    $.get("/emergencia/espera_finalizada/"+emer+"/"+i+"/"+estado);
   }else {
     num = num+1;estado="0";
     $('img_'+emer+'_'+i).remove();

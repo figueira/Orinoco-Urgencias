@@ -562,6 +562,16 @@ def emergencia_espera_idN(request,id_emergencia):
         esp = esp+i+","
     return HttpResponse(esp)
 
+# Se agrega a la base de datos la fechay hora en que se marco check (finalizo) 
+# para una causa de espera para una emergencia 
+#
+def emergencia_espera_finalizada(request,id_emergencia,id_espera,espera):
+    emer               = get_object_or_404(Emergencia,id=id_emergencia)
+    espera             = get_object_or_404(Espera,id=id_espera)
+    esperaEmer         = EsperaEmergencia.objects.get(espera=espera,emergencia=emer)
+    esperaEmer.hora_fin  = datetime.now()
+    esperaEmer.save() 
+    return HttpResponse('')
 
 #########################################################
 #                                                       #
