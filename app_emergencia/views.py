@@ -264,6 +264,7 @@ def emergencia_darAlta(request,idE):
 @login_required(login_url='/')
 def emergencia_aplicarTriage(request,idE,vTriage):
     emergencia = get_object_or_404(Emergencia,id=idE)
+    print r'Usuario actualmente en sesion: ' + str(request.user)
     medico = Usuario.objects.get(username=request.user)
     if ((medico.tipo == "1") or (medico.tipo == "2")):
         fechaReal  = datetime.now()

@@ -6,17 +6,33 @@ function MantenerEsperas(emer){
   $.get("/emergencia/espera_mantener/"+emer);
 }
 
-function estado(emer,i){
+function estado(emer,i)
+{
   var estado="";
-  var num = parseInt($('#texto'+emer).attr("texto"));
-  if($("#"+emer+'-'+i).find('input').is(':checked')) {
-    num = num-1;estado ="1";
-    $('#img_'+emer+'_'+i).remove();
-  }else {
-    num = num+1;estado="0";
-    $('img_'+emer+'_'+i).remove();
-    $('#causas_'+emer).after('<img id="img_'+emer+'_'+i+'" style="width:50px;height:50px;" class = "esperaC_'+emer+'" src="/static/img/esperas/espera_'+i+'.png"/>');
+  var num = parseInt($('#texto' + emer).attr("texto"));
+  
+  if($("#" + emer + '-' + i).find('input').is(':checked')) 
+  {
+    num = num - 1;
+    estado = "1";
+    $('#img_' + emer + '_' + i).remove();
+  } else 
+  {
+    num = num + 1;
+    estado = "0";
+    $('img_' + emer + '_' + i).remove();
+
+    // Construir la imagen que sera agregada si la caja es desmarcada
+    var reason_image = $("<img></img>");
+    reason_image.attr("id", "img_" + emer + "_" + i);
+    reason_image.attr("src", "/static/img/esperas/espera_" + i + ".png")
+    reason_image.css("width", "50px");
+    reason_image.css("height", "50px");
+    reason_image.addClass("esperaC_" + emer);
+    
+    $('#causas_' + emer).after(reason_image)
   }
+  
   $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
   $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
   $('#emergencia_'+emer).css("background","white");
