@@ -28,6 +28,7 @@ from django.db.models import Count
 import ho.pisa as pisa
 import cStringIO as StringIO
 import cgi
+import json
 from django.template.loader import render_to_string
 from app_enfermedad.models import *
 ######################################################
@@ -93,8 +94,10 @@ def emergencia_listar_todas(request):
     lista = Emergencia.objects.filter(hora_egreso=None)
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
-    info = {'lista':lista,'form':form,'titulo':titulo}
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+    info = { 'lista': lista, 'form': form, 'titulo': titulo }
+    return render_to_response('lista.html', 
+                               info,
+                               context_instance = RequestContext(request))
 
 def emergencia_listar_triage(request):
     lista = Emergencia.objects.filter(hora_egreso=None)
@@ -512,26 +515,39 @@ def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     return HttpResponse()
 
 def emergencia_espera_asignadas(request,id_emergencia):
-    emer        = get_object_or_404(Emergencia,id=id_emergencia)
-    esperasEmer = EsperaEmergencia.objects.filter(emergencia=emer)
-    esp = ""
-    for i in esperasEmer:
-        esp = esp+str(i.espera.nombre)+","
-    return HttpResponse(esp)
+    emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
+    esperasEmergencia = EsperaEmergencia.objects.filter(
+                          emergencia = emergencia_actual
+                        )
+    respuestaJson = {}
+    for indice, esperaEmergencia in enumerate(esperasEmergencia):
+      respuestaJson[indice] = esperaEmergencia.espera.json_dict()
+      respuestaJson[indice]['estado'] = esperaEmergencia.estado
+
+    return HttpResponse(json.dumps(respuestaJson), 
+                        content_type = 'application/json')
 
 def emergencia_espera_noAsignadas(request,id_emergencia):   
+    emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
+    esperasEmergencia = EsperaEmergencia.objects.filter(
+                          emergencia = emergencia_actual
+                        )
 
-    emer = get_object_or_404(Emergencia,id=id_emergencia)
-    esperasEmer = EsperaEmergencia.objects.filter(emergencia=emer)
-    esperasEmer = [str(i.espera.nombre) for i in esperasEmer]
-    esperas     = Espera.objects.filter()
-    esperas     = [str(i.nombre) for i in esperas ]
-    for EspEmer in esperasEmer:
-        esperas.remove(EspEmer)
-    esp = ""
-    for i in esperas:
-        esp = esp+i+","
-    return HttpResponse(esp)
+    # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
+    # las esperas aquellas que ya estan asignadas
+    esperasAsignadas = map( lambda e: e.espera,
+                            esperasEmergencia )
+    esperasNoAsignadas = Espera.objects.all()
+    for espera in esperasAsignadas:
+      esperasNoAsignadas.exclude(id = espera.id)
+
+    # Habiendo calculado los valores, se construye la respuesta en JSON
+    respuestaJson = {}
+    for i, espera in enumerate(esperasNoAsignadas):
+      respuestaJson[i] = espera.json_dict()
+
+    return HttpResponse(json.dumps(respuestaJson,
+                        content_type = 'application/json')
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)

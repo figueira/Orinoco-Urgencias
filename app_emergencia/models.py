@@ -148,7 +148,7 @@ class Emergencia(models.Model):
         NoAten = 0
         for esp in emerEspera:
             if esp.estado == '0':
-                NoAten = NoAten+1
+                NoAten = NoAten + 1
         return NoAten
     
     def tiempo_espera(self):
@@ -235,8 +235,18 @@ class AsignarCub(models.Model):
 
 class Espera(models.Model):
     nombre = models.CharField(max_length=48)
+
     def __unicode__(self):
-        return "%s" % self.nombre
+      return "%s" % self.nombre
+
+    # Retorna una reresentacion del objeto en froma de diccionario, para que 
+    # pueda ser fácilmente convertido a JSON
+    def json_dict(self):
+      json = {}
+      json['id'] = self.id
+      json['nombre'] = self.nombre
+
+      return json
 
 class EsperaEmergencia(models.Model):
     espera     = models.ForeignKey(Espera)
@@ -245,8 +255,9 @@ class EsperaEmergencia(models.Model):
     #Hora en la que se comienza a contabilizar esa causa de espera para esa emergencia	
     hora_comienzo = models.DateTimeField(auto_now_add=True)
     hora_fin      = models.DateTimeField(blank=True,null=True)
+
     def __unicode__(self):
-        return "%s" % self.espera.nombre
+      return "%s" % self.espera.nombre
 
 class ComentarioEmergencia(models.Model):
     emergencia = models.ForeignKey(Emergencia)

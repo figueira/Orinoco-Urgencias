@@ -84,62 +84,71 @@ function agregar(emer,i){
 }
 
 function modificar(emer){
-  $.get("/emergencia/espera_asignadas/"+emer,function (data){
+  $.getJSON("/emergencia/espera_asignadas/"+emer,function (esperasAsignadas){
     $.get("/emergencia/espera_noAsignadas/"+emer,function (data2){
       $.get("/emergencia/espera_asignadasCheck/"+emer,function (data3){
-        $.get("/emergencia/espera_id/"+emer,function (data4){
-          $.get("/emergencia/espera_idN/"+emer,function (data5){
-            var esperasAsig   = data.substring(0,data.length-1);
-            if(esperasAsig ==""){esperasAsig = [];}
-            else{esperasAsig  = esperasAsig.split(",");}
-            
-            var esperasNasig  = data2.substring(0,data2.length-1);
-            if(esperasNasig ==""){esperasNasig = [];}
-            else{esperasNasig  = esperasNasig.split(",");}
-            
-            var esperasChecki = data3.substring(0,data3.length-1);
-            if(esperasChecki ==""){esperasChecki = [];}
-            else{esperasChecki = esperasChecki.split(",");}
+        $.get("/emergencia/espera_idN/"+emer,function (data5){
+          var esperasNasig  = data2.substring(0,data2.length-1);
+          if(esperasNasig ==""){esperasNasig = [];}
+          else{esperasNasig  = esperasNasig.split(",");}
+          
+          var esperasChecki = data3.substring(0,data3.length-1);
+          if(esperasChecki ==""){esperasChecki = [];}
+          else{esperasChecki = esperasChecki.split(",");}
 
-            var indexAsig     = data4.substring(0,data4.length-1);
-            if(indexAsig ==""){indexAsig =[];}
-            else{indexAsig  = indexAsig.split(",");}
+          var indexNasig  = data5.substring(0,data5.length-1);
+          if(indexNasig == "" ){indexNasig = [];}
+          else{indexNasig = indexNasig.split(",");}
 
-            var indexNasig  = data5.substring(0,data5.length-1);
-            if(indexNasig == "" ){indexNasig = [];}
-            else{indexNasig = indexNasig.split(",");}
+          var tamano1 = esperasAsignadas.length + esperasNasig.length;          
+          var i = 0;
+          var contenido = "";
+          var imagenIni = '<img id="img_'+emer+'-';
+          var imagenFin = '" style="width:22px;height:22px;" src="/static/img/esperas/espera_';
+          var finImagen = '.png"/>';
+          var menos     = '<img src="/static/img/Atencion/menosim.png" class="imagenIcono" title="-" onClick="eliminar('+emer+',';
+          var mas       = '<img src="/static/img/Atencion/masim.png" class="imagenIcono" title="-" onClick="agregar('+emer+',';
+          var checkbox  = '<input type="checkbox" onchange="estado('+emer+',';
+          var check = ')" name="check" />';
+          var checkbox2 = '<input type="checkbox" onchange="estado('+emer+',';
+          var check2 = ')" name="check" checked />';
 
-            var tamano1 = esperasAsig.length +esperasNasig.length;          
-            var i = 0;
-            var contenido = "";
-            var imagenIni = '<img id="img_'+emer+'-';
-            var imagenFin = '" style="width:22px;height:22px;" src="/static/img/esperas/espera_';
-            var finImagen = '.png"/>';
-            var menos     = '<img src="/static/img/Atencion/menosim.png" class="imagenIcono" title="-" onClick="eliminar('+emer+',';
-            var mas       = '<img src="/static/img/Atencion/masim.png" class="imagenIcono" title="-" onClick="agregar('+emer+',';
-            var checkbox  = '<input type="checkbox" onchange="estado('+emer+',';
-            var check = ')" name="check" />';
-            var checkbox2 = '<input type="checkbox" onchange="estado('+emer+',';
-            var check2 = ')" name="check" checked />';
-            $(".esperaC_"+emer).each(function(index,valor){
-              $(valor).remove();
-            });
-            for (i = 0;i<esperasAsig.length;i++){
-              if (esperasChecki[i]  == "0"){
-                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<span>'+menos+indexAsig[i]+')"/>'+'</span>'+checkbox+indexAsig[i]+check+imagenIni+indexAsig[i]+imagenFin+indexAsig[i]+finImagen+" "+esperasAsig[i]+"</li>";
-                $('#causas_'+emer).before('<img id="img_'+emer+'_'+indexAsig[i]+'" style="width:50px;height:50px;" class = "esperaC_'+emer+'" src="/static/img/esperas/espera_'+indexAsig[i]+'.png"/>');
-              }else if(esperasChecki[i] == "1"){
-                contenido=contenido+'<li id="'+emer+'-'+indexAsig[i]+'">'+'<span>'+menos+indexAsig[i]+')"/>'+'</span>'+checkbox2+indexAsig[i]+check2+imagenIni+indexAsig[i]+imagenFin+indexAsig[i]+finImagen+" "+esperasAsig[i]+"</li>";
-              }
-            }
-            contenido=contenido+'<hr id="hr'+emer+'">';
-            var  j = 0;
-            for (j = 0;j<esperasNasig.length;j++){
-              contenido = contenido + '<li id="'+emer+'-'+indexNasig[j]+'">'+'<span>'+mas+indexNasig[j]+')"/>'+'</span>'+imagenIni+indexNasig[j]+imagenFin+indexNasig[j]+finImagen+" "+esperasNasig[j]+"</li>";
-              i++;
-            }
-            $("#espera"+emer).attr('data-content',contenido);
+          $(".esperaC_"+emer).each(function(index,valor){
+            $(valor).remove();
           });
+
+          $.each(esperasAsignadas, function(i, espera){
+            console.log(espera);
+            console.log(espera.estado + " " + espera.id);
+            if (espera.estado  == "0"){
+              contenido = contenido + '<li id="' + emer + '-' + espera.id + i +
+                          '"><span>' + menos + espera.id + ')"/></span>' +
+                          checkbox + espera.id + check + imagenIni + espera.id +
+                          imagenFin + espera.id + finImagen + " " + espera.nombre +
+                          "</li>";
+              $('#causas_' + emer).before(
+                '<img id="img_' + emer + '_' + espera.id + 
+                '" style="width:50px;height:50px;" class = "esperaC_' + emer + 
+                '" src="/static/img/esperas/espera_' + espera.id + '.png"/>');
+
+              console.log(contenido)
+
+            }else if(espera.estado == "1"){
+              contenido = contenido + '<li id="' + emer + '-' + espera.id + 
+                          '">' + '<span>' + menos + espera.id + ')"/>' + 
+                          '</span>' + checkbox2 + espera.id + check2 + 
+                          imagenIni + espera.id + imagenFin + espera.id + 
+                          finImagen + " " + espera.nombre + "</li>";
+            }
+          });
+
+          contenido = contenido + '<hr id="hr' + emer + '">';
+          var  j = 0;
+          for (j = 0;j<esperasNasig.length;j++){
+            contenido = contenido + '<li id="'+emer+'-'+indexNasig[j]+'">'+'<span>'+mas+indexNasig[j]+')"/>'+'</span>'+imagenIni+indexNasig[j]+imagenFin+indexNasig[j]+finImagen+" "+esperasNasig[j]+"</li>";
+            i++;
+          }
+          $("#espera"+emer).attr('data-content',contenido);
         });
       });
     });

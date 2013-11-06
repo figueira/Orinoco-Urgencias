@@ -183,10 +183,19 @@
             </td>
 
       <td class='tdEspera'>
-         <span id='espera{{l.id}}' class='espera' data-html="true" data-toggle="popover" data-placement="bottom" title="" data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" idEmer="{{l.id}}" >
+         <span id='espera{{l.id}}' 
+               class='espera' 
+               data-html="true" 
+               data-toggle="popover" 
+               data-placement="bottom" 
+               title="" 
+               data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" 
+               idEmer="{{l.id}}" >
           <span class="btn btn-small btn-primary" style='width:10px;'>
-            <b id="texto{{l.id}}" texto='{{l.numEsperasNoAtendidas}}' style="font-size: 17px;">
-             {{l.numEsperasNoAtendidas}}
+            <b id="texto{{l.id}}" 
+               texto='{{l.numEsperasNoAtendidas}}' 
+               style="font-size: 17px;">
+              {{l.numEsperasNoAtendidas}}
             </b>
           </span>
         </span>

@@ -9,3 +9,7 @@ AM/settings.py
 # Logs and databases #
 ######################
 *.sqlite
+
+# VIm swap files #
+##################
+*.swp
