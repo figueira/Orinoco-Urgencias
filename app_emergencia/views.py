@@ -496,13 +496,14 @@ def emergencia_espera_agregar(request,id_emergencia,id_espera):
     return HttpResponse()
 
 def emergencia_espera_eliminar(request,id_emergencia,id_espera):
-    emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer   = get_object_or_404(Emergencia, id = id_emergencia)
     emer.fecha_Esp_act = datetime.now()
     emer.save()
-    espe   = get_object_or_404(Espera,id=id_espera)
-    espera = EsperaEmergencia.objects.get(emergencia=emer,espera=espe)
+    espe   = get_object_or_404(Espera,id = id_espera)
+    espera = EsperaEmergencia.objects.get(emergencia = emer, espera = espe)
     espera.delete() 
-    return HttpResponse()
+    print "Elemento eliminado"
+    return HttpResponse('')
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     emer               = get_object_or_404(Emergencia,id=id_emergencia)
@@ -528,26 +529,28 @@ def emergencia_espera_asignadas(request,id_emergencia):
                         content_type = 'application/json')
 
 def emergencia_espera_noAsignadas(request,id_emergencia):   
-    emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
-    esperasEmergencia = EsperaEmergencia.objects.filter(
-                          emergencia = emergencia_actual
-                        )
+  emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
+  esperasEmergencia = EsperaEmergencia.objects.filter(
+                        emergencia = emergencia_actual
+                      )
 
-    # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
-    # las esperas aquellas que ya estan asignadas
-    esperasAsignadas = map( lambda e: e.espera,
-                            esperasEmergencia )
-    esperasNoAsignadas = Espera.objects.all()
-    for espera in esperasAsignadas:
-      esperasNoAsignadas.exclude(id = espera.id)
+  # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
+  # las esperas aquellas que ya estan asignadas
+  esperasAsignadas = map( lambda e: e.espera,
+                          esperasEmergencia )
+  esperasNoAsignadas = Espera.objects.all()
+  for espera in esperasAsignadas:
+    esperasNoAsignadas.exclude(id = espera.id)
+  print str(esperasAsignadas)
+  print str(esperasNoAsignadas)
 
-    # Habiendo calculado los valores, se construye la respuesta en JSON
-    respuestaJson = {}
-    for i, espera in enumerate(esperasNoAsignadas):
-      respuestaJson[i] = espera.json_dict()
+  # Habiendo calculado los valores, se construye la respuesta en JSON
+  respuestaJson = {}
+  for i, espera in enumerate(esperasNoAsignadas):
+    respuestaJson[i] = espera.json_dict()
 
-    return HttpResponse(json.dumps(respuestaJson,
-                        content_type = 'application/json')
+  return HttpResponse(json.dumps(respuestaJson),
+                      content_type = 'application/json')
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
