@@ -520,36 +520,34 @@ def emergencia_espera_asignadas(request,id_emergencia):
     esperasEmergencia = EsperaEmergencia.objects.filter(
                           emergencia = emergencia_actual
                         )
-    respuestaJson = {}
+    respuesta_json = {}
     for indice, esperaEmergencia in enumerate(esperasEmergencia):
-      respuestaJson[indice] = esperaEmergencia.espera.json_dict()
-      respuestaJson[indice]['estado'] = esperaEmergencia.estado
+      respuesta_json[indice] = esperaEmergencia.espera.json_dict()
+      respuesta_json[indice]['estado'] = esperaEmergencia.estado
 
-    return HttpResponse(json.dumps(respuestaJson), 
+    return HttpResponse(json.dumps(respuesta_json), 
                         content_type = 'application/json')
 
 def emergencia_espera_noAsignadas(request,id_emergencia):   
   emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
-  esperasEmergencia = EsperaEmergencia.objects.filter(
-                        emergencia = emergencia_actual
-                      )
+  esperas_emergencia = EsperaEmergencia.objects.filter(
+                         emergencia = emergencia_actual
+                       )
 
   # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
   # las esperas aquellas que ya estan asignadas
-  esperasAsignadas = map( lambda e: e.espera,
-                          esperasEmergencia )
-  esperasNoAsignadas = Espera.objects.all()
-  for espera in esperasAsignadas:
-    esperasNoAsignadas.exclude(id = espera.id)
-  print str(esperasAsignadas)
-  print str(esperasNoAsignadas)
+  esperas_asignadas = map( lambda e: e.espera,
+                           esperas_emergencia )
+  esperas_no_asignadas = list(Espera.objects.all())
+  for espera in esperas_asignadas:
+    esperas_no_asignadas.remove(espera)
 
   # Habiendo calculado los valores, se construye la respuesta en JSON
-  respuestaJson = {}
-  for i, espera in enumerate(esperasNoAsignadas):
-    respuestaJson[i] = espera.json_dict()
+  respuesta_json = {}
+  for i, espera in enumerate(esperas_no_asignadas):
+    respuesta_json[i] = espera.json_dict()
 
-  return HttpResponse(json.dumps(respuestaJson),
+  return HttpResponse(json.dumps(respuesta_json),
                       content_type = 'application/json')
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
