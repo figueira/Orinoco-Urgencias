@@ -43,29 +43,33 @@ function estado(emer,i)
 }
 
 function eliminar(emer,i){
-  $('#img_' + emer + '_' + i).remove();
-  // Actualizar el contador de causas de espera
-  var num = parseInt($('#texto' + emer).attr("texto"));
-  if(!$("#" + emer + '-' + i).find('input').is(':checked')){
-    console.log("Input no seleccionado");
-    num = num - 1;
-    $('#texto' + emer).attr("texto", num);
-    $('#texto' + emer).html("" + num + "");
-  }
-  
-  // Insertar el <li> seleccionado del lado inferior con el logo '+' y el
-  // evento, y eliminar el checkbox
-  $('#' + emer + '-' + i).insertAfter($('#hr' + emer));
-  $('#' + emer + '-' + i).find('.imagenIcono').attr('src','/static/img/Atencion/masim.png');
-  $('#' + emer + '-' + i).find('.imagenIcono').attr('onClick','agregar(' + emer + ',' + i + ')');
-  $('#' + emer + '-' + i).find('input').remove();
-  $.get("/emergencia/espera_eliminar/" + emer + "/" + i);
+  // Se hace la petición para eliminar la causa de espera
+  $.get("/emergencia/espera_eliminar/" + emer + "/" + i, function(){
+    // Habiendo recibido respuesta del servidor, se procede a cambiar el DOM
 
-  // Eliminar la imagen de la lista
-  $("#emergencia_" + emer).data("tiempoEsp","0:0:0:0");
-  $("#emergencia_" + emer).data("tiempo_espera_inicio","0");
-  $('#emergencia_' + emer).css("background","white");
+    // Eliminar la imagen de la lista
+    $('#img_' + emer + '_' + i).remove();
 
+    // Actualizar el contador de causas de espera
+    var num = parseInt($('#texto' + emer).attr("texto"));
+    if(!$("#" + emer + '-' + i).find('input').is(':checked')){
+      console.log("Input no seleccionado");
+      num = num - 1;
+      $('#texto' + emer).attr("texto", num);
+      $('#texto' + emer).html("" + num + "");
+    }
+    
+    // Insertar el <li> seleccionado del lado inferior con el logo '+' y el
+    // evento, y eliminar el checkbox
+    $('#' + emer + '-' + i).insertAfter($('#hr' + emer));
+    $('#' + emer + '-' + i).find('.imagenIcono').attr('src','/static/img/Atencion/masim.png');
+    $('#' + emer + '-' + i).find('.imagenIcono').attr('onClick','agregar(' + emer + ',' + i + ')');
+    $('#' + emer + '-' + i).find('input').remove();
+
+    $("#emergencia_" + emer).data("tiempoEsp","0:0:0:0");
+    $("#emergencia_" + emer).data("tiempo_espera_inicio","0");
+    $('#emergencia_' + emer).css("background","white");
+  });
 }
 
 function agregar(emer,i){
