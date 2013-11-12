@@ -226,122 +226,107 @@
 <script>
 
   $(document).ready(function() {
-  $('.dropdown-toggle').dropdown();
-  var cont = 1;
-  {% for l in lista %}
-    $("#emergencia_{{l.id}}").data("tiempoEsp","{{l.tiempo_espera_causasR}}");
-    $("#emergencia_{{l.id}}").data("fila",cont);
-     $("#emergencia_{{l.id}}").data("flat","0");
-    cont++;
-  {% endfor %}
+    // Asociacion del evento click sobre las esperas
+    $('.espera').on('click', function(event){
+      event.preventDefault();
+      mostrar_esperas($(this).attr('idemer'));
+    });
 
-  $('td:not(".tdEspera,.tdTriage")').click(function(){
-    $('.espera').popover('hide'); 
-    
-  });
-  $('.espera').click(function(e){
+    $('.dropdown-toggle').dropdown();
+      var cont = 1;
+      {% for l in lista %}
+        $("#emergencia_{{l.id}}").data("tiempoEsp","{{l.tiempo_espera_causasR}}");
+        $("#emergencia_{{l.id}}").data("fila",cont);
+        $("#emergencia_{{l.id}}").data("flat","0");
+        cont++;
+      {% endfor %}
+
+      $('td:not(".tdEspera,.tdTriage")').click(function(){
+      $('.espera').popover('hide'); 
+    });
+
+    $('.espera').click(function(e){
       e.stopPropagation();
       $('.espera').not(this).popover('hide');
-  });
+    });
  
 
-  var myVar=setInterval(function(){myTimer()},1000);
-  var tiempoMax = 360;
-  function myTimer() {
+    var myVar=setInterval(function(){myTimer()},1000);
+    var tiempoMax = 360;
+    function myTimer() {
 
-  {% for l in lista %}
-  var idE= "{{l.paciente.apellidos}}"
-  var tiempo=$("#tiempo_{{l.id}}").html();
-  tiempo = tiempo.split(":");
-  dias = parseInt(tiempo[0]);
-  hors = parseInt(tiempo[1]);
-  mins = parseInt(tiempo[2]);
-  segs = parseInt(tiempo[3]);
-  var tiempoC = (dias*24*60)+(hors*60)+mins;
+    {% for l in lista %}
+      var idE= "{{l.paciente.apellidos}}"
+      var tiempo=$("#tiempo_{{l.id}}").html();
+      tiempo = tiempo.split(":");
+      dias = parseInt(tiempo[0]);
+      hors = parseInt(tiempo[1]);
+      mins = parseInt(tiempo[2]);
+      segs = parseInt(tiempo[3]);
+      var tiempoC = (dias*24*60)+(hors*60)+mins;
 
-  segs += 1;
+      segs += 1;
 
-  if (segs == 60) {
-    segs = segs%60;
-    mins = mins +1;
-    if (mins == 60) {
-      mins = mins%60;
-      hors = hors + 1;
-      if (hors == 24) {
-        hors = hors % 24;
-        dias = dias + 1;
+      if (segs == 60) {
+        segs = segs%60;
+        mins = mins +1;
+        if (mins == 60) {
+          mins = mins%60;
+          hors = hors + 1;
+          if (hors == 24) {
+            hors = hors % 24;
+            dias = dias + 1;
+          }
+        }
       }
-    }
-  }
 
-  if (segs < 10) segs = "0"+segs;
-       if (mins < 10) mins = "0"+mins;
+      if (segs < 10) segs = "0"+segs;
+      if (mins < 10) mins = "0"+mins;
       if (hors < 10) hors = "0"+hors;
-           if (dias < 10) dias = "0"+dias;
+      if (dias < 10) dias = "0"+dias;
 
-                tiempo = dias+":"+hors+":"+mins+":"+segs;
-                $("#tiempo_{{l.id}}").html(tiempo);
-                // console.log($("#emergencia_{{l.id}}").data("tiempoEsp"));
-                //    if ($("#emergencia_{{l.id}}").data("tiempo_espera_inicio") != "1"){
-                //if (dias  == 0 && hors == 2 && mins == 0  && segs == 0){
-                    tiempoEsp = $("#emergencia_{{l.id}}").data("tiempoEsp").split(":");
-                 //   console.log($("#emergencia_{{l.id}}").data("tiempoEsp"));
-                    diasEsp = parseInt(tiempoEsp[0]);
-                    horsEsp = parseInt(tiempoEsp[1]);
-                    minsEsp = parseInt(tiempoEsp[2]);
-                    segsEsp = parseInt(tiempoEsp[3]);
-                  //$("#emergencia_{{l.id}}").data("tiempo_espera","0");
-                 //{{l.tiempo_espe_act}}
-                //  $("#emergencia_{{l.id}}").data("tiempo_espera_inicio","1");
-               // }
-                
-                //if (dias > 0 || hors > 1 || ){
-               //   console.log("dias: "+diasEsp+", hora:"+horsEsp+", min: "+minsEsp+"segsEsp: "+segsEsp);
-                    segsEsp += 1;
-                    if (segsEsp == 60) {
-                      segsEsp = segsEsp%60;
-                      minsEsp = minsEsp +1;
-                      if (minsEsp == 60) {
-                        minsEsp = minsEsp%60;
-                        horsEsp = horsEsp + 1;
-                        if (horsEsp == 24) {
-                          horsEsp = horsEsp % 24;
-                          diasEsp = diasEsp + 1;
-                        }
-                      }
-                    }
-                    $("#emergencia_{{l.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
-                    //if (minsEsp == 30 && segsEsp == 0){
-                    if (diasEsp > 0 || horsEsp> 0 || minsEsp > 0){
-                     // if ($("#emergencia_{{l.id}}").data("flat") == "0"){
-                     //   $("#emergencia_{{l.id}}").data("flat","1");
-                        $('#emergencia_{{l.id}}').css("background","rgba(230, 230, 230, 0.5)");
-                     // }else{
-                      //  $("#emergencia_{{l.id}}").data("flat","0");
-                       // $('#emergencia_{{l.id}}').css("background","rgb(255, 255, 255)");
-                      //}
+      tiempo = dias+":"+hors+":"+mins+":"+segs;
+      $("#tiempo_{{l.id}}").html(tiempo);
+      tiempoEsp = $("#emergencia_{{l.id}}").data("tiempoEsp").split(":");
+      diasEsp = parseInt(tiempoEsp[0]);
+      horsEsp = parseInt(tiempoEsp[1]);
+      minsEsp = parseInt(tiempoEsp[2]);
+      segsEsp = parseInt(tiempoEsp[3]);
+      segsEsp += 1;
+      if (segsEsp == 60) {
+        segsEsp = segsEsp%60;
+        minsEsp = minsEsp +1;
+        if (minsEsp == 60) {
+          minsEsp = minsEsp%60;
+          horsEsp = horsEsp + 1;
+          if (horsEsp == 24) {
+            horsEsp = horsEsp % 24;
+            diasEsp = diasEsp + 1;
+          }
+        }
+      }
+      $("#emergencia_{{l.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
+      if (diasEsp > 0 || horsEsp> 0 || minsEsp > 0){
+        $('#emergencia_{{l.id}}').css("background","rgba(230, 230, 230, 0.5)");
+      }
 
-                    }
-
-                tiempo = (dias*24*60)+(hors*60)+mins;
-                tExc = tiempoMax;
-                tRoj = tiempoMax * .66;
-                tAma = tiempoMax * .33;
-                if (tiempo  > tExc) {
-           var alarma = $("#imagen_{{l.id}}").attr("src");
-           if (alarma != "/static/img/estados/alarmaNegra.png") {
-           $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png");          
-           }
-           } else if (tiempo > tRoj) {
-      $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
+      tiempo = (dias*24*60)+(hors*60)+mins;
+      tExc = tiempoMax;
+      tRoj = tiempoMax * .66;
+      tAma = tiempoMax * .33;
+      if (tiempo  > tExc) {
+        var alarma = $("#imagen_{{l.id}}").attr("src");
+        if (alarma != "/static/img/estados/alarmaNegra.png") {
+          $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
+        }
+      } else if (tiempo > tRoj) {
+        $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
       } else if (tiempo > tAma) {
-             $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
-       }
+        $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
+      }
 
-
-	     t = Math.floor((tiempoC /tiempoMax)*100);
-      // console.log("TIEMPO : "+tiempo+ " Tiempo total en porcentaje: "+t+ " de paciente: "+idE);
-	     if (t >= 100) {
+      t = Math.floor((tiempoC /tiempoMax)*100);
+      if (t >= 100) {
         $("#barra_{{l.id}}").attr("class","bar bar-inverse");
       } else if (t < 100 && t >= 66) {
         $("#barra_{{l.id}}").attr("class","bar bar-danger");
@@ -350,9 +335,9 @@
       } else {
         $("#barra_{{l.id}}").attr("class","bar bar-success");
       }
-	
-	{% endfor %}
-	}
+
+      {% endfor %}
+    }
   });
 </script>
 

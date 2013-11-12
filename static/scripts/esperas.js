@@ -101,71 +101,109 @@ function agregar(emer,i){
   $('#emergencia_' + emer).css("background","white");
 }
 
-function modificar(emer){
+function mostrar_esperas(emer){
   var contenido = "";
-  var imagenIni = '<img id="img_' + emer + '-';
-  var imagenFin = '" style="width:22px;height:22px;" ' + 
-                  'src="/static/img/esperas/espera_';
-  var finImagen = '.png"/>';
-  var menos     = '<img src="/static/img/Atencion/menosim.png" ' +
-                  'class="imagenIcono" title="-" onClick="eliminar(' + emer + 
-                  ',';
-  var mas       = '<img src="/static/img/Atencion/masim.png" class="imagenIcono"' +
-                  'title="-" onClick="agregar('+emer+',';
-  var checkbox  = '<input type="checkbox" onchange="estado(' + emer + ',';
-  var check = ')" name="check" />';
-  var checkbox2 = '<input type="checkbox" onchange="estado(' + emer + ',';
-  var check2 = ')" name="check" checked />';
+
+  var menos = $('<img> </img>');
+  menos.attr('src', '/static/img/Atencion/menosim.jpg');
+  menos.addClass('imagenIcono');
+
+  var mas = $('<img> </img>');
+  menos.attr('src', '/static/img/Atencion/masim.jpg');
+  menos.addClass('imagenIcono');
 
   // Eliminar las listas que esta construida actualmente
   $(".esperaC_"+emer).each(function(index,valor){
     $(valor).remove();
   });
     
-  $.getJSON("/emergencia/espera_asignadas/" + emer, function(esperasAsignadas){
-    $.getJSON("/emergencia/espera_noAsignadas/" + emer, function(esperasNoAsignadas){
+  $.getJSON("/emergencia/espera_asignadas/" + emer, function(esperas_asignadas){
+    $.getJSON("/emergencia/espera_noAsignadas/" + emer, function(esperas_no_asignadas){
       // Construir la seccion de esperas asignadas
-      $.each(esperasAsignadas, function(i, espera){
+      // Construir el elemento de la seccion de esperas asignadas
+      var lista_esperas = $('<ul> </ul>');
+      $.each(esperas_asignadas, function(i, espera){
+        var list_item = $('<li> </li>');
+        var checkbox = $('<input> </input>');
+        var span_item = $('<span> </span>');
+        var item_imagen_espera = $('<img> </img>');
+
+        list_item.attr('id', emer + '-' + espera.id + i);
+
+        checkbox.attr('type', 'checkbox')
+
+        item_imagen_espera.attr('id', emer + '-' + espera.id);
+        item_imagen_espera.attr('src', '/static/img/esperas/espera_' +
+                                       espera.id +
+                                       '.png');
+        item_imagen_espera.css('width', '22px');
+        item_imagen_espera.css('height', '22px');
+
+        span_item.append(menos);
+        list_item.append(span_item)
+
         // Revisar si el elemento esta marcado como atendido
         if (espera.estado  == "0")
         {
-          contenido = contenido + '<li id="' + emer + '-' + espera.id + i +
-                      '"><span>' + menos + espera.id + ')"/></span>' +
-                      checkbox + espera.id + check + imagenIni + espera.id +
-                      imagenFin + espera.id + finImagen + " " + espera.nombre +
-                      "</li>";
+          ckeckbox.attr('checked', 'true');
           $('#causas_' + emer).before(
             '<img id="img_' + emer + '_' + espera.id + 
             '" style="width:50px;height:50px;" class = "esperaC_' + emer + 
             '" src="/static/img/esperas/espera_' + espera.id + '.png"/>');
         }else if(espera.estado == "1")
         {
-          contenido = contenido + '<li id="' + emer + '-' + espera.id + 
-                      '">' + '<span>' + menos + espera.id + ')"/>' + 
-                      '</span>' + checkbox2 + espera.id + check2 + 
-                      imagenIni + espera.id + imagenFin + espera.id + 
-                      finImagen + " " + espera.nombre + "</li>";
+          checkbox.attr('checked', 'false');
         }
+
+        list_item.append(checkbox);
+        list_item.append(item_imagen_espera);
+        list_item.text(espera.nombre);
+
+        lista_esperas.append(list_item);
       });
 
-      contenido = contenido + '<hr id="hr' + emer + '">';
-
+      $("#espera"+emer).append(lista_esperas);
+      $("#espera"+emer).append($('<hr> </hr>'));
+      
       // Construir la seccion de esperas no asignadas
-      $.each(esperasNoAsignadas, function(i, espera){
-        contenido = contenido + '<li id="' + emer + '-' + espera.id + 
-                    '">' + '<span>' + mas + espera.id + ')"/>' + 
-                    '</span>' + imagenIni + espera.id + imagenFin + 
-                    espera.id + finImagen + " " + espera.nombre + "</li>";
-      });
+      lista_no_esperas = $('<ul> </ul>')
+      $("#espera"+emer).append(lista_no_esperas);
+      $.each(esperas_no_asignadas, function(i, espera){
+        var list_item = $('<li> </li>');
+        var checkbox = $('<input> </input>');
+        var span_item = $('<span> </span>');
+        var item_imagen_espera = $('<img> </img>');
 
-      // Asignar el contenido construido al elemento apropiado
-      $("#espera"+emer).attr('data-content',contenido);
+        lista_no_esperas.append(list_item);
+        list_item.append(item_imagen_espera);
+        list_item.append(span_item)
+        span_item.append(mas);
+        list_item.text(espera.nombre);
+
+        list_item.attr('id', emer + '-' + espera.id + i);
+
+        checkbox.attr('type', 'checkbox')
+
+        item_imagen_espera.attr('id', emer + '-' + espera.id);
+        item_imagen_espera.attr('src', '/static/img/esperas/espera_' +
+                                       espera.id +
+                                       '.png');
+        item_imagen_espera.css('width', '22px');
+        item_imagen_espera.css('height', '22px');
+
+
+        console.log(list_item.html());
+        console.log(span_item.html());
+        console.log(item_imagen_espera.html());
+
+
+      });
     });
   });
 }
 
 function contenido(emer){
-  modificar(emer);
+  //modificar(emer);
 }
 
 $(document).ready(function () {
