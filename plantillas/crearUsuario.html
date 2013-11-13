@@ -1,81 +1,184 @@
 {% extends "base.html" %}
-{% block cuerpo %}
-{% if mensaje %}
-  {{ mensaje }}
-{% endif %}
-<div class="row">
-  <div class="cuadroGrande span12 centrar">
-  	<h4>Crear Nuevo Usuario</h4>
-			<form class= "tablaAgregar" method="post" action="/usuario/crear">
-			{% csrf_token %}
-				<table>
-					<tr>
-						<td>C&eacute;dula</td>
-						<td>{{form.cedula}}</td>
-						<td><span class="msj-error">{{form.cedula.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Nombres</td>
-						<td>{{form.nombres}}</td>
-						<td><span class="msj-error">{{form.nombres.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Apellidos</td>
-						<td>{{form.apellidos}}</td>
-						<td><span class="msj-error">{{form.apellidos.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Tipo</td>
-						<td>{{form.tipo}}</td>
-						<td><span class="msj-error">{{form.tipo.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Sexo</td>
-						<td>{{form.sexo}}</td>
-						<td><span class="msj-error">{{form.sexo.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>N&uacute;mero de M&oacute;vil</td>
-						<td>{{form.cod_cel}}{{form.num_cel}}</td>
-						<td><span class="msj-error">{{form.cod_cel.errors}}{{form.num_cel.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Direcci&oacute;n de Residencia</td>
-						<td>{{form.direccion}}</td>
-						<td><span class="msj-error">{{form.direccion.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>N&uacute;mero de Residencia</td>
-						<td>{{form.cod_casa}}{{form.num_casa}}</td>
-						<td><span class="msj-error">{{form.cod_casa.errors}}{{form.num_casa.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td>{{form.email}}</td>
-						<td><span class="msj-error">{{form.email.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Clave</td>
-						<td>{{form.clave}}</td>
-						<td><span class="msj-error">{{form.clave.errors}}</span></td>
-					</tr>
-					<tr>
-						<td>Confirmar Clave</td>
-						<td>{{form.clave0}}</td>
-						<td><span class="msj-error">{{form.clave0.errors}}</span></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td> {{form.administrador}} Agregar usuario como Administrador</td>
-						<td><span class="msj-error">{{form.administrador.errors}}</span></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input class="btn btn-primary" type="submit" value="Crear Usuario" /></td>
-					</tr>
-				</table>
-			</form>
-		</div>
+  {% block cuerpo %}
+  {% if mensaje %}
+    {{ mensaje }}
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <h4>
+        Crear Nuevo Usuario
+      </h4>
+      <form class= "tablaAgregar" method="post" action="/usuario/crear">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td>
+              C&eacute;dula
+            </td>
+            <td>
+              {{form.cedula}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.cedula.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Nombres
+            </td>
+            <td>
+              {{form.nombres}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.nombres.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Apellidos
+            </td>
+            <td>
+              {{form.apellidos}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.apellidos.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Tipo
+            </td>
+            <td>
+              {{form.tipo}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.tipo.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Sexo
+            </td>
+            <td>
+              {{form.sexo}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.sexo.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              N&uacute;mero de M&oacute;vil
+            </td>
+            <td>
+              {{form.cod_cel}}{{form.num_cel}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.cod_cel.errors}}{{form.num_cel.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Direcci&oacute;n de Residencia
+            </td>
+            <td>
+              {{form.direccion}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.direccion.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              N&uacute;mero de Residencia
+            </td>
+            <td>
+              {{form.cod_casa}}{{form.num_casa}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.cod_casa.errors}}{{form.num_casa.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Email
+            </td>
+            <td>
+              {{form.email}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.email.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Clave
+            </td>
+            <td>
+              {{form.clave}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.clave.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Confirmar Clave
+            </td>
+            <td>
+              {{form.clave0}}
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.clave0.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              
+            </td>
+            <td>
+               {{form.administrador}} Agregar usuario como Administrador
+            </td>
+            <td>
+              <span class="msj-error">
+                {{form.administrador.errors}}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              
+            </td>
+            <td>
+              <input class="btn btn-primary" 
+                     type="submit" 
+                     value="Crear Usuario" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
   </div>
-</div>
 {% endblock %}
