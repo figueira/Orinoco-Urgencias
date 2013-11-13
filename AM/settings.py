@@ -7,20 +7,20 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('Jose Lezama', 'joseglego@gmail.com'),
     ('MaIsabel Jilo', 'isajilo7@gmail.com'),
-    ('Carlos Ledezma', 'cgledezma1101@gmail.com'),
+    ('Daniel Montenegro', 'monttda@gmail.com'),	
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # 'django.db.backends.sqlite3', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'cmsb',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '/home/montt/Documents/Proyecto/TDScopia/BD/BD.sqlite3',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'carlos',
+        'USER': '',
         'PASSWORD': '',
-        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '5432',                      # Set to empty string for default.
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
     }
 }
 
@@ -53,11 +53,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-<<<<<<< HEAD
-MEDIA_ROOT = '/home/carlos/MiniProyecto/media/'
-=======
-MEDIA_ROOT = '/home/thoncats/Escritorio/TDScopia/media/'
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
+MEDIA_ROOT = '/home/montt/Documents/Proyecto/TDScopia/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -76,11 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-<<<<<<< HEAD
-    '/home/carlos/MiniProyecto/static/',
-=======
-    '/home/thoncats/Escritorio/TDScopia/static/',
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
+    '/home/montt/Documents/Proyecto/TDScopia/static/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -120,11 +112,7 @@ ROOT_URLCONF = 'AM.urls'
 WSGI_APPLICATION = 'AM.wsgi.application'
 
 TEMPLATE_DIRS = (
-<<<<<<< HEAD
-    "/home/carlos/MiniProyecto/plantillas/",
-=======
-    "/home/thoncats/Escritorio/TDScopia/plantillas/",
->>>>>>> 7fd2af462849f39651fc4b30570af89c868c3661
+    "/home/montt/Documents/Proyecto/TDScopia/plantillas/",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
