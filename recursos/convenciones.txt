@@ -17,5 +17,24 @@ HTML:
   - Si estas ubicando un elemento por identificador. Piensa de nuevo
   - Usar JQuery antes que Javascript
   - No insertar HTML puro en los templates. Siempre usar JQuery.
+  - Para escribir tags de HTML se siguen los siguientes lineamientos:
+    . Se escribe un tag por línea. Los tags 'hijos' de otros deben ir en una
+    línea separada y con un punto de indentación mayor. Ejemplo:
 
+    <div>
+      <p> El tag hijo </p>
+    </div>
+
+    Notar que el tag para cerrar también va en una línea separada.
+
+    . Si un tag no cabe en una línea, entonces se escribe el primer atributo al
+    lado del nombre del tag, y el resto uno por línea, debajo, a la misma altura
+    del primer atributo. Ejemplo:
+
+    <input type="button"
+           class="btn btn-primary"
+           value="Aceptar"
+           id="boton">
 Python:
+  - Para la definición y llamadas de funciones, aplican las mismas reglas que
+    para los tags de HTML
