@@ -25,49 +25,29 @@
         <table class="table table-bordered table-striped"
           style="font-size: 22px;">
           <tr>
-            <th>
-              N&uacute;mero
-            </th>
-            <th>
-              Nombre
-            </th>
-            <th>
-              ISE
-            </th>
-            <th>
-              Tiempo de Espera Total
-            </th>
-            <th>
-              &Uacute;ltima Fecha de Ingreso
-            </th>
-            <th>
-              Acciones
-            </th>
+            <th>N&uacute;mero</th>
+            <th>Nombre</th>
+            <th>ISE</th>
+            <th>Tiempo de Espera Total</th>
+            <th>&Uacute;ltima Fecha de Ingreso</th>
+            <th>Acciones</th>
           </tr>
           {% for l in lista %}
             <tr>
+              <td>{{l.id}}</td>
               <td>
-                {{l.id}}
-              </td>
-              <td>
-                <span class="nombreLista">
-                  <a href='/paciente/{{ l.paciente.id }}'>
-                    {{l.paciente}}
-                  </a>
+                <span class="nombreLista"> 
+                  <a href='/paciente/{{ l.paciente.id }}'> {{l.paciente}} </a>
                 </span>
               </td>
               <td>
-                {% if l.triage != 0 %}
+                {% if l.triage != 0 %} 
                   <img src="/static/img/estados/nivel{{ l.triage }}.png"
-                       title="Nivel {{ l.triage }}" />
+                       title="Nivel {{ l.triage }}" /> 
                 {% endif %}
               </td>
-              <td>
-                {{l.tiempo_emergenciaT}}
-              </td>
-              <td>
-                {{l.horaR}}
-              </td>
+              <td>{{l.tiempo_emergenciaT}}</td>
+              <td>{{l.horaR}}</td>
               <td>
                 <center>
                   <a href="/emergencia/agrega_emer/{{l.id}}" 
@@ -75,7 +55,7 @@
                      data-toggle="tooltip"
                      data-original-title="Ingresar a Emergencias"> 
                     <img src="/static/img/acceso.png"
-                         style="margin-left: 5px; width: 35px; height: 35px;"/>
+                         style="margin-left: 5px; width: 35px; height: 35px;" />
                   </a>
                 </center>
               </td>
