@@ -12,42 +12,32 @@
           {% csrf_token %}
           <table>
             <tr>
-              <td>
-                Paciente
-              </td>
-              <td>
-                <strong>{{emergencia.paciente}}</strong>
-              </td>
+              <td>Paciente</td>
+              <td><strong>{{emergencia.paciente}}</strong></td>
             </tr>
+            
             <tr>
-              <td>
-                Destino
-              </td>
-              <td>
-                {{form.destino}}
-              </td>
+              <td>Destino</td>
+              <td>{{form.destino}}</td>
             </tr>
+            
             <tr id="oculto">
-              <td>
-                Area
-              </td>
-              <td>
-                {{form.area}}
-              </td>
+              <td>Area</td>
+              <td>{{form.area}}</td>
             </tr>
+            
             <tr>
-              <td>
-                Fecha de Alta
-              </td>
+              <td>Fecha de Alta</td>
               <td>
                 <div class="input-append">
                   {{form.darAlta}} 
-                  <span id="ahora" class="btn">
-                    Ahora
+                  <span id="ahora" class="btn"> 
+                    Ahora 
                   </span>
                 </div>
               </td>
             </tr>
+            
             <tr>
               <td></td>
               <td>
@@ -86,7 +76,7 @@
                 var minutos = currentTime.getMinutes()
                 var segundos = currentTime.getSeconds()
                 $("#id_darAlta").val(dia + "/" + mes + "/" + ano + " " +
-                		                 horas + ":" + minutos + ":" + segundos)
+                                     horas + ":" + minutos + ":" + segundos)
               });
         });
   </script>
