@@ -1,0 +1,21 @@
+General:
+  - python import this
+  - Por obligación, el código se escribe en español.
+  - Nombres de funciones y variables en minúsculas y con palabras separadas por
+    '_'.
+  - Indentación con 2 espacios.
+  - 80 caracteres por línea.
+  - Usar nombres de variables explícitos y completos
+
+HTML:
+  - Estilos se definen en archivos .css
+  - La asociación de eventos se hace por jQuery, no en el tag.
+  - La ubicación de elementos en el DOM se prefire en la jerarquía:
+    . Tag
+    . Clase CSS
+    . Identificador
+  - Si estas ubicando un elemento por identificador. Piensa de nuevo
+  - Usar JQuery antes que Javascript
+  - No insertar HTML puro en los templates. Siempre usar JQuery.
+
+Python:

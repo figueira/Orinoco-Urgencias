@@ -8,4 +8,10 @@ AM/settings.py
 
 # Logs and databases #
 ######################
-*.sqlite
+.sqlite*
+
+# Archivos de los editores de texto #
+#####################################
+*~
+*.swp*
+

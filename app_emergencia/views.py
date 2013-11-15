@@ -28,9 +28,20 @@ from django.db.models import Count
 import ho.pisa as pisa
 import cStringIO as StringIO
 import cgi
+import json
 from django.template.loader import render_to_string
 from app_enfermedad.models import *
 ######################################################
+
+    
+# Cantidad de segundos en 1,2,..,6 horas
+# hora_en_segundos[0] -> Segundos en 0 horas
+# hora_en_segundos[1] -> Segundos en 1 hora
+# .
+# .
+# .
+# hora_en_segundos[6] -> Segundos en 6 horas
+hora_en_segundos = [0,3600,7200,10800,14400,18000,21600] 
 
 def emergencia_buscar(request):
     mensaje = ""
@@ -93,8 +104,10 @@ def emergencia_listar_todas(request):
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
-    info = {'lista':lista,'form':form,'titulo':titulo}
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+    info = { 'lista': lista, 'form': form, 'titulo': titulo }
+    return render_to_response('lista.html', 
+                               info,
+                               context_instance = RequestContext(request))
 
 def emergencia_listar_triage(request):
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
@@ -284,6 +297,7 @@ def emergencia_darAlta(request,idE):
 @login_required(login_url='/')
 def emergencia_aplicarTriage(request,idE,vTriage):
     emergencia = get_object_or_404(Emergencia,id=idE)
+    print r'Usuario actualmente en sesion: ' + str(request.user)
     medico = Usuario.objects.get(username=request.user)
     if ((medico.tipo == "1") or (medico.tipo == "2")):
         fechaReal  = datetime.now()
@@ -445,34 +459,87 @@ def estadisticas_prueba():
       triages.append([(i+1),triagesBien[i]])
     return triages
 
+
+def obtener_causas_de_espera(emergencias):
+    
+    # Diccionario que mapea el nombre de la causa de espera
+    # a un arreglo indicando la cantidad de ocurrencias por
+    # intervalo de duracion
+    # Ej: '[[Ubicacion, [0,2,3,1]], [Laboratorio, [2,0,4,4]]]'
+    causas_de_espera = {}
+    
+    objetos_causas_de_espera = Espera.objects.all()
+    for causa in objetos_causas_de_espera:
+      causas_de_espera[causa.nombre] = [0,0,0,0]
+      
+    for emergencia in emergencias:
+      espera_emergencias = EsperaEmergencia.objects.filter(emergencia=emergencia)
+      for espera_emergencia in espera_emergencias:
+        causa = espera_emergencia.espera.nombre
+        tiempo_espera = (espera_emergencia.hora_fin -
+                          espera_emergencia.hora_comienzo).total_seconds()
+        if tiempo_espera < hora_en_segundos[2]:
+          grupo = 0
+        elif hora_en_segundos[2] <= tiempo_espera and \
+             tiempo_espera < hora_en_segundos[2]:
+          grupo = 1
+        elif hora_en_segundos[4] <= tiempo_espera and \
+             tiempo_espera < hora_en_segundos[6]:
+          grupo = 2
+        else:
+          grupo = 3
+          
+        causas_de_espera[causa][grupo] += 1
+      return causas_de_espera    
+          
+      
+
 def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     # Datos generales
-    fecha0 = date(int(anho),int(mes),int(dia))
-    fecha = date(int(anho2),int(mes2),int(dia2))
-    sig_sem = fecha + timedelta(days=7)
-    ingresos = Emergencia.objects.filter(hora_ingreso__range=[fecha0,fecha])
-    es = Emergencia.objects.filter(hora_egreso__range=[fecha0,fecha])
+    fecha_inicio = date(int(anho),int(mes),int(dia))
+    fecha_fin = date(int(anho2),int(mes2),int(dia2))
+    siguiente_semana = fecha_fin + timedelta(days=7)
+    ingresos_emergencia = Emergencia.objects.filter(
+                            hora_ingreso__range=[fecha_inicio,fecha_fin])
+    egresos_emergencia = Emergencia.objects.filter(
+                            hora_egreso__range=[fecha_inicio,fecha_fin])
     
-    # Cuanto se tardo cada emergencia
-    horas0a2=0
-    horas2a4=0
-    horas4a6=0
-    horas6aM=0
-    hora = 3600
-    for e in es:
-        t = e.tiempo_emergencia() 
-        if t < 2*hora:
-            horas0a2 += 1
-        elif t >= 2*hora and t < 4*hora:
-            horas2a4 += 1
-        elif t >= 4*hora and t < 6*hora:
-            horas4a6 += 1
+    # Cantidad de emergencias por duracion
+    # horas[0] -> 0 a 2 horas
+    # horas[1] -> 2 a 4 horas
+    # horas[2] -> 4 a 6 horas
+    # horas[3] -> 6 o + horas
+    horas = [0,0,0,0]
+
+    
+    # Emergencias por duracion
+    # emergencias_por_horas[0] -> 0 a 2 horas
+    # emergencias_por_horas[1] -> 2 a 4 horas
+    # emergencias_por_horas[2] -> 4 a 6 horas
+    # emergencias_por_horas[3] -> 6 o + horas
+    emergencias_por_horas = [[],[],[],[]]
+    
+    for egreso in egresos_emergencia:
+        t = egreso.tiempo_emergencia()
+        if t < hora_en_segundos[2]:
+            grupo = 0
+        elif t >= hora_en_segundos[2] and t < hora_en_segundos[4]:
+            grupo = 1
+        elif t >= hora_en_segundos[4] and t < hora_en_segundos[6]:
+            grupo = 2
         else:
-            horas6aM += 1
-    total = horas0a2 + horas2a4 + horas4a6 + horas6aM
+            grupo = 3
+        horas[grupo] += 1
+        emergencias_por_horas[grupo].append(egreso)
+            
+    total_egresos = sum(horas)
+    
+    # Causas de espera por grupo
+    causas = obtener_causas_de_espera(emergencias_por_horas[3])
     
     # Resultados de los Triages
-    triages = Triage.objects.filter(fecha__range=[fecha0,fecha]).values('nivel').annotate(Count('nivel')).order_by('nivel')
+    triages = Triage.objects.filter(fecha__range=[fecha_inicio,fecha_fin]) \
+              .values('nivel').annotate(Count('nivel')).order_by('nivel')
     triages = [[i['nivel'],i['nivel__count']] for i in triages]
     triagesBien = [0,0,0,0,0]
     for i in triages:
@@ -480,18 +547,31 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     triages = []
     for i in range(5):
       triages.append([(i+1),triagesBien[i]])
-    egresos = [['Total',total],['Menos de 2 horas',horas0a2],['2 a 4 horas',horas2a4],['4 a 6 horas',horas4a6],['Más de 6 horas',horas6aM]]
-    info = {'triages':triages,'fecha':date.today(),'inicio':fecha0,'fin':fecha-timedelta(days=1),'sig':sig_sem,'total_ingresos':len(ingresos),'total_egresos':total,'egresos':egresos}
-    return render_to_response('estadisticas.html',info,context_instance=RequestContext(request))
+    egresos = [['Total',total_egresos],['Menos de 2 horas',horas[0]],
+                ['2 a 4 horas',horas[1]],['4 a 6 horas',horas[2]],
+                ['Más de 6 horas',horas[3]]
+              ]
+    info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
+            'fin':fecha_fin-timedelta(days=1),'sig':siguiente_semana,
+             'total_ingresos':len(ingresos_emergencia),
+             'total_egresos':total_egresos,
+             'egresos':egresos, 'emergencias':emergencias_por_horas,
+             'causas':causas
+            }
+    return render_to_response('estadisticas.html',info,
+                              context_instance=RequestContext(request))
 
 def estadisticas_sem(request,dia,mes,anho):
-    fecha = datetime(int(anho),int(mes),int(dia))
-    fecha0 = fecha - timedelta(weeks=1)
-    return redirect('/estadisticas/'+str(fecha0.day)+'-'+str(fecha0.month)+'-'+str(fecha0.year)+'/'+dia+'-'+mes+'-'+anho)
+    fecha_fin = datetime(int(anho),int(mes),int(dia))
+    fecha_inicio = fecha_fin - timedelta(weeks=1)
+    return redirect('/estadisticas/' + str(fecha_inicio.day) + '-' + 
+                      str(fecha_inicio.month) + '-' + str(fecha_inicio.year) +
+                      '/' + dia + '-' + mes + '-' + anho)
     
 def estadisticas(request):
     hoy = datetime.today()
-    return redirect('/estadisticas/'+str(hoy.day)+'-'+str(hoy.month)+'-'+str(hoy.year))
+    return redirect('/estadisticas/' + str(hoy.day) + '-' + str(hoy.month) +
+                    '-' + str(hoy.year))
 
 
 #########################################################
@@ -515,13 +595,14 @@ def emergencia_espera_agregar(request,id_emergencia,id_espera):
     return HttpResponse()
 
 def emergencia_espera_eliminar(request,id_emergencia,id_espera):
-    emer   = get_object_or_404(Emergencia,id=id_emergencia)
+    emer   = get_object_or_404(Emergencia, id = id_emergencia)
     emer.fecha_Esp_act = datetime.now()
     emer.save()
-    espe   = get_object_or_404(Espera,id=id_espera)
-    espera = EsperaEmergencia.objects.get(emergencia=emer,espera=espe)
+    espe   = get_object_or_404(Espera,id = id_espera)
+    espera = EsperaEmergencia.objects.get(emergencia = emer, espera = espe)
     espera.delete() 
-    return HttpResponse()
+    print "Elemento eliminado"
+    return HttpResponse('')
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     emer               = get_object_or_404(Emergencia,id=id_emergencia)
@@ -534,26 +615,39 @@ def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     return HttpResponse()
 
 def emergencia_espera_asignadas(request,id_emergencia):
-    emer        = get_object_or_404(Emergencia,id=id_emergencia)
-    esperasEmer = EsperaEmergencia.objects.filter(emergencia=emer)
-    esp = ""
-    for i in esperasEmer:
-        esp = esp+str(i.espera.nombre)+","
-    return HttpResponse(esp)
+    emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
+    esperasEmergencia = EsperaEmergencia.objects.filter(
+                          emergencia = emergencia_actual
+                        )
+    respuesta_json = {}
+    for indice, esperaEmergencia in enumerate(esperasEmergencia):
+      respuesta_json[indice] = esperaEmergencia.espera.json_dict()
+      respuesta_json[indice]['estado'] = esperaEmergencia.estado
+
+    return HttpResponse(json.dumps(respuesta_json), 
+                        content_type = 'application/json')
 
 def emergencia_espera_noAsignadas(request,id_emergencia):   
+  emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
+  esperas_emergencia = EsperaEmergencia.objects.filter(
+                         emergencia = emergencia_actual
+                       )
 
-    emer = get_object_or_404(Emergencia,id=id_emergencia)
-    esperasEmer = EsperaEmergencia.objects.filter(emergencia=emer)
-    esperasEmer = [str(i.espera.nombre) for i in esperasEmer]
-    esperas     = Espera.objects.filter()
-    esperas     = [str(i.nombre) for i in esperas ]
-    for EspEmer in esperasEmer:
-        esperas.remove(EspEmer)
-    esp = ""
-    for i in esperas:
-        esp = esp+i+","
-    return HttpResponse(esp)
+  # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
+  # las esperas aquellas que ya estan asignadas
+  esperas_asignadas = map( lambda e: e.espera,
+                           esperas_emergencia )
+  esperas_no_asignadas = list(Espera.objects.all())
+  for espera in esperas_asignadas:
+    esperas_no_asignadas.remove(espera)
+
+  # Habiendo calculado los valores, se construye la respuesta en JSON
+  respuesta_json = {}
+  for i, espera in enumerate(esperas_no_asignadas):
+    respuesta_json[i] = espera.json_dict()
+
+  return HttpResponse(json.dumps(respuesta_json),
+                      content_type = 'application/json')
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
@@ -585,6 +679,16 @@ def emergencia_espera_idN(request,id_emergencia):
         esp = esp+i+","
     return HttpResponse(esp)
 
+# Se agrega a la base de datos la fechay hora en que se marco check (finalizo) 
+# para una causa de espera para una emergencia 
+#
+def emergencia_espera_finalizada(request,id_emergencia,id_espera,espera):
+    emer               = get_object_or_404(Emergencia,id=id_emergencia)
+    espera             = get_object_or_404(Espera,id=id_espera)
+    esperaEmer         = EsperaEmergencia.objects.get(espera=espera,emergencia=emer)
+    esperaEmer.hora_fin  = datetime.now()
+    esperaEmer.save() 
+    return HttpResponse('')
 
 #########################################################
 #                                                       #
