@@ -1,197 +1,249 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block scripts %}
-<!--Datetime Picker -->
-<script type="text/javascript" src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet" href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-{% endblock %}
-
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <link rel="stylesheet"
+        href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+{% endblock %} 
 {% block cuerpo %}
-{% if mensaje %}
-{{ mensaje }}
-{% endif %}
-<div class="row">
-  <div class="cuadroGrande span7 centrar">
-    <h4>Calcular Triage</h4>
 
-<div class="tabbable"> <!-- Only required for left/right tabs -->
-  <ul class="nav nav-tabs" id="myTab">
-  	<li id="litab4" class="active" ><a href="#tab4" data-toggle="tab">Evaluaci&oacute;n</a></li>
-    <li id="litab1" ><a href="#tab1" data-toggle="tab">Pregunta 1</a></li>
-    <li id="litab2"><a href="#tab2" data-toggle="tab">Pregunta 2</a></li>
-    <li id="litab3"><a href="#tab3" data-toggle="tab">Pregunta 3</a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane text-center" id="tab1">
-      <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
-      <a class="btn btn-danger" href="/emergencia/{{idE}}/t1">Si</a>
-      <a id="no_inmediata" class="btn" href="#">No</a>
+  {% if mensaje %} 
+    {{ mensaje }} 
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span7 centrar">
+      <h4>Calcular Triage</h4>
+  
+      <div class="tabbable">
+        <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs" id="myTab">
+          <li id="litab4" class="active">
+            <a  href="#tab4"
+                data-toggle="tab">
+              Evaluaci&oacute;n
+            </a>
+          </li>
+          <li id="litab1">
+            <a href="#tab1" data-toggle="tab">Pregunta 1</a>
+          </li>
+          <li id="litab2">
+            <a href="#tab2" data-toggle="tab">Pregunta 2</a>
+          </li>
+          <li id="litab3">
+            <a href="#tab3" data-toggle="tab">Pregunta 3</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane text-center" id="tab1">
+            <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
+            <a class="btn btn-danger" href="/emergencia/{{idE}}/t1">
+              Si
+            </a> 
+            <a id="no_inmediata" class="btn" href="#">
+              No
+            </a>
+          </div>
+  
+          <div class="tab-pane text-center" id="tab2">
+            <h4>¿Este Paciente Puede Esperar?</h4>
+            <a id="si_espera" class="btn btn-primaryt" href="#">
+              Si
+            </a>
+            <a class="btn btn-warning" href="/emergencia/{{idE}}/t2">
+              No
+            </a>
+          </div>
+  
+          <div class="tab-pane text-center" id="tab3">
+            <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
+            <a class="btn btn-primary" href="/emergencia/{{idE}}/t5">
+              Ninguno
+            </a>
+            <a class="btn btn-success" href="/emergencia/{{idE}}/t4">
+              Uno
+            </a>
+            <a id="recursos" class="btn btn-warning" href="#">
+              Varios
+            </a>
+          </div>
+  
+          <div class="tab-pane active" id="tab4">
+            <form name="calcularTriage" 
+                  class="tablaAgregar" 
+                  method="post"
+                  action="/emergencia/{{idE}}/triage/calcular">
+              {% csrf_token %}
+              <table>
+                <tr>
+                  <td>{{form.fecha.label}}</td>
+                  <td>
+                    <div id="ingreso_picker" class="input-append">
+                      {{form.fecha}}
+                      <span id="ahora" class="btn">
+                        Ahora
+                      </span> 
+                      <span class="add-on"> 
+                        <i data-time-icon="icon-time"
+                          data-date-icon="icon-calendar"> 
+                        </i>
+                      </span>
+                    </div> <script type="text/javascript">
+                      $(function() {
+                      $('#ingreso_picker').datetimepicker({
+                      language: 'pt-BR'
+                      });
+                      });
+                    </script>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.motivo.label}}</td>
+                  <td>{{form.motivo}}</td>
+                </tr>
+                <tr>
+                  <td>{{form.ingreso.label}}</td>
+                  <td>{{form.ingreso}}</td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_tmp.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_tmp}} 
+                      <span class="add-on">
+                        &deg;
+                        Centigrados
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_fc.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_fc}} 
+                      <span class="add-on">
+                        por minuto
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_fr.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_fr}} 
+                      <span class="add-on">
+                        por minuto
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_pa.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_pa}} 
+                      <span class="add-on">
+                        mmHg
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_pb.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_pb}} 
+                      <span class="add-on">
+                        mmHg
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{form.signos_saod.label}}</td>
+                  <td>
+                    <div class="input-append">
+                      {{form.signos_saod}} 
+                      <span class="add-on">
+                        %
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Escala AVPU</td>
+                  <td>{{form.signos_avpu}}</td>
+                <tr>
+                  <td>Dolor</td>
+                  <td>{{form.signos_dolor}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <input class="btn btn-primary" 
+                           type="submit"
+                           value="Ingresar" />
+                  </td>
+                </tr>
+              </table>
+            </form>
+  
+          </div>
+        </div>
+      </div>
+  
     </div>
-
-    <div class="tab-pane text-center" id="tab2">
-      <h4>¿Este Paciente Puede Esperar?</h4>
-      <a id="si_espera"class="btn btn-primaryt" href="#">Si</a>
-      <a class="btn btn-warning" href="/emergencia/{{idE}}/t2">No</a>
-    </div>
-
-    <div class="tab-pane text-center" id="tab3">
-      <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
-      <a class="btn btn-primary" href="/emergencia/{{idE}}/t5">Ninguno</a>
-      <a class="btn btn-success" href="/emergencia/{{idE}}/t4">Uno</a>
-      <a id="recursos" class="btn btn-warning" href="#">Varios</a>     
-    </div>
-
-    <div class="tab-pane active" id="tab4">
-    <form name="calcularTriage" class="tablaAgregar" method="post" action="/emergencia/{{idE}}/triage/calcular">
-      {% csrf_token %}
-      <table>
-	<tr>
-	  <td> {{form.fecha.label}} </td>
-	  <td>
-	    <div id="ingreso_picker" class="input-append">
-	      {{form.fecha}}
-	      <span id="ahora" class="btn">Ahora</span>
-	      <span class="add-on">
-		<i data-time-icon="icon-time" data-date-icon="icon-calendar">
-		</i>
-	      </span>
-	    </div>
-	    <script type="text/javascript">
-	      $(function() {
-	      $('#ingreso_picker').datetimepicker({
-	      language: 'pt-BR'
-	      });
-	      });
-	    </script>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.motivo.label}}</td>
-	  <td>{{form.motivo}}</td>
-	</tr>
-	<tr>
-	  <td>{{form.ingreso.label}}</td>
-	  <td>{{form.ingreso}}</td>
-	</tr>            
-	<tr>
-	  <td>{{form.signos_tmp.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_tmp}}
-	      <span class="add-on">&deg; Centigrados</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.signos_fc.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_fc}}
-	      <span class="add-on">por minuto</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.signos_fr.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_fr}}
-	      <span class="add-on">por minuto</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.signos_pa.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_pa}}
-	      <span class="add-on">mmHg</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.signos_pb.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_pb}}
-	      <span class="add-on">mmHg</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>{{form.signos_saod.label}}</td>
-	  <td>
-	    <div class="input-append">
-	      {{form.signos_saod}}
-	      <span class="add-on">%</span>
-	    </div>
-	  </td>
-	</tr>
-	<tr>
-	  <td>Escala AVPU</td>
-	  <td>{{form.signos_avpu}}</td>
-
-	<tr>
-	  <td>Dolor</td>
-	  <td>{{form.signos_dolor}}</td>
-	</tr>
-	<tr>
-	  <td></td>
-	  <td><input class="btn btn-primary" type="submit" value="Ingresar" /></td>
-	</tr>
-      </table>
-    </form>
-
+    <div class="cuadroGrande span4 centrar">
+      <h4>Imagen Gu&iacute;a</h4>
+      <img src="/static/img/triage.jpg" />
     </div>
   </div>
-</div>    
-
-  </div>
-  <div class="cuadroGrande span4 centrar">
-    <h4>Imagen Gu&iacute;a</h4>
-    <img src="/static/img/triage.jpg" />
-  </div>
-</div>
-{% endblock %}
+{% endblock %} 
 
 {% block scripts2 %}
-  <script type="text/javascript" src="/static/libs/bootstrap/js/bootstrap-tab.js"></script>
+  <script type="text/javascript"
+    src="/static/libs/bootstrap/js/bootstrap-tab.js">
+  </script>
   <script>
-
-$(document).ready(function() {
-    $("#no_inmediata").click(function() {
-      $('#tab1').hide();
-      $('#litab1').removeClass('active');
-      $('#tab2').show();
-      $('#litab2').addClass('active');
+    
+    $(document).ready(function() {
+        $("#no_inmediata").click(function() {
+          $('#tab1').hide();
+          $('#litab1').removeClass('active');
+          $('#tab2').show();
+          $('#litab2').addClass('active');
+        });
+    
+        $("#si_espera").click(function() {
+          $('#tab2').hide();
+          $('#litab2').removeClass('active');
+          $('#tab3').show();
+          $('#litab3').addClass('active');
+        });
+    
+        $("#recursos").click(function() {
+          $('#tab3').hide();
+          $('#litab3').removeClass('active');
+          $('#tab4').show();
+          $('#litab4').addClass('active');
+        });
+    
+        $("#ahora").click(function() {
+      var currentTime = new Date()
+      var mes = currentTime.getMonth() + 1;
+      var dia = currentTime.getDate();
+      var ano = currentTime.getFullYear();
+      
+      var horas    = currentTime.getHours()
+      var minutos  = currentTime.getMinutes()
+      var segundos = currentTime.getSeconds()
+      $("#id_fecha").val(dia+"/"+mes+"/"+ano+" "+horas+":"+minutos+":"+segundos)
+        });
+    
+    
     });
-
-    $("#si_espera").click(function() {
-      $('#tab2').hide();
-      $('#litab2').removeClass('active');
-      $('#tab3').show();
-      $('#litab3').addClass('active');
-    });
-
-    $("#recursos").click(function() {
-      $('#tab3').hide();
-      $('#litab3').removeClass('active');
-      $('#tab4').show();
-      $('#litab4').addClass('active');
-    });
-
-    $("#ahora").click(function() {
-  var currentTime = new Date()
-  var mes = currentTime.getMonth() + 1;
-  var dia = currentTime.getDate();
-  var ano = currentTime.getFullYear();
-  
-  var horas    = currentTime.getHours()
-  var minutos  = currentTime.getMinutes()
-  var segundos = currentTime.getSeconds()
-  $("#id_fecha").val(dia+"/"+mes+"/"+ano+" "+horas+":"+minutos+":"+segundos)
-    });
-
-
-});
   </script>
 {% endblock %}

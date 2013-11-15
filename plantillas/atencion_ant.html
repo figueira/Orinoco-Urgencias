@@ -1,27 +1,38 @@
 <!--script type="text/javascript" src="/static/libs/js/jquery.min.js"></script-->
 {% if mensaje %}
-   <center style="color:red">{{mensaje}}</center>
+   <center style="color:red">
+     {{mensaje}}
+   </center>
 {% endif %}
-    <script>
-      function envia2(pag){
-        $('#Dant').load(pag);
-      }
-    </script>
-    <span3>
-<div class="btn-group btn-group-vertical">
-    <div style='padding:2px'>    
-        <input class="btn btn-info" style="width:100px" type="button" value="Medicos" 
-          onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/medica')" />
-    </div>
-    <div style='padding:2px'>
-        <input class="btn btn-info" type="button" style="width:100px" value="Quirurgicos" 
-          onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')"/>
-    </div>
-    <div style='padding:2px'>
-        <input class="btn btn-info" style="width:100px" type="button" value="Alergicos" 
-          onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/alergia')"/>
-    </div>
-</div>
+<script>
+  function envia2(pag){
+    $('#Dant').load(pag);
+  }
+</script>
+<span3>
+  <div class="btn-group btn-group-vertical">
+      <div style='padding:2px'>    
+          <input class="btn btn-info" 
+                 style="width:100px" 
+                 type="button" 
+                 value="Medicos" 
+                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/medica')" />
+      </div>
+      <div style='padding:2px'>
+          <input class="btn btn-info" 
+                 type="button" 
+                 style="width:100px" 
+                 value="Quirurgicos" 
+                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')"/>
+      </div>
+      <div style='padding:2px'>
+          <input class="btn btn-info" 
+                 style="width:100px" 
+                 type="button" 
+                 value="Alergicos" 
+                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/alergia')"/>
+      </div>
+  </div>
 </span3>
 
         
