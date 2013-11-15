@@ -63,11 +63,13 @@ $(document).ready(
   {% if lista %}
 
     <table class="table table-bordered" style="font-size: 22px;">
-      <tr>
+      <tr> 
 
         <th><center>UBICACI&Oacute;N</center></th>
         <th><center>PACIENTE</center></th>
+        {% if titulo != "Atendidos" and titulo != "Observacion" and titulo != "Ambulatorio" %}
         <th><center>NIVEL DE TRIAGE</center></th>
+        {% endif %}
         <th><center>CAUSAS DE ESPERA</center></th>
         <th>
           <center>TIEMPO DE ATENCI&Oacute;N</center>
@@ -90,6 +92,7 @@ $(document).ready(
                 {% csrf_token %}
                 <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                   <option value="nada">--</option>
+                  <option value="egreso">Egreso</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -122,6 +125,7 @@ $(document).ready(
             {% csrf_token %}
             <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                 <option value="nada">--</option>
+                <option value="egreso">Egreso</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -153,16 +157,13 @@ $(document).ready(
 
         {% endif %}
         
-         <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
-          <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
-          </a>
 
         <td><span class="nombreLista"><a href='/paciente/{{ l.paciente.id }}'>{{l.paciente}}</a></span></td>
-        
-        <td class='tdTriage'>{% if l.triage != 0 %}
+        {% if titulo != "Atendidos" and titulo != "Observacion" and titulo != "Ambulatorio" %}
+        <td class='tdTriage'>{% if l.triage != 0 %}<center>
           <a href="/emergencia/{{l.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
           <img src="/static/img/estados/nivel{{ l.triage }}.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ l.triage }}"/>
-          </a>
+          </a></center>
           {% else %}
           <a href="/emergencia/{{l.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
           <img src="/static/img/estados/nivel0.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ l.triage }}"/>
@@ -172,6 +173,7 @@ $(document).ready(
 
           {% endif %}
         </td>
+        {% endif %}
 
 	<td class='tdEspera'>
      <span id='espera{{l.id}}' class='espera' data-html="true" data-toggle="popover" data-placement="bottom" title="" data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" idEmer="{{l.id}}" >
