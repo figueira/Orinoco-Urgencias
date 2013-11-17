@@ -1,124 +1,161 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <title>Historia Medica</title>
+  <head>
+    <title>
+      Historia Medica
+    </title>
     <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
     <style type="text/css">
-            body {
-                font-size: 12px;
-                margin: 20px;
-                font-family: 'Raleway', sans-serif;
-            }
-
-            .titulo {
-                font-size: 20px;
-                text-align: center;
-                font-weight: bold;
-                /*color: #A9D0F5;*/
-                color: #47464E;
-                text-decoration:underline;
-            }
-
-            .subtitulos {
-                font-size: 16px;
-                background-color: #A9D0F5;
-                padding:2px;
-                border:1px;
-                border-width:1px;
-            }
-
-            .fecha {
-                text-align: right;
-            }
-
-            .izquierda{
-                padding: 5px;
-                text-align: center;
-                /*border-style:groove;
-                border-width:2px;*/
-                
-
-            }
-            p.main {
-                text-align:justify;
-            }
-            
-
-            .left{
-                float: left;
-                /*text-align: left;*/
-                /*border-width:2px;*/
-            }
-            .right{
-                text-align: right;
-                /*float: right;*/
-            }
-
-            .bloque{
-                border-style:solid;
-                border-width:1px;
-                background-color:#CBC5B8;
-            }
+      body {
+        font-size: 12px;
+        margin: 20px;
+        font-family: 'Raleway', sans-serif;
+      }
+      
+      .titulo {
+        font-size: 20px;
+        text-align: center;
+        font-weight: bold;
+        /*color: #A9D0F5;*/
+        color: #47464E;
+        text-decoration: underline;
+      }
+      
+      .subtitulos {
+        font-size: 16px;
+        background-color: #A9D0F5;
+        padding: 2px;
+        border: 1px;
+        border-width: 1px;
+      }
+      
+      .fecha {
+        text-align: right;
+      }
+      
+      .izquierda {
+        padding: 5px;
+        text-align: center;
+        /*border-style:groove;
+                      border-width:2px;*/
+      }
+      
+      p.main {
+        text-align: justify;
+      }
+      
+      .left {
+        float: left;
+        /*text-align: left;*/
+        /*border-width:2px;*/
+      }
+      
+      .right {
+        text-align: right;
+        /*float: right;*/
+      }
+      
+      .bloque {
+        border-style: solid;
+        border-width: 1px;
+        background-color: #CBC5B8;
+      }
     </style>
-    </head>  
-    <body> 
-        <header>
-            <div class="left">
-                <!-- <div class="logo">Foto Paciente</div> -->
-            </div>
-            <div class="right">
-                <p>
-                    <h4>Centro M&eacute;dico</h4>
-                    Direcci&oacute;n<br>
-                    Tel&eacute;fonos
-                </p>
-            </div>
-        </header>
-        <p class= "titulo">HISTORIAL M&Eacute;DICO ELECTR&Oacute;NICO</p>
-        <div class="cuerpo">
-            <div class="bloque">
-                <p><h4 class = "subtitulos">1. IDENTIFICACI&Oacute;N</h4>
-                    <b>  1.1.- Nombre del Paciente:</b> {{ emergencia.paciente.nombres }} {{ emergencia.paciente.apellidos }} <br>
-                <b>  1.2.- Sexo: </b> {{ emergencia.paciente.sexoR }} <br>
-                <b>  1.3.- Edad:</b> {{emergencia.paciente.edad}} <br>
-                <b>  1.4.- C&eacute;dula de identidad:</b> {{emergencia.paciente.cedula}} <br>
-                <b>1.5.- Persona de Contacto:</b> {{ emergencia.paciente.contacto_nom}} <br>
-                <b>1.6.- Direcci&oacute;n:</b> {{ emergencia.paciente.direccion}} <br> 
-                <b>1.7.- Tel&eacute;fono</b>  {{ emergencia.paciente.tlf_casa}}<br>
-                <b>1.8.- Correo Electr&oacute;nico</b> {{ emergencia.paciente.email}}</p>
-
-                
-            </div>
-            <div class="bloque">
-                <p ><h4 class = "subtitulos">2. M&Oacute;DULO DE TRIAGE</h4>
-                </p>
-                <b>  2.1.- Fecha y hora de Ingreso a triage:</b> {{ triage.fechaR }} <br>
-                <strong>2.2.- Recursos que necesita: </strong>{{triage.recursos}} <br>
-                <strong>2.3.- Motivo de Ingreso: </strong>{{ttriage.motivo}} <br>
-                <strong>2.4.- Temperatura: </strong>{{triage.signos_tmp}} &deg; Centigrados <br>
-                <strong>2.5.- Frecuencia Card&iacute;aca: </strong>{{triage.signos_fc}} por minuto <br>
-                <strong>2.6.- Frecuencia Respiratoria: </strong>{{triage.signos_fr}} por  minuto <br>
-                <strong>2.7.- Presi&oacute;n Sist&oacute;lica: </strong>{{triage.signos_pa}} mmHg <br>
-                <strong>2.8.- Presi&oacute;n Diast&oacute;lica: </strong>{{triage.signos_pb}} mmHg <br>
-                <strong>2.9.- Saturaci&oacute;n de Ox&iacute;geno: </strong>{{triage.signos_saod}} % <br>
-                <strong>2.10.- Escala AVPU: </strong>{{triage.signos_avpu}} <br>
-                <strong>2.11.- Dolor: </strong>{{triage.signos_dolor}} <br>
-                <strong>2.12.- NIVEL: </strong>{{triage.nivel}} <br>
-            </div>
-            <div class="bloque">
-                <p ><h4 class = "subtitulos">3. M&Oacute;DULO DE ATENCI&Oacute;N EN EL DEPARTAMENTO DE EMERGENCIA</h4>
-                    <b>  3.1.- Fecha y hora de la Atenci&oacute;n:</b> {{ atencion.horaA }} <br>
-                <b>  3.2.- Responsable de la Atenci&oacute;n: </b> {{ emergencia.responsable }} <br>
-                <b>  3.3.- &Aacute;rea de la Atenci&oacute;n:</b> {{triage.areaAtencion}} <br>
-                <b>  3.4.- Enfermedad Actual:</b> {{enfA.narrativa}} <br>
-                <b>  3.5.- Antecedentes Pertinentes: </b> <br>
-                <b>3.6.- Ex&aacute;men F&iacute;sico:</b> <br> 
-                <b>3.7.- Indicaciones:</b> dieta {%if dieta%}{{dieta.indicacion}}({{dieta.dieta_OB}}){% endif%}, medicamentos {% for m in medicamento %} {{m.indicacion}}({{m.med_Dosis}} {{m.med_Conc}}), {%endfor%}<br>
-                <b>3.8.- Diagn&oacute;stico Final: </b> {% for d in diags %} {{d.diagnostico.nombreD}},{%endfor%} <br>
-                 <b>3.8.- Destino Definitivo: </b></p>
-                
-            </div>
-        </div>
-        <footer><p class = "fecha"> Caracas, {{ingreso}}</p><br/></footer>
-    </body>
+  </head>
+  <body>
+    <header>
+      <div class="left">
+        <!-- <div class="logo">Foto Paciente</div> -->
+      </div>
+      <div class="right">
+        <p>
+          <h4>
+            Centro M&eacute;dico
+          </h4>
+          Direcci&oacute;n<br> 
+          Tel&eacute;fonos
+        </p>
+      </div>
+    </header>
+    
+    <p class="titulo">
+      HISTORIAL M&Eacute;DICO ELECTR&Oacute;NICO
+    </p>
+    <div class="cuerpo">
+      <div class="bloque">
+        <p>
+          <h4 class="subtitulos">
+            1. IDENTIFICACI&Oacute;N
+          </h4>
+          <b> 1.1.- Nombre del Paciente:</b> {{ emergencia.paciente.nombres }}
+          {{ emergencia.paciente.apellidos }} <br> 
+          <b> 1.2.- Sexo: </b> {{emergencia.paciente.sexoR }} <br> 
+          <b> 1.3.- Edad:</b> {{emergencia.paciente.edad}} <br> 
+          <b> 1.4.- C&eacute;dula de identidad:</b> 
+          {{emergencia.paciente.cedula}} <br> 
+          <b>1.5.- Persona de Contacto:</b> 
+          {{ emergencia.paciente.contacto_nom}} <br>
+          <b>1.6.- Direcci&oacute;n:</b> {{ emergencia.paciente.direccion}} <br>
+          <b>1.7.- Tel&eacute;fono</b> {{ emergencia.paciente.tlf_casa}}<br>
+          <b>1.8.- Correo Electr&oacute;nico</b> {{ emergencia.paciente.email}}
+        </p>
+  
+      </div>
+      <div class="bloque">
+        <p>
+          <h4 class="subtitulos">
+            2. M&Oacute;DULO DE TRIAGE
+          </h4>
+        </p>
+        <b> 2.1.- Fecha y hora de Ingreso a triage:</b> {{ triage.fechaR }} <br>
+        <strong>2.2.- Recursos que necesita: </strong>{{triage.recursos}} <br>
+        <strong>2.3.- Motivo de Ingreso: </strong>{{ttriage.motivo}} <br>
+        <strong>2.4.- Temperatura: </strong>{{triage.signos_tmp}} &deg;
+          Centigrados <br> 
+        <strong>2.5.- Frecuencia Card&iacute;aca: </strong>{{triage.signos_fc}}
+          por minuto <br> 
+        <strong>2.6.- Frecuencia Respiratoria: </strong>{{triage.signos_fr}} por
+          minuto <br> 
+        <strong>2.7.- Presi&oacute;n Sist&oacute;lica: </strong>
+          {{triage.signos_pa}} mmHg <br>
+        <strong>2.8.- Presi&oacute;n Diast&oacute;lica: </strong>
+          {{triage.signos_pb}}mmHg <br> 
+        <strong>2.9.- Saturaci&oacute;n de Ox&iacute;geno: </strong>
+          {{triage.signos_saod}} % <br> 
+        <strong>2.10.- Escala AVPU: </strong>{{triage.signos_avpu}} <br> 
+        <strong>2.11.- Dolor: </strong>{{triage.signos_dolor}} <br> 
+        <strong>2.12.- NIVEL: </strong>{{triage.nivel}} <br>
+      </div>
+      <div class="bloque">
+        <p>
+          <h4 class="subtitulos">
+            3. M&Oacute;DULO DE ATENCI&Oacute;N EN EL DEPARTAMENTO DE EMERGENCIA
+          </h4>
+          <b> 3.1.- Fecha y hora de la Atenci&oacute;n:</b> {{ atencion.horaA
+            }} <br> 
+          <b> 3.2.- Responsable de la Atenci&oacute;n: </b>
+            {{emergencia.responsable}} <br> 
+          <b> 3.3.- &Aacute;rea de la Atenci&oacute;n:</b> 
+            {{triage.areaAtencion}} <br> 
+          <b> 3.4.- Enfermedad Actual:</b> {{enfA.narrativa}} <br> 
+          <b> 3.5.- Antecedentes Pertinentes: </b> 
+          <br> <b>3.6.- Ex&aacute;men F&iacute;sico:</b> <br> 
+          <b>3.7.- Indicaciones:</b> dieta {%if dieta%}{{dieta.indicacion}}
+            ({{dieta.dieta_OB}}){% endif%}, medicamentos 
+            {% for m in medicamento %} {{m.indicacion}}({{m.med_Dosis}} 
+            {{m.med_Conc}}), {%endfor%}<br>
+          <b>3.8.- Diagn&oacute;stico Final: </b> {% for d in diags %}
+            {{d.diagnostico.nombreD}},{%endfor%} <br> 
+          <b>3.8.- Destino Definitivo: </b>
+        </p>
+  
+      </div>
+    </div>
+    <footer>
+      <p class="fecha">
+        Caracas, {{ingreso}}
+      </p>
+      <br />
+    </footer>
+  </body>
 </html>

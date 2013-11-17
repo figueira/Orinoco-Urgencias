@@ -1,40 +1,76 @@
-<link rel="stylesheet" type="text/css" href="/static/css/Atencion/atencion.css" /> 
-<script src ="/static/scripts/efectos_info_cuerpo.js"> </script>
-<script src ="/static/scripts/atencion_Plan_cuerpo.js"> </script>
- <script>
+<link rel="stylesheet" type="text/css"
+  href="/static/css/Atencion/atencion.css" />
+<script src="/static/scripts/efectos_info_cuerpo.js"> </script>
+<script src="/static/scripts/atencion_Plan_cuerpo.js"> </script>
+<script>
   $(document).ready(function () {
     inputs_de_anomalias();
   });
 </script>
-<div id='div_boton1'>  
-  <button  class="btn btn-small" id="boton1">X</button>
+<div id='div_boton1'>
+  <button class="btn btn-small" id="boton1">X</button>
 </div>
-<center>
-  
-</center>
+<center></center>
 
-{% for parte in partecuerpo %}
-
-  {% if parte.nombre == 'CABEZA_Y_ROSTRO' %}
-    <button id='{{parte.nombre}}' style='width:120px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">CABEZA&nbsp;Y&nbsp;ROSTRO</button>
+{% for parte in partecuerpo %} 
+  {% if parte.nombre == 'CABEZA_Y_ROSTRO'%}
+    <button id='{{parte.nombre}}' 
+            style='width: 120px'
+            class="btn btn-info btn-mini"
+           onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      CABEZA&nbsp;Y&nbsp;ROSTRO
+    </button>
   {% elif parte.nombre == 'EXTREMIDADES_SUPERIORES' %}
-    <button id='{{parte.nombre}}' style='width:170px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">EXTREMIDADES&nbsp;SUPERIORES</button>
+    <button id='{{parte.nombre}}' 
+            style='width: 170px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      EXTREMIDADES&nbsp;SUPERIORES
+    </button>
   {% elif parte.nombre == 'EXTREMIDADES_INFERIORES' %}
-    <button id='{{parte.nombre}}' style='width:170px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">EXTREMIDADES&nbsp;INFERIORES</button>
-  {% elif parte.nombre == 'GENITALES_MASCULINOS' and paciente.sexo == 1  %}
-    <button id='{{parte.nombre}}' style='width:145px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">GENITALES&nbsp;MASCULINOS&nbsp;</button>
+    <button id='{{parte.nombre}}' 
+            style='width: 170px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      EXTREMIDADES&nbsp;INFERIORES
+    </button>
+  {% elif parte.nombre == 'GENITALES_MASCULINOS' and paciente.sexo == 1 %}
+    <button id='{{parte.nombre}}' 
+            style='width: 145px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      GENITALES&nbsp;MASCULINOS&nbsp;
+    </button>
   {% elif parte.nombre == 'GENITALES_FEMENINOS' and paciente.sexo == 2 %}
-    <button id='{{parte.nombre}}' style='width:140px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">GENITALES&nbsp;FEMENINOS</button>
+    <button id='{{parte.nombre}}' 
+            style='width: 140px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      GENITALES&nbsp;FEMENINOS
+    </button>
   {% elif parte.nombre == 'EXAMEN_DE_MAMA' and paciente.sexo == 2 %}
-    <button id='{{parte.nombre}}' style='width:110px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">EXAMEN&nbsp;DE&nbsp;MAMA</button>
+    <button id='{{parte.nombre}}' 
+            style='width: 110px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      EXAMEN&nbsp;DE&nbsp;MAMA
+    </button>
   {% elif parte.nombre == 'EXAMEN_RECTAL' %}
-    <button id='{{parte.nombre}}' style='width:105px' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">EXAMEN&nbsp;RECTAL</button>
-  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre != 'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
-    <button id='{{parte.nombre}}' class="btn btn-info btn-mini" onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">{{parte.nombre}}</button>
-  {% endif %}
+    <button id='{{parte.nombre}}' 
+            style='width: 105px'
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
+      EXAMEN&nbsp;RECTAL
+    </button>
+  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre !=
+  'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
+    <button id='{{parte.nombre}}' 
+            class="btn btn-info btn-mini"
+            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">{{parte.nombre}}
+    </button>
+  {% endif %} 
 {% endfor %}
 
-<div id='Parte_Cuerpo_Guardar' >
-  <div id='div_Parte_Cuerpo'>
-  </div>
-</div>  
+<div id='Parte_Cuerpo_Guardar'>
+  <div id='div_Parte_Cuerpo'></div>
+</div>

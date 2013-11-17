@@ -1,62 +1,76 @@
 {% extends "base.html" %}
 {% block cuerpo %}
-{% if mensaje %}
-{{mensaje}}
-{% endif %}
-<div class="container row">
-  <div class="span12">
-  <h3>Informacion</h3> 
-  </div>
-  <div class="span2">
-    <img src="{{p.src_foto}}">
-  </div>
-  <div class="span4">
-    <h4> {{p.apellidos}}, {{p.nombres}}</h4>
-    <strong>C&eacute;dula:</strong> {{p.cedula}} <br/>
-    <strong>Nombre:</strong> {{p.nombres}} <br/>
-    <strong>Apellido:</strong> {{p.apellidos}}<br/>
-    <strong>Sexo:</strong> {{p.sexoR}}<br/>
-    <strong>Edad:</strong> {{p.edad}}<br/>
-
-    <h4> Contacto </h4>
-    <strong>V&iacute;nculo:</strong> {{p.relacion}} <br/>
-    <strong>Nombre:</strong> {{p.contacto_nom}} <br/>
-    <strong>Tel&eacute;fono:</strong> {{p.contacto_tlf}}<br/>
-  </div>
-
-  <div class="span3">
-    <h4>Signos Vitales</h4>
-    (Ultima Actualizaci&oacute;n: {{ea.fecha_triage}})<br/>
-    <strong>Temperatura:</strong> {{p.signos_tmp}}<br/>
-    <strong>Frecuencia Card&iacute;aca:</strong> {{p.signos_fc}}<br/>
-    <strong>Frecuencia Respiratoria:</strong> {{p.signos_fr}}<br/>
-    <strong>Presi&oacute;n Sist&oacute;lica:</strong> {{p.signos_pa}}<br/>
-    <strong>Presi&oacute;n Diast&oacute;lica:</strong> {{p.signos_pb}}<br/>    
-    <strong>Saturaci&oacute;n de Ox&iacute;geno:</strong> {{p.signos_saod}}<br/>    
-  </div>
-
-  {% if ea.hora_egreso == None %}
-  <div class="span12">  
-  <h3>Acciones</h3>
-    {% if ea.triage == 0 %}<a href="/emergencia/{{ea.id}}/triage/calcular" class="btn btn-primary">Aplicar Triage</a>{% endif %}
-    <a href='/emergencia/atencion/{{ ea.id }}/historia' class="btn btn-primary">Realizar Atenci&oacute;n </a>
-    <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">Ver Informe Triage</a> 
-    <a href="/emergencia/{{ea.id}}/daralta" class="btn btn-primary">Egreso</a> 
-  </div>
-
-{% endif %}
-  <div class="span12">
-  <h3>Historia M&eacute;dica Completa</h3>
-    {% for e in es %}
-      <h4> Emergencia ID:{{ e.id }} </h4>
-        <strong>Inicio:</strong> {{ e.hora_ingreso }}
-        <strong>Fin:</strong> {% if e.hora_egreso %}{{ e.hora_egreso }}{%else%}Activa{%endif%}<br/>
-        {% for t in e.triages %}
-
-          <strong>Triage - Resultado:</strong> {{ t.nivel}}
-        {% endfor %}
-    {% endfor %}
-  </div>
+  {% if mensaje %}
+  {{mensaje}}
+  {% endif %}
+  <div class="container row">
+    <div class="span12">
+      <h3>Informacion</h3> 
+    </div>
+    
+    <div class="span2">
+      <img src="{{p.src_foto}}">
+    </div>
+    
+    <div class="span4">
+      <h4> {{p.apellidos}}, {{p.nombres}}</h4>
+      <strong>C&eacute;dula:</strong> {{p.cedula}} <br/>
+      <strong>Nombre:</strong> {{p.nombres}} <br/>
+      <strong>Apellido:</strong> {{p.apellidos}}<br/>
+      <strong>Sexo:</strong> {{p.sexoR}}<br/>
+      <strong>Edad:</strong> {{p.edad}}<br/>
   
-</div>
+      <h4> Contacto </h4>
+      <strong>V&iacute;nculo:</strong> {{p.relacion}} <br/>
+      <strong>Nombre:</strong> {{p.contacto_nom}} <br/>
+      <strong>Tel&eacute;fono:</strong> {{p.contacto_tlf}}<br/>
+    </div>
+  
+    <div class="span3">
+      <h4>Signos Vitales</h4>
+      (Ultima Actualizaci&oacute;n: {{ea.fecha_triage}})<br/>
+      <strong>Temperatura:</strong> {{p.signos_tmp}}<br/>
+      <strong>Frecuencia Card&iacute;aca:</strong> {{p.signos_fc}}<br/>
+      <strong>Frecuencia Respiratoria:</strong> {{p.signos_fr}}<br/>
+      <strong>Presi&oacute;n Sist&oacute;lica:</strong> {{p.signos_pa}}<br/>
+      <strong>Presi&oacute;n Diast&oacute;lica:</strong> {{p.signos_pb}}<br/>    
+      <strong>Saturaci&oacute;n de Ox&iacute;geno:
+        </strong> {{p.signos_saod}}<br/>    
+    </div>
+  
+    {% if ea.hora_egreso == None %}
+      <div class="span12">  
+        <h3>Acciones</h3>
+        {% if ea.triage == 0 %}
+          <a href="/emergencia/{{ea.id}}/triage/calcular" 
+             class="btn btn-primary">
+            Aplicar Triage
+          </a>
+        {% endif %}
+        
+        <a href='/emergencia/atencion/{{ ea.id }}/historia' 
+           class="btn btn-primary">
+          Realizar Atenci&oacute;n 
+        </a>
+        <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">
+          Ver Informe Triage
+        </a> 
+        <a href="/emergencia/{{ea.id}}/daralta" class="btn btn-primary">
+          Egreso
+        </a> 
+      </div>
+    {% endif %}
+    
+    <div class="span12">
+      <h3>Historia M&eacute;dica Completa</h3>
+        {% for e in es %}
+          <h4> Emergencia ID:{{ e.id }} </h4>
+          <strong>Inicio:</strong> {{ e.hora_ingreso }}
+          <strong>Fin:</strong> {% if e.hora_egreso %}{{ e.hora_egreso }}{%else%}Activa{%endif%}<br/>
+          {% for t in e.triages %}
+            <strong>Triage - Resultado:</strong> {{ t.nivel}}
+          {% endfor %}
+        {% endfor %}
+    </div>
+  </div>
 {% endblock %}

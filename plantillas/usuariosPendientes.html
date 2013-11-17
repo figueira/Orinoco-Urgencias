@@ -1,33 +1,47 @@
 {% extends "base.html" %}
-{% block cuerpo %}
-{% if mensaje %}
-{{mensaje}}
-{% endif %}
-<div class="row">
-  <div class="cuadroGrande span12 centrar">
-  	<div class="titulo">Lista de Solicitudes de Usuarios Pendientes</div>
-  	<table class="table table-bordered table-striped">
-    	<tr>
-			  <th>C&eacute;dula</th>
-			  <th>Nombre</th>
-				<th>Sexo</th>
-				<th>Tipo</th>
-				<th>Acciones</th>
-			</tr>
-			{% for l in listaP %}
-			  <tr>
-					<td><span class="nombreLista">{{l.cedula}}</span></td>
-			    <td><span class="nombreLista">{{l.first_name}} {{l.last_name}}</span></td>
-					<td><span class="nombreLista">{{l.sexoR}}</span></td>
-					<td><span class="nombreLista">{{l.tipoR}}</span></td>
-					<td>
-						<a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobar" ><img src="/static/img/usuarios/aprobar.png" title="Autorizar"/></a>
-						<a href="/usuario/pendientes/{{l.usuario.cedula}}/rechazar"><img src="/static/img/usuarios/negar.png" title="Rechazar"/></a>
-						<a href="/usuario/pendientes/{{l.usuario.cedula}}/examinar"><img src="/static/img/usuarios/lupa.png" title="Examinar"/></a>
-					</td>
-			  </tr>
-			{% endfor %}
-		</table>
+  {% block cuerpo %}
+  {% if mensaje %}
+    {{mensaje}}
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <div class="titulo">Lista de Solicitudes de Usuarios Pendientes</div>
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th>C&eacute;dula</th>
+          <th>Nombre</th>
+          <th>Sexo</th>
+          <th>Tipo</th>
+          <th>Acciones</th>
+        </tr>
+        {% for l in listaP %}
+          <tr>
+            <td>
+              <span class="nombreLista">{{l.cedula}}</span>
+            </td>
+            <td>
+              <span class="nombreLista">{{l.first_name}} {{l.last_name}}</span>
+            </td>
+            <td>
+              <span class="nombreLista">{{l.sexoR}}</span>
+            </td>
+            <td>
+              <span class="nombreLista">{{l.tipoR}}</span>
+            </td>
+            <td>
+              <a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobar" >
+                <img src="/static/img/usuarios/aprobar.png" title="Autorizar"/>
+              </a>
+              <a href="/usuario/pendientes/{{l.usuario.cedula}}/rechazar">
+                <img src="/static/img/usuarios/negar.png" title="Rechazar"/>
+              </a>
+              <a href="/usuario/pendientes/{{l.usuario.cedula}}/examinar">
+                <img src="/static/img/usuarios/lupa.png" title="Examinar"/>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
-</div>
 {% endblock %}
