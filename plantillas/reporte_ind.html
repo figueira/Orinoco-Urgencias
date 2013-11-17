@@ -1,149 +1,150 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <title>Historia Medica</title>
-    <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
-<!--     <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css"> -->
-    <style type="text/css">
-            body {
-                font-size: 12px;
-                margin: 20px;
-                font-family: 'Raleway', sans-serif;
-            }
-
-            .titulo {
-                font-size: 20px;
-                text-align: center;
-                font-weight: bold;
-                /*color: #A9D0F5;*/
-                color: #47464E;
-                text-decoration:underline;
-            }
-
-            .subtitulos {
-                font-size: 16px;
-                background-color: #A9D0F5;
-                padding:2px;
-                border:1px;
-                border-width:1px;
-            }
-
-            .fecha {
-                text-align: right;
-            }
-
-            .izquierda{
-                padding: 5px;
-                text-align: center;
-                /*border-style:groove;
-                border-width:2px;*/
-                
-
-            }
-            p.main {
-                text-align:justify;
-            }
-            
-
-            .left{
-                float: left;
-                /*text-align: left;*/
-                /*border-width:2px;*/
-            }
-            .right{
-                text-align: right;
-                /*float: right;*/
-            }
-    </style>
-    </head>  
-    <body> 
-        <header>
-            <div class="left">
-                <!-- <div class="logo">Foto Paciente</div> -->
-            </div>
-            <div class="right">
-                <p>
-                    <h4>Centro M&eacute;dico</h4>
-                    Direcci&oacute;n<br>
-                    Tel&eacute;fonos
-                </p>
-            </div>
-        </header>
-        <p class= "titulo">REPORTE INDICACIONES</p>
-        <div class="cuerpo">
-            <table id="tLIST"class="table table-bordered table-hover">
-                <thead>
-                    <tr class= "btn-info ">
-                        <th>
-                            <center>Hora</center>
-                        </th>
-                        <th>
-                            <center>Tipo</center>
-                        </th>
-                        <th>
-                            <center>Nombre</center>
-                        </th>
-                        <th>
-                            <center>Status</center>
-                        </th>
-
-
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in indicaciones %}
-      <tr>
-          <td>
-              <center>
+  <head>
+  <title>Historia Medica</title>
+  <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
+  <!--     <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css"> -->
+  <style type="text/css">
+    body {
+      font-size: 12px;
+      margin: 20px;
+      font-family: 'Raleway', sans-serif;
+    }
+    
+    .titulo {
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+      /*color: #A9D0F5;*/
+      color: #47464E;
+      text-decoration: underline;
+    }
+    
+    .subtitulos {
+      font-size: 16px;
+      background-color: #A9D0F5;
+      padding: 2px;
+      border: 1px;
+      border-width: 1px;
+    }
+    
+    .fecha {
+      text-align: right;
+    }
+    
+    .izquierda {
+      padding: 5px;
+      text-align: center;
+      /*border-style:groove;
+                    border-width:2px;*/
+    }
+    
+    p.main {
+      text-align: justify;
+    }
+    
+    .left {
+      float: left;
+      /*text-align: left;*/
+      /*border-width:2px;*/
+    }
+    
+    .right {
+      text-align: right;
+      /*float: right;*/
+    }
+  </style>
+</head>
+  <body>
+    <header>
+      <div class="left">
+      </div>
+      <div class="right">
+        <p>
+          <h4>Centro M&eacute;dico</h4>
+          Direcci&oacute;n<br> Tel&eacute;fonos
+        </p>
+      </div>
+    </header>
+    
+    <p class="titulo">REPORTE INDICACIONES</p>
+    <div class="cuerpo">
+      <table id="tLIST" class="table table-bordered table-hover">
+        <thead>
+          <tr class="btn-info ">
+            <th>
+              <center>Hora</center>
+            </th>
+            <th>
+              <center>Tipo</center>
+            </th>
+            <th>
+              <center>Nombre</center>
+            </th>
+            <th>
+              <center>Status</center>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in indicaciones %}
+            <tr>
+              <td>
+                <center>
                   <p>{{i.horaA}}</p>
-              </center>
-          </td>
-          <td>
-              <center>
+                </center>
+              </td>
+              <td>
+                <center>
                   {% if i.indicacion.tipo == 'dieta'%}
-                  <p style="width:70px;height:12px"> Dieta </p>
+                    <p style="width: 70px; height: 12px">Dieta</p>
                   {% elif i.indicacion.tipo == 'hidrata'%}
-                  <p style="width:70px;height:12px"> Hidrataci&oacute;n </p>
+                    <p style="width: 70px; height: 12px">Hidrataci&oacute;n</p>
                   {% elif i.indicacion.tipo == 'medicamento'%}
-                  <p style="width:70px;height:12px"> Medicamento </p>
+                    <p style="width: 70px; height: 12px">Medicamento</p>
                   {% elif i.indicacion.tipo == 'lab'%}
-                  <p style="width:70px;height:12px"> Diagn&oacute;stico - Laboratorio </p>
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Laboratorio
+                    </p>
                   {% elif i.indicacion.tipo == 'imagen'%}
-                  <p style="width:70px;height:12px"> Diagn&oacute;stico - Imagenolog&iacute;a </p>
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Imagenolog&iacute;a
+                    </p>
                   {% elif i.indicacion.tipo == 'endoscopico'%}
-                  <p style="width:70px;height:12px"> Diagn&oacute;stico - Estudio Endosc&oacute;pico </p>
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Estudio Endosc&oacute;pico
+                    </p>
                   {% elif i.indicacion.tipo == 'valora'%}
-                  <p style="width:70px;height:12px"> Diagn&oacute;stico - Valoraci&oacute;n Especializada </p>
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Valoraci&oacute;n Especializada
+                    </p>
                   {% elif i.indicacion.tipo == 'otros'%}
-                  <p style="width:70px;height:12px"> Diagn&oacute;stico - Otros </p>
-                  
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Otros
+                    </p>
                   {% elif i.indicacion.tipo == 'terapeutico'%}
-                  <p style="width:70px;height:12px"> Terap&eacute;utico </p>
+                    <p style="width: 70px; height: 12px">Terap&eacute;utico</p>
                   {% endif %}
-              </center>
-          </td>
-          <td>
-              <center>
-                <p style="width:250px;height:12px;">{{i.indicacion}}</p>
-                <!-- <p style="width:250px;height:12px;">{{i.indicacion.nombre}}</p> -->
-              </center>
-          </td>
-          <td>
-              <center>
-                <p style="width:250px;height:12px;">{{i.statusA}}</p>
-              </center>
-          </td>
-      </tr>
-      <!-- <tr class="extraINFO">
-        <td colspan="5">
-          <div class="infoE"></div>
-        </td>
-       </tr> -->
-       {% endfor %}
-    </tbody>
-  </table>
-            
-        </div>
-        <footer><p class = "fecha"> Caracas, {{ingreso}}</p><br/></footer>
-    </body>
+                </center>
+              </td>
+              <td>
+                <center>
+                  <p style="width: 250px; height: 12px;">{{i.indicacion}}</p>
+                </center>
+              </td>
+              <td>
+                <center>
+                  <p style="width: 250px; height: 12px;">{{i.statusA}}</p>
+                </center>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <footer>
+      <p class="fecha">Caracas, {{ingreso}}</p>
+      <br />
+    </footer>
+  </body>
 </html>

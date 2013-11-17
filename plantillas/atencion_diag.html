@@ -1,106 +1,152 @@
 {% if "Exitosamente" in mensaje %}
-    <div class= "alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{mensaje}}
-    </div>
+  <div class="alert alert-success">
+    <button type="button" 
+            class="close" 
+            data-dismiss="alert">
+      &times;
+    </button>
+    {{mensaje}}
+  </div>
 {% elif "nombre" in mensaje %}
-    <div class= "alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{mensaje}}
-    </div>
+  <div class="alert alert-error">
+    <button type="button" 
+            class="close" 
+            data-dismiss="alert">
+      &times;
+    </button>
+    {{mensaje}}
+  </div>
 {% endif %}
 
 <script>
-function envia1(pag){
+  function envia1(pag){
     var formu = $('#formDIAG').serialize();
     $.post(pag,formu,function(data){
-        $("#dDiag").html(data);
+      $("#dDiag").html(data);
     });
-}
-function CompruebaCampo(obj){
-  if ($(obj).parents("tr").hasClass("ultimoD")){
-    ultimoD = $(".ultimoD:last");
-    clon = ultimoD.clone();
-    ultimoD.removeClass("ultimoD");
-    clon.insertAfter($(ultimoD));
-    $("tr.ultimoD:last td center input[type='text']").prop("value","");
-    }
   }
-  $(document).ready(function(){
-  $("[rel='tooltip']").tooltip();
-});
+  function CompruebaCampo(obj){
+    if ($(obj).parents("tr").hasClass("ultimoD")){
+      ultimoD = $(".ultimoD:last");
+      clon = ultimoD.clone();
+      ultimoD.removeClass("ultimoD");
+      clon.insertAfter($(ultimoD));
+      $("tr.ultimoD:last td center input[type='text']").prop("value","");
+      }
+    }
+    $(document).ready(function(){
+    $("[rel='tooltip']").tooltip();
+  });
 </script>
 
-<form id= "formDIAG" method="post" action="">
+<form id="formDIAG" method="post" action="">
   {% csrf_token %}
-<center>
-<div id="tablaDIAG" style='height:410px;OVERFLOW: auto;'>
-    <table id="tabDIAG" class="table table-bordered">
-    <caption><p class="lead">Diagn&oacute;sticos Establecidos</p></caption>
-    <thread>
-        <tr class= "btn-info">
+  <center>
+    <div id="tablaDIAG" style='height: 410px; OVERFLOW: auto;'>
+      <table id="tabDIAG" 
+             class="table table-bordered">
+        <caption>
+          <p class="lead">
+            Diagn&oacute;sticos Establecidos
+          </p>
+        </caption>
+        <thread>
+          <tr class="btn-info">
             <th>
-                <center><a rel="tooltip" data-toggle="tooltip" data-original-title="Eliminar"href="#"><i class="icon-trash icon-white"></i></a></center>
+              <center>
+                <a rel="tooltip" 
+                   data-toggle="tooltip"
+                   data-original-title="Eliminar" 
+                   href="#"><i
+                   class="icon-trash icon-white"></i></a>
+              </center>
             </th>
             <th>
-                <center>Hora</center>
+              <center>
+                Hora
+              </center>
             </th>
             <th>
-                <center>Nombre de Diagn&oacute;stico</center>
+              <center>
+                Nombre de Diagn&oacute;stico
+              </center>
             </th>
-        </tr>
-    </thread>
-<tbody>
-    {% for d in diags %}
-    <tr class="well">
-        <td>
-            <center>
-                <input type="checkbox" name="check" value="{{d.id}}" />
-            </center>
-        </td>
-        <td>
-            <center>
-                <p>{{d.horaD}}</p>
-            </center>
-        </td>
-        <td>
-            <center>
-                <input class="input-xxlarge" type="text" name="{{d.id}}nombre" value="{{d.diagnostico.nombreD}}">
-            </center>
-        </td>
-    </tr>
-    {% endfor %}
-    <tr class="ultimoD">
-        <td>
-            <center>
-                <input type="checkbox" name="check" value=""/>
-            </center>
-        </td>
-        <td>
-        </td>
-        <td>
-            <center>
-                <input class="input-xxlarge" placeholder="Especifique diagn&oacute;stico" type="text" name="nuevoDiag" value="" onChange="CompruebaCampo(this)">
-            </center>
-        </td>
-    </tr>
-    </tbody>
-  </table>
-</center>
-</div>
-<br>
+          </tr>
+        </thread>
+        <tbody>
+          {% for d in diags %}
+            <tr class="well">
+              <td>
+                <center>
+                  <input type="checkbox" 
+                         name="check" 
+                         value="{{d.id}}" />
+                </center>
+              </td>
+              <td>
+                <center>
+                  <p>{{d.horaD}}</p>
+                </center>
+              </td>
+              <td>
+                <center>
+                  <input class="input-xxlarge" 
+                         type="text" 
+                         name="{{d.id}}nombre"
+                         value="{{d.diagnostico.nombreD}}">
+                </center>
+              </td>
+            </tr>
+          {% endfor %}
+          <tr class="ultimoD">
+            <td>
+              <center>
+                <input type="checkbox" name="check" value="" />
+              </center>
+            </td>
+            <td></td>
+            <td>
+              <center>
+                <input class="input-xxlarge"
+                  placeholder="Especifique diagn&oacute;stico" type="text"
+                  name="nuevoDiag" value="" onChange="CompruebaCampo(this)">
+              </center>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </center>
+  <br>
 </form>
 <center>
-        <div class="btn-group"> 
-          <button class="btn btn-mini btn-primary" onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/eliminar')"><i class="icon-remove-sign icon-white"></i>&nbsp;Eliminar</button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-mini btn-primary" onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/modificar')"><i class="icon-edit icon-white"></i>Modificar</button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-mini btn-primary" onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/agregar')"><i class="icon-plus icon-white"></i>Agregar</button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-mini btn-primary" onClick="envia1('/emergencia/diagnostico/{{emergencia.id}}')"><i class="icon-arrow-left icon-white"></i>Deshacer</button>
-        </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/eliminar')">
+      <i class="icon-remove-sign icon-white"></i>
+      &nbsp;
+      Eliminar
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/modificar')">
+      <i class="icon-edit icon-white"></i>
+      Modificar
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/diagnostico/agregar')">
+      <i class="icon-plus icon-white"></i>
+      Agregar
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/diagnostico/{{emergencia.id}}')">
+      <i class="icon-arrow-left icon-white"></i>
+      Deshacer
+    </button>
+  </div>
 </center>
