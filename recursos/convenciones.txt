@@ -9,6 +9,11 @@ General:
 
 HTML:
   - Estilos se definen en archivos .css
+  - Las clases en CSS se definen con la convencion de Bootstrap, es decir,
+    palabras en minúsculas separadas por '-'. Por ejemplo:
+    . btn-primary
+    . causas-espera
+    . id-emergencia
   - La asociación de eventos se hace por jQuery, no en el tag.
   - La ubicación de elementos en el DOM se prefire en la jerarquía:
     . Tag

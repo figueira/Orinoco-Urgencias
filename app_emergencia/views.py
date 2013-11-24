@@ -10,7 +10,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext
 
 # General HTML
-from django.shortcuts import render_to_response,redirect,get_object_or_404
+from django.shortcuts import render_to_response, redirect, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Manejo de Informacion de esta aplicacion
@@ -101,13 +101,27 @@ def emergencia_buscar(request):
     return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_todas(request):   
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    emergencias = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    esperas_asignadas = {}
+    esperas_no_asignadas = {}
+
+    for emergencia in emergencias:
+      esperas_asignadas[str(emergencia.id)] = emergencia_esperas_asignadas(emergencia)
+      esperas_no_asignadas[str(emergencia.id)] = emergencia_esperas_no_asignadas(
+                                           emergencia
+                                         )
+
+    print str(esperas_no_asignadas)
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
-    info = { 'lista': lista, 'form': form, 'titulo': titulo }
-    return render_to_response('lista.html', 
-                               info,
-                               context_instance = RequestContext(request))
+    info = { 'emergencias': emergencias,
+             'form': form, 
+             'titulo': titulo,
+             'esperas_asignadas': esperas_asignadas,
+             'esperas_no_asignadas': esperas_no_asignadas }
+    return render(request,
+                  'lista.html', 
+                  info)
 
 def emergencia_listar_triage(request):
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
@@ -614,40 +628,33 @@ def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     espera1.save() 
     return HttpResponse()
 
-def emergencia_espera_asignadas(request,id_emergencia):
-    emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
-    esperasEmergencia = EsperaEmergencia.objects.filter(
-                          emergencia = emergencia_actual
-                        )
-    respuesta_json = {}
-    for indice, esperaEmergencia in enumerate(esperasEmergencia):
-      respuesta_json[indice] = esperaEmergencia.espera.json_dict()
-      respuesta_json[indice]['estado'] = esperaEmergencia.estado
+# Dado un objeto de emergencia, devuelve la lista de causas de eséra que han
+# sido asignadas a ella
+#
+# Entrada: emergencia_buscada -> Objeto Emergencia a buscar
+# Salida: Lista de EsperaEmergencia que han sido asignadas a la emergencia
+def emergencia_esperas_asignadas(emergencia_buscada):
+    esperas_emergencia = EsperaEmergencia.objects.filter(
+                           emergencia = emergencia_buscada
+                         )
+    esperas_asignadas = map(lambda e: e.espera, esperas_emergencia)
+    return esperas_asignadas
 
-    return HttpResponse(json.dumps(respuesta_json), 
-                        content_type = 'application/json')
-
-def emergencia_espera_noAsignadas(request,id_emergencia):   
-  emergencia_actual = get_object_or_404(Emergencia, id = id_emergencia)
-  esperas_emergencia = EsperaEmergencia.objects.filter(
-                         emergencia = emergencia_actual
-                       )
-
+# Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
+# le han sido asignadas
+#
+# Entrada: emergencia_buscada -> Objeto Emergencia a consultar
+# Salida: Lista de EsperaEmergencia que aún no han sido asignadas a la 
+#         emergencia
+def emergencia_esperas_no_asignadas(emergencia_buscada):   
   # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
   # las esperas aquellas que ya estan asignadas
-  esperas_asignadas = map( lambda e: e.espera,
-                           esperas_emergencia )
+  esperas_asignadas = emergencia_esperas_asignadas(emergencia_buscada)
   esperas_no_asignadas = list(Espera.objects.all())
   for espera in esperas_asignadas:
     esperas_no_asignadas.remove(espera)
 
-  # Habiendo calculado los valores, se construye la respuesta en JSON
-  respuesta_json = {}
-  for i, espera in enumerate(esperas_no_asignadas):
-    respuesta_json[i] = espera.json_dict()
-
-  return HttpResponse(json.dumps(respuesta_json),
-                      content_type = 'application/json')
+  return esperas_no_asignadas
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
