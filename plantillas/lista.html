@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+  {% block estilos %}
+    <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
+  {% endblock %}
+
   {% block cuerpo %}
     {% if "Exitosamente" in mensaje %} 
       <div class= "alert alert-success">
@@ -40,32 +44,55 @@
       }
 
       $(document).ready(function(){
+        // Asociacion del evento click sobre las esperas
+        $('.boton-espera').click(function(event){
+          event.preventDefault();
+          var causas_espera = $(this).parent('.espera')
+                                     .first()
+                                     .children('.causas-espera');
+          causas_espera.fadeToggle();
+        });
+
+        // Método que agrega causas de espera a partir de la lista de causas
+        // no asignadas
+        $('.espera-mas').click(function(event){
+          // Construir el elemento a agregar a la lista de causas asignadas
+          var asignadas = $(this).closest('.causas-espera')
+                                 .children('.esperas-asignadas')
+                                 .first();
+          var item_lista = $('<li></li>');
+          asignadas.append(item_lista);
+          
+          // Colocar el logo para eliminar la causa
+          var menos = $('<img> </img>');
+          menos.attr('src', '/static/img/Atencion/menosim.png');
+          menos.addClass('espera-menos');
+          item_lista.append(menos);
+
+          // Colocar el checkbox para marcar la causa como atendida
+          var checkbox = $('<input></input>');
+          checkbox.attr('type', 'checkbox');
+          checkbox.attr('checked', false);
+          item_lista.append(checkbox);
+
+          // Colocar la imagen de la causa de espera
+          var imagen_espera = $(this).siblings('.imagen-espera-lista')
+                                     .first();
+          item_lista.append(imagen_espera);
+
+          // Colocar la causa de espera
+          item_lista.append($(this).parent().text());
+
+          // Eliminar el elemento
+          $(this).parent().remove()
+        })
+
         $(".formCubA").css("display","none");
         $("[rel='tooltip']").tooltip();
         $(".tit_list").html("{{titulo}}")
       });
     </script>
 
-    <style>
-      span.espera:link, span.espera:visited, span.espera:active 
-      { 
-        text-decoration: none 
-      }
-      .s1 {
-        width:57px;
-      }
-      .s2 {
-        width:25px;
-      }
-
-      .nombreLista {
-        text-transform: uppercase;
-      }
-
-      .cubi:hover, .imagenIcono{
-        cursor: pointer;
-      }
-    </style>
 
     <div class="container row">
       
@@ -189,7 +216,8 @@
                 data-placement="bottom" 
                 title="" 
                 idEmer="{{emergencia.id}}" >
-            <span class="btn btn-small btn-primary" style='width:10px;'>
+            <span class="btn btn-small btn-primary boton-espera" 
+                  style='width:10px;'>
               <b id="texto{{emergencia.id}}" 
                  texto='{{emergencia.numEsperasNoAtendidas}}' 
                  style="font-size: 17px;">
@@ -197,18 +225,20 @@
               </b>
             </span>
             <div class="causas-espera">
-              Lista de esperas
-              <button class='btn btn-small btn-primary'>
-<!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
+              <p class='titulo-esperas'>
+                Lista de esperas
+                <button class='btn btn-small btn-primary'>
+  <!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
                 mantener
-              </button>
-
+                </button>
+              </p>
               <hr />
 
               <ul class='esperas-asignadas'>
-                {% for espera in esperas_asignadas.emergencia.id %}
+                {% for espera in emergencia.esperas_asignadas %}
                   <li class='espera-asignada'>
-                    <img src='/static/img/menosim.jpg' />
+                    <img class='espera-menos'
+                         src='/static/img/Atencion/menosim.png' />
 
                     {% if espera.estado == 0 %}
                       <input type='checkbox' ckecked />
@@ -226,13 +256,13 @@
               <hr />
 
               <ul class="esperas-no-asignadas">
-                {{ emergencia.id }}
-                {% for espera_asignada in esperas_no_asignadas.emergencia.id %}
-                  <li class='espera-asignada'>
-                    <img src='/static/img/masim.jpg' />
+                {% for espera in emergencia.esperas_no_asignadas %}
+                  <li class='espera-no-asignada'>
+                    <img class='espera-mas'
+                         src='/static/img/Atencion/masim.png' />
                     <img class="imagen-espera-lista" 
-                         src="/static/img/esperas/espera_{{espera_asignada.id}}.png"/>
-                    {{ espera_asignada.nombre }}
+                         src="/static/img/esperas/espera_{{espera.id}}.png"/>
+                    {{ espera.nombre }}
                   </li>
                 {% endfor %}
               </ul>
@@ -265,12 +295,6 @@
 <script>
 
   $(document).ready(function() {
-    // Asociacion del evento click sobre las esperas
-    $('.espera').on('click', function(event){
-      event.preventDefault();
-      mostrar_esperas($(this).attr('idemer'));
-    });
-
     $('.dropdown-toggle').dropdown();
       var cont = 1;
       {% for emergencia in emergencias %}

@@ -102,23 +102,12 @@ def emergencia_buscar(request):
 
 def emergencia_listar_todas(request):   
     emergencias = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    esperas_asignadas = {}
-    esperas_no_asignadas = {}
 
-    for emergencia in emergencias:
-      esperas_asignadas[str(emergencia.id)] = emergencia_esperas_asignadas(emergencia)
-      esperas_no_asignadas[str(emergencia.id)] = emergencia_esperas_no_asignadas(
-                                           emergencia
-                                         )
-
-    print str(esperas_no_asignadas)
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
     info = { 'emergencias': emergencias,
              'form': form, 
-             'titulo': titulo,
-             'esperas_asignadas': esperas_asignadas,
-             'esperas_no_asignadas': esperas_no_asignadas }
+             'titulo': titulo }
     return render(request,
                   'lista.html', 
                   info)
@@ -627,34 +616,6 @@ def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     espera1.estado     = str(espera)
     espera1.save() 
     return HttpResponse()
-
-# Dado un objeto de emergencia, devuelve la lista de causas de eséra que han
-# sido asignadas a ella
-#
-# Entrada: emergencia_buscada -> Objeto Emergencia a buscar
-# Salida: Lista de EsperaEmergencia que han sido asignadas a la emergencia
-def emergencia_esperas_asignadas(emergencia_buscada):
-    esperas_emergencia = EsperaEmergencia.objects.filter(
-                           emergencia = emergencia_buscada
-                         )
-    esperas_asignadas = map(lambda e: e.espera, esperas_emergencia)
-    return esperas_asignadas
-
-# Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
-# le han sido asignadas
-#
-# Entrada: emergencia_buscada -> Objeto Emergencia a consultar
-# Salida: Lista de EsperaEmergencia que aún no han sido asignadas a la 
-#         emergencia
-def emergencia_esperas_no_asignadas(emergencia_buscada):   
-  # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
-  # las esperas aquellas que ya estan asignadas
-  esperas_asignadas = emergencia_esperas_asignadas(emergencia_buscada)
-  esperas_no_asignadas = list(Espera.objects.all())
-  for espera in esperas_asignadas:
-    esperas_no_asignadas.remove(espera)
-
-  return esperas_no_asignadas
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
