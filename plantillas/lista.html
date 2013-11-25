@@ -55,7 +55,7 @@
 
         // Método que agrega causas de espera a partir de la lista de causas
         // no asignadas
-        $('.espera-mas').click(function(event){
+        $('.causas-espera').on('click', '.espera-mas', function(event){
           // Construir el elemento a agregar a la lista de causas asignadas
           var asignadas = $(this).closest('.causas-espera')
                                  .children('.esperas-asignadas')
@@ -85,7 +85,35 @@
 
           // Eliminar el elemento
           $(this).parent().remove()
-        })
+        });
+
+        // Método que elimina causas de espera a partir de la lista de causas
+        // asignadas
+        $('.causas-espera').on('click', '.espera-menos', function(event){
+          // Construir el elemento a agregar a la lista de causas no asignadas
+          var no_asignadas = $(this).closest('.causas-espera')
+                                    .children('.esperas-no-asignadas')
+                                    .first();
+          var item_lista = $('<li></li>');
+          no_asignadas.append(item_lista);
+          
+          // Colocar el logo para eliminar la causa
+          var menos = $('<img> </img>');
+          menos.attr('src', '/static/img/Atencion/masim.png');
+          menos.addClass('espera-mas');
+          item_lista.append(menos);
+
+          // Colocar la imagen de la causa de espera
+          var imagen_espera = $(this).siblings('.imagen-espera-lista')
+                                     .first();
+          item_lista.append(imagen_espera);
+
+          // Colocar la causa de espera
+          item_lista.append($(this).parent().text());
+
+          // Eliminar el elemento
+          $(this).parent().remove()
+        });
 
         $(".formCubA").css("display","none");
         $("[rel='tooltip']").tooltip();
