@@ -46,21 +46,33 @@
       $(document).ready(function(){
         // Evento que oculta la lista de causas de espera cuando se hace click
         // fuera de ella
-        $(':not(.causas-espera)').click(function(event){
-          event.preventDefault();
-          console.log($(this).hasClass('boton-espera'));
-          if(!$(this).hasClass('boton-espera'))
-          {
-            $('.causas-espera').fadeOut();
-          }
+        $(document.body).click(function(){
+          console.log('Clicked the body');
+          $('.causas-espera').fadeOut();
         })
 
         // Asociacion del evento click sobre las esperas
         $('.boton-espera').click(function(event){
           event.preventDefault();
+          event.stopPropagation();
           var causas_espera = $(this).siblings('.causas-espera');
-          causas_espera.fadeToggle();
+          // Decidir que hacer dependiendo de si el panel con las causas de
+          // espera esta visible o no
+          if(causas_espera.css('display') == 'none')
+          {
+            $('.causas-espera').fadeOut();
+            causas_espera.fadeIn();
+          } else
+          {
+            $('.causas-espera').fadeOut();
+          }
         });
+
+        // Esto es para prevenir que el click en el div de causas de espera
+        // haga que el mismo desaparezca
+        $('.causas-espera').click(function(event){
+          event.stopPropagation();
+        })
 
         // Método que agrega causas de espera a partir de la lista de causas
         // no asignadas
@@ -248,11 +260,7 @@
         <td class='tdEspera'>
           <span class="btn btn-small btn-primary boton-espera" 
                 style='width:10px;'>
-            <b id="texto{{emergencia.id}}" 
-               texto='{{emergencia.numEsperasNoAtendidas}}' 
-               style="font-size: 17px;">
-              {{emergencia.numEsperasNoAtendidas}}
-            </b>
+            {{emergencia.numEsperasNoAtendidas}}
           </span>
           <div class="causas-espera">
             <p class='titulo-esperas'>

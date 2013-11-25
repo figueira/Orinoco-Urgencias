@@ -17,11 +17,15 @@ span.espera:link, span.espera:visited, span.espera:active
   cursor: pointer;
 }
 
+.boton-espera
+{
+  /* Colocar texto en negritas */
+}
 .causas-espera
 {
   background-color: white;
   border: 2px solid;
-  border-radius: 25px;
+  border-radius: 10px;
   display: none;
   font-size: 18px;
   position: absolute;
