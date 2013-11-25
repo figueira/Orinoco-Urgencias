@@ -44,12 +44,21 @@
       }
 
       $(document).ready(function(){
+        // Evento que oculta la lista de causas de espera cuando se hace click
+        // fuera de ella
+        $(':not(.causas-espera)').click(function(event){
+          event.preventDefault();
+          console.log($(this).hasClass('boton-espera'));
+          if(!$(this).hasClass('boton-espera'))
+          {
+            $('.causas-espera').fadeOut();
+          }
+        })
+
         // Asociacion del evento click sobre las esperas
         $('.boton-espera').click(function(event){
           event.preventDefault();
-          var causas_espera = $(this).parent('.espera')
-                                     .first()
-                                     .children('.causas-espera');
+          var causas_espera = $(this).siblings('.causas-espera');
           causas_espera.fadeToggle();
         });
 
@@ -237,67 +246,57 @@
               </td>
 
         <td class='tdEspera'>
-          <span id='espera{{emergencia.id}}' 
-                class='espera' 
-                data-html="true" 
-                data-toggle="popover" 
-                data-placement="bottom" 
-                title="" 
-                idEmer="{{emergencia.id}}" >
-            <span class="btn btn-small btn-primary boton-espera" 
-                  style='width:10px;'>
-              <b id="texto{{emergencia.id}}" 
-                 texto='{{emergencia.numEsperasNoAtendidas}}' 
-                 style="font-size: 17px;">
-                {{emergencia.numEsperasNoAtendidas}}
-              </b>
-            </span>
-            <div class="causas-espera">
-              <p class='titulo-esperas'>
-                Lista de esperas
-                <button class='btn btn-small btn-primary'>
-  <!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
-                mantener
-                </button>
-              </p>
-              <hr />
-
-              <ul class='esperas-asignadas'>
-                {% for espera in emergencia.esperas_asignadas %}
-                  <li class='espera-asignada'>
-                    <img class='espera-menos'
-                         src='/static/img/Atencion/menosim.png' />
-
-                    {% if espera.estado == 0 %}
-                      <input type='checkbox' ckecked />
-                    {% else %}
-                      <input type='checkbox' />
-                    {% endif %}
-
-                    <img class='imagen-espera-lista'
-                         src='/static/img/esperas/espera_{{espera_asignada.id}}.png'/>
-                    {{ espera_asignada.nombre }}
-                  </li>
-                {% endfor %}
-              </ul>
-
-              <hr />
-
-              <ul class="esperas-no-asignadas">
-                {% for espera in emergencia.esperas_no_asignadas %}
-                  <li class='espera-no-asignada'>
-                    <img class='espera-mas'
-                         src='/static/img/Atencion/masim.png' />
-                    <img class="imagen-espera-lista" 
-                         src="/static/img/esperas/espera_{{espera.id}}.png"/>
-                    {{ espera.nombre }}
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
+          <span class="btn btn-small btn-primary boton-espera" 
+                style='width:10px;'>
+            <b id="texto{{emergencia.id}}" 
+               texto='{{emergencia.numEsperasNoAtendidas}}' 
+               style="font-size: 17px;">
+              {{emergencia.numEsperasNoAtendidas}}
+            </b>
           </span>
-          <span id="causas_{{emergencia.id}}">
-          </span>
+          <div class="causas-espera">
+            <p class='titulo-esperas'>
+              Lista de esperas
+              <button class='btn btn-small btn-primary'>
+<!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
+              mantener
+              </button>
+            </p>
+            <hr />
+
+            <ul class='esperas-asignadas'>
+              {% for espera in emergencia.esperas_asignadas %}
+                <li class='espera-asignada'>
+                  <img class='espera-menos'
+                       src='/static/img/Atencion/menosim.png' />
+
+                  {% if espera.estado == 0 %}
+                    <input type='checkbox' ckecked />
+                  {% else %}
+                    <input type='checkbox' />
+                  {% endif %}
+
+                  <img class='imagen-espera-lista'
+                       src='/static/img/esperas/espera_{{espera_asignada.id}}.png'/>
+                  {{ espera_asignada.nombre }}
+                </li>
+              {% endfor %}
+            </ul>
+
+            <hr />
+
+            <ul class="esperas-no-asignadas">
+              {% for espera in emergencia.esperas_no_asignadas %}
+                <li class='espera-no-asignada'>
+                  <img class='espera-mas'
+                       src='/static/img/Atencion/masim.png' />
+                  <img class="imagen-espera-lista" 
+                       src="/static/img/esperas/espera_{{espera.id}}.png"/>
+                  {{ espera.nombre }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
         </td>
         <td>
             <div class="progress progress-striped active">
