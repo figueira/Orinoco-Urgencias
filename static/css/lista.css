@@ -20,6 +20,7 @@ span.espera:link, span.espera:visited, span.espera:active
 .boton-espera
 {
   /* Colocar texto en negritas */
+  width: 10px;
 }
 .causas-espera
 {

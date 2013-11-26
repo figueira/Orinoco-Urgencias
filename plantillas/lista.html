@@ -44,10 +44,9 @@
       }
 
       $(document).ready(function(){
-        // Evento que oculta la lista de causas de espera cuando se hace click
-        // fuera de ella
+        // Evento que oculta el panel de causas de espera cuando se hace click
+        // fuera de el
         $(document.body).click(function(){
-          console.log('Clicked the body');
           $('.causas-espera').fadeOut();
         })
 
@@ -68,7 +67,7 @@
           }
         });
 
-        // Esto es para prevenir que el click en el div de causas de espera
+        // Esto es para prevenir que el click en el panel de causas de espera
         // haga que el mismo desaparezca
         $('.causas-espera').click(function(event){
           event.stopPropagation();
@@ -78,10 +77,14 @@
         // no asignadas
         $('.causas-espera').on('click', '.espera-mas', function(event){
           // Construir el elemento a agregar a la lista de causas asignadas
-          var asignadas = $(this).closest('.causas-espera')
-                                 .children('.esperas-asignadas')
-                                 .first();
+          var mas_activado = $(this);
+          var asignadas = mas_activado.closest('.causas-espera')
+                                       .children('.esperas-asignadas')
+                                       .first();
           var item_lista = $('<li></li>');
+          var id_espera = mas_activado.parent().data('id-espera');
+          item_lista.addClass('espera-asignada');
+          item_lista.attr('data-id-espera', id_espera);
           asignadas.append(item_lista);
           
           // Colocar el logo para eliminar la causa
@@ -94,28 +97,33 @@
           var checkbox = $('<input></input>');
           checkbox.attr('type', 'checkbox');
           checkbox.attr('checked', false);
+          checkbox.addClass('espera-atendida');
           item_lista.append(checkbox);
 
           // Colocar la imagen de la causa de espera
-          var imagen_espera = $(this).siblings('.imagen-espera-lista')
-                                     .first();
+          var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
+                                          .first();
           item_lista.append(imagen_espera);
 
           // Colocar la causa de espera
-          item_lista.append($(this).parent().text());
+          item_lista.append(mas_activado.parent().text());
 
           // Eliminar el elemento
-          $(this).parent().remove()
+          mas_activado.parent().remove()
         });
 
         // Método que elimina causas de espera a partir de la lista de causas
         // asignadas
         $('.causas-espera').on('click', '.espera-menos', function(event){
           // Construir el elemento a agregar a la lista de causas no asignadas
-          var no_asignadas = $(this).closest('.causas-espera')
-                                    .children('.esperas-no-asignadas')
-                                    .first();
+          var menos_activado = $(this)
+          var no_asignadas = menos_activado.closest('.causas-espera')
+                                           .children('.esperas-no-asignadas')
+                                           .first();
           var item_lista = $('<li></li>');
+          var id_espera = menos_activado.parent().data('id-espera');
+          item_lista.addClass('espera-no-asignada');
+          item_lista.attr('data-id-espera', id_espera);
           no_asignadas.append(item_lista);
           
           // Colocar el logo para eliminar la causa
@@ -125,15 +133,15 @@
           item_lista.append(menos);
 
           // Colocar la imagen de la causa de espera
-          var imagen_espera = $(this).siblings('.imagen-espera-lista')
-                                     .first();
+          var imagen_espera = menos_activado.siblings('.imagen-espera-lista')
+                                            .first();
           item_lista.append(imagen_espera);
 
           // Colocar la causa de espera
-          item_lista.append($(this).parent().text());
+          item_lista.append(menos_activado.parent().text());
 
           // Eliminar el elemento
-          $(this).parent().remove()
+          menos_activado.parent().remove()
         });
 
         $(".formCubA").css("display","none");
@@ -258,8 +266,7 @@
               </td>
 
         <td class='tdEspera'>
-          <span class="btn btn-small btn-primary boton-espera" 
-                style='width:10px;'>
+          <span class="btn btn-small btn-primary boton-espera">
             {{emergencia.numEsperasNoAtendidas}}
           </span>
           <div class="causas-espera">
@@ -267,21 +274,22 @@
               Lista de esperas
               <button class='btn btn-small btn-primary'>
 <!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
-              mantener
+              Mantener
               </button>
             </p>
             <hr />
 
             <ul class='esperas-asignadas'>
               {% for espera in emergencia.esperas_asignadas %}
-                <li class='espera-asignada'>
+                <li class='espera-asignada'
+                    data-id-espera='{{ espera.id }}'>
                   <img class='espera-menos'
                        src='/static/img/Atencion/menosim.png' />
 
                   {% if espera.estado == 0 %}
-                    <input type='checkbox' ckecked />
+                    <input class='espera-atendida' type='checkbox' />
                   {% else %}
-                    <input type='checkbox' />
+                    <input class='espera-atendida' type='checkbox' ckecked />
                   {% endif %}
 
                   <img class='imagen-espera-lista'
@@ -295,7 +303,8 @@
 
             <ul class="esperas-no-asignadas">
               {% for espera in emergencia.esperas_no_asignadas %}
-                <li class='espera-no-asignada'>
+                <li class='espera-no-asignada'
+                    data-id-espera='{{ espera.id }}'>
                   <img class='espera-mas'
                        src='/static/img/Atencion/masim.png' />
                   <img class="imagen-espera-lista" 
