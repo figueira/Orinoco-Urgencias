@@ -114,24 +114,25 @@ class Emergencia(models.Model):
   #
   # Salida: Lista de EsperaEmergencia que han sido asignadas a la emergencia
   def esperas_asignadas(self):
+    print "Emergencia: " + str(self.id);
     esperas_emergencia = EsperaEmergencia.objects.filter(
                            emergencia = self
                          )
-    esperas_asignadas = map(lambda e: e.espera, esperas_emergencia)
-    return esperas_asignadas
+    for esp in esperas_emergencia:
+      print "Espera: " + esp.estado
+    return esperas_emergencia
 
   # Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
   # le han sido asignadas
   #
-  # Salida: Lista de EsperaEmergencia que aún no han sido asignadas a la 
-  #         emergencia
+  # Salida: Lista de Espera que aun no han sido asignadas a la emergencia
   def esperas_no_asignadas(self):
     # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
     # las esperas aquellas que ya estan asignadas
     esperas_asignadas = self.esperas_asignadas()
     esperas_no_asignadas = list(Espera.objects.all())
-    for espera in esperas_asignadas:
-      esperas_no_asignadas.remove(espera)
+    for espera_emergencia in esperas_asignadas:
+      esperas_no_asignadas.remove(espera_emergencia.espera)
 
     return esperas_no_asignadas
 
