@@ -78,11 +78,18 @@
         $('.causas-espera').on('click', '.espera-mas', function(event){
           // Construir el elemento a agregar a la lista de causas asignadas
           var mas_activado = $(this);
+          var id_espera = mas_activado.parent().data('id-espera');
+          var id_emergencia = mas_activado.closest('.fila-emergencia')
+                                          .data('id-emergencia');
+          
+          // Antes que todo se envia una actualizacion a la base de datos para
+          // guardar este cambio
+          $.get('/emergencia/' + id_emergencia + '/agregar_espera/' + id_espera);
+
           var asignadas = mas_activado.closest('.causas-espera')
                                        .children('.esperas-asignadas')
                                        .first();
           var item_lista = $('<li></li>');
-          var id_espera = mas_activado.parent().data('id-espera');
           item_lista.addClass('espera-asignada');
           item_lista.attr('data-id-espera', id_espera);
           asignadas.append(item_lista);
@@ -168,7 +175,9 @@
 
           </tr>
           {% for emergencia in emergencias %}
-            <tr id ="emergencia_{{emergencia.id}}" class="filaEmergencia" >
+            <tr id ="emergencia_{{emergencia.id}}" 
+                class="fila-emergencia" 
+                data-id-emergencia='{{ emergencia.id }}'>
               <td>
                 {% if emergencia.triage != 0 %}
                 {% if emergencia.cubi != '' %}
@@ -280,21 +289,23 @@
             <hr />
 
             <ul class='esperas-asignadas'>
-              {% for espera in emergencia.esperas_asignadas %}
+              {% for espera_emergencia in emergencia.esperas_asignadas %}
                 <li class='espera-asignada'
-                    data-id-espera='{{ espera.id }}'>
+                    data-id-espera='{{ espera_emergencia.espera.id }}'>
                   <img class='espera-menos'
                        src='/static/img/Atencion/menosim.png' />
-
-                  {% if espera.estado == 0 %}
+                  {% if espera_emergencia.estado == '0' %}
                     <input class='espera-atendida' type='checkbox' />
                   {% else %}
-                    <input class='espera-atendida' type='checkbox' ckecked />
+                    <input class='espera-atendida' type='checkbox' checked />
                   {% endif %}
 
-                  <img class='imagen-espera-lista'
-                       src='/static/img/esperas/espera_{{espera_asignada.id}}.png'/>
-                  {{ espera_asignada.nombre }}
+                  <img 
+                    class='imagen-espera-lista'
+                    src=
+                      '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                  />
+                  {{ espera_emergencia.espera.nombre }}
                 </li>
               {% endfor %}
             </ul>

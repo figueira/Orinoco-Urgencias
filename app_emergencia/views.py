@@ -591,12 +591,12 @@ def emergencia_espera_mantener(request,id_emergencia):
 def emergencia_agregar_espera(request,id_emergencia,id_espera):
     emergencia = get_object_or_404(Emergencia,id=id_emergencia)
     emergencia.fecha_Esp_act = datetime.now()
-    emer.save()
+    emergencia.save()
     espera = get_object_or_404(Espera,id=id_espera)
     espera_emergencia = EsperaEmergencia(emergencia = emergencia,
                                          espera = espera,
                                          estado = '0')
-    espera.save()
+    espera_emergencia.save()
     return HttpResponse()
 
 def emergencia_espera_eliminar(request,id_emergencia,id_espera):
