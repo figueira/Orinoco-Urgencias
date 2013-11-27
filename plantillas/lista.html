@@ -110,10 +110,17 @@
           // Colocar la imagen de la causa de espera
           var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
                                           .first();
-          item_lista.append(imagen_espera);
+          item_lista.append(imagen_espera.clone());
 
           // Colocar la causa de espera
           item_lista.append(mas_activado.parent().text());
+
+          // Agregar la imagen de la causa de espera al td adyacente
+          imagen_espera.removeClass('imagen-espera-lista');
+          imagen_espera.addClass('imagen-espera-td');
+          mas_activado.closest('.causas-espera')
+                      .siblings('.imagenes-causas-espera')
+                      .append(imagen_espera);
 
           // Eliminar el elemento
           mas_activado.parent().remove()
@@ -146,6 +153,14 @@
 
           // Colocar la causa de espera
           item_lista.append(menos_activado.parent().text());
+
+          // Eliminar la imagen de la causa de espera del td
+          imagen_td = menos_activado.closest('.causas-espera')
+                                      .siblings('.imagenes-causas-espera')
+                                      .children('[data-id-espera=' + 
+                                                id_espera + ']')
+                                      .first();
+          imagen_td.remove();
 
           // Eliminar el elemento
           menos_activado.parent().remove()
@@ -278,7 +293,7 @@
           <span class="btn btn-small btn-primary boton-espera">
             {{emergencia.numEsperasNoAtendidas}}
           </span>
-          <div class="causas-espera">
+          <span class="causas-espera">
             <p class='titulo-esperas'>
               Lista de esperas
               <button class='btn btn-small btn-primary'>
@@ -302,6 +317,7 @@
 
                   <img 
                     class='imagen-espera-lista'
+                    data-id-espera='{{ espera_emergencia.espera.id }}'
                     src=
                       '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
                   />
@@ -319,12 +335,24 @@
                   <img class='espera-mas'
                        src='/static/img/Atencion/masim.png' />
                   <img class="imagen-espera-lista" 
-                       src="/static/img/esperas/espera_{{espera.id}}.png"/>
+                       data-id-espera='{{ espera.id }}'
+                       src="/static/img/esperas/espera_{{ espera.id }}.png"/>
                   {{ espera.nombre }}
                 </li>
               {% endfor %}
             </ul>
-          </div>
+          </span>
+
+          <span class='imagenes-causas-espera'>
+            {% for espera_emergencia in emergencia.esperas_asignadas %}
+              <img 
+                class='imagen-espera-td'
+                data-id-espera='{{ espera_emergencia.espera.id }}'
+                src=
+                  '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                 />
+            {% endfor %}
+          </span>
         </td>
         <td>
             <div class="progress progress-striped active">
