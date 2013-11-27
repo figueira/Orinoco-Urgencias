@@ -84,7 +84,8 @@
           
           // Antes que todo se envia una actualizacion a la base de datos para
           // guardar este cambio
-          $.get('/emergencia/' + id_emergencia + '/agregar_espera/' + id_espera);
+          $.get('/emergencia/' + id_emergencia + '/agregar_espera/' + 
+                id_espera);
 
           var asignadas = mas_activado.closest('.causas-espera')
                                        .children('.esperas-asignadas')
@@ -131,11 +132,18 @@
         $('.causas-espera').on('click', '.espera-menos', function(event){
           // Construir el elemento a agregar a la lista de causas no asignadas
           var menos_activado = $(this)
+          var id_espera = menos_activado.parent().data('id-espera');
+          var id_emergencia = menos_activado.closest('.fila-emergencia')
+                                            .data('id-emergencia');
+
+          // Hacer peticion a la base de datos para eliminar la causa de espera
+          $.get('/emergencia/' + id_emergencia + '/eliminar_espera/' + 
+                id_espera);
+
           var no_asignadas = menos_activado.closest('.causas-espera')
                                            .children('.esperas-no-asignadas')
                                            .first();
           var item_lista = $('<li></li>');
-          var id_espera = menos_activado.parent().data('id-espera');
           item_lista.addClass('espera-no-asignada');
           item_lista.attr('data-id-espera', id_espera);
           no_asignadas.append(item_lista);

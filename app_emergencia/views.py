@@ -588,26 +588,26 @@ def emergencia_espera_mantener(request,id_emergencia):
     emer.save()
     return HttpResponse()
 
-def emergencia_agregar_espera(request,id_emergencia,id_espera):
-    emergencia = get_object_or_404(Emergencia,id=id_emergencia)
+def emergencia_agregar_espera(request, id_emergencia, id_espera):
+    emergencia = get_object_or_404(Emergencia, id = id_emergencia)
     emergencia.fecha_Esp_act = datetime.now()
     emergencia.save()
-    espera = get_object_or_404(Espera,id=id_espera)
+    espera = get_object_or_404(Espera, id = id_espera)
     espera_emergencia = EsperaEmergencia(emergencia = emergencia,
                                          espera = espera,
                                          estado = '0')
     espera_emergencia.save()
     return HttpResponse()
 
-def emergencia_espera_eliminar(request,id_emergencia,id_espera):
-    emer   = get_object_or_404(Emergencia, id = id_emergencia)
-    emer.fecha_Esp_act = datetime.now()
-    emer.save()
-    espe   = get_object_or_404(Espera,id = id_espera)
-    espera = EsperaEmergencia.objects.get(emergencia = emer, espera = espe)
-    espera.delete() 
-    print "Elemento eliminado"
-    return HttpResponse('')
+def emergencia_eliminar_espera(request, id_emergencia, id_espera):
+    emergencia = get_object_or_404(Emergencia, id = id_emergencia)
+    emergencia.fecha_Esp_act = datetime.now()
+    emergencia.save()
+    espera = get_object_or_404(Espera, id = id_espera)
+    espera_emergencia = EsperaEmergencia.objects.get(emergencia = emergencia, 
+                                                     espera = espera)
+    espera_emergencia.delete() 
+    return HttpResponse()
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     emer               = get_object_or_404(Emergencia,id=id_emergencia)
