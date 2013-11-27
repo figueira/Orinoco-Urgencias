@@ -123,8 +123,14 @@
                       .siblings('.imagenes-causas-espera')
                       .append(imagen_espera);
 
+          // Actualizar el contador de causas de espera
+          contador = mas_activado.closest('.causas-espera')
+                                 .siblings('.boton-espera');
+          contador.text(+(contador.text()) + 1);
+
           // Eliminar el elemento
           mas_activado.parent().remove()
+
         });
 
         // Método que elimina causas de espera a partir de la lista de causas
@@ -169,6 +175,11 @@
                                                 id_espera + ']')
                                       .first();
           imagen_td.remove();
+
+          // Actualizar el contador de causas de espera
+          contador = menos_activado.closest('.causas-espera')
+                                 .siblings('.boton-espera');
+          contador.text(+(contador.text()) - 1);
 
           // Eliminar el elemento
           menos_activado.parent().remove()
