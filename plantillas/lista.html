@@ -136,6 +136,12 @@
         // Método que elimina causas de espera a partir de la lista de causas
         // asignadas
         $('.causas-espera').on('click', '.espera-menos', function(event){
+          if(!confirm("¿Esta seguro que desea eliminar esta causa de espera? " +
+                      "Esto no la marcará como atendida, para ello use la " +
+                      "caja que se encuentra al lado"))
+          {
+            return false;
+          }
           // Construir el elemento a agregar a la lista de causas no asignadas
           var menos_activado = $(this)
           var id_espera = menos_activado.parent().data('id-espera');
