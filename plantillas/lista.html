@@ -318,7 +318,19 @@
           <span class="btn btn-small btn-primary boton-espera">
             {{emergencia.numEsperasNoAtendidas}}
           </span>
-          <span class="causas-espera">
+
+          <span class='imagenes-causas-espera'>
+            {% for espera_emergencia in emergencia.esperas_asignadas %}
+              <img 
+                class='imagen-espera-td'
+                data-id-espera='{{ espera_emergencia.espera.id }}'
+                src=
+                  '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                 />
+            {% endfor %}
+          </span>
+
+          <div class="causas-espera">
             <p class='titulo-esperas'>
               Lista de esperas
               <button class='btn btn-small btn-primary'>
@@ -366,18 +378,7 @@
                 </li>
               {% endfor %}
             </ul>
-          </span>
-
-          <span class='imagenes-causas-espera'>
-            {% for espera_emergencia in emergencia.esperas_asignadas %}
-              <img 
-                class='imagen-espera-td'
-                data-id-espera='{{ espera_emergencia.espera.id }}'
-                src=
-                  '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
-                 />
-            {% endfor %}
-          </span>
+          </div>
         </td>
         <td>
             <div class="progress progress-striped active">
