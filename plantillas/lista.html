@@ -54,7 +54,7 @@
         $('.boton-espera').click(function(event){
           event.preventDefault();
           event.stopPropagation();
-          var causas_espera = $(this).siblings('.causas-espera');
+          var causas_espera = $(this).children('.causas-espera');
           // Decidir que hacer dependiendo de si el panel con las causas de
           // espera esta visible o no
           if(causas_espera.css('display') == 'none')
@@ -314,11 +314,7 @@
                 {% endif %}
               </td>
 
-        <td class='tdEspera'>
-          <span class="btn btn-small btn-primary boton-espera">
-            {{emergencia.numEsperasNoAtendidas}}
-          </span>
-
+        <td class='tdEspera boton-espera'>
           <span class='imagenes-causas-espera'>
             {% for espera_emergencia in emergencia.esperas_asignadas %}
               <img 
@@ -330,7 +326,7 @@
             {% endfor %}
           </span>
 
-          <div class="causas-espera">
+          <div class="causas-espera caja-dialogo">
             <p class='titulo-esperas'>
               Lista de esperas
               <button class='btn btn-small btn-primary'>

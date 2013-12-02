@@ -17,10 +17,9 @@ span.espera:link, span.espera:visited, span.espera:active
   cursor: pointer;
 }
 
-.boton-espera
+.boton-espera:hover
 {
-  /* Colocar texto en negritas */
-  width: 10px;
+  cursor:pointer;
 }
 .causas-espera
 {
@@ -32,6 +31,38 @@ span.espera:link, span.espera:visited, span.espera:active
   position: absolute;
   z-index: 1;
 }
+
+/* Estos son los estilos que definen una caja con una pequeña flecha */
+.caja-dialogo {
+  position: absolute;
+  background: #ffffff; 
+  border: 2px solid #000000; 
+} 
+
+.caja-dialogo:after, .caja-dialogo:before {
+  bottom: 100%; 
+  left: 50%; 
+  border: solid transparent; 
+  content: " "; 
+  height: 0; 
+  width: 0; 
+  position: absolute; 
+  pointer-events: none; 
+} 
+
+.caja-dialogo:after {
+  border-color: rgba(255, 255, 255, 0); 
+  border-bottom-color: #ffffff; 
+  border-width: 20px; 
+  margin-left: -20px; 
+} 
+
+.caja-dialogo:before {
+  border-color: rgba(0, 0, 0, 0); 
+  border-bottom-color: #000000; 
+  border-width: 23px; margin-left: -23px; 
+}
+/* Fin de la definicion de la caja */
 
 .imagen-espera-lista
 {
