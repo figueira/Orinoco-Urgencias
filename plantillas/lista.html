@@ -84,53 +84,47 @@
           
           // Antes que todo se envia una actualizacion a la base de datos para
           // guardar este cambio
-          $.get('/emergencia/' + id_emergencia + '/agregar_espera/' + 
-                id_espera);
+          $.getJSON('/emergencia/' + id_emergencia + '/agregar_espera/' + 
+                    id_espera, '', function(id_retorno){
+            var asignadas = mas_activado.closest('.causas-espera')
+                                         .children('.esperas-asignadas')
+                                         .first();
+            var item_lista = $('<li></li>');
+            item_lista.addClass('espera-asignada');
+            item_lista.attr('data-id-espera', id_espera);
+            item_lista.attr('data-id-espera-emergencia', id_retorno);
+            asignadas.append(item_lista);
+            
+            // Colocar el logo para eliminar la causa
+            var menos = $('<img> </img>');
+            menos.attr('src', '/static/img/Atencion/menosim.png');
+            menos.addClass('espera-menos');
+            item_lista.append(menos);
 
-          var asignadas = mas_activado.closest('.causas-espera')
-                                       .children('.esperas-asignadas')
-                                       .first();
-          var item_lista = $('<li></li>');
-          item_lista.addClass('espera-asignada');
-          item_lista.attr('data-id-espera', id_espera);
-          asignadas.append(item_lista);
-          
-          // Colocar el logo para eliminar la causa
-          var menos = $('<img> </img>');
-          menos.attr('src', '/static/img/Atencion/menosim.png');
-          menos.addClass('espera-menos');
-          item_lista.append(menos);
+            // Colocar el checkbox para marcar la causa como atendida
+            var checkbox = $('<input></input>');
+            checkbox.attr('type', 'checkbox');
+            checkbox.addClass('espera-atendida');
+            item_lista.append(checkbox);
 
-          // Colocar el checkbox para marcar la causa como atendida
-          var checkbox = $('<input></input>');
-          checkbox.attr('type', 'checkbox');
-          checkbox.attr('checked', false);
-          checkbox.addClass('espera-atendida');
-          item_lista.append(checkbox);
+            // Colocar la imagen de la causa de espera
+            var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
+                                            .first();
+            item_lista.append(imagen_espera.clone());
 
-          // Colocar la imagen de la causa de espera
-          var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
-                                          .first();
-          item_lista.append(imagen_espera.clone());
+            // Colocar la causa de espera
+            item_lista.append(mas_activado.parent().text());
 
-          // Colocar la causa de espera
-          item_lista.append(mas_activado.parent().text());
+            // Agregar la imagen de la causa de espera al td adyacente
+            imagen_espera.removeClass('imagen-espera-lista');
+            imagen_espera.addClass('imagen-espera-td');
+            mas_activado.closest('.causas-espera')
+                        .siblings('.imagenes-causas-espera')
+                        .append(imagen_espera);
 
-          // Agregar la imagen de la causa de espera al td adyacente
-          imagen_espera.removeClass('imagen-espera-lista');
-          imagen_espera.addClass('imagen-espera-td');
-          mas_activado.closest('.causas-espera')
-                      .siblings('.imagenes-causas-espera')
-                      .append(imagen_espera);
-
-          // Actualizar el contador de causas de espera
-          contador = mas_activado.closest('.causas-espera')
-                                 .siblings('.boton-espera');
-          contador.text(+(contador.text()) + 1);
-
-          // Eliminar el elemento
-          mas_activado.parent().remove()
-
+            // Eliminar el elemento
+            mas_activado.parent().remove()
+          });
         });
 
         // Método que elimina causas de espera a partir de la lista de causas
@@ -150,45 +144,96 @@
 
           // Hacer peticion a la base de datos para eliminar la causa de espera
           $.get('/emergencia/' + id_emergencia + '/eliminar_espera/' + 
-                id_espera);
+                id_espera, function(){
+            var no_asignadas = menos_activado.closest('.causas-espera')
+                                             .children('.esperas-no-asignadas')
+                                             .first();
+            var item_lista = $('<li></li>');
+            item_lista.addClass('espera-no-asignada');
+            item_lista.attr('data-id-espera', id_espera);
+            no_asignadas.append(item_lista);
+            
+            // Colocar el logo para eliminar la causa
+            var menos = $('<img> </img>');
+            menos.attr('src', '/static/img/Atencion/masim.png');
+            menos.addClass('espera-mas');
+            item_lista.append(menos);
 
-          var no_asignadas = menos_activado.closest('.causas-espera')
-                                           .children('.esperas-no-asignadas')
+            // Colocar la imagen de la causa de espera
+            var imagen_espera = menos_activado.siblings('.imagen-espera-lista')
+                                              .first();
+            item_lista.append(imagen_espera);
+
+            // Colocar la causa de espera
+            item_lista.append(menos_activado.parent().text());
+
+            // Eliminar la imagen de la causa de espera del td
+            imagen_td = menos_activado.closest('.causas-espera')
+                                        .siblings('.imagenes-causas-espera')
+                                        .children('[data-id-espera=' + 
+                                                  id_espera + ']')
+                                        .first();
+            imagen_td.remove();
+
+            // Eliminar el elemento
+            menos_activado.parent().remove()
+          });
+        });
+
+        // Asociacion del evento sobre el checkbox que marca una causa de espera
+        // como finalizada
+        $('.esperas-asignadas').on('click', '.espera-atendida', function(){
+          var checkbox_activado = $(this);
+          if(checkbox_activado.is(':checked')){
+            if(!confirm('¿Está seguro que desea marcar esta causa como ' +
+                        'atendida? Esta acción no es reversible')){
+              return false;
+            }
+            var id_espera_emergencia = checkbox_activado
+                                       .parent()
+                                       .data('id-espera-emergencia');
+
+            // Hacer peticion a la base de datos para finalizar la espera
+            $.get('/emergencia/espera_finalizada/' + id_espera_emergencia, 
+                  function(){
+              // Si se finalizo la espera con exito, devolver la causa a la
+              // lista de esperas por asignar
+              var id_espera = checkbox_activado.parent().data('id-espera');
+              var no_asignadas = checkbox_activado
+                                 .closest('.causas-espera')
+                                 .children('.esperas-no-asignadas')
+                                 .first();
+              var item_lista = $('<li></li>');
+              item_lista.addClass('espera-no-asignada');
+              item_lista.attr('data-id-espera', id_espera);
+              no_asignadas.append(item_lista);
+              
+              // Colocar el logo para eliminar la causa
+              var menos = $('<img> </img>');
+              menos.attr('src', '/static/img/Atencion/masim.png');
+              menos.addClass('espera-mas');
+              item_lista.append(menos);
+
+              // Colocar la imagen de la causa de espera
+              var imagen_espera = checkbox_activado
+                                  .siblings('.imagen-espera-lista')
+                                  .first()
+                                  .clone();
+              item_lista.append(imagen_espera);
+
+              // Colocar la causa de espera
+              item_lista.append(checkbox_activado.parent().text());
+
+              // Eliminar la imagen de la causa de espera del td
+              imagen_td = checkbox_activado.closest('.causas-espera')
+                                           .siblings('.imagenes-causas-espera')
+                                           .children('[data-id-espera=' + 
+                                                     id_espera + ']')
                                            .first();
-          var item_lista = $('<li></li>');
-          item_lista.addClass('espera-no-asignada');
-          item_lista.attr('data-id-espera', id_espera);
-          no_asignadas.append(item_lista);
-          
-          // Colocar el logo para eliminar la causa
-          var menos = $('<img> </img>');
-          menos.attr('src', '/static/img/Atencion/masim.png');
-          menos.addClass('espera-mas');
-          item_lista.append(menos);
-
-          // Colocar la imagen de la causa de espera
-          var imagen_espera = menos_activado.siblings('.imagen-espera-lista')
-                                            .first();
-          item_lista.append(imagen_espera);
-
-          // Colocar la causa de espera
-          item_lista.append(menos_activado.parent().text());
-
-          // Eliminar la imagen de la causa de espera del td
-          imagen_td = menos_activado.closest('.causas-espera')
-                                      .siblings('.imagenes-causas-espera')
-                                      .children('[data-id-espera=' + 
-                                                id_espera + ']')
-                                      .first();
-          imagen_td.remove();
-
-          // Actualizar el contador de causas de espera
-          contador = menos_activado.closest('.causas-espera')
-                                 .siblings('.boton-espera');
-          contador.text(+(contador.text()) - 1);
-
-          // Eliminar el elemento
-          menos_activado.parent().remove()
+              imagen_td.remove();
+              checkbox_activado.remove()
+            });
+          }
         });
 
         $(".formCubA").css("display","none");
@@ -317,12 +362,14 @@
         <td class='tdEspera boton-espera'>
           <span class='imagenes-causas-espera'>
             {% for espera_emergencia in emergencia.esperas_asignadas %}
-              <img 
-                class='imagen-espera-td'
-                data-id-espera='{{ espera_emergencia.espera.id }}'
-                src=
-                  '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
-                 />
+              {% if espera_emergencia.hora_fin == None %}
+                <img 
+                  class='imagen-espera-td'
+                  data-id-espera='{{ espera_emergencia.espera.id }}'
+                  src=
+                    '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                   />
+              {% endif %}
             {% endfor %}
           </span>
 
@@ -331,21 +378,21 @@
               Lista de esperas
               <button class='btn btn-small btn-primary'>
 <!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
-              Mantener
+                Mantener
               </button>
             </p>
+
             <hr />
 
             <ul class='esperas-asignadas'>
               {% for espera_emergencia in emergencia.esperas_asignadas %}
                 <li class='espera-asignada'
-                    data-id-espera='{{ espera_emergencia.espera.id }}'>
+                    data-id-espera='{{ espera_emergencia.espera.id }}'
+                    data-id-espera-emergencia='{{ espera_emergencia.id }}'>
                   <img class='espera-menos'
                        src='/static/img/Atencion/menosim.png' />
-                  {% if espera_emergencia.estado == '0' %}
+                  {% if espera_emergencia.hora_fin == None %}
                     <input class='espera-atendida' type='checkbox' />
-                  {% else %}
-                    <input class='espera-atendida' type='checkbox' checked />
                   {% endif %}
 
                   <img 
@@ -376,8 +423,9 @@
             </ul>
           </div>
         </td>
+
         <td>
-            <div class="progress progress-striped active">
+          <div class="progress progress-striped active">
             <div id="barra_{{emergencia.id}}" class="" style="width:100%;">
              <span id="tiempo_{{emergencia.id}}" style="font-size: 22px;">{{emergencia.tiempo_esperaR}}</span>
             </div>
