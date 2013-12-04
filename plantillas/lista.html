@@ -99,25 +99,12 @@
                     {% csrf_token %}
                     <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                       <option value="nada">--</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5A">5A</option>
-                      <option value="5B">5B</option>
-                      <option value="5C">5C</option>
-                      <option value="5D">5D</option>
-                      <option value="5E">5E</option>
-                      <option value="6A">6A</option>
-                      <option value="6B">6B</option>
-                      <option value="6C">6C</option>
-                      <option value="6D">6D</option>
-                      <option value="6E">6E</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
+
+                      <!--Se imprime la lista de cubiculos   -->
+                      
+                      {% for c in cubiculos %}
+                      <option value="{{c.nombre}}">{{c.nombre}}</option>
+                      {% endfor %}
                     </select>
                     <button class="btn btn-mini btn-primary" onClick="enviaA('{{l.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Actualizar"><i class="icon-refresh icon-white"></i>
                     </button>
@@ -131,25 +118,12 @@
                 {% csrf_token %}
                 <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
                     <option value="nada">--</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5A">5A</option>
-                    <option value="5B">5B</option>
-                    <option value="5C">5C</option>
-                    <option value="5D">5D</option>
-                    <option value="5E">5E</option>
-                    <option value="6A">6A</option>
-                    <option value="6B">6B</option>
-                    <option value="6C">6C</option>
-                    <option value="6D">6D</option>
-                    <option value="6E">6E</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
+
+                    <!--Se imprime la lista de cubiculos   -->
+                    
+                    {% for c in cubiculos %}
+                    <option value="{{c.nombre}}">{{c.nombre}}</option>
+                    {% endfor %}
                   </select>
                   <button class="btn btn-mini btn-primary" onClick="enviaA('{{l.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Guardar"><i class="icon-plus-sign icon-white"></i></button>
                 </form>

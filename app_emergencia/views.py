@@ -100,11 +100,15 @@ def emergencia_buscar(request):
     info = {'form':form,'busqueda':busqueda,'titulo':titulo,'boton':boton}
     return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
+#   Busca en la base de datos las emergencias y los 
+#   cubiculos que seran utilizados en la vista lista.hmtl
+#
 def emergencia_listar_todas(request):   
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    cubiculos = Cubiculo.objects.all()
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
-    info = { 'lista': lista, 'form': form, 'titulo': titulo }
+    info = { 'lista': lista, 'cubiculos': cubiculos, 'form': form, 'titulo': titulo }
     return render_to_response('lista.html', 
                                info,
                                context_instance = RequestContext(request))
