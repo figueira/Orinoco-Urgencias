@@ -1,0 +1,43 @@
+----------------
+Comandos Útiles
+----------------
+
+1.- Versión Django: desde cónsola hacer:
+	python -> import django -> django.VERSION
+
+2.- Agregar un superusuario para manipular como admin: 
+	python manage.py createsuperuser --username=joe --email=joe@example.com
+
+3.- Correr en un puerto específico: 
+	python manage.py runserver <PUERTO>. 
+	Ejemplo: python manage.py runserver 8088
+
+4.-  Actualizar BD : python manage.py syncdb
+
+5.- Entrar al editor de postgres desde cónsola: python manage.py dbshell
+
+6.- Cargar valores Json: 
+	python manage.py loaddata <RUTA>. 
+	Ejemplo:  python manage.py loaddata BD/*.json
+
+7.- Crear objetos Json con la data que se encuentra en la BD: 
+	python manage.py dumpdata <NOMBRE_TABLA> --indent 4 > <NOMBRE_ARCHIVO_OUT>. 
+	Ejemplo: python manage.py dumpdata app_emergencia.Indicacion --indent 4 > indicacion.json
+
+8.- Generar el diagrama de clases del proyecto, por defecto lo coloca en el directorio raíz: 
+	python manage.py graph_models -a -g -o <NOMBRE_ARCHIVO>. 
+	Ejemplo: python manage.py graph_models -a -g -o modelo.png
+
+9.- Para visualizar las tablas desde el administrador de Django:
+	Agregar en el admin.py de la app asociada (Ejemplo con app_paciente):
+	from app_paciente.models import *
+	from django.contrib import admin
+	// Agregar aqui las tablas que se desean visualizar:
+	admin.site.register(Paciente)
+
+
+Diagrama de Casos de Uso:
+
+- No está actualizado, mediante este enlace se puede editar:
+http://www.gliffy.com/go/publish/3977401
+
