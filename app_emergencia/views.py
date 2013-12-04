@@ -100,6 +100,9 @@ def emergencia_buscar(request):
     info = {'form':form,'busqueda':busqueda,'titulo':titulo,'boton':boton}
     return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
+#   Busca en la base de datos las emergencias y los 
+#   cubiculos que seran utilizados en la vista lista.hmtl
+#
 def emergencia_listar_todas(request):   
     emergencias = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
 
