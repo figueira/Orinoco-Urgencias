@@ -347,7 +347,7 @@
               </td>
 
         <td class='tdEspera boton-espera'>
-          <span class='imagenes-causas-espera'>
+          <div class='imagenes-causas-espera'>
             {% for espera_emergencia in emergencia.esperas_asignadas %}
               {% if espera_emergencia.hora_fin == None %}
                 <img 
@@ -358,7 +358,12 @@
                    />
               {% endif %}
             {% endfor %}
-          </span>
+          </div>
+          
+<!-- Esto es necesario para que el dropdown siempre salga dentro del td, a causa
+     de la flecha que se coloca sobre la caja -->
+          <br />
+          <br />
 
           <div class="causas-espera caja-dialogo">
             <p class='titulo-esperas'>
