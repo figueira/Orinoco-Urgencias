@@ -118,7 +118,9 @@ def emergencia_listar_todas(request):
                   info)
 
 def emergencia_listar_triage(request):
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+    lista = Emergencia.objects \
+                      .filter(hora_egreso = None) \
+                      .order_by('hora_ingreso')
     lista = [i for i in lista if i.atendido() == False]
     lista0 = [i for i in lista if  i.triage() == 0]
     lista1 = [i for i in lista if  i.triage() == 1]
@@ -133,15 +135,25 @@ def emergencia_listar_triage(request):
     lista1.extend(lista0)
     form = IniciarSesionForm()
     titulo = "Área de Triage"
-    info = {'lista':lista1,'form':form,'titulo':titulo}
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+    cubiculos = Cubiculo.objects.all()
+    info = {'emergencias': lista1, 
+            'form': form, 
+            'titulo': titulo,
+            'cubiculos': cubiculos}
+    return render_to_response('lista.html',
+                              info,
+                              context_instance = RequestContext(request))
 
 def emergencia_listar_sinclasificar(request):    
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
     lista = [i for i in lista if i.triage() == 0]
     form = IniciarSesionForm()
     titulo = "Sin Clasificar"
-    info = {'lista':lista,'form':form,'titulo':titulo}
+    cubiculos = Cubiculo.objects.all()
+    info = {'emergencias': lista, 
+            'form': form, 
+            'titulo': titulo,
+            'cubiculos': cubiculos}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_clasificados(request):    
@@ -158,8 +170,14 @@ def emergencia_listar_clasificados(request):
     lista1.extend(lista5)
     form = IniciarSesionForm()
     titulo = "Clasificados"
-    info = {'lista':lista1,'form':form,'titulo':titulo}
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+    cubiculos = Cubiculo.objects.all()
+    info = {'emergencias': lista1, 
+            'form': form, 
+            'titulo': titulo,
+            'cubiculos': cubiculos}
+    return render_to_response('lista.html',
+                              info,
+                              context_instance = RequestContext(request))
 
 def emergencia_listar_atencion(request,mensaje):
     print "ver mensaje con el que entra a listar atencion: ",mensaje
@@ -167,7 +185,7 @@ def emergencia_listar_atencion(request,mensaje):
     lista = [i for i in lista if i.atendido() == True]
     form = IniciarSesionForm()
     titulo = "Atendidos"
-    info = {'lista':lista,'form':form,'titulo':titulo,'mensaje':mensaje}
+    info = {'emergencias': lista, 'form': form, 'titulo': titulo, 'mensaje': mensaje}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_observacion(request):
@@ -175,7 +193,11 @@ def emergencia_listar_observacion(request):
     lista = [i for i in lista if i.atendido() == True and i.triage() <= 3]
     form = IniciarSesionForm()
     titulo = "Observacion"
-    info = {'lista':lista,'form':form,'titulo':titulo}
+    cubiculos = Cubiculo.objects.all()
+    info = {'emergencias': lista,
+            'form': form,
+            'titulo': titulo,
+            'cubiculos': cubiculos}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_ambulatoria(request):
@@ -183,7 +205,11 @@ def emergencia_listar_ambulatoria(request):
     lista = [i for i in lista if i.atendido() == True and i.triage() > 3]
     form = IniciarSesionForm()
     titulo = "Ambulatorio"
-    info = {'lista':lista,'form':form,'titulo':titulo}
+    cubiculos = Cubiculo.objects.all()
+    info = {'emergencias': lista,
+            'form': form,
+            'titulo': titulo,
+            'cubiculos': cubiculos}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 
@@ -434,7 +460,24 @@ def emergencia_calcularTriage(request,idE):
             else:
                 f_area = AreaEmergencia.objects.get(nombre__startswith="Atenci")
  
-            t = Triage(emergencia = emergencia,medico=medico,fecha=f_fecha,motivo=f_motivo,areaAtencion=f_area,ingreso=f_ingreso,atencion=f_atencion,esperar=f_esperar,recursos=f_recursos,signos_tmp=f_temp,signos_fc=f_fc,signos_fr=f_fr,signos_pa=f_pb,signos_saod=f_saod,signos_avpu=f_avpu,signos_dolor=f_dolor,nivel=triage)
+            t = Triage(emergencia = emergencia,
+                       medico = medico,
+                       fecha = f_fecha,
+                       motivo = f_motivo,
+                       areaAtencion = f_area,
+                       ingreso = f_ingreso,
+                       atencion = f_atencion,
+                       esperar = f_esperar,
+                       recursos = f_recursos,
+                       signos_tmp = f_temp,
+                       signos_fc = f_fc,
+                       signos_fr = f_fr,
+                       signos_pa = f_pb,
+                       signos_saod = f_saod,
+                       signos_avpu = f_avpu,
+                       signos_dolor = f_dolor,
+                       nivel = triage)
+
             paciente = emergencia.paciente
             paciente.signos_tmp = f_temp
             paciente.signos_fc = f_fc
