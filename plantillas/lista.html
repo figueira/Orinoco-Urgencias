@@ -284,7 +284,6 @@
                   {{emergencia.cubi}}
                 </center>
                 </div>
-                {% else %}
                 <div id="formCub">
                 <center>
                 <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
@@ -330,14 +329,6 @@
              <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
               <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
               </a>
-
-              {% else %}
-                <center>NO ASIGNADO</center>
-              {% endif %}
-              
-               <a href='/emergencia/{{emergencia.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
-                <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
-                </a>
 
               <td><span class="nombreLista"><a href='/paciente/{{ emergencia.paciente.id }}'>{{emergencia.paciente}}</a></span></td>
               
