@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+  {% block estilos %}
+    <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
+  {% endblock %}
+
   {% block cuerpo %}
     {% if "Exitosamente" in mensaje %} 
       <div class= "alert alert-success">
@@ -40,36 +44,221 @@
       }
 
       $(document).ready(function(){
+        // Evento que oculta el panel de causas de espera cuando se hace click
+        // fuera de el
+        $(document.body).click(function(){
+          $('.causas-espera').fadeOut();
+        })
+
+        // Asociacion del evento click sobre las esperas
+        $('.boton-espera').click(function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          var causas_espera = $(this).children('.causas-espera');
+          // Decidir que hacer dependiendo de si el panel con las causas de
+          // espera esta visible o no
+          if(causas_espera.css('display') == 'none')
+          {
+            $('.causas-espera').fadeOut();
+            causas_espera.fadeIn();
+          } else
+          {
+            $('.causas-espera').fadeOut();
+          }
+        });
+
+        // Esto es para prevenir que el click en el panel de causas de espera
+        // haga que el mismo desaparezca
+        $('.causas-espera').click(function(event){
+          event.stopPropagation();
+        })
+
+        // Método que agrega causas de espera a partir de la lista de causas
+        // no asignadas
+        $('.causas-espera').on('click', '.espera-mas', function(event){
+          // Construir el elemento a agregar a la lista de causas asignadas
+          var mas_activado = $(this);
+          var id_espera = mas_activado.parent().data('id-espera');
+          var id_emergencia = mas_activado.closest('.fila-emergencia')
+                                          .data('id-emergencia');
+          
+          // Antes que todo se envia una actualizacion a la base de datos para
+          // guardar este cambio
+          $.getJSON('/emergencia/' + id_emergencia + '/agregar_espera/' + 
+                    id_espera, '', function(id_retorno){
+            var asignadas = mas_activado.closest('.causas-espera')
+                                         .children('.esperas-asignadas')
+                                         .first();
+            var item_lista = $('<li></li>');
+            item_lista.addClass('espera-asignada');
+            item_lista.attr('data-id-espera', id_espera);
+            item_lista.attr('data-id-espera-emergencia', id_retorno);
+            asignadas.append(item_lista);
+            
+            // Colocar el logo para eliminar la causa
+            var menos = $('<img> </img>');
+            menos.attr('src', '/static/img/Atencion/menosim.png');
+            menos.addClass('espera-menos');
+            item_lista.append(menos);
+
+            // Colocar el checkbox para marcar la causa como atendida
+            var checkbox = $('<input></input>');
+            checkbox.attr('type', 'checkbox');
+            checkbox.addClass('espera-atendida');
+            item_lista.append(checkbox);
+
+            // Colocar la imagen de la causa de espera
+            var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
+                                            .first();
+            item_lista.append(imagen_espera.clone());
+
+            // Colocar la causa de espera
+            item_lista.append(mas_activado.parent().text());
+
+            // Agregar la imagen de la causa de espera al td adyacente
+            imagen_espera.removeClass('imagen-espera-lista');
+            imagen_espera.addClass('imagen-espera-td');
+            mas_activado.closest('.causas-espera')
+                        .siblings('.imagenes-causas-espera')
+                        .append(imagen_espera);
+
+            // Eliminar el elemento
+            mas_activado.parent().remove()
+          });
+        });
+
+        // Método que elimina causas de espera a partir de la lista de causas
+        // asignadas
+        $('.causas-espera').on('click', '.espera-menos', function(event){
+          if(!confirm("¿Esta seguro que desea eliminar esta causa de espera? " +
+                      "Esto no la marcará como atendida, para ello use la " +
+                      "caja que se encuentra al lado"))
+          {
+            return false;
+          }
+          // Construir el elemento a agregar a la lista de causas no asignadas
+          var menos_activado = $(this)
+          var id_espera = menos_activado.parent().data('id-espera');
+          var id_emergencia = menos_activado.closest('.fila-emergencia')
+                                            .data('id-emergencia');
+
+          // Hacer peticion a la base de datos para eliminar la causa de espera
+          $.get('/emergencia/' + id_emergencia + '/eliminar_espera/' + 
+                id_espera, function(){
+            var no_asignadas = menos_activado.closest('.causas-espera')
+                                             .children('.esperas-no-asignadas')
+                                             .first();
+            var item_lista = $('<li></li>');
+            item_lista.addClass('espera-no-asignada');
+            item_lista.attr('data-id-espera', id_espera);
+            no_asignadas.append(item_lista);
+            
+            // Colocar el logo para eliminar la causa
+            var menos = $('<img> </img>');
+            menos.attr('src', '/static/img/Atencion/masim.png');
+            menos.addClass('espera-mas');
+            item_lista.append(menos);
+
+            // Colocar la imagen de la causa de espera
+            var imagen_espera = menos_activado.siblings('.imagen-espera-lista')
+                                              .first();
+            item_lista.append(imagen_espera);
+
+            // Colocar la causa de espera
+            item_lista.append(menos_activado.parent().text());
+
+            // Eliminar la imagen de la causa de espera del td
+            imagen_td = menos_activado.closest('.causas-espera')
+                                        .siblings('.imagenes-causas-espera')
+                                        .children('[data-id-espera=' + 
+                                                  id_espera + ']')
+                                        .first();
+            imagen_td.remove();
+
+            // Eliminar el elemento
+            menos_activado.parent().remove()
+          });
+        });
+
+        // Asociacion del evento sobre el checkbox que marca una causa de espera
+        // como finalizada
+        $('.esperas-asignadas').on('click', '.espera-atendida', function(){
+          var checkbox_activado = $(this);
+          console.log(checkbox_activado.attr('checked'))
+          if(checkbox_activado.is(':checked')){
+            if(!confirm('¿Está seguro que desea marcar esta causa como ' +
+                        'atendida? Esta acción no es reversible')){
+              return false;
+            }
+            var id_espera_emergencia = checkbox_activado
+                                       .parent()
+                                       .data('id-espera-emergencia');
+
+            // Hacer peticion a la base de datos para finalizar la espera
+            $.get('/emergencia/espera_finalizada/' + id_espera_emergencia, 
+                  function(){
+              // Si se finalizo la espera con exito, devolver la causa a la
+              // lista de esperas por asignar
+              var id_espera = checkbox_activado.parent().data('id-espera');
+              var no_asignadas = checkbox_activado
+                                 .closest('.causas-espera')
+                                 .children('.esperas-no-asignadas')
+                                 .first();
+              var item_lista = $('<li></li>');
+              item_lista.addClass('espera-no-asignada');
+              item_lista.attr('data-id-espera', id_espera);
+              no_asignadas.append(item_lista);
+              
+              // Colocar el logo para eliminar la causa
+              var menos = $('<img> </img>');
+              menos.attr('src', '/static/img/Atencion/masim.png');
+              menos.addClass('espera-mas');
+              item_lista.append(menos);
+
+              // Colocar la imagen de la causa de espera
+              var imagen_espera = checkbox_activado
+                                  .siblings('.imagen-espera-lista')
+                                  .first()
+                                  .clone();
+              item_lista.append(imagen_espera);
+
+              // Colocar la causa de espera
+              item_lista.append(checkbox_activado.parent().text());
+
+              // Eliminar la imagen de la causa de espera del td
+              imagen_td = checkbox_activado.closest('.causas-espera')
+                                           .siblings('.imagenes-causas-espera')
+                                           .children('[data-id-espera=' + 
+                                                     id_espera + ']')
+                                           .first();
+              imagen_td.remove();
+            });
+          } else {
+            // Mantener el checkbox siempre marcado
+            return false;
+          }
+        });
+
+        // Especialmente para Firefox, se deben asignar las propiedades
+        // correctas a los checkbox
+        $('.espera-atendida').each(function(i, checkbox){
+          checkbox = $(checkbox)
+          if(checkbox.attr('checked') == 'checked'){
+            checkbox.prop('checked', 'checked')
+          } else {
+            checkbox.removeProp('checked')
+          }
+        });
         $(".formCubA").css("display","none");
         $("[rel='tooltip']").tooltip();
         $(".tit_list").html("{{titulo}}")
       });
     </script>
 
-    <style>
-      span.espera:link, span.espera:visited, span.espera:active 
-      { 
-        text-decoration: none 
-      }
-      .s1 {
-        width:57px;
-      }
-      .s2 {
-        width:25px;
-      }
-
-      .nombreLista {
-        text-transform: uppercase;
-      }
-
-      .cubi:hover, .imagenIcono{
-        cursor: pointer;
-      }
-    </style>
 
     <div class="container row">
       
-      {% if lista %}
+      {% if emergencias %}
 
         <table class="table table-bordered" style="font-size: 22px;">
           <tr>
@@ -83,21 +272,23 @@
             </th>
 
           </tr>
-          {% for l in lista %}
-          <tr id ="emergencia_{{l.id}}" class="filaEmergencia" >
-            <td>
-              {% if l.triage != 0 %}
-              {% if l.cubi != '' %}
-              <div class="cubi" id="cubDir_{{l.id}}" onclick="actualizar('{{l.id}}')">
-              <center>
-                {{l.cubi}}
-              </center>
-              </div>
-              <div id="formCubA_{{l.id}}" class="formCubA">
+          {% for emergencia in emergencias %}
+            <tr id ="emergencia_{{emergencia.id}}" 
+                class="fila-emergencia" 
+                data-id-emergencia='{{ emergencia.id }}'>
+              <td>
+                {% if emergencia.triage != 0 %}
+                {% if emergencia.cubi != '' %}
+                <div class="cubi" id="cubDir_{{emergencia.id}}" onclick="actualizar('{{emergencia.id}}')">
                 <center>
-                  <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{l.id}}/actualizar">
-                    {% csrf_token %}
-                    <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
+                  {{emergencia.cubi}}
+                </center>
+                </div>
+                <div id="formCub">
+                <center>
+                <form id="formCubi" method="post" action="/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
+                  {% csrf_token %}
+                  <select id="{{emergencia.id}}cub" name="{{emergencia.id}}cub" class="s1">
                       <option value="nada">--</option>
 
                       <!--Se imprime la lista de cubiculos   -->
@@ -106,10 +297,9 @@
                       <option value="{{c.nombre}}">{{c.nombre}}</option>
                       {% endfor %}
                     </select>
-                    <button class="btn btn-mini btn-primary" onClick="enviaA('{{l.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Actualizar"><i class="icon-refresh icon-white"></i>
-                    </button>
+                    <button class="btn btn-mini btn-primary" onClick="enviaA('{{emergencia.id}}')" rel="tooltip" data-toggle="tooltip" data-original-title="Guardar"><i class="icon-plus-sign icon-white"></i></button>
                   </form>
-                </center>
+              </center>
               </div>
               {% else %}
               <div id="formCub">
@@ -140,51 +330,106 @@
               <img style="margin-left: 5px; width:35px; height:35px;" src="/static/img/alta.png"/>
               </a>
 
-            <td><span class="nombreLista"><a href='/paciente/{{ l.paciente.id }}'>{{l.paciente}}</a></span></td>
-            
-            <td class='tdTriage'>{% if l.triage != 0 %}
-              <a href="/emergencia/{{l.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
-              <img src="/static/img/estados/nivel{{ l.triage }}.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ l.triage }}"/>
-              </a>
-              {% else %}
-              <a href="/emergencia/{{l.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
-              <img src="/static/img/estados/nivel0.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ l.triage }}"/>
-              </a>
-              <a href="/emergencia/{{l.id}}/t1"><img src="/static/img/estados/nivel1.png" style="margin-left: 5px; width:30px; height:40px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 1"/></a>
-              <a href="/emergencia/{{l.id}}/t2"><img src="/static/img/estados/nivel2.png" style="margin-left: 5px; width:30px; height:40px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 2"/></a>
+              <td><span class="nombreLista"><a href='/paciente/{{ emergencia.paciente.id }}'>{{emergencia.paciente}}</a></span></td>
+              
+              <td class='tdTriage'>{% if emergencia.triage != 0 %}
+                <a href="/emergencia/{{emergencia.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
+                <img src="/static/img/estados/nivel{{ emergencia.triage }}.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ emergencia.triage }}"/>
+                </a>
+                {% else %}
+                <a href="/emergencia/{{emergencia.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
+                <img src="/static/img/estados/nivel0.png" style="margin-left: 5px; width:30px; height:40px;" title="Nivel {{ emergencia.triage }}"/>
+                </a>
+                <a href="/emergencia/{{emergencia.id}}/t1"><img src="/static/img/estados/nivel1.png" style="margin-left: 5px; width:30px; height:40px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 1"/></a>
+                <a href="/emergencia/{{emergencia.id}}/t2"><img src="/static/img/estados/nivel2.png" style="margin-left: 5px; width:30px; height:40px;" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 2"/></a>
 
+                {% endif %}
+              </td>
+
+        <td class='tdEspera boton-espera'>
+          <div class='imagenes-causas-espera'>
+            {% for espera_emergencia in emergencia.esperas_asignadas %}
+              {% if espera_emergencia.hora_fin == None %}
+                <img 
+                  class='imagen-espera-td'
+                  data-id-espera='{{ espera_emergencia.espera.id }}'
+                  src=
+                    '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                   />
               {% endif %}
-            </td>
-
-      <td class='tdEspera'>
-         <span id='espera{{l.id}}' 
-               class='espera' 
-               data-html="true" 
-               data-toggle="popover" 
-               data-placement="bottom" 
-               title="" 
-               data-original-title="Lista De Esperas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-mini btn-primary' onclick='MantenerEsperas({{l.id}})' >mantener</button>" 
-               idEmer="{{l.id}}" >
-          <span class="btn btn-small btn-primary" style='width:10px;'>
-            <b id="texto{{l.id}}" 
-               texto='{{l.numEsperasNoAtendidas}}' 
-               style="font-size: 17px;">
-              {{l.numEsperasNoAtendidas}}
-            </b>
-          </span>
-        </span>
-        <span id="causas_{{l.id}}">
-        </span>
-      </td>
-      <td>
-          <div class="progress progress-striped active">
-          <div id="barra_{{l.id}}" class="" style="width:100%;">
-           <span id="tiempo_{{l.id}}" style="font-size: 22px;">{{l.tiempo_esperaR}}</span>
+            {% endfor %}
           </div>
-        </div>
+          
+<!-- Esto es necesario para que el dropdown siempre salga dentro del td, a causa
+     de la flecha que se coloca sobre la caja -->
+          <br />
+          <br />
 
-      </td>
-          </tr> 
+          <div class="causas-espera caja-dialogo">
+            <p class='titulo-esperas'>
+              Lista de esperas
+              <button class='btn btn-small btn-primary'>
+<!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
+                Mantener
+              </button>
+            </p>
+
+            <hr />
+
+            <ul class='esperas-asignadas'>
+              {% for espera_emergencia in emergencia.esperas_asignadas %}
+                <li class='espera-asignada'
+                    data-id-espera='{{ espera_emergencia.espera.id }}'
+                    data-id-espera-emergencia='{{ espera_emergencia.id }}'>
+                  <img class='espera-menos'
+                       src='/static/img/Atencion/menosim.png' />
+                  {% if espera_emergencia.hora_fin == None %}
+                    <input class='espera-atendida' 
+                           type='checkbox' />
+                  {% else %}
+                    <input class='espera-atendida'
+                           type='checkbox'
+                           checked='checked' />
+                  {% endif %}
+
+                  <img 
+                    class='imagen-espera-lista'
+                    data-id-espera='{{ espera_emergencia.espera.id }}'
+                    src=
+                      '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                  />
+                  {{ espera_emergencia.espera.nombre }}
+                </li>
+              {% endfor %}
+            </ul>
+
+            <hr />
+
+            <ul class="esperas-no-asignadas">
+              {% for espera in emergencia.esperas_no_asignadas %}
+                <li class='espera-no-asignada'
+                    data-id-espera='{{ espera.id }}'>
+                  <img class='espera-mas'
+                       src='/static/img/Atencion/masim.png' />
+                  <img class="imagen-espera-lista" 
+                       data-id-espera='{{ espera.id }}'
+                       src="/static/img/esperas/espera_{{ espera.id }}.png"/>
+                  {{ espera.nombre }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </td>
+
+        <td>
+          <div class="progress progress-striped active">
+            <div id="barra_{{emergencia.id}}" class="" style="width:100%;">
+             <span id="tiempo_{{emergencia.id}}" style="font-size: 22px;">{{emergencia.tiempo_esperaR}}</span>
+            </div>
+          </div>
+
+        </td>
+            </tr> 
           {% endfor %}
 
         </table>
@@ -200,18 +445,12 @@
 <script>
 
   $(document).ready(function() {
-    // Asociacion del evento click sobre las esperas
-    $('.espera').on('click', function(event){
-      event.preventDefault();
-      mostrar_esperas($(this).attr('idemer'));
-    });
-
     $('.dropdown-toggle').dropdown();
       var cont = 1;
-      {% for l in lista %}
-        $("#emergencia_{{l.id}}").data("tiempoEsp","{{l.tiempo_espera_causasR}}");
-        $("#emergencia_{{l.id}}").data("fila",cont);
-        $("#emergencia_{{l.id}}").data("flat","0");
+      {% for emergencia in emergencias %}
+        $("#emergencia_{{emergencia.id}}").data("tiempoEsp","{{emergencia.tiempo_espera_causasR}}");
+        $("#emergencia_{{emergencia.id}}").data("fila",cont);
+        $("#emergencia_{{emergencia.id}}").data("flat","0");
         cont++;
       {% endfor %}
 
@@ -229,9 +468,9 @@
     var tiempoMax = 360;
     function myTimer() {
 
-    {% for l in lista %}
-      var idE= "{{l.paciente.apellidos}}"
-      var tiempo=$("#tiempo_{{l.id}}").html();
+    {% for emergencia in emergencias %}
+      var idE= "{{emergencia.paciente.apellidos}}"
+      var tiempo=$("#tiempo_{{emergencia.id}}").html();
       tiempo = tiempo.split(":");
       dias = parseInt(tiempo[0]);
       hors = parseInt(tiempo[1]);
@@ -260,8 +499,8 @@
       if (dias < 10) dias = "0"+dias;
 
       tiempo = dias+":"+hors+":"+mins+":"+segs;
-      $("#tiempo_{{l.id}}").html(tiempo);
-      tiempoEsp = $("#emergencia_{{l.id}}").data("tiempoEsp").split(":");
+      $("#tiempo_{{emergencia.id}}").html(tiempo);
+      tiempoEsp = $("#emergencia_{{emergencia.id}}").data("tiempoEsp").split(":");
       diasEsp = parseInt(tiempoEsp[0]);
       horsEsp = parseInt(tiempoEsp[1]);
       minsEsp = parseInt(tiempoEsp[2]);
@@ -279,9 +518,9 @@
           }
         }
       }
-      $("#emergencia_{{l.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
+      $("#emergencia_{{emergencia.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
       if (diasEsp > 0 || horsEsp> 0 || minsEsp > 0){
-        $('#emergencia_{{l.id}}').css("background","rgba(230, 230, 230, 0.5)");
+        $('#emergencia_{{emergencia.id}}').css("background","rgba(230, 230, 230, 0.5)");
       }
 
       tiempo = (dias*24*60)+(hors*60)+mins;
@@ -289,25 +528,25 @@
       tRoj = tiempoMax * .66;
       tAma = tiempoMax * .33;
       if (tiempo  > tExc) {
-        var alarma = $("#imagen_{{l.id}}").attr("src");
+        var alarma = $("#imagen_{{emergencia.id}}").attr("src");
         if (alarma != "/static/img/estados/alarmaNegra.png") {
-          $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
+          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
         }
       } else if (tiempo > tRoj) {
-        $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaRoja.png");
+        $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaRoja.png");
       } else if (tiempo > tAma) {
-        $("#imagen_{{l.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
+        $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
       }
 
       t = Math.floor((tiempoC /tiempoMax)*100);
       if (t >= 100) {
-        $("#barra_{{l.id}}").attr("class","bar bar-inverse");
+        $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
       } else if (t < 100 && t >= 66) {
-        $("#barra_{{l.id}}").attr("class","bar bar-danger");
+        $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
       } else if (t < 66 && t >= 33) {
-        $("#barra_{{l.id}}").attr("class","bar bar-warning");
+        $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
       } else {
-        $("#barra_{{l.id}}").attr("class","bar bar-success");
+        $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
       }
 
       {% endfor %}
