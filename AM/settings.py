@@ -8,20 +8,20 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('Jose Lezama', 'joseglego@gmail.com'),
     ('MaIsabel Jilo', 'isajilo7@gmail.com'),
-    ('Daniel Montenegro', 'monttda@gmail.com'),	
+    ('Carlos Ledezma', 'cgledezma1101@gmail.com'),	
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'django.db.backends.sqlite3', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'cmsb',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'USER': 'carlos',
+        'PASSWORD': '',
+        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',                      # Set to empty string for default.
     }
 }
 
