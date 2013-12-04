@@ -210,4 +210,14 @@ Cuando se pregunte si se desea crear un super-usuario para la aplicación escrib
 
   yes
 
-y escoger un nombre de usuario, correo electrónico y contraseña
+y escoger un nombre de usuario, correo electrónico y contraseña.
+
+Cuando termine la sincronización de la base de datos puede ejecutar en la misma
+consola:
+
+  python manage.py runserver
+
+que iniciará la aplicación, a la que se podrá acceder con cualquier navegador
+accediendo a la url:
+
+  localhost:8000
