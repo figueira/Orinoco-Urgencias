@@ -1,0 +1,213 @@
+﻿Instalación de la aplicación TDS
+--------------------------------
+Autor: Carlos Ledezma
+Fecha: Noviembre, 2013
+
+Introducción
+------------
+
+A continuación se presenta un documento con las instrucciones detalladas de cómo
+instalar la aplicación TDS en un sistema operativo Windows 8, recién instalado,
+de 32 bits. Es recomendable que durante todo el proceso se cuente con una conexión
+estable a internet.
+
+A lo largo del proceso se instalarán diversos programas, es conveniente que se
+verifique la correcta instalación de los mismos antes de seguir con pasos 
+subsiguientes.
+
+Así pues, empecemos.
+
+Dependencias
+------------
+
+Dado que el sistema se encuentra alojado en un repositorio de GitHub, será
+conveniente descargar la aplicación que dicha página nos brinda para manipular
+los repositorios. Para ello vaya a la siguiente dirección:
+
+  http://windows.github.com/
+
+y oprima el botón que dice 'Download GitHub for Windows'.
+
+Cuando finalice la descarga, inicie el instalador haciendo doble click en el
+archivo obtenido. En el dialogo inicial haga click en 'Install' y espere a que
+finalice el proceso de descarga.
+
+Inicie el instalador, coloque sus credenciales de GitHub y realice los pasos de
+configuración.
+
+El programa se ejecuta utilizando el framework 'Django', escrito en el lenguaje de
+programación 'Python', por lo que será necesario descargar e instalar el
+intérprete para este lenguaje. El mismo se puede conseguir en:
+
+  http://www.python.org/getit/windows/
+  
+en dicha página haga click en el enlace que dice 'individual releases'. En la página
+siguiente haga click en el enlace 'Python 2.7.6'. Busque en la página siguiente
+el enlace 'Windows x86 MSI Installer (2.7.6) (sig)' y haga click en él.
+
+En la primera pantalla seleccione 'Install for al users' y haga click en 'Next'.
+Luego tome nota del directorio de instalación y haga click en 'Next' hasta que 
+inicie la instalación. Cuando finalice la instalación haga click en 'Finish' y 
+reinicie la computadora.
+
+Para utilizar correctamente Python será necesario cambiar las variables de
+ambiente de Windows. Para ésto vaya al 'Control Panel', busque la opción
+'Edit the system environment variables'. En la caja de diálogo que aparece haga
+click en 'Environment Variables...'. En el panel 'System variables' busque la
+variable 'Path', seleccionela y haga click en 'Edit...'. Al final de el valor
+'Variable value' AGREGUE el valor 
+';<python_home>;<python_home>\Scripts', donde
+<python_home> es el directorio en el que se instaló Python, y del que
+tomó nota en el paso de instalación. Cuando haya hecho ésto, haga click en 'Ok'.
+
+Para instalar ciertas extensiones de Python que son necesarias para la aplicación
+es conveniente utilizar 'Pip', un manejador de paquetes de Python. Para ello tome
+el contenido de:
+
+  https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+  
+y péguelo en un archivo en su escritorio llamado 'ez_setup.py'.
+
+Haga doble click sobre el archivo generado. Ésto debería iniciar una consola de 
+Python que ejecutará una serie de comandos y, al finalizar, se cerrará sola.
+
+Ahora copie el contenido de la página:
+
+  https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+  
+y péguelo nuevamente en el escritorio, en un archivo llamado 'get-pip.py' y haga
+doble click sobre el archivo. Nuevamente se iniciará la consola de Python.
+
+Ahora que se tiene Pip, se puede fácilmente instalar el framework Django 
+abriendo la aplicación 'PowerShell' con derechos de administrador y colocando el
+siguiente comando:
+
+  pip install Django
+
+Se mostrará el progreso de la descarga. Espere a que finalice.
+
+Para verificar que Django se instaló correctamente ejecute el intérprete de
+Python corriendo en el 'PowerShell' el siguiente comando:
+  
+  python
+
+y en la consola que obtendrá coloque:
+
+  import django
+  django.VERSION
+  
+Lo que debería dar un resultado parecido a '(1, 6, 0, 'final', 0)', lo que indica
+la version del framework instalada. Puede salir de la consola interactiva de
+Python con el comando:
+
+  quit()
+
+Luego será necesario descargar la base de datos. El programa a utilizar será
+PostgreSQL, el cual se puede descargar de:
+
+  http://www.enterprisedb.com/products-services-training/pgdownload#windows
+  
+haciendo click en el link 'Win x86-32' bajo la versión 9.3.1. Cuando finalice la
+descarga, arranque el instalador. Acepte las configuraciones por defecto, y
+escoja una clave para el super-usuario cuando se le pida la misma. Espere a que
+finalice la instalación.
+
+Desmarque la opción para lanzar el 'Stack Builder' y haga click en 'Finish'
+
+Ahora será necesario instalar algunas extensiones de Django que la aplicación
+utiliza. Para ello será necesario tener, primero, un compilador de C. Éste
+se puede obtener en:
+
+  http://tdm-gcc.tdragon.net/download
+  
+en el enlace que indica la versión de 32-bits.
+
+Cuando finalice la descarga ejecute el instalador. En la primera pantalla
+seleccione la opción 'Create'. Cuando finalice la descarga seleccione la opción
+de 32-bits y haga click en 'Next'. En adelante acepte las opciones por defecto 
+hasta que inicie la instalación. Espere a que la misma finalice.
+
+Ahora cree el archivo '<python_home>\Lib\distutils\distutils.cfg' con
+el siguiente contenido:
+
+  [build]
+  compiler=mingw32
+
+Para utilizar la base de datos será necesario instalar un paquete de Python que 
+hace la interfaz entre el lenguaje y la base de datos. Para ello vaya a la
+siquiente página:
+  
+  http://www.stickpeople.com/projects/python/win-psycopg/
+  
+y descargue el archivo en la fila '2.5.1 (For Python 2.7)'. Al finalizar la
+descarga ejecute el instalador usando los valores por defecto que se dan.
+
+También será necesario obtener algunas extensiones de Django. Para ello abra
+un 'PowerShell' y escriba los comandos:
+
+  pip install django_extensions
+  pip install Pillow
+  pip install pisa
+  pip install reportlab
+  pip install html5lib
+  
+Configurar la base de datos
+---------------------------
+
+Para realizar esta configuración inicie la aplicación 'pgAdmin III', instalada
+con la base de datos. 
+
+En la lista de la izquierda haga doble click sobre el único servidor que
+debería haber (PostgreSQL 9.3 (x86) (localhost:5432)) e ingrese la contraseña
+escogida para el super-usuario de la base de datos.
+
+Debería obtener varias listas desplegables bajo el servidor. Haga click derecho
+sobre la lista 'Databases' y seleccione la opción 'New Database...'. Asigne a
+'Name' el valor 'cmsb' (sin comillas) y en 'Owner' escoja de la lista desplegable
+el valor 'postgres'. Haga click en 'Ok'
+
+Instalar la aplicación
+----------------------
+
+Para obtener el cógigo fuente de la aplicación, el mismo debe ser descargado
+desde el repositorio en GitHub al cual habrá sido invitado como colaborador.
+
+Lance la aplicación de GitHub que se instaló en pasos anteriores. Bajo la pestaña
+'github' tendrá su nombre de usuario. Haga click en él y busque en la derecha el
+repositorio 'ramiroso/TDScopia'. Haga click en 'clone', la opción que sale al
+pasar el mouse sobre el nombre del repositorio.
+
+Una vez que se termine de copiar el repositorio, haga click sobre la opción
+'repositories' bajo la pestaña 'local' y haga click sobre la flecha que se
+encuentra a la derecha del nombre del repositorio que se acaba de clonar.
+
+En la parte superior derecha encontrará una imágen de un engranaje. Haga click
+sobre ella, y luego sobre la opción 'open in explorer'. Ésto abrirá la ubicación
+en la computadora del código de la aplicación.
+
+Si se hace click sobre la barra superior (donde se encuentra la ubicación) se 
+mostrará la ruta real del archivo. A ésta la llamaremos <home_tds>.
+
+Ahora será necesario realizar ciertos pasos de configuración sobre la aplicación.
+Para ello abra en un editor de texto (Notepad, Notepad ++) el archivo 
+'<home_tds>/AM/settings.py'.
+
+Vaya a la opción llamada 'DATABASES' y asigne a la entrada 'ENGINE' el valor
+'django.db.backends.postgresql_psycopg2' (incluidas las comillas), borrando la 
+opción que se encuentre presente. A la opción 'NAME' asígnele el valor 'cmsb'
+(incluidas las comillas). 
+
+A la opción 'USER' asignele el valor 'postgres'(incluidas las comillas), y a 
+'PASSWORD' la contraseña escogida durante la instalación de la base de datos
+(entre comillas). Guarde los cambios.
+
+Ahora abra 'PowerShell' y escriba los siguientes comandos:
+
+  cd <home_tds>
+  python manage.py syncdb
+  
+Cuando se pregunte si se desea crear un super-usuario para la aplicación escribir
+
+  yes
+
+y escoger un nombre de usuario, correo electrónico y contraseña
