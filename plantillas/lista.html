@@ -184,6 +184,7 @@
         // como finalizada
         $('.esperas-asignadas').on('click', '.espera-atendida', function(){
           var checkbox_activado = $(this);
+          console.log(checkbox_activado.attr('checked'))
           if(checkbox_activado.is(':checked')){
             if(!confirm('¿Está seguro que desea marcar esta causa como ' +
                         'atendida? Esta acción no es reversible')){
@@ -231,11 +232,23 @@
                                                      id_espera + ']')
                                            .first();
               imagen_td.remove();
-              checkbox_activado.remove()
             });
+          } else {
+            // Mantener el checkbox siempre marcado
+            return false;
           }
         });
 
+        // Especialmente para Firefox, se deben asignar las propiedades
+        // correctas a los checkbox
+        $('.espera-atendida').each(function(i, checkbox){
+          checkbox = $(checkbox)
+          if(checkbox.attr('checked') == 'checked'){
+            checkbox.prop('checked', 'checked')
+          } else {
+            checkbox.removeProp('checked')
+          }
+        });
         $(".formCubA").css("display","none");
         $("[rel='tooltip']").tooltip();
         $(".tit_list").html("{{titulo}}")
@@ -392,7 +405,12 @@
                   <img class='espera-menos'
                        src='/static/img/Atencion/menosim.png' />
                   {% if espera_emergencia.hora_fin == None %}
-                    <input class='espera-atendida' type='checkbox' />
+                    <input class='espera-atendida' 
+                           type='checkbox' />
+                  {% else %}
+                    <input class='espera-atendida'
+                           type='checkbox'
+                           checked='checked' />
                   {% endif %}
 
                   <img 
