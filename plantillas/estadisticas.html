@@ -192,29 +192,55 @@
   </div>
   
   <hr />
-  <div class="row">
-    <div class="span12">
-      <h4> Incidencia de Causas de Espera en Pacientes en "Negro" </h4>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Causa de Espera</th>
-            <th>0 a 2 horas</th>
-            <th>2 a 4 horas</th>
-            <th>4 a 6 horas</th>
-            <th>6 o m&aacute;s horas</th>
-          </tr>
-        </thead>
-        {% for causa, valores in causas.items %}
-          <tr>
-            <td>{{causa}}</td>
-            {% for valor in valores %}
-              <td>{{valor}}</td>
-            {% endfor %}
-          </tr>
-        {% endfor %}
-      </table>
+	  <h4> Incidencia de Causas de Espera de los Pacientes en: </h4>
+    <ul class="nav nav-tabs" id="myTab">
+    {% for color in causas%}
+      {% if forloop.first %}
+      <li class="active">
+      {% else %}
+      <li>
+      {% endif %}
+      <a href="#{{color.0}}">{{color.0}}</a></li>
+    {% endfor %}
+    </ul>
+    
+    
+    <div class="tab-content">
+      {% for color in causas %}
+	{% if forloop.first %}
+	  <div class="tab-pane active" id="{{color.0}}">
+	{% else %}
+	  <div class="tab-pane" id="{{color.0}}">    
+	{% endif %}
+	    <table class="table table-striped table-hover">
+	      <thead>
+		<tr>
+		  <th>Causa de Espera</th>
+		  <th>0 a 2 horas</th>
+		  <th>2 a 4 horas</th>
+		  <th>4 a 6 horas</th>
+		  <th>6 o m&aacute;s horas</th>
+		</tr>
+	      </thead>
+	      {% for causa, valores in color.1.items %}
+		<tr>
+		  <td>{{causa}}</td>
+		  {% for valor in valores %}
+		    <td>{{valor}}</td>
+		  {% endfor %}
+		</tr>
+	      {% endfor %}
+	    </table>
+	</div>
+      {% endfor %}
     </div>
-  </div>
+ 
+  <script>
+      $('#myTab a').click(function (e) {
+	e.preventDefault();
+	$(this).tab('show');
+      })
+  </script>
 
+  
 {% endblock %}
