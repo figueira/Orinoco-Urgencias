@@ -9,7 +9,9 @@
         href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
   
   <!--Load the AJAX API-->
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="/static/libs/highcharts/highcharts.js"></script>
+  <script src="/static/libs/highcharts/modules/exporting.js"></script>
+  <script type="text/javascript" src="/static/scripts/jsapi"></script>
   <script type="text/javascript">
   
     // Load the Visualization API and the piechart package.
@@ -193,7 +195,7 @@
   
   <hr />
 	  <h4> Incidencia de Causas de Espera de los Pacientes en: </h4>
-    <ul class="nav nav-tabs" id="myTab">
+    <ul class="nav nav-tabs" id="tab-de-incidencias">
     {% for color in causas%}
       {% if forloop.first %}
       <li class="active">
@@ -231,12 +233,59 @@
 		</tr>
 	      {% endfor %}
 	    </table>
+	    <div id="chart-{{color.0}}" style="min-width: 1170px; height: 400px; margin: 0 auto"></div>
 	</div>
       {% endfor %}
     </div>
  
+ 
+ <script>
+ $(function () {
+      {% for color in causas %}
+        $('#chart-{{color.0}}').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Total fruit consumtion, grouped by gender'
+            },
+            xAxis: {
+                categories: [{% for color2 in causas %}
+			    {% if not forloop.first %}
+			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
+			    {% endif %}
+			      {% endfor %}
+			     ]
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {
+                    text: 'Numero de incidencias'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y
+                }
+            },
+            series: [{% for causa, valores in color.1.items %}
+		{
+		name: '{{causa}}',
+		data: {{valores}}
+		}{% if not forloop.last %},{% endif %}
+	    {% endfor %}]
+        });
+        {% endfor %}
+    });
+    
+</script>
+ 
+ 
+ 
   <script>
-      $('#myTab a').click(function (e) {
+      $('#tab-de-incidencias a').click(function (e) {
 	e.preventDefault();
 	$(this).tab('show');
       })
