@@ -227,21 +227,23 @@ def emergencia_agregar(request):
             p_nombres          = pcd['nombres']
             p_apellidos        = pcd['apellidos']
             p_sexo             = pcd['sexo']
-            #p_dia              = pcd['dia']
-            #p_mes              = pcd['mes']
-            #p_ano              = pcd['ano']
             p_fecha_nacimiento = pcd['fecha_nacimiento']
-            #p_cel              = pcd['cel']
-            #p_email            = pcd['email']
-            #p_direccion        = pcd['direccion']
-            #p_tlf_casa         = pcd['tlf_casa']
-            #p_contacto_rel     = pcd['contacto_rel']
-            #p_contacto_nombre  = pcd['contacto_nombre']
-            #p_contacto_tlf     = pcd['contacto_tlf']
-            #p_fecha_nacimiento = p_dia+"/"+p_mes+"/"+p_ano
-            prueba = Paciente.objects.filter(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos)
+            prueba = Paciente.objects.filter(cedula = p_cedula,
+                                             nombres = p_nombres,
+                                             apellidos = p_apellidos)
             if len(prueba) == 0:
-                p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel="",email="",direccion="",tlf_casa="",contacto_rel=11,contacto_nom="",contacto_tlf="")
+                p = Paciente(cedula = p_cedula,
+                             nombres = p_nombres,
+                             apellidos = p_apellidos,
+                             sexo = p_sexo,
+                             fecha_nacimiento = p_fecha_nacimiento,
+                             tlf_cel = "",
+                             email = "",
+                             direccion = "",
+                             tlf_casa = "",
+                             contacto_rel = 11,
+                             contacto_nom = "",
+                             contacto_tlf = "")
                 #p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel=p_cel,email=p_email,direccion=p_direccion,tlf_casa=p_tlf_casa,contacto_rel=p_contacto_rel,contacto_nom=p_contacto_nombre,contacto_tlf=p_contacto_tlf)
                 p.save()
             else:
