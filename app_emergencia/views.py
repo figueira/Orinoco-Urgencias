@@ -509,7 +509,7 @@ def estadisticas_prueba():
     for i in range(5):
       triages.append([(i+1),triagesBien[i]])
     return triages
-
+  
 
 def obtener_causas_de_espera(emergencias):
     
@@ -527,12 +527,14 @@ def obtener_causas_de_espera(emergencias):
       espera_emergencias = EsperaEmergencia.objects.filter(emergencia=emergencia)
       for espera_emergencia in espera_emergencias:
         causa = espera_emergencia.espera.nombre
+        if espera_emergencia.hora_fin == None:
+          continue
         tiempo_espera = (espera_emergencia.hora_fin -
-                          espera_emergencia.hora_comienzo).total_seconds()
+                          espera_emergencia.hora_comienzo).seconds
         if tiempo_espera < hora_en_segundos[2]:
           grupo = 0
         elif hora_en_segundos[2] <= tiempo_espera and \
-             tiempo_espera < hora_en_segundos[2]:
+             tiempo_espera < hora_en_segundos[4]:
           grupo = 1
         elif hora_en_segundos[4] <= tiempo_espera and \
              tiempo_espera < hora_en_segundos[6]:
@@ -541,7 +543,7 @@ def obtener_causas_de_espera(emergencias):
           grupo = 3
           
         causas_de_espera[causa][grupo] += 1
-      return causas_de_espera    
+    return causas_de_espera    
           
       
 
@@ -586,7 +588,42 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     total_egresos = sum(horas)
     
     # Causas de espera por grupo
-    causas = obtener_causas_de_espera(emergencias_por_horas[3])
+    causas_pacientes_en_negro = obtener_causas_de_espera\
+      (emergencias_por_horas[3])
+    causas_pacientes_en_rojo = obtener_causas_de_espera\
+      (emergencias_por_horas[2])
+    causas_pacientes_en_amarillo = obtener_causas_de_espera\
+      (emergencias_por_horas[1])
+    causas_pacientes_en_verde = obtener_causas_de_espera\
+      (emergencias_por_horas[0])
+    total_causas = len(causas_pacientes_en_amarillo)
+    causas_de_espera = Espera.objects.all()
+    causas_pacientes_total = {}
+    for causa in causas_de_espera:
+      causas_pacientes_total[causa.nombre] = [
+	sum([causas_pacientes_en_verde[causa.nombre][0],
+	  causas_pacientes_en_amarillo[causa.nombre][0],
+	  causas_pacientes_en_rojo[causa.nombre][0],
+	  causas_pacientes_en_negro[causa.nombre][0]]),
+	sum([causas_pacientes_en_verde[causa.nombre][1],
+	  causas_pacientes_en_amarillo[causa.nombre][1],
+	  causas_pacientes_en_rojo[causa.nombre][1],
+	  causas_pacientes_en_negro[causa.nombre][1]]),
+	sum([causas_pacientes_en_verde[causa.nombre][2],
+	  causas_pacientes_en_amarillo[causa.nombre][2],
+	  causas_pacientes_en_rojo[causa.nombre][2],
+	  causas_pacientes_en_negro[causa.nombre][2]]),
+	sum([causas_pacientes_en_verde[causa.nombre][3],
+	  causas_pacientes_en_amarillo[causa.nombre][3],
+	  causas_pacientes_en_rojo[causa.nombre][3],
+	  causas_pacientes_en_negro[causa.nombre][3]])
+	]
+    causas = [('General', causas_pacientes_total),
+	      ('Verde', causas_pacientes_en_verde),
+	      ('Amarillo', causas_pacientes_en_amarillo),
+	      ('Rojo', causas_pacientes_en_rojo),
+	      ('Negro', causas_pacientes_en_negro)]
+    
     
     # Resultados de los Triages
     triages = Triage.objects.filter(fecha__range=[fecha_inicio,fecha_fin]) \
