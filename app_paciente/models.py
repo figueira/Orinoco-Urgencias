@@ -24,7 +24,7 @@ RELACION = (
 
 # Create your models here.
 class Paciente(models.Model):
-    cedula           = models.CharField(max_length=9,default=0)
+    cedula           = models.CharField(default=0)
     nombres          = models.CharField(max_length=64)
     apellidos        = models.CharField(max_length=64)
     sexo             = models.IntegerField(choices=SEXO)

@@ -12,21 +12,14 @@ ATENCION = (
 )
 
 class AgregarEmergenciaForm(forms.Form):
-    ingreso          = forms.DateTimeField(label="FECHA Y HORA DE INGRESO",widget=forms.TextInput(attrs={'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))
-    cedula           = forms.CharField(label="DOCUMENTO DE IDENTIDAD",max_length=9)
-    nombres          = forms.CharField(label="NOMBRE", max_length=64)
-    apellidos        = forms.CharField(label="APELLIDO", max_length=64)
-    sexo             = forms.ChoiceField(label="SEXO", choices=SEXO,required=False)
-    fecha_nacimiento = forms.DateField(label="FECHA DE NACIMIENTO")
-    #cel              = forms.CharField(label="TELEFONO CELULAR",max_length=11,required=False)
-    #email            = forms.EmailField(label="Correo Electrónico",max_length=64,required=False)
-    #direccion        = forms.CharField(label="Dirección",max_length=128,required=False)
-    #tlf_casa         = forms.CharField(label="Número de Teléfono de Habitación",max_length=11,required=False)    
-    #contacto_nombre  = forms.CharField(label="Nombre de la Persona de Contacto",max_length=64,required=False)
-    #contacto_rel     = forms.ChoiceField(label="Vínculo entre El Contacto y el Paciente",choices=RELACION,required=False)
-    #contacto_tlf     = forms.CharField(label="Número de Teléfono del Contacto",max_length=11,required=False)
-    #foto             = forms.ImageField(label="Foto",required=False)
-    
+    ingreso = forms.DateTimeField(
+                label = "FECHA Y HORA DE INGRESO",
+                widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))
+    cedula = forms.CharField(label = "DOCUMENTO DE IDENTIDAD")
+    nombres = forms.CharField(label = "NOMBRE", max_length = 64)
+    apellidos = forms.CharField(label = "APELLIDO", max_length = 64)
+    sexo = forms.ChoiceField(label = "SEXO", choices = SEXO,required = False)
+    fecha_nacimiento = forms.DateField(label = "FECHA DE NACIMIENTO")
 
 class darAlta(forms.Form):
     destino  = forms.ModelChoiceField(label="Destino",queryset=Destino.objects.all())
