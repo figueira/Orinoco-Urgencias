@@ -1,0 +1,10241 @@
+[{"pk": 1, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04126136414",
+"fecha_nacimiento": "1974-06-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126857912",
+"signos_pb": 0.0,
+"nombres": "ADAM APOLINARIO",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "JARA PENA",
+"contacto_tlf": "04141564475",
+"signos_fr": 0,
+"contacto_nom": "ELVIRA ERNANDEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ADAMAPOLINARIOJARAPENA@gmail.com",
+"cedula": "1111112",
+"signos_tmp": 0.0
+}
+},
+{"pk": 1,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 1,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:57:16",
+"hora_egreso": "2013-12-03T12:57:16",
+"fecha_Esp_act": "2013-12-03T12:57:16"
+}
+},
+{"pk": 1,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T11:05:16",
+"espera": 1,
+"emergencia": 1
+}
+}
+,
+{"pk": 2,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:05:16",
+"hora_fin": "2013-12-03T11:21:16",
+"espera": 2,
+"emergencia": 1
+}
+}
+,
+{"pk": 3,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:21:16",
+"hora_fin": "2013-12-03T11:32:16",
+"espera": 3,
+"emergencia": 1
+}
+}
+,
+{"pk": 4,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:32:16",
+"hora_fin": "2013-12-03T12:17:16",
+"espera": 5,
+"emergencia": 1
+}
+}
+,
+{"pk": 5,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T12:27:16",
+"espera": 6,
+"emergencia": 1
+}
+}
+,
+{"pk": 6,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:27:16",
+"hora_fin": "2013-12-03T12:53:16",
+"espera": 8,
+"emergencia": 1
+}
+}
+,
+{"pk": 7,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:53:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 10,
+"emergencia": 1
+}
+}
+,{"pk": 2, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04128189835",
+"fecha_nacimiento": "1928-10-24",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121830003",
+"signos_pb": 0.0,
+"nombres": "YANINA SUYAI",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "MUNOZ PIZARRO",
+"contacto_tlf": "04126356928",
+"signos_fr": 0,
+"contacto_nom": "HANNA GALLARDO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "YANINASUYAIMUNOZPIZARRO@gmail.com",
+"cedula": "1111113",
+"signos_tmp": 0.0
+}
+},
+{"pk": 2,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 2,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:49:16",
+"hora_egreso": "2013-12-03T12:49:16",
+"fecha_Esp_act": "2013-12-03T12:49:16"
+}
+},
+{"pk": 8,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T12:48:16",
+"espera": 6,
+"emergencia": 2
+}
+}
+,
+{"pk": 9,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:48:16",
+"hora_fin": "2013-12-03T12:49:16",
+"espera": 7,
+"emergencia": 2
+}
+}
+,{"pk": 3, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04165771420",
+"fecha_nacimiento": "1936-02-13",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122955919",
+"signos_pb": 0.0,
+"nombres": "ALDO QUILLEN",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "VALDES ODRIGUEZ",
+"contacto_tlf": "04123321500",
+"signos_fr": 0,
+"contacto_nom": "OLIVERIO FARIAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALDOQUILLENVALDESODRIGUEZ@gmail.com",
+"cedula": "1111114",
+"signos_tmp": 0.0
+}
+},
+{"pk": 3,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 3,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:57:16",
+"hora_egreso": "2013-12-03T14:57:16",
+"fecha_Esp_act": "2013-12-03T14:57:16"
+}
+},
+{"pk": 10,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T14:30:16",
+"espera": 1,
+"emergencia": 3
+}
+}
+,
+{"pk": 11,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:30:16",
+"hora_fin": "2013-12-03T14:48:16",
+"espera": 3,
+"emergencia": 3
+}
+}
+,
+{"pk": 12,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:48:16",
+"hora_fin": "2013-12-03T14:52:16",
+"espera": 4,
+"emergencia": 3
+}
+}
+,
+{"pk": 13,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:52:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 6,
+"emergencia": 3
+}
+}
+,
+{"pk": 14,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 7,
+"emergencia": 3
+}
+}
+,
+{"pk": 15,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 8,
+"emergencia": 3
+}
+}
+,
+{"pk": 16,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 9,
+"emergencia": 3
+}
+}
+,
+{"pk": 17,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 10,
+"emergencia": 3
+}
+}
+,{"pk": 4, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149815140",
+"fecha_nacimiento": "1992-02-14",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127769401",
+"signos_pb": 0.0,
+"nombres": " ALENKA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GODOY HERRERA",
+"contacto_tlf": "04127700481",
+"signos_fr": 0,
+"contacto_nom": "MIRYAM GUERRERO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALENKAGODOYHERRERA@gmail.com",
+"cedula": "1111115",
+"signos_tmp": 0.0
+}
+},
+{"pk": 4,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 4,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:46:16",
+"hora_egreso": "2013-12-03T13:46:16",
+"fecha_Esp_act": "2013-12-03T13:46:16"
+}
+},
+{"pk": 18,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T10:39:16",
+"espera": 5,
+"emergencia": 4
+}
+}
+,
+{"pk": 19,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:39:16",
+"hora_fin": "2013-12-03T13:16:16",
+"espera": 7,
+"emergencia": 4
+}
+}
+,
+{"pk": 20,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:16:16",
+"hora_fin": "2013-12-03T13:22:16",
+"espera": 8,
+"emergencia": 4
+}
+}
+,
+{"pk": 21,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:22:16",
+"hora_fin": "2013-12-03T13:41:16",
+"espera": 9,
+"emergencia": 4
+}
+}
+,
+{"pk": 22,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:41:16",
+"hora_fin": "2013-12-03T13:46:16",
+"espera": 10,
+"emergencia": 4
+}
+}
+,{"pk": 5, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147324957",
+"fecha_nacimiento": "1996-02-09",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121262998",
+"signos_pb": 0.0,
+"nombres": "CALOGERO JON",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MEDINA OLIVARES",
+"contacto_tlf": "04123435199",
+"signos_fr": 0,
+"contacto_nom": "DALMA ES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CALOGEROJONMEDINAOLIVARES@gmail.com",
+"cedula": "1111116",
+"signos_tmp": 0.0
+}
+},
+{"pk": 5,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 5,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:45:16",
+"hora_egreso": "2013-12-03T11:45:16",
+"fecha_Esp_act": "2013-12-03T11:45:16"
+}
+},
+{"pk": 23,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T08:11:16",
+"espera": 2,
+"emergencia": 5
+}
+}
+,
+{"pk": 24,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:11:16",
+"hora_fin": "2013-12-03T09:02:16",
+"espera": 5,
+"emergencia": 5
+}
+}
+,
+{"pk": 25,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:02:16",
+"hora_fin": "2013-12-03T09:43:16",
+"espera": 6,
+"emergencia": 5
+}
+}
+,
+{"pk": 26,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:43:16",
+"hora_fin": "2013-12-03T10:35:16",
+"espera": 7,
+"emergencia": 5
+}
+}
+,
+{"pk": 27,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:35:16",
+"hora_fin": "2013-12-03T11:45:16",
+"espera": 8,
+"emergencia": 5
+}
+}
+,{"pk": 6, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04121630555",
+"fecha_nacimiento": "1978-02-02",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128742013",
+"signos_pb": 0.0,
+"nombres": "MERIBELLA ",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORELLANA MEDINA",
+"contacto_tlf": "04147422024",
+"signos_fr": 0,
+"contacto_nom": "NAIMID DONOSO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MERIBELLAORELLANAMEDINA@gmail.com",
+"cedula": "1111117",
+"signos_tmp": 0.0
+}
+},
+{"pk": 6,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 6,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:51:16",
+"hora_egreso": "2013-12-03T16:51:16",
+"fecha_Esp_act": "2013-12-03T16:51:16"
+}
+},
+{"pk": 28,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T10:53:16",
+"espera": 1,
+"emergencia": 6
+}
+}
+,
+{"pk": 29,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:53:16",
+"hora_fin": "2013-12-03T14:54:16",
+"espera": 2,
+"emergencia": 6
+}
+}
+,
+{"pk": 30,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:54:16",
+"hora_fin": "2013-12-03T15:15:16",
+"espera": 5,
+"emergencia": 6
+}
+}
+,
+{"pk": 31,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:15:16",
+"hora_fin": "2013-12-03T16:09:16",
+"espera": 6,
+"emergencia": 6
+}
+}
+,
+{"pk": 32,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:09:16",
+"hora_fin": "2013-12-03T16:51:16",
+"espera": 7,
+"emergencia": 6
+}
+}
+,{"pk": 7, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04124555938",
+"fecha_nacimiento": "1949-09-08",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122419705",
+"signos_pb": 0.0,
+"nombres": "NARCISO MAXIMO",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ORELLANA MOLINA",
+"contacto_tlf": "04144436438",
+"signos_fr": 0,
+"contacto_nom": "EMELINDA SANDOVAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NARCISOMAXIMOORELLANAMOLINA@gmail.com",
+"cedula": "1111118",
+"signos_tmp": 0.0
+}
+},
+{"pk": 7,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 7,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:57:16",
+"hora_egreso": "2013-12-03T08:57:16",
+"fecha_Esp_act": "2013-12-03T08:57:16"
+}
+},
+{"pk": 33,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T08:38:16",
+"espera": 2,
+"emergencia": 7
+}
+}
+,
+{"pk": 34,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:38:16",
+"hora_fin": "2013-12-03T08:39:16",
+"espera": 4,
+"emergencia": 7
+}
+}
+,
+{"pk": 35,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:39:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 5,
+"emergencia": 7
+}
+}
+,
+{"pk": 36,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 9,
+"emergencia": 7
+}
+}
+,
+{"pk": 37,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 10,
+"emergencia": 7
+}
+}
+,{"pk": 8, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04165835838",
+"fecha_nacimiento": "1947-11-05",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123833696",
+"signos_pb": 0.0,
+"nombres": "CAMILCAMILO SUMAJ",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SALAZAR MARTINEZ",
+"contacto_tlf": "04148204144",
+"signos_fr": 0,
+"contacto_nom": "LIBERATO LEIVA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CAMILCAMILOSUMAJSALAZARMARTINEZ@gmail.com",
+"cedula": "1111119",
+"signos_tmp": 0.0
+}
+},
+{"pk": 8,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 8,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:22:16",
+"hora_egreso": "2013-12-03T14:22:16",
+"fecha_Esp_act": "2013-12-03T14:22:16"
+}
+},
+{"pk": 38,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T10:03:16",
+"espera": 1,
+"emergencia": 8
+}
+}
+,
+{"pk": 39,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:03:16",
+"hora_fin": "2013-12-03T13:28:16",
+"espera": 2,
+"emergencia": 8
+}
+}
+,
+{"pk": 40,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:28:16",
+"hora_fin": "2013-12-03T14:22:16",
+"espera": 3,
+"emergencia": 8
+}
+}
+,
+{"pk": 41,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:22:16",
+"hora_fin": "2013-12-03T14:22:16",
+"espera": 5,
+"emergencia": 8
+}
+}
+,{"pk": 9, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04127259689",
+"fecha_nacimiento": "1974-08-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122299712",
+"signos_pb": 0.0,
+"nombres": "CLEMA FLORIANA",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ES RUIZ",
+"contacto_tlf": "04146857815",
+"signos_fr": 0,
+"contacto_nom": "MILES VIDAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CLEMAFLORIANAESRUIZ@gmail.com",
+"cedula": "1111120",
+"signos_tmp": 0.0
+}
+},
+{"pk": 9,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 9,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:57:16",
+"hora_egreso": "2013-12-03T10:57:16",
+"fecha_Esp_act": "2013-12-03T10:57:16"
+}
+},
+{"pk": 42,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T06:52:16",
+"espera": 1,
+"emergencia": 9
+}
+}
+,
+{"pk": 43,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:52:16",
+"hora_fin": "2013-12-03T07:52:16",
+"espera": 2,
+"emergencia": 9
+}
+}
+,
+{"pk": 44,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:52:16",
+"hora_fin": "2013-12-03T10:29:16",
+"espera": 3,
+"emergencia": 9
+}
+}
+,
+{"pk": 45,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:29:16",
+"hora_fin": "2013-12-03T10:40:16",
+"espera": 5,
+"emergencia": 9
+}
+}
+,
+{"pk": 46,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:40:16",
+"hora_fin": "2013-12-03T10:56:16",
+"espera": 9,
+"emergencia": 9
+}
+}
+,
+{"pk": 47,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:56:16",
+"hora_fin": "2013-12-03T10:57:16",
+"espera": 10,
+"emergencia": 9
+}
+}
+,{"pk": 10, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04121352477",
+"fecha_nacimiento": "1951-12-01",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121875911",
+"signos_pb": 0.0,
+"nombres": "URBANA BETEL",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "LAGOS ORRES",
+"contacto_tlf": "04146484363",
+"signos_fr": 0,
+"contacto_nom": "GERALDINA SANHUEZA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "URBANABETELLAGOSORRES@gmail.com",
+"cedula": "1111121",
+"signos_tmp": 0.0
+}
+},
+{"pk": 10,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 10,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:54:16",
+"hora_egreso": "2013-12-03T13:54:16",
+"fecha_Esp_act": "2013-12-03T13:54:16"
+}
+},
+{"pk": 48,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T09:54:16",
+"espera": 2,
+"emergencia": 10
+}
+}
+,
+{"pk": 49,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:54:16",
+"hora_fin": "2013-12-03T10:39:16",
+"espera": 3,
+"emergencia": 10
+}
+}
+,
+{"pk": 50,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:39:16",
+"hora_fin": "2013-12-03T13:34:16",
+"espera": 7,
+"emergencia": 10
+}
+}
+,
+{"pk": 51,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:34:16",
+"hora_fin": "2013-12-03T13:49:16",
+"espera": 9,
+"emergencia": 10
+}
+}
+,
+{"pk": 52,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:49:16",
+"hora_fin": "2013-12-03T13:54:16",
+"espera": 10,
+"emergencia": 10
+}
+}
+,{"pk": 11, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04124658917",
+"fecha_nacimiento": "1980-12-25",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121728564",
+"signos_pb": 0.0,
+"nombres": "FRANCIA SOCORRO",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GODOY PARRA",
+"contacto_tlf": "04124116949",
+"signos_fr": 0,
+"contacto_nom": "ALUMINE CARVAJAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "FRANCIASOCORROGODOYPARRA@gmail.com",
+"cedula": "1111122",
+"signos_tmp": 0.0
+}
+},
+{"pk": 11,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T12:17:16",
+"paciente": 11,
+"hora_ingresoReal": "2013-12-03T12:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T18:46:16",
+"hora_egreso": "2013-12-03T18:46:16",
+"fecha_Esp_act": "2013-12-03T18:46:16"
+}
+},
+{"pk": 53,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 4,
+"emergencia": 11
+}
+}
+,
+{"pk": 54,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:57:16",
+"hora_fin": "2013-12-03T17:52:16",
+"espera": 7,
+"emergencia": 11
+}
+}
+,
+{"pk": 55,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:52:16",
+"hora_fin": "2013-12-03T18:31:16",
+"espera": 8,
+"emergencia": 11
+}
+}
+,
+{"pk": 56,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:31:16",
+"hora_fin": "2013-12-03T18:44:16",
+"espera": 9,
+"emergencia": 11
+}
+}
+,
+{"pk": 57,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:44:16",
+"hora_fin": "2013-12-03T18:46:16",
+"espera": 10,
+"emergencia": 11
+}
+}
+,{"pk": 12, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04166052319",
+"fecha_nacimiento": "1901-10-04",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123198253",
+"signos_pb": 0.0,
+"nombres": "CELINA CLELIA",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "CAMPOS GOMEZ",
+"contacto_tlf": "04146676996",
+"signos_fr": 0,
+"contacto_nom": "SAMUEL RIQUELME",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CELINACLELIACAMPOSGOMEZ@gmail.com",
+"cedula": "1111123",
+"signos_tmp": 0.0
+}
+},
+{"pk": 12,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 12,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:57:16",
+"hora_egreso": "2013-12-03T08:57:16",
+"fecha_Esp_act": "2013-12-03T08:57:16"
+}
+},
+{"pk": 58,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T04:41:16",
+"espera": 4,
+"emergencia": 12
+}
+}
+,
+{"pk": 59,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:41:16",
+"hora_fin": "2013-12-03T08:42:16",
+"espera": 5,
+"emergencia": 12
+}
+}
+,
+{"pk": 60,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:42:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 9,
+"emergencia": 12
+}
+}
+,
+{"pk": 61,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:55:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 10,
+"emergencia": 12
+}
+}
+,{"pk": 13, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164270388",
+"fecha_nacimiento": "1939-03-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122263769",
+"signos_pb": 0.0,
+"nombres": "FRANCISFRANCISCO DUILIO",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "LORES VARGAS",
+"contacto_tlf": "04127693584",
+"signos_fr": 0,
+"contacto_nom": "CARLO DIAZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "FRANCISFRANCISCODUILIOLORESVARGAS@gmail.com",
+"cedula": "1111124",
+"signos_tmp": 0.0
+}
+},
+{"pk": 13,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 13,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:37:16",
+"hora_egreso": "2013-12-03T14:37:16",
+"fecha_Esp_act": "2013-12-03T14:37:16"
+}
+},
+{"pk": 62,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T13:33:16",
+"espera": 1,
+"emergencia": 13
+}
+}
+,
+{"pk": 63,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:33:16",
+"hora_fin": "2013-12-03T14:02:16",
+"espera": 4,
+"emergencia": 13
+}
+}
+,
+{"pk": 64,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:02:16",
+"hora_fin": "2013-12-03T14:06:16",
+"espera": 5,
+"emergencia": 13
+}
+}
+,
+{"pk": 65,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:06:16",
+"hora_fin": "2013-12-03T14:37:16",
+"espera": 6,
+"emergencia": 13
+}
+}
+,{"pk": 14, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04166585512",
+"fecha_nacimiento": "1988-03-07",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121170255",
+"signos_pb": 0.0,
+"nombres": "SOLANO ZAHIR",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ESCOBAR GUERRERO",
+"contacto_tlf": "04143866879",
+"signos_fr": 0,
+"contacto_nom": "ANASTASIO GALLARDO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SOLANOZAHIRESCOBARGUERRERO@gmail.com",
+"cedula": "1111125",
+"signos_tmp": 0.0
+}
+},
+{"pk": 14,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 14,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:51:16",
+"hora_egreso": "2013-12-03T07:51:16",
+"fecha_Esp_act": "2013-12-03T07:51:16"
+}
+},
+{"pk": 66,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T01:49:16",
+"espera": 1,
+"emergencia": 14
+}
+}
+,
+{"pk": 67,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:49:16",
+"hora_fin": "2013-12-03T05:49:16",
+"espera": 2,
+"emergencia": 14
+}
+}
+,
+{"pk": 68,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:49:16",
+"hora_fin": "2013-12-03T06:43:16",
+"espera": 3,
+"emergencia": 14
+}
+}
+,
+{"pk": 69,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:43:16",
+"hora_fin": "2013-12-03T07:39:16",
+"espera": 6,
+"emergencia": 14
+}
+}
+,
+{"pk": 70,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:39:16",
+"hora_fin": "2013-12-03T07:45:16",
+"espera": 7,
+"emergencia": 14
+}
+}
+,
+{"pk": 71,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:45:16",
+"hora_fin": "2013-12-03T07:51:16",
+"espera": 8,
+"emergencia": 14
+}
+}
+,{"pk": 15, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04121801931",
+"fecha_nacimiento": "1984-08-04",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128283979",
+"signos_pb": 0.0,
+"nombres": "DEMIAN ALUHE",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ODRIGUEZ LEIVA",
+"contacto_tlf": "04165982004",
+"signos_fr": 0,
+"contacto_nom": "CONRADO VARGAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "DEMIANALUHEODRIGUEZLEIVA@gmail.com",
+"cedula": "1111126",
+"signos_tmp": 0.0
+}
+},
+{"pk": 15,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 15,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:33:16",
+"hora_egreso": "2013-12-03T13:33:16",
+"fecha_Esp_act": "2013-12-03T13:33:16"
+}
+},
+{"pk": 72,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T09:08:16",
+"espera": 3,
+"emergencia": 15
+}
+}
+,
+{"pk": 73,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:08:16",
+"hora_fin": "2013-12-03T11:11:16",
+"espera": 4,
+"emergencia": 15
+}
+}
+,
+{"pk": 74,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:11:16",
+"hora_fin": "2013-12-03T11:18:16",
+"espera": 7,
+"emergencia": 15
+}
+}
+,
+{"pk": 75,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:18:16",
+"hora_fin": "2013-12-03T13:33:16",
+"espera": 8,
+"emergencia": 15
+}
+}
+,{"pk": 16, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142031840",
+"fecha_nacimiento": "1962-02-05",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129547732",
+"signos_pb": 0.0,
+"nombres": "AGAR AMORINA",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "MARTINEZ HENRIQUEZ",
+"contacto_tlf": "04143008607",
+"signos_fr": 0,
+"contacto_nom": "EVELISE ORTIZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "AGARAMORINAMARTINEZHENRIQUEZ@gmail.com",
+"cedula": "1111127",
+"signos_tmp": 0.0
+}
+},
+{"pk": 16,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 16,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:57:16",
+"hora_egreso": "2013-12-03T11:57:16",
+"fecha_Esp_act": "2013-12-03T11:57:16"
+}
+},
+{"pk": 76,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T08:01:16",
+"espera": 1,
+"emergencia": 16
+}
+}
+,
+{"pk": 77,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:01:16",
+"hora_fin": "2013-12-03T10:07:16",
+"espera": 2,
+"emergencia": 16
+}
+}
+,
+{"pk": 78,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:07:16",
+"hora_fin": "2013-12-03T11:25:16",
+"espera": 3,
+"emergencia": 16
+}
+}
+,
+{"pk": 79,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:25:16",
+"hora_fin": "2013-12-03T11:39:16",
+"espera": 4,
+"emergencia": 16
+}
+}
+,
+{"pk": 80,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:39:16",
+"hora_fin": "2013-12-03T11:53:16",
+"espera": 5,
+"emergencia": 16
+}
+}
+,
+{"pk": 81,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:53:16",
+"hora_fin": "2013-12-03T11:54:16",
+"espera": 6,
+"emergencia": 16
+}
+}
+,
+{"pk": 82,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:54:16",
+"hora_fin": "2013-12-03T11:56:16",
+"espera": 9,
+"emergencia": 16
+}
+}
+,
+{"pk": 83,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:56:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 10,
+"emergencia": 16
+}
+}
+,{"pk": 17, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163164096",
+"fecha_nacimiento": "1996-03-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126341135",
+"signos_pb": 0.0,
+"nombres": "SHANTI MAICA",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "RAYA VERGARA",
+"contacto_tlf": "04143860200",
+"signos_fr": 0,
+"contacto_nom": "NOELIA PEREZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SHANTIMAICARAYAVERGARA@gmail.com",
+"cedula": "1111128",
+"signos_tmp": 0.0
+}
+},
+{"pk": 17,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 17,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:57:16",
+"hora_egreso": "2013-12-03T12:57:16",
+"fecha_Esp_act": "2013-12-03T12:57:16"
+}
+},
+{"pk": 84,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T12:00:16",
+"espera": 1,
+"emergencia": 17
+}
+}
+,
+{"pk": 85,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:00:16",
+"hora_fin": "2013-12-03T12:15:16",
+"espera": 2,
+"emergencia": 17
+}
+}
+,
+{"pk": 86,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:15:16",
+"hora_fin": "2013-12-03T12:50:16",
+"espera": 3,
+"emergencia": 17
+}
+}
+,
+{"pk": 87,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:50:16",
+"hora_fin": "2013-12-03T12:52:16",
+"espera": 4,
+"emergencia": 17
+}
+}
+,
+{"pk": 88,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:52:16",
+"hora_fin": "2013-12-03T12:55:16",
+"espera": 5,
+"emergencia": 17
+}
+}
+,
+{"pk": 89,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:55:16",
+"hora_fin": "2013-12-03T12:55:16",
+"espera": 6,
+"emergencia": 17
+}
+}
+,
+{"pk": 90,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:55:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 7,
+"emergencia": 17
+}
+}
+,
+{"pk": 91,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:57:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 9,
+"emergencia": 17
+}
+}
+,{"pk": 18, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142110644",
+"fecha_nacimiento": "1974-05-21",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128823651",
+"signos_pb": 0.0,
+"nombres": "MAKU GENESIS",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ROJAS VENEGAS",
+"contacto_tlf": "04122249219",
+"signos_fr": 0,
+"contacto_nom": "ALDANA ES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MAKUGENESISROJASVENEGAS@gmail.com",
+"cedula": "1111129",
+"signos_tmp": 0.0
+}
+},
+{"pk": 18,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 18,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:57:16",
+"hora_egreso": "2013-12-03T13:57:16",
+"fecha_Esp_act": "2013-12-03T13:57:16"
+}
+},
+{"pk": 92,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T13:41:16",
+"espera": 2,
+"emergencia": 18
+}
+}
+,
+{"pk": 93,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:41:16",
+"hora_fin": "2013-12-03T13:55:16",
+"espera": 3,
+"emergencia": 18
+}
+}
+,
+{"pk": 94,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:55:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 4,
+"emergencia": 18
+}
+}
+,
+{"pk": 95,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:57:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 6,
+"emergencia": 18
+}
+}
+,
+{"pk": 96,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:57:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 8,
+"emergencia": 18
+}
+}
+,{"pk": 19, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04128631792",
+"fecha_nacimiento": "1926-02-01",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127631386",
+"signos_pb": 0.0,
+"nombres": "MELIPAL ",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "HERRERA CAMPOS",
+"contacto_tlf": "04168072977",
+"signos_fr": 0,
+"contacto_nom": "VENANCIO CASTILLO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MELIPALHERRERACAMPOS@gmail.com",
+"cedula": "1111130",
+"signos_tmp": 0.0
+}
+},
+{"pk": 19,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 19,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:54:16",
+"hora_egreso": "2013-12-03T13:54:16",
+"fecha_Esp_act": "2013-12-03T13:54:16"
+}
+},
+{"pk": 97,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T11:15:16",
+"espera": 3,
+"emergencia": 19
+}
+}
+,
+{"pk": 98,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:15:16",
+"hora_fin": "2013-12-03T12:56:16",
+"espera": 4,
+"emergencia": 19
+}
+}
+,
+{"pk": 99,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:56:16",
+"hora_fin": "2013-12-03T13:21:16",
+"espera": 5,
+"emergencia": 19
+}
+}
+,
+{"pk": 100,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:21:16",
+"hora_fin": "2013-12-03T13:40:16",
+"espera": 6,
+"emergencia": 19
+}
+}
+,
+{"pk": 101,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:40:16",
+"hora_fin": "2013-12-03T13:45:16",
+"espera": 7,
+"emergencia": 19
+}
+}
+,
+{"pk": 102,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:45:16",
+"hora_fin": "2013-12-03T13:54:16",
+"espera": 10,
+"emergencia": 19
+}
+}
+,{"pk": 20, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163666138",
+"fecha_nacimiento": "1929-10-27",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126893857",
+"signos_pb": 0.0,
+"nombres": "NICETO OBED",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "RIQUELME GOMEZ",
+"contacto_tlf": "04149041343",
+"signos_fr": 0,
+"contacto_nom": "LORENZA SANHUEZA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NICETOOBEDRIQUELMEGOMEZ@gmail.com",
+"cedula": "1111131",
+"signos_tmp": 0.0
+}
+},
+{"pk": 20,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T11:17:16",
+"paciente": 20,
+"hora_ingresoReal": "2013-12-03T11:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T17:57:16",
+"hora_egreso": "2013-12-03T17:57:16",
+"fecha_Esp_act": "2013-12-03T17:57:16"
+}
+},
+{"pk": 103,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:17:16",
+"hora_fin": "2013-12-03T14:08:16",
+"espera": 1,
+"emergencia": 20
+}
+}
+,
+{"pk": 104,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:08:16",
+"hora_fin": "2013-12-03T15:16:16",
+"espera": 3,
+"emergencia": 20
+}
+}
+,
+{"pk": 105,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:16:16",
+"hora_fin": "2013-12-03T16:21:16",
+"espera": 6,
+"emergencia": 20
+}
+}
+,
+{"pk": 106,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:21:16",
+"hora_fin": "2013-12-03T17:27:16",
+"espera": 7,
+"emergencia": 20
+}
+}
+,
+{"pk": 107,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:27:16",
+"hora_fin": "2013-12-03T17:44:16",
+"espera": 8,
+"emergencia": 20
+}
+}
+,
+{"pk": 108,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:44:16",
+"hora_fin": "2013-12-03T17:56:16",
+"espera": 9,
+"emergencia": 20
+}
+}
+,
+{"pk": 109,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:56:16",
+"hora_fin": "2013-12-03T17:57:16",
+"espera": 10,
+"emergencia": 20
+}
+}
+,{"pk": 21, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04128054924",
+"fecha_nacimiento": "1974-02-14",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124135687",
+"signos_pb": 0.0,
+"nombres": "ICARO OFIR",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "PINO SANDOVAL",
+"contacto_tlf": "04168919955",
+"signos_fr": 0,
+"contacto_nom": "VALQUIRIA SANDOVAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ICAROOFIRPINOSANDOVAL@gmail.com",
+"cedula": "1111132",
+"signos_tmp": 0.0
+}
+},
+{"pk": 21,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 21,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:56:16",
+"hora_egreso": "2013-12-03T19:56:16",
+"fecha_Esp_act": "2013-12-03T19:56:16"
+}
+},
+{"pk": 110,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T17:30:16",
+"espera": 1,
+"emergencia": 21
+}
+}
+,
+{"pk": 111,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:30:16",
+"hora_fin": "2013-12-03T19:08:16",
+"espera": 4,
+"emergencia": 21
+}
+}
+,
+{"pk": 112,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:08:16",
+"hora_fin": "2013-12-03T19:19:16",
+"espera": 5,
+"emergencia": 21
+}
+}
+,
+{"pk": 113,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:19:16",
+"hora_fin": "2013-12-03T19:42:16",
+"espera": 6,
+"emergencia": 21
+}
+}
+,
+{"pk": 114,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:42:16",
+"hora_fin": "2013-12-03T19:46:16",
+"espera": 7,
+"emergencia": 21
+}
+}
+,
+{"pk": 115,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:46:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 8,
+"emergencia": 21
+}
+}
+,
+{"pk": 116,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:56:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 10,
+"emergencia": 21
+}
+}
+,{"pk": 22, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04144635468",
+"fecha_nacimiento": "1926-05-20",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123922602",
+"signos_pb": 0.0,
+"nombres": "SUEN YENIEN",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "GONZALEZ HENRIQUEZ",
+"contacto_tlf": "04146491936",
+"signos_fr": 0,
+"contacto_nom": " MIRANDA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SUENYENIENGONZALEZHENRIQUEZ@gmail.com",
+"cedula": "1111133",
+"signos_tmp": 0.0
+}
+},
+{"pk": 22,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 22,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:49:16",
+"hora_egreso": "2013-12-03T09:49:16",
+"fecha_Esp_act": "2013-12-03T09:49:16"
+}
+},
+{"pk": 117,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T06:09:16",
+"espera": 2,
+"emergencia": 22
+}
+}
+,
+{"pk": 118,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:09:16",
+"hora_fin": "2013-12-03T08:37:16",
+"espera": 3,
+"emergencia": 22
+}
+}
+,
+{"pk": 119,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:37:16",
+"hora_fin": "2013-12-03T09:09:16",
+"espera": 4,
+"emergencia": 22
+}
+}
+,
+{"pk": 120,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:09:16",
+"hora_fin": "2013-12-03T09:22:16",
+"espera": 5,
+"emergencia": 22
+}
+}
+,
+{"pk": 121,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:22:16",
+"hora_fin": "2013-12-03T09:34:16",
+"espera": 6,
+"emergencia": 22
+}
+}
+,
+{"pk": 122,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:34:16",
+"hora_fin": "2013-12-03T09:41:16",
+"espera": 7,
+"emergencia": 22
+}
+}
+,
+{"pk": 123,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:41:16",
+"hora_fin": "2013-12-03T09:47:16",
+"espera": 9,
+"emergencia": 22
+}
+}
+,
+{"pk": 124,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:47:16",
+"hora_fin": "2013-12-03T09:49:16",
+"espera": 10,
+"emergencia": 22
+}
+}
+,{"pk": 23, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04148941672",
+"fecha_nacimiento": "1944-01-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129081794",
+"signos_pb": 0.0,
+"nombres": "JULIANA DOELLA",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "YANEZ HENRIQUEZ",
+"contacto_tlf": "04143841853",
+"signos_fr": 0,
+"contacto_nom": "AMABLE VASQUEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "JULIANADOELLAYANEZHENRIQUEZ@gmail.com",
+"cedula": "1111134",
+"signos_tmp": 0.0
+}
+},
+{"pk": 23,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T11:17:16",
+"paciente": 23,
+"hora_ingresoReal": "2013-12-03T11:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T17:57:16",
+"hora_egreso": "2013-12-03T17:57:16",
+"fecha_Esp_act": "2013-12-03T17:57:16"
+}
+},
+{"pk": 125,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:17:16",
+"hora_fin": "2013-12-03T16:09:16",
+"espera": 3,
+"emergencia": 23
+}
+}
+,
+{"pk": 126,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:09:16",
+"hora_fin": "2013-12-03T17:57:16",
+"espera": 4,
+"emergencia": 23
+}
+}
+,
+{"pk": 127,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:57:16",
+"hora_fin": "2013-12-03T17:57:16",
+"espera": 9,
+"emergencia": 23
+}
+}
+,{"pk": 24, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149916915",
+"fecha_nacimiento": "1990-11-07",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124477029",
+"signos_pb": 0.0,
+"nombres": "DINKO JANKO",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SAN MARTIN MEDINA",
+"contacto_tlf": "04125430092",
+"signos_fr": 0,
+"contacto_nom": "TOMASTOME VENEGAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "DINKOJANKOSANMARTINMEDINA@gmail.com",
+"cedula": "1111135",
+"signos_tmp": 0.0
+}
+},
+{"pk": 24,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 24,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:43:16",
+"hora_egreso": "2013-12-03T11:43:16",
+"fecha_Esp_act": "2013-12-03T11:43:16"
+}
+},
+{"pk": 128,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T06:00:16",
+"espera": 3,
+"emergencia": 24
+}
+}
+,
+{"pk": 129,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:00:16",
+"hora_fin": "2013-12-03T06:08:16",
+"espera": 4,
+"emergencia": 24
+}
+}
+,
+{"pk": 130,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:08:16",
+"hora_fin": "2013-12-03T06:17:16",
+"espera": 5,
+"emergencia": 24
+}
+}
+,
+{"pk": 131,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T06:25:16",
+"espera": 8,
+"emergencia": 24
+}
+}
+,
+{"pk": 132,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:25:16",
+"hora_fin": "2013-12-03T06:59:16",
+"espera": 9,
+"emergencia": 24
+}
+}
+,
+{"pk": 133,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:59:16",
+"hora_fin": "2013-12-03T11:43:16",
+"espera": 10,
+"emergencia": 24
+}
+}
+,{"pk": 25, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147432935",
+"fecha_nacimiento": "1966-07-28",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123187743",
+"signos_pb": 0.0,
+"nombres": " IBEL",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "UENTES GARCIA",
+"contacto_tlf": "04141479640",
+"signos_fr": 0,
+"contacto_nom": "AMELIE ODRIGUEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "IBELUENTESGARCIA@gmail.com",
+"cedula": "1111136",
+"signos_tmp": 0.0
+}
+},
+{"pk": 25,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 25,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:57:16",
+"hora_egreso": "2013-12-03T19:57:16",
+"fecha_Esp_act": "2013-12-03T19:57:16"
+}
+},
+{"pk": 134,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T18:18:16",
+"espera": 2,
+"emergencia": 25
+}
+}
+,
+{"pk": 135,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:18:16",
+"hora_fin": "2013-12-03T18:53:16",
+"espera": 4,
+"emergencia": 25
+}
+}
+,
+{"pk": 136,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:53:16",
+"hora_fin": "2013-12-03T19:37:16",
+"espera": 6,
+"emergencia": 25
+}
+}
+,
+{"pk": 137,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:37:16",
+"hora_fin": "2013-12-03T19:43:16",
+"espera": 8,
+"emergencia": 25
+}
+}
+,
+{"pk": 138,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:43:16",
+"hora_fin": "2013-12-03T19:57:16",
+"espera": 9,
+"emergencia": 25
+}
+}
+,{"pk": 26, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147910989",
+"fecha_nacimiento": "1947-04-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123130728",
+"signos_pb": 0.0,
+"nombres": "GREGORIO SAVO",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "FERNANDEZ SPINOZA",
+"contacto_tlf": "04146496232",
+"signos_fr": 0,
+"contacto_nom": "KAI TAPIA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "GREGORIOSAVOFERNANDEZSPINOZA@gmail.com",
+"cedula": "1111137",
+"signos_tmp": 0.0
+}
+},
+{"pk": 26,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 26,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:06:16",
+"hora_egreso": "2013-12-03T16:06:16",
+"fecha_Esp_act": "2013-12-03T16:06:16"
+}
+},
+{"pk": 139,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T11:30:16",
+"espera": 3,
+"emergencia": 26
+}
+}
+,
+{"pk": 140,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:30:16",
+"hora_fin": "2013-12-03T15:22:16",
+"espera": 5,
+"emergencia": 26
+}
+}
+,
+{"pk": 141,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:22:16",
+"hora_fin": "2013-12-03T15:47:16",
+"espera": 6,
+"emergencia": 26
+}
+}
+,
+{"pk": 142,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:47:16",
+"hora_fin": "2013-12-03T16:06:16",
+"espera": 10,
+"emergencia": 26
+}
+}
+,{"pk": 27, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149743576",
+"fecha_nacimiento": "1902-12-17",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122625093",
+"signos_pb": 0.0,
+"nombres": "JEMINA LUISILLA",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORELLANA ALARCON",
+"contacto_tlf": "04124033100",
+"signos_fr": 0,
+"contacto_nom": "DORA JARA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "JEMINALUISILLAORELLANAALARCON@gmail.com",
+"cedula": "1111138",
+"signos_tmp": 0.0
+}
+},
+{"pk": 27,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 27,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:50:16",
+"hora_egreso": "2013-12-03T13:50:16",
+"fecha_Esp_act": "2013-12-03T13:50:16"
+}
+},
+{"pk": 143,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T10:59:16",
+"espera": 3,
+"emergencia": 27
+}
+}
+,
+{"pk": 144,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:59:16",
+"hora_fin": "2013-12-03T12:41:16",
+"espera": 4,
+"emergencia": 27
+}
+}
+,
+{"pk": 145,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:41:16",
+"hora_fin": "2013-12-03T12:53:16",
+"espera": 7,
+"emergencia": 27
+}
+}
+,
+{"pk": 146,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:53:16",
+"hora_fin": "2013-12-03T13:50:16",
+"espera": 8,
+"emergencia": 27
+}
+}
+,{"pk": 28, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149551816",
+"fecha_nacimiento": "1923-04-20",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129843393",
+"signos_pb": 0.0,
+"nombres": "ELVIO KHALIL",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "GUTIERREZ PENA",
+"contacto_tlf": "04149577901",
+"signos_fr": 0,
+"contacto_nom": "KATU PENA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ELVIOKHALILGUTIERREZPENA@gmail.com",
+"cedula": "1111139",
+"signos_tmp": 0.0
+}
+},
+{"pk": 28,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 28,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:18:16",
+"hora_egreso": "2013-12-03T07:18:16",
+"fecha_Esp_act": "2013-12-03T07:18:16"
+}
+},
+{"pk": 147,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T05:14:16",
+"espera": 9,
+"emergencia": 28
+}
+}
+,
+{"pk": 148,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:14:16",
+"hora_fin": "2013-12-03T07:18:16",
+"espera": 10,
+"emergencia": 28
+}
+}
+,{"pk": 29, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163156582",
+"fecha_nacimiento": "1958-09-20",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125554958",
+"signos_pb": 0.0,
+"nombres": "PRIMAVERA YASMINA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "VENEGAS ALVARADO",
+"contacto_tlf": "04124928828",
+"signos_fr": 0,
+"contacto_nom": "GAEL ALVARADO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "PRIMAVERAYASMINAVENEGASALVARADO@gmail.com",
+"cedula": "1111140",
+"signos_tmp": 0.0
+}
+},
+{"pk": 29,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 29,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:38:16",
+"hora_egreso": "2013-12-03T08:38:16",
+"fecha_Esp_act": "2013-12-03T08:38:16"
+}
+},
+{"pk": 149,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T06:25:16",
+"espera": 1,
+"emergencia": 29
+}
+}
+,
+{"pk": 150,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:25:16",
+"hora_fin": "2013-12-03T07:12:16",
+"espera": 3,
+"emergencia": 29
+}
+}
+,
+{"pk": 151,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:12:16",
+"hora_fin": "2013-12-03T08:38:16",
+"espera": 6,
+"emergencia": 29
+}
+}
+,
+{"pk": 152,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:38:16",
+"hora_fin": "2013-12-03T08:38:16",
+"espera": 7,
+"emergencia": 29
+}
+}
+,{"pk": 30, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125703134",
+"fecha_nacimiento": "1999-04-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123629701",
+"signos_pb": 0.0,
+"nombres": "AKIE MAYDA",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "SAEZ BUSTAMANTE",
+"contacto_tlf": "04126464108",
+"signos_fr": 0,
+"contacto_nom": "ELVIA ZUNIGA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "AKIEMAYDASAEZBUSTAMANTE@gmail.com",
+"cedula": "1111141",
+"signos_tmp": 0.0
+}
+},
+{"pk": 30,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 30,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:07:16",
+"hora_egreso": "2013-12-03T07:07:16",
+"fecha_Esp_act": "2013-12-03T07:07:16"
+}
+},
+{"pk": 153,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T05:18:16",
+"espera": 1,
+"emergencia": 30
+}
+}
+,
+{"pk": 154,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:18:16",
+"hora_fin": "2013-12-03T05:50:16",
+"espera": 6,
+"emergencia": 30
+}
+}
+,
+{"pk": 155,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:50:16",
+"hora_fin": "2013-12-03T06:44:16",
+"espera": 7,
+"emergencia": 30
+}
+}
+,
+{"pk": 156,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:44:16",
+"hora_fin": "2013-12-03T06:58:16",
+"espera": 8,
+"emergencia": 30
+}
+}
+,
+{"pk": 157,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:58:16",
+"hora_fin": "2013-12-03T07:07:16",
+"espera": 9,
+"emergencia": 30
+}
+}
+,{"pk": 31, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146404803",
+"fecha_nacimiento": "1987-02-28",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122323342",
+"signos_pb": 0.0,
+"nombres": "EUSTAQUIO CARLO",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MIRANDA MOLINA",
+"contacto_tlf": "04127346487",
+"signos_fr": 0,
+"contacto_nom": "SAMAR ESCOBAR",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "EUSTAQUIOCARLOMIRANDAMOLINA@gmail.com",
+"cedula": "1111142",
+"signos_tmp": 0.0
+}
+},
+{"pk": 31,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T12:17:16",
+"paciente": 31,
+"hora_ingresoReal": "2013-12-03T12:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:32:16",
+"hora_egreso": "2013-12-03T16:32:16",
+"fecha_Esp_act": "2013-12-03T16:32:16"
+}
+},
+{"pk": 158,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T13:11:16",
+"espera": 5,
+"emergencia": 31
+}
+}
+,
+{"pk": 159,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:11:16",
+"hora_fin": "2013-12-03T16:32:16",
+"espera": 8,
+"emergencia": 31
+}
+}
+,{"pk": 32, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04167610673",
+"fecha_nacimiento": "1953-08-07",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128143050",
+"signos_pb": 0.0,
+"nombres": "CATULO NICASIO",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "DIAZ HERRERA",
+"contacto_tlf": "04149419518",
+"signos_fr": 0,
+"contacto_nom": "CHANTAL ORTIZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CATULONICASIODIAZHERRERA@gmail.com",
+"cedula": "1111143",
+"signos_tmp": 0.0
+}
+},
+{"pk": 32,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 32,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:57:16",
+"hora_egreso": "2013-12-03T11:57:16",
+"fecha_Esp_act": "2013-12-03T11:57:16"
+}
+},
+{"pk": 160,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T07:06:16",
+"espera": 1,
+"emergencia": 32
+}
+}
+,
+{"pk": 161,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:06:16",
+"hora_fin": "2013-12-03T09:45:16",
+"espera": 6,
+"emergencia": 32
+}
+}
+,
+{"pk": 162,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:45:16",
+"hora_fin": "2013-12-03T11:12:16",
+"espera": 7,
+"emergencia": 32
+}
+}
+,
+{"pk": 163,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:12:16",
+"hora_fin": "2013-12-03T11:55:16",
+"espera": 8,
+"emergencia": 32
+}
+}
+,
+{"pk": 164,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:55:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 9,
+"emergencia": 32
+}
+}
+,{"pk": 33, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04166205463",
+"fecha_nacimiento": "1982-06-28",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122711904",
+"signos_pb": 0.0,
+"nombres": "MARGARITA SAGRARIO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "VALDES CASTRO",
+"contacto_tlf": "04164693778",
+"signos_fr": 0,
+"contacto_nom": "DELVIS TORO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MARGARITASAGRARIOVALDESCASTRO@gmail.com",
+"cedula": "1111144",
+"signos_tmp": 0.0
+}
+},
+{"pk": 33,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 33,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:56:16",
+"hora_egreso": "2013-12-03T09:56:16",
+"fecha_Esp_act": "2013-12-03T09:56:16"
+}
+},
+{"pk": 165,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T09:16:16",
+"espera": 3,
+"emergencia": 33
+}
+}
+,
+{"pk": 166,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:16:16",
+"hora_fin": "2013-12-03T09:26:16",
+"espera": 4,
+"emergencia": 33
+}
+}
+,
+{"pk": 167,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:26:16",
+"hora_fin": "2013-12-03T09:56:16",
+"espera": 6,
+"emergencia": 33
+}
+}
+,
+{"pk": 168,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:56:16",
+"hora_fin": "2013-12-03T09:56:16",
+"espera": 7,
+"emergencia": 33
+}
+}
+,{"pk": 34, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04141296145",
+"fecha_nacimiento": "1960-08-18",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122007616",
+"signos_pb": 0.0,
+"nombres": "SEGUNDA LILEN",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ALVARADO SAN MARTIN",
+"contacto_tlf": "04166049087",
+"signos_fr": 0,
+"contacto_nom": "IRINA CARVAJAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SEGUNDALILENALVARADOSANMARTIN@gmail.com",
+"cedula": "1111145",
+"signos_tmp": 0.0
+}
+},
+{"pk": 34,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 34,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:57:16",
+"hora_egreso": "2013-12-03T12:57:16",
+"fecha_Esp_act": "2013-12-03T12:57:16"
+}
+},
+{"pk": 169,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T08:35:16",
+"espera": 2,
+"emergencia": 34
+}
+}
+,
+{"pk": 170,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:35:16",
+"hora_fin": "2013-12-03T12:16:16",
+"espera": 4,
+"emergencia": 34
+}
+}
+,
+{"pk": 171,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:16:16",
+"hora_fin": "2013-12-03T12:36:16",
+"espera": 5,
+"emergencia": 34
+}
+}
+,
+{"pk": 172,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:36:16",
+"hora_fin": "2013-12-03T12:52:16",
+"espera": 6,
+"emergencia": 34
+}
+}
+,
+{"pk": 173,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:52:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 8,
+"emergencia": 34
+}
+}
+,
+{"pk": 174,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:57:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 9,
+"emergencia": 34
+}
+}
+,{"pk": 35, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04127399577",
+"fecha_nacimiento": "1974-02-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121437596",
+"signos_pb": 0.0,
+"nombres": "YACO PAUL",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SPINOZA MORENO",
+"contacto_tlf": "04146498888",
+"signos_fr": 0,
+"contacto_nom": "HUBERTO CONTRERAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "YACOPAULSPINOZAMORENO@gmail.com",
+"cedula": "1111146",
+"signos_tmp": 0.0
+}
+},
+{"pk": 35,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 35,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:53:16",
+"hora_egreso": "2013-12-03T10:53:16",
+"fecha_Esp_act": "2013-12-03T10:53:16"
+}
+},
+{"pk": 175,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T09:50:16",
+"espera": 1,
+"emergencia": 35
+}
+}
+,
+{"pk": 176,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:50:16",
+"hora_fin": "2013-12-03T10:06:16",
+"espera": 5,
+"emergencia": 35
+}
+}
+,
+{"pk": 177,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:06:16",
+"hora_fin": "2013-12-03T10:45:16",
+"espera": 7,
+"emergencia": 35
+}
+}
+,
+{"pk": 178,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:45:16",
+"hora_fin": "2013-12-03T10:47:16",
+"espera": 8,
+"emergencia": 35
+}
+}
+,
+{"pk": 179,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:47:16",
+"hora_fin": "2013-12-03T10:53:16",
+"espera": 9,
+"emergencia": 35
+}
+}
+,{"pk": 36, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125838458",
+"fecha_nacimiento": "1972-10-06",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128429944",
+"signos_pb": 0.0,
+"nombres": "REINALDO SILVESTRE",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MARTINEZ ALARCON",
+"contacto_tlf": "04161515867",
+"signos_fr": 0,
+"contacto_nom": "OSIAS CORTES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "REINALDOSILVESTREMARTINEZALARCON@gmail.com",
+"cedula": "1111147",
+"signos_tmp": 0.0
+}
+},
+{"pk": 36,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 36,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:51:16",
+"hora_egreso": "2013-12-03T07:51:16",
+"fecha_Esp_act": "2013-12-03T07:51:16"
+}
+},
+{"pk": 180,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T01:20:16",
+"espera": 2,
+"emergencia": 36
+}
+}
+,
+{"pk": 181,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:20:16",
+"hora_fin": "2013-12-03T03:09:16",
+"espera": 5,
+"emergencia": 36
+}
+}
+,
+{"pk": 182,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:09:16",
+"hora_fin": "2013-12-03T07:24:16",
+"espera": 7,
+"emergencia": 36
+}
+}
+,
+{"pk": 183,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:24:16",
+"hora_fin": "2013-12-03T07:38:16",
+"espera": 8,
+"emergencia": 36
+}
+}
+,
+{"pk": 184,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:38:16",
+"hora_fin": "2013-12-03T07:45:16",
+"espera": 9,
+"emergencia": 36
+}
+}
+,
+{"pk": 185,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:45:16",
+"hora_fin": "2013-12-03T07:51:16",
+"espera": 10,
+"emergencia": 36
+}
+}
+,{"pk": 37, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146055499",
+"fecha_nacimiento": "2002-03-03",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122200304",
+"signos_pb": 0.0,
+"nombres": "FANNY ",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "SAN MARTIN VARGAS",
+"contacto_tlf": "04128058480",
+"signos_fr": 0,
+"contacto_nom": "ALFONSO OLIVARES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "FANNYSANMARTINVARGAS@gmail.com",
+"cedula": "1111148",
+"signos_tmp": 0.0
+}
+},
+{"pk": 37,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 37,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:57:16",
+"hora_egreso": "2013-12-03T15:57:16",
+"fecha_Esp_act": "2013-12-03T15:57:16"
+}
+},
+{"pk": 186,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T13:46:16",
+"espera": 1,
+"emergencia": 37
+}
+}
+,
+{"pk": 187,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:46:16",
+"hora_fin": "2013-12-03T14:56:16",
+"espera": 2,
+"emergencia": 37
+}
+}
+,
+{"pk": 188,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:56:16",
+"hora_fin": "2013-12-03T15:07:16",
+"espera": 4,
+"emergencia": 37
+}
+}
+,
+{"pk": 189,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:07:16",
+"hora_fin": "2013-12-03T15:51:16",
+"espera": 5,
+"emergencia": 37
+}
+}
+,
+{"pk": 190,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:51:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 7,
+"emergencia": 37
+}
+}
+,
+{"pk": 191,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 9,
+"emergencia": 37
+}
+}
+,{"pk": 38, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147392176",
+"fecha_nacimiento": "1906-12-03",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124821859",
+"signos_pb": 0.0,
+"nombres": "AILEN FIONAFIORE",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "RIVERA SAAVEDRA",
+"contacto_tlf": "04165112091",
+"signos_fr": 0,
+"contacto_nom": "BERNARDA VERGARA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "AILENFIONAFIORERIVERASAAVEDRA@gmail.com",
+"cedula": "1111149",
+"signos_tmp": 0.0
+}
+},
+{"pk": 38,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 38,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:57:16",
+"hora_egreso": "2013-12-03T11:57:16",
+"fecha_Esp_act": "2013-12-03T11:57:16"
+}
+},
+{"pk": 192,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T07:21:16",
+"espera": 1,
+"emergencia": 38
+}
+}
+,
+{"pk": 193,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:21:16",
+"hora_fin": "2013-12-03T11:29:16",
+"espera": 3,
+"emergencia": 38
+}
+}
+,
+{"pk": 194,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:29:16",
+"hora_fin": "2013-12-03T11:55:16",
+"espera": 4,
+"emergencia": 38
+}
+}
+,
+{"pk": 195,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:55:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 10,
+"emergencia": 38
+}
+}
+,{"pk": 39, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04144488772",
+"fecha_nacimiento": "1957-04-25",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124780785",
+"signos_pb": 0.0,
+"nombres": "SIGFRIDO ZUAHIR",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "VENEGAS VENEGAS",
+"contacto_tlf": "04167927105",
+"signos_fr": 0,
+"contacto_nom": "FLORENTE VALENZUELA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SIGFRIDOZUAHIRVENEGASVENEGAS@gmail.com",
+"cedula": "1111150",
+"signos_tmp": 0.0
+}
+},
+{"pk": 39,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 39,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:44:16",
+"hora_egreso": "2013-12-03T12:44:16",
+"fecha_Esp_act": "2013-12-03T12:44:16"
+}
+},
+{"pk": 196,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T08:39:16",
+"espera": 3,
+"emergencia": 39
+}
+}
+,
+{"pk": 197,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:39:16",
+"hora_fin": "2013-12-03T09:29:16",
+"espera": 6,
+"emergencia": 39
+}
+}
+,
+{"pk": 198,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:29:16",
+"hora_fin": "2013-12-03T12:44:16",
+"espera": 7,
+"emergencia": 39
+}
+}
+,{"pk": 40, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04162235830",
+"fecha_nacimiento": "1918-03-23",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124994035",
+"signos_pb": 0.0,
+"nombres": "CELSO MERCURIO",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "GUTIERREZ GODOY",
+"contacto_tlf": "04145077468",
+"signos_fr": 0,
+"contacto_nom": "CESIA POBLETE",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CELSOMERCURIOGUTIERREZGODOY@gmail.com",
+"cedula": "1111151",
+"signos_tmp": 0.0
+}
+},
+{"pk": 40,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 40,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:14:16",
+"hora_egreso": "2013-12-03T15:14:16",
+"fecha_Esp_act": "2013-12-03T15:14:16"
+}
+},
+{"pk": 199,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T09:18:16",
+"espera": 1,
+"emergencia": 40
+}
+}
+,
+{"pk": 200,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:18:16",
+"hora_fin": "2013-12-03T11:51:16",
+"espera": 4,
+"emergencia": 40
+}
+}
+,
+{"pk": 201,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:51:16",
+"hora_fin": "2013-12-03T13:13:16",
+"espera": 7,
+"emergencia": 40
+}
+}
+,
+{"pk": 202,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:13:16",
+"hora_fin": "2013-12-03T14:28:16",
+"espera": 8,
+"emergencia": 40
+}
+}
+,
+{"pk": 203,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:28:16",
+"hora_fin": "2013-12-03T14:38:16",
+"espera": 9,
+"emergencia": 40
+}
+}
+,
+{"pk": 204,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:38:16",
+"hora_fin": "2013-12-03T15:14:16",
+"espera": 10,
+"emergencia": 40
+}
+}
+,{"pk": 41, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146677317",
+"fecha_nacimiento": "1902-03-01",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123597444",
+"signos_pb": 0.0,
+"nombres": "HIEI MORENO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SANCHEZ NUNEZ",
+"contacto_tlf": "04146611050",
+"signos_fr": 0,
+"contacto_nom": "MARIADELASNIEVES ESCOBAR",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "HIEIMORENOSANCHEZNUNEZ@gmail.com",
+"cedula": "1111152",
+"signos_tmp": 0.0
+}
+},
+{"pk": 41,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 41,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:00:16",
+"hora_egreso": "2013-12-03T16:00:16",
+"fecha_Esp_act": "2013-12-03T16:00:16"
+}
+},
+{"pk": 205,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T10:59:16",
+"espera": 1,
+"emergencia": 41
+}
+}
+,
+{"pk": 206,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:59:16",
+"hora_fin": "2013-12-03T13:15:16",
+"espera": 4,
+"emergencia": 41
+}
+}
+,
+{"pk": 207,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:15:16",
+"hora_fin": "2013-12-03T13:45:16",
+"espera": 7,
+"emergencia": 41
+}
+}
+,
+{"pk": 208,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:45:16",
+"hora_fin": "2013-12-03T15:28:16",
+"espera": 8,
+"emergencia": 41
+}
+}
+,
+{"pk": 209,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:28:16",
+"hora_fin": "2013-12-03T15:28:16",
+"espera": 9,
+"emergencia": 41
+}
+}
+,
+{"pk": 210,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:28:16",
+"hora_fin": "2013-12-03T16:00:16",
+"espera": 10,
+"emergencia": 41
+}
+}
+,{"pk": 42, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04143245816",
+"fecha_nacimiento": "1928-08-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122419016",
+"signos_pb": 0.0,
+"nombres": "ELEUTERIA MICOL",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GUERRERO GONZALEZ",
+"contacto_tlf": "04162157859",
+"signos_fr": 0,
+"contacto_nom": "DIANO NAVARRO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ELEUTERIAMICOLGUERREROGONZALEZ@gmail.com",
+"cedula": "1111153",
+"signos_tmp": 0.0
+}
+},
+{"pk": 42,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 42,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:55:16",
+"hora_egreso": "2013-12-03T10:55:16",
+"fecha_Esp_act": "2013-12-03T10:55:16"
+}
+},
+{"pk": 211,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T09:50:16",
+"espera": 3,
+"emergencia": 42
+}
+}
+,
+{"pk": 212,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:50:16",
+"hora_fin": "2013-12-03T10:26:16",
+"espera": 6,
+"emergencia": 42
+}
+}
+,
+{"pk": 213,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:26:16",
+"hora_fin": "2013-12-03T10:53:16",
+"espera": 7,
+"emergencia": 42
+}
+}
+,
+{"pk": 214,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:53:16",
+"hora_fin": "2013-12-03T10:55:16",
+"espera": 9,
+"emergencia": 42
+}
+}
+,{"pk": 43, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04162550006",
+"fecha_nacimiento": "1980-07-24",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128468781",
+"signos_pb": 0.0,
+"nombres": "NURIEL NEO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SAEZ ORELLANA",
+"contacto_tlf": "04129841884",
+"signos_fr": 0,
+"contacto_nom": "YOSEF VALENZUELA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NURIELNEOSAEZORELLANA@gmail.com",
+"cedula": "1111154",
+"signos_tmp": 0.0
+}
+},
+{"pk": 43,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 43,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:57:16",
+"hora_egreso": "2013-12-03T09:57:16",
+"fecha_Esp_act": "2013-12-03T09:57:16"
+}
+},
+{"pk": 215,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T05:11:16",
+"espera": 2,
+"emergencia": 43
+}
+}
+,
+{"pk": 216,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:11:16",
+"hora_fin": "2013-12-03T08:43:16",
+"espera": 3,
+"emergencia": 43
+}
+}
+,
+{"pk": 217,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:43:16",
+"hora_fin": "2013-12-03T09:31:16",
+"espera": 4,
+"emergencia": 43
+}
+}
+,
+{"pk": 218,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:31:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 6,
+"emergencia": 43
+}
+}
+,{"pk": 44, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04167407167",
+"fecha_nacimiento": "2001-09-19",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122372967",
+"signos_pb": 0.0,
+"nombres": "ALUMINE ",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "FIGUEROA GONZALEZ",
+"contacto_tlf": "04123856302",
+"signos_fr": 0,
+"contacto_nom": "ALAIDE VASQUEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALUMINEFIGUEROAGONZALEZ@gmail.com",
+"cedula": "1111155",
+"signos_tmp": 0.0
+}
+},
+{"pk": 44,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 44,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:29:16",
+"hora_egreso": "2013-12-03T11:29:16",
+"fecha_Esp_act": "2013-12-03T11:29:16"
+}
+},
+{"pk": 219,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T08:53:16",
+"espera": 1,
+"emergencia": 44
+}
+}
+,
+{"pk": 220,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:53:16",
+"hora_fin": "2013-12-03T10:39:16",
+"espera": 3,
+"emergencia": 44
+}
+}
+,
+{"pk": 221,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:39:16",
+"hora_fin": "2013-12-03T11:29:16",
+"espera": 7,
+"emergencia": 44
+}
+}
+,{"pk": 45, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04144497068",
+"fecha_nacimiento": "1983-01-05",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125589988",
+"signos_pb": 0.0,
+"nombres": "YAGO LAUTARO",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "EPULVEDA SILVA",
+"contacto_tlf": "04169258099",
+"signos_fr": 0,
+"contacto_nom": "MELIN GONZALEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "YAGOLAUTAROEPULVEDASILVA@gmail.com",
+"cedula": "1111156",
+"signos_tmp": 0.0
+}
+},
+{"pk": 45,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 45,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:00:16",
+"hora_egreso": "2013-12-03T19:00:16",
+"fecha_Esp_act": "2013-12-03T19:00:16"
+}
+},
+{"pk": 222,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T14:21:16",
+"espera": 3,
+"emergencia": 45
+}
+}
+,
+{"pk": 223,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:21:16",
+"hora_fin": "2013-12-03T17:55:16",
+"espera": 4,
+"emergencia": 45
+}
+}
+,
+{"pk": 224,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:55:16",
+"hora_fin": "2013-12-03T18:17:16",
+"espera": 7,
+"emergencia": 45
+}
+}
+,
+{"pk": 225,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:17:16",
+"hora_fin": "2013-12-03T19:00:16",
+"espera": 8,
+"emergencia": 45
+}
+}
+,{"pk": 46, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04165890459",
+"fecha_nacimiento": "2012-06-08",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128734427",
+"signos_pb": 0.0,
+"nombres": "ENRIQUETA CUYEN",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "SAEZ ERNANDEZ",
+"contacto_tlf": "04168097238",
+"signos_fr": 0,
+"contacto_nom": "ALVIN AGUILERA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ENRIQUETACUYENSAEZERNANDEZ@gmail.com",
+"cedula": "1111157",
+"signos_tmp": 0.0
+}
+},
+{"pk": 46,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 46,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:54:16",
+"hora_egreso": "2013-12-03T13:54:16",
+"fecha_Esp_act": "2013-12-03T13:54:16"
+}
+},
+{"pk": 226,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T10:37:16",
+"espera": 1,
+"emergencia": 46
+}
+}
+,
+{"pk": 227,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:37:16",
+"hora_fin": "2013-12-03T13:28:16",
+"espera": 4,
+"emergencia": 46
+}
+}
+,
+{"pk": 228,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:28:16",
+"hora_fin": "2013-12-03T13:52:16",
+"espera": 7,
+"emergencia": 46
+}
+}
+,
+{"pk": 229,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:52:16",
+"hora_fin": "2013-12-03T13:52:16",
+"espera": 9,
+"emergencia": 46
+}
+}
+,
+{"pk": 230,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:52:16",
+"hora_fin": "2013-12-03T13:54:16",
+"espera": 10,
+"emergencia": 46
+}
+}
+,{"pk": 47, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142501605",
+"fecha_nacimiento": "1996-09-18",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126201229",
+"signos_pb": 0.0,
+"nombres": "MARIEN MAXIMINA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "MORENO ALVARADO",
+"contacto_tlf": "04121147492",
+"signos_fr": 0,
+"contacto_nom": "SOLEDAD ROMERO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MARIENMAXIMINAMORENOALVARADO@gmail.com",
+"cedula": "1111158",
+"signos_tmp": 0.0
+}
+},
+{"pk": 47,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T11:17:16",
+"paciente": 47,
+"hora_ingresoReal": "2013-12-03T11:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T17:57:16",
+"hora_egreso": "2013-12-03T17:57:16",
+"fecha_Esp_act": "2013-12-03T17:57:16"
+}
+},
+{"pk": 231,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:17:16",
+"hora_fin": "2013-12-03T15:55:16",
+"espera": 1,
+"emergencia": 47
+}
+}
+,
+{"pk": 232,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:55:16",
+"hora_fin": "2013-12-03T16:39:16",
+"espera": 2,
+"emergencia": 47
+}
+}
+,
+{"pk": 233,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:39:16",
+"hora_fin": "2013-12-03T17:04:16",
+"espera": 3,
+"emergencia": 47
+}
+}
+,
+{"pk": 234,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:04:16",
+"hora_fin": "2013-12-03T17:42:16",
+"espera": 4,
+"emergencia": 47
+}
+}
+,
+{"pk": 235,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:42:16",
+"hora_fin": "2013-12-03T17:54:16",
+"espera": 5,
+"emergencia": 47
+}
+}
+,
+{"pk": 236,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:54:16",
+"hora_fin": "2013-12-03T17:57:16",
+"espera": 7,
+"emergencia": 47
+}
+}
+,
+{"pk": 237,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:57:16",
+"hora_fin": "2013-12-03T17:57:16",
+"espera": 10,
+"emergencia": 47
+}
+}
+,{"pk": 48, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125250255",
+"fecha_nacimiento": "1990-04-21",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121915704",
+"signos_pb": 0.0,
+"nombres": "ANDY MACONDO",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SANCHEZ VASQUEZ",
+"contacto_tlf": "04129558304",
+"signos_fr": 0,
+"contacto_nom": "FAUSTO CONTRERAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ANDYMACONDOSANCHEZVASQUEZ@gmail.com",
+"cedula": "1111159",
+"signos_tmp": 0.0
+}
+},
+{"pk": 48,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 48,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:45:16",
+"hora_egreso": "2013-12-03T15:45:16",
+"fecha_Esp_act": "2013-12-03T15:45:16"
+}
+},
+{"pk": 238,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T14:24:16",
+"espera": 1,
+"emergencia": 48
+}
+}
+,
+{"pk": 239,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:24:16",
+"hora_fin": "2013-12-03T15:02:16",
+"espera": 5,
+"emergencia": 48
+}
+}
+,
+{"pk": 240,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:02:16",
+"hora_fin": "2013-12-03T15:29:16",
+"espera": 7,
+"emergencia": 48
+}
+}
+,
+{"pk": 241,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:29:16",
+"hora_fin": "2013-12-03T15:45:16",
+"espera": 8,
+"emergencia": 48
+}
+}
+,{"pk": 49, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04162811709",
+"fecha_nacimiento": "1975-06-15",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125869962",
+"signos_pb": 0.0,
+"nombres": "IBRIAN JAIME",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ORELLANA ROJAS",
+"contacto_tlf": "04165807147",
+"signos_fr": 0,
+"contacto_nom": "ALEXANDRO ORRES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "IBRIANJAIMEORELLANAROJAS@gmail.com",
+"cedula": "1111160",
+"signos_tmp": 0.0
+}
+},
+{"pk": 49,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 49,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:09:16",
+"hora_egreso": "2013-12-03T08:09:16",
+"fecha_Esp_act": "2013-12-03T08:09:16"
+}
+},
+{"pk": 242,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T04:29:16",
+"espera": 1,
+"emergencia": 49
+}
+}
+,
+{"pk": 243,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:29:16",
+"hora_fin": "2013-12-03T04:56:16",
+"espera": 2,
+"emergencia": 49
+}
+}
+,
+{"pk": 244,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:56:16",
+"hora_fin": "2013-12-03T06:58:16",
+"espera": 4,
+"emergencia": 49
+}
+}
+,
+{"pk": 245,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:58:16",
+"hora_fin": "2013-12-03T07:29:16",
+"espera": 5,
+"emergencia": 49
+}
+}
+,
+{"pk": 246,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:29:16",
+"hora_fin": "2013-12-03T08:01:16",
+"espera": 8,
+"emergencia": 49
+}
+}
+,
+{"pk": 247,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:01:16",
+"hora_fin": "2013-12-03T08:09:16",
+"espera": 10,
+"emergencia": 49
+}
+}
+,{"pk": 50, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04168253580",
+"fecha_nacimiento": "1901-07-12",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121567525",
+"signos_pb": 0.0,
+"nombres": "OXANA MAGALI",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "MOLINA RAYA",
+"contacto_tlf": "04125765292",
+"signos_fr": 0,
+"contacto_nom": "NELIDA VENEGAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "OXANAMAGALIMOLINARAYA@gmail.com",
+"cedula": "1111161",
+"signos_tmp": 0.0
+}
+},
+{"pk": 50,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T12:17:16",
+"paciente": 50,
+"hora_ingresoReal": "2013-12-03T12:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T18:56:16",
+"hora_egreso": "2013-12-03T18:56:16",
+"fecha_Esp_act": "2013-12-03T18:56:16"
+}
+},
+{"pk": 248,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T17:38:16",
+"espera": 1,
+"emergencia": 50
+}
+}
+,
+{"pk": 249,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:38:16",
+"hora_fin": "2013-12-03T18:31:16",
+"espera": 2,
+"emergencia": 50
+}
+}
+,
+{"pk": 250,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:31:16",
+"hora_fin": "2013-12-03T18:50:16",
+"espera": 3,
+"emergencia": 50
+}
+}
+,
+{"pk": 251,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:50:16",
+"hora_fin": "2013-12-03T18:53:16",
+"espera": 4,
+"emergencia": 50
+}
+}
+,
+{"pk": 252,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:53:16",
+"hora_fin": "2013-12-03T18:54:16",
+"espera": 7,
+"emergencia": 50
+}
+}
+,
+{"pk": 253,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:54:16",
+"hora_fin": "2013-12-03T18:56:16",
+"espera": 8,
+"emergencia": 50
+}
+}
+,
+{"pk": 254,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:56:16",
+"hora_fin": "2013-12-03T18:56:16",
+"espera": 10,
+"emergencia": 50
+}
+}
+,{"pk": 51, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04165242935",
+"fecha_nacimiento": "1926-06-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122971777",
+"signos_pb": 0.0,
+"nombres": "LIS WILKA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GALLARDO RUIZ",
+"contacto_tlf": "04141888724",
+"signos_fr": 0,
+"contacto_nom": "CLOTILDE ROJAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "LISWILKAGALLARDORUIZ@gmail.com",
+"cedula": "1111162",
+"signos_tmp": 0.0
+}
+},
+{"pk": 51,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 51,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:57:16",
+"hora_egreso": "2013-12-03T15:57:16",
+"fecha_Esp_act": "2013-12-03T15:57:16"
+}
+},
+{"pk": 255,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T15:02:16",
+"espera": 1,
+"emergencia": 51
+}
+}
+,
+{"pk": 256,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:02:16",
+"hora_fin": "2013-12-03T15:12:16",
+"espera": 5,
+"emergencia": 51
+}
+}
+,
+{"pk": 257,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:12:16",
+"hora_fin": "2013-12-03T15:24:16",
+"espera": 6,
+"emergencia": 51
+}
+}
+,
+{"pk": 258,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:24:16",
+"hora_fin": "2013-12-03T15:39:16",
+"espera": 8,
+"emergencia": 51
+}
+}
+,
+{"pk": 259,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:39:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 9,
+"emergencia": 51
+}
+}
+,
+{"pk": 260,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 10,
+"emergencia": 51
+}
+}
+,{"pk": 52, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04148310973",
+"fecha_nacimiento": "1950-04-03",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123482636",
+"signos_pb": 0.0,
+"nombres": "EVELYN FLORISEL",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "JARA BUSTOS",
+"contacto_tlf": "04143987462",
+"signos_fr": 0,
+"contacto_nom": "AMABLE GUTIERREZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "EVELYNFLORISELJARABUSTOS@gmail.com",
+"cedula": "1111163",
+"signos_tmp": 0.0
+}
+},
+{"pk": 52,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 52,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:45:16",
+"hora_egreso": "2013-12-03T16:45:16",
+"fecha_Esp_act": "2013-12-03T16:45:16"
+}
+},
+{"pk": 261,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T12:15:16",
+"espera": 1,
+"emergencia": 52
+}
+}
+,
+{"pk": 262,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:15:16",
+"hora_fin": "2013-12-03T15:55:16",
+"espera": 3,
+"emergencia": 52
+}
+}
+,
+{"pk": 263,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:55:16",
+"hora_fin": "2013-12-03T16:39:16",
+"espera": 9,
+"emergencia": 52
+}
+}
+,
+{"pk": 264,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:39:16",
+"hora_fin": "2013-12-03T16:45:16",
+"espera": 10,
+"emergencia": 52
+}
+}
+,{"pk": 53, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04128634118",
+"fecha_nacimiento": "1974-04-19",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121236332",
+"signos_pb": 0.0,
+"nombres": "MAXIMO DARDO",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "VASQUEZ PARRA",
+"contacto_tlf": "04169653727",
+"signos_fr": 0,
+"contacto_nom": "JEMIMA MALDONADO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MAXIMODARDOVASQUEZPARRA@gmail.com",
+"cedula": "1111164",
+"signos_tmp": 0.0
+}
+},
+{"pk": 53,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 53,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:57:16",
+"hora_egreso": "2013-12-03T19:57:16",
+"fecha_Esp_act": "2013-12-03T19:57:16"
+}
+},
+{"pk": 265,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T15:32:16",
+"espera": 1,
+"emergencia": 53
+}
+}
+,
+{"pk": 266,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:32:16",
+"hora_fin": "2013-12-03T19:22:16",
+"espera": 6,
+"emergencia": 53
+}
+}
+,
+{"pk": 267,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:22:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 7,
+"emergencia": 53
+}
+}
+,
+{"pk": 268,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:56:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 8,
+"emergencia": 53
+}
+}
+,
+{"pk": 269,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:56:16",
+"hora_fin": "2013-12-03T19:57:16",
+"espera": 10,
+"emergencia": 53
+}
+}
+,{"pk": 54, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04121786176",
+"fecha_nacimiento": "1944-05-28",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125869519",
+"signos_pb": 0.0,
+"nombres": "FLORENTE SACHA",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MOLINA MUNOZ",
+"contacto_tlf": "04127255860",
+"signos_fr": 0,
+"contacto_nom": "JAMES JARA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "FLORENTESACHAMOLINAMUNOZ@gmail.com",
+"cedula": "1111165",
+"signos_tmp": 0.0
+}
+},
+{"pk": 54,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 54,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:49:16",
+"hora_egreso": "2013-12-03T10:49:16",
+"fecha_Esp_act": "2013-12-03T10:49:16"
+}
+},
+{"pk": 270,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T09:03:16",
+"espera": 3,
+"emergencia": 54
+}
+}
+,
+{"pk": 271,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:03:16",
+"hora_fin": "2013-12-03T10:10:16",
+"espera": 5,
+"emergencia": 54
+}
+}
+,
+{"pk": 272,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:10:16",
+"hora_fin": "2013-12-03T10:19:16",
+"espera": 6,
+"emergencia": 54
+}
+}
+,
+{"pk": 273,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:19:16",
+"hora_fin": "2013-12-03T10:25:16",
+"espera": 7,
+"emergencia": 54
+}
+}
+,
+{"pk": 274,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:25:16",
+"hora_fin": "2013-12-03T10:27:16",
+"espera": 8,
+"emergencia": 54
+}
+}
+,
+{"pk": 275,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:27:16",
+"hora_fin": "2013-12-03T10:49:16",
+"espera": 10,
+"emergencia": 54
+}
+}
+,{"pk": 55, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149329407",
+"fecha_nacimiento": "1949-10-12",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124375752",
+"signos_pb": 0.0,
+"nombres": "LELIS ALIHUEN",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ROMERO VASQUEZ",
+"contacto_tlf": "04149639496",
+"signos_fr": 0,
+"contacto_nom": "ELEODORO ESCOBAR",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "LELISALIHUENROMEROVASQUEZ@gmail.com",
+"cedula": "1111166",
+"signos_tmp": 0.0
+}
+},
+{"pk": 55,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 55,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:57:16",
+"hora_egreso": "2013-12-03T08:57:16",
+"fecha_Esp_act": "2013-12-03T08:57:16"
+}
+},
+{"pk": 276,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 4,
+"emergencia": 55
+}
+}
+,
+{"pk": 277,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:55:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 5,
+"emergencia": 55
+}
+}
+,
+{"pk": 278,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:55:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 6,
+"emergencia": 55
+}
+}
+,
+{"pk": 279,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 8,
+"emergencia": 55
+}
+}
+,
+{"pk": 280,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 9,
+"emergencia": 55
+}
+}
+,
+{"pk": 281,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 10,
+"emergencia": 55
+}
+}
+,{"pk": 56, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04143323739",
+"fecha_nacimiento": "1998-09-06",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124765075",
+"signos_pb": 0.0,
+"nombres": "JADE SELENE",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "SPINOZA RAMIREZ",
+"contacto_tlf": "04166084266",
+"signos_fr": 0,
+"contacto_nom": "TERESITA SANDOVAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "JADESELENESPINOZARAMIREZ@gmail.com",
+"cedula": "1111167",
+"signos_tmp": 0.0
+}
+},
+{"pk": 56,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 56,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:57:16",
+"hora_egreso": "2013-12-03T14:57:16",
+"fecha_Esp_act": "2013-12-03T14:57:16"
+}
+},
+{"pk": 282,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T14:45:16",
+"espera": 1,
+"emergencia": 56
+}
+}
+,
+{"pk": 283,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:45:16",
+"hora_fin": "2013-12-03T14:56:16",
+"espera": 3,
+"emergencia": 56
+}
+}
+,
+{"pk": 284,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:56:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 4,
+"emergencia": 56
+}
+}
+,
+{"pk": 285,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 6,
+"emergencia": 56
+}
+}
+,
+{"pk": 286,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:57:16",
+"hora_fin": "2013-12-03T14:57:16",
+"espera": 9,
+"emergencia": 56
+}
+}
+,{"pk": 57, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04168122891",
+"fecha_nacimiento": "1972-10-13",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124716678",
+"signos_pb": 0.0,
+"nombres": "BALTAZAR VIDAL",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "CARRASCO TORO",
+"contacto_tlf": "04168964036",
+"signos_fr": 0,
+"contacto_nom": "ROSADELIMA JIMENEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "BALTAZARVIDALCARRASCOTORO@gmail.com",
+"cedula": "1111168",
+"signos_tmp": 0.0
+}
+},
+{"pk": 57,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 57,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:57:16",
+"hora_egreso": "2013-12-03T13:57:16",
+"fecha_Esp_act": "2013-12-03T13:57:16"
+}
+},
+{"pk": 287,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T11:38:16",
+"espera": 1,
+"emergencia": 57
+}
+}
+,
+{"pk": 288,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:38:16",
+"hora_fin": "2013-12-03T13:04:16",
+"espera": 2,
+"emergencia": 57
+}
+}
+,
+{"pk": 289,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:04:16",
+"hora_fin": "2013-12-03T13:29:16",
+"espera": 3,
+"emergencia": 57
+}
+}
+,
+{"pk": 290,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:29:16",
+"hora_fin": "2013-12-03T13:56:16",
+"espera": 4,
+"emergencia": 57
+}
+}
+,
+{"pk": 291,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:56:16",
+"hora_fin": "2013-12-03T13:56:16",
+"espera": 6,
+"emergencia": 57
+}
+}
+,
+{"pk": 292,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:56:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 7,
+"emergencia": 57
+}
+}
+,
+{"pk": 293,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:57:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 9,
+"emergencia": 57
+}
+}
+,
+{"pk": 294,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:57:16",
+"hora_fin": "2013-12-03T13:57:16",
+"espera": 10,
+"emergencia": 57
+}
+}
+,{"pk": 58, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04148278325",
+"fecha_nacimiento": "1967-05-07",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128244005",
+"signos_pb": 0.0,
+"nombres": " ALESSIA",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "HERRERA SILVA",
+"contacto_tlf": "04162155931",
+"signos_fr": 0,
+"contacto_nom": "ABDUL ROJAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALESSIAHERRERASILVA@gmail.com",
+"cedula": "1111169",
+"signos_tmp": 0.0
+}
+},
+{"pk": 58,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 58,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:03:16",
+"hora_egreso": "2013-12-03T16:03:16",
+"fecha_Esp_act": "2013-12-03T16:03:16"
+}
+},
+{"pk": 295,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T11:52:16",
+"espera": 1,
+"emergencia": 58
+}
+}
+,
+{"pk": 296,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:52:16",
+"hora_fin": "2013-12-03T12:54:16",
+"espera": 3,
+"emergencia": 58
+}
+}
+,
+{"pk": 297,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:54:16",
+"hora_fin": "2013-12-03T14:45:16",
+"espera": 4,
+"emergencia": 58
+}
+}
+,
+{"pk": 298,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:45:16",
+"hora_fin": "2013-12-03T15:00:16",
+"espera": 6,
+"emergencia": 58
+}
+}
+,
+{"pk": 299,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:00:16",
+"hora_fin": "2013-12-03T16:03:16",
+"espera": 9,
+"emergencia": 58
+}
+}
+,{"pk": 59, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04162871083",
+"fecha_nacimiento": "1934-03-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121989646",
+"signos_pb": 0.0,
+"nombres": "ALEX LUDOVICO",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "FARIAS FERNANDEZ",
+"contacto_tlf": "04146278971",
+"signos_fr": 0,
+"contacto_nom": "SEGISMUNDO ALVARADO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALEXLUDOVICOFARIASFERNANDEZ@gmail.com",
+"cedula": "1111170",
+"signos_tmp": 0.0
+}
+},
+{"pk": 59,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 59,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:57:16",
+"hora_egreso": "2013-12-03T19:57:16",
+"fecha_Esp_act": "2013-12-03T19:57:16"
+}
+},
+{"pk": 300,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T19:55:16",
+"espera": 2,
+"emergencia": 59
+}
+}
+,
+{"pk": 301,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:55:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 6,
+"emergencia": 59
+}
+}
+,
+{"pk": 302,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:56:16",
+"hora_fin": "2013-12-03T19:56:16",
+"espera": 9,
+"emergencia": 59
+}
+}
+,
+{"pk": 303,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:56:16",
+"hora_fin": "2013-12-03T19:57:16",
+"espera": 10,
+"emergencia": 59
+}
+}
+,{"pk": 60, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164295423",
+"fecha_nacimiento": "1960-09-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127657288",
+"signos_pb": 0.0,
+"nombres": "ALUMINE MARGARITA",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "PIZARRO EPULVEDA",
+"contacto_tlf": "04149913640",
+"signos_fr": 0,
+"contacto_nom": "CLELIA ARAVENA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ALUMINEMARGARITAPIZARROEPULVEDA@gmail.com",
+"cedula": "1111171",
+"signos_tmp": 0.0
+}
+},
+{"pk": 60,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 60,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:46:16",
+"hora_egreso": "2013-12-03T19:46:16",
+"fecha_Esp_act": "2013-12-03T19:46:16"
+}
+},
+{"pk": 304,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T16:06:16",
+"espera": 2,
+"emergencia": 60
+}
+}
+,
+{"pk": 305,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:06:16",
+"hora_fin": "2013-12-03T18:11:16",
+"espera": 5,
+"emergencia": 60
+}
+}
+,
+{"pk": 306,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:11:16",
+"hora_fin": "2013-12-03T19:09:16",
+"espera": 6,
+"emergencia": 60
+}
+}
+,
+{"pk": 307,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:09:16",
+"hora_fin": "2013-12-03T19:29:16",
+"espera": 8,
+"emergencia": 60
+}
+}
+,
+{"pk": 308,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:29:16",
+"hora_fin": "2013-12-03T19:36:16",
+"espera": 9,
+"emergencia": 60
+}
+}
+,
+{"pk": 309,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:36:16",
+"hora_fin": "2013-12-03T19:46:16",
+"espera": 10,
+"emergencia": 60
+}
+}
+,{"pk": 61, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125085994",
+"fecha_nacimiento": "1947-09-25",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125407839",
+"signos_pb": 0.0,
+"nombres": "TIARA VELIA",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORRES VALENZUELA",
+"contacto_tlf": "04123459032",
+"signos_fr": 0,
+"contacto_nom": "TUPAC LORES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "TIARAVELIAORRESVALENZUELA@gmail.com",
+"cedula": "1111172",
+"signos_tmp": 0.0
+}
+},
+{"pk": 61,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 61,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T04:42:16",
+"hora_egreso": "2013-12-03T04:42:16",
+"fecha_Esp_act": "2013-12-03T04:42:16"
+}
+},
+{"pk": 310,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T01:58:16",
+"espera": 5,
+"emergencia": 61
+}
+}
+,
+{"pk": 311,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:58:16",
+"hora_fin": "2013-12-03T02:38:16",
+"espera": 6,
+"emergencia": 61
+}
+}
+,
+{"pk": 312,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:38:16",
+"hora_fin": "2013-12-03T04:42:16",
+"espera": 8,
+"emergencia": 61
+}
+}
+,{"pk": 62, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163810401",
+"fecha_nacimiento": "1919-02-15",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127487017",
+"signos_pb": 0.0,
+"nombres": " ATICA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "EPULVEDA HERRERA",
+"contacto_tlf": "04148183731",
+"signos_fr": 0,
+"contacto_nom": "SENEN ARAVENA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ATICAEPULVEDAHERRERA@gmail.com",
+"cedula": "1111173",
+"signos_tmp": 0.0
+}
+},
+{"pk": 62,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 62,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:57:16",
+"hora_egreso": "2013-12-03T15:57:16",
+"fecha_Esp_act": "2013-12-03T15:57:16"
+}
+},
+{"pk": 313,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T09:19:16",
+"espera": 1,
+"emergencia": 62
+}
+}
+,
+{"pk": 314,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:19:16",
+"hora_fin": "2013-12-03T15:13:16",
+"espera": 2,
+"emergencia": 62
+}
+}
+,
+{"pk": 315,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:13:16",
+"hora_fin": "2013-12-03T15:56:16",
+"espera": 4,
+"emergencia": 62
+}
+}
+,
+{"pk": 316,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:56:16",
+"hora_fin": "2013-12-03T15:56:16",
+"espera": 5,
+"emergencia": 62
+}
+}
+,
+{"pk": 317,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:56:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 6,
+"emergencia": 62
+}
+}
+,
+{"pk": 318,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 7,
+"emergencia": 62
+}
+}
+,
+{"pk": 319,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 8,
+"emergencia": 62
+}
+}
+,
+{"pk": 320,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 9,
+"emergencia": 62
+}
+}
+,
+{"pk": 321,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 10,
+"emergencia": 62
+}
+}
+,{"pk": 63, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04143320119",
+"fecha_nacimiento": "1956-05-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129621580",
+"signos_pb": 0.0,
+"nombres": "MIJAEL ELIELIAN",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "TAPIA SAEZ",
+"contacto_tlf": "04146007732",
+"signos_fr": 0,
+"contacto_nom": "MIKI CARVAJAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MIJAELELIELIANTAPIASAEZ@gmail.com",
+"cedula": "1111174",
+"signos_tmp": 0.0
+}
+},
+{"pk": 63,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 63,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:57:16",
+"hora_egreso": "2013-12-03T08:57:16",
+"fecha_Esp_act": "2013-12-03T08:57:16"
+}
+},
+{"pk": 322,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T08:03:16",
+"espera": 1,
+"emergencia": 63
+}
+}
+,
+{"pk": 323,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:03:16",
+"hora_fin": "2013-12-03T08:46:16",
+"espera": 2,
+"emergencia": 63
+}
+}
+,
+{"pk": 324,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:46:16",
+"hora_fin": "2013-12-03T08:54:16",
+"espera": 4,
+"emergencia": 63
+}
+}
+,
+{"pk": 325,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:54:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 5,
+"emergencia": 63
+}
+}
+,
+{"pk": 326,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:55:16",
+"hora_fin": "2013-12-03T08:56:16",
+"espera": 6,
+"emergencia": 63
+}
+}
+,
+{"pk": 327,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:56:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 7,
+"emergencia": 63
+}
+}
+,
+{"pk": 328,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 8,
+"emergencia": 63
+}
+}
+,
+{"pk": 329,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:57:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 9,
+"emergencia": 63
+}
+}
+,{"pk": 64, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146412265",
+"fecha_nacimiento": "1988-10-15",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121278010",
+"signos_pb": 0.0,
+"nombres": "ANGELO ELISANDRO",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "CASTILLO CAMPOS",
+"contacto_tlf": "04147823206",
+"signos_fr": 0,
+"contacto_nom": " CARVAJAL",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ANGELOELISANDROCASTILLOCAMPOS@gmail.com",
+"cedula": "1111175",
+"signos_tmp": 0.0
+}
+},
+{"pk": 64,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 64,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:07:16",
+"hora_egreso": "2013-12-03T07:07:16",
+"fecha_Esp_act": "2013-12-03T07:07:16"
+}
+},
+{"pk": 330,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T04:10:16",
+"espera": 4,
+"emergencia": 64
+}
+}
+,
+{"pk": 331,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:10:16",
+"hora_fin": "2013-12-03T05:02:16",
+"espera": 6,
+"emergencia": 64
+}
+}
+,
+{"pk": 332,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:02:16",
+"hora_fin": "2013-12-03T06:27:16",
+"espera": 7,
+"emergencia": 64
+}
+}
+,
+{"pk": 333,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:27:16",
+"hora_fin": "2013-12-03T06:33:16",
+"espera": 9,
+"emergencia": 64
+}
+}
+,
+{"pk": 334,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:33:16",
+"hora_fin": "2013-12-03T07:07:16",
+"espera": 10,
+"emergencia": 64
+}
+}
+,{"pk": 65, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125706353",
+"fecha_nacimiento": "2006-07-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126145632",
+"signos_pb": 0.0,
+"nombres": "SIRIA MIRYAM",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "PALMA SILVA",
+"contacto_tlf": "04142302590",
+"signos_fr": 0,
+"contacto_nom": "GIOVANNA DIAZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SIRIAMIRYAMPALMASILVA@gmail.com",
+"cedula": "1111176",
+"signos_tmp": 0.0
+}
+},
+{"pk": 65,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T11:17:16",
+"paciente": 65,
+"hora_ingresoReal": "2013-12-03T11:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T17:52:16",
+"hora_egreso": "2013-12-03T17:52:16",
+"fecha_Esp_act": "2013-12-03T17:52:16"
+}
+},
+{"pk": 335,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:17:16",
+"hora_fin": "2013-12-03T13:56:16",
+"espera": 1,
+"emergencia": 65
+}
+}
+,
+{"pk": 336,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:56:16",
+"hora_fin": "2013-12-03T14:07:16",
+"espera": 2,
+"emergencia": 65
+}
+}
+,
+{"pk": 337,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:07:16",
+"hora_fin": "2013-12-03T16:18:16",
+"espera": 3,
+"emergencia": 65
+}
+}
+,
+{"pk": 338,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:18:16",
+"hora_fin": "2013-12-03T16:43:16",
+"espera": 4,
+"emergencia": 65
+}
+}
+,
+{"pk": 339,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:43:16",
+"hora_fin": "2013-12-03T17:39:16",
+"espera": 9,
+"emergencia": 65
+}
+}
+,
+{"pk": 340,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:39:16",
+"hora_fin": "2013-12-03T17:52:16",
+"espera": 10,
+"emergencia": 65
+}
+}
+,{"pk": 66, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164236377",
+"fecha_nacimiento": "1916-04-09",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125066197",
+"signos_pb": 0.0,
+"nombres": "ELVIS IVO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "CARDENAS ROJAS",
+"contacto_tlf": "04141635706",
+"signos_fr": 0,
+"contacto_nom": "TIZIANO SAAVEDRA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ELVISIVOCARDENASROJAS@gmail.com",
+"cedula": "1111177",
+"signos_tmp": 0.0
+}
+},
+{"pk": 66,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 66,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:49:16",
+"hora_egreso": "2013-12-03T14:49:16",
+"fecha_Esp_act": "2013-12-03T14:49:16"
+}
+},
+{"pk": 341,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T12:00:16",
+"espera": 2,
+"emergencia": 66
+}
+}
+,
+{"pk": 342,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:00:16",
+"hora_fin": "2013-12-03T13:43:16",
+"espera": 3,
+"emergencia": 66
+}
+}
+,
+{"pk": 343,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:43:16",
+"hora_fin": "2013-12-03T14:25:16",
+"espera": 4,
+"emergencia": 66
+}
+}
+,
+{"pk": 344,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:25:16",
+"hora_fin": "2013-12-03T14:46:16",
+"espera": 5,
+"emergencia": 66
+}
+}
+,
+{"pk": 345,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:46:16",
+"hora_fin": "2013-12-03T14:49:16",
+"espera": 6,
+"emergencia": 66
+}
+}
+,{"pk": 67, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164111328",
+"fecha_nacimiento": "1922-08-13",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127084665",
+"signos_pb": 0.0,
+"nombres": "ATILA POMPEO",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "CARRASCO GARRIDO",
+"contacto_tlf": "04169843239",
+"signos_fr": 0,
+"contacto_nom": "ULADIMIRO PINO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ATILAPOMPEOCARRASCOGARRIDO@gmail.com",
+"cedula": "1111178",
+"signos_tmp": 0.0
+}
+},
+{"pk": 67,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T12:17:16",
+"paciente": 67,
+"hora_ingresoReal": "2013-12-03T12:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T18:57:16",
+"hora_egreso": "2013-12-03T18:57:16",
+"fecha_Esp_act": "2013-12-03T18:57:16"
+}
+},
+{"pk": 346,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T16:04:16",
+"espera": 1,
+"emergencia": 67
+}
+}
+,
+{"pk": 347,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:04:16",
+"hora_fin": "2013-12-03T17:20:16",
+"espera": 3,
+"emergencia": 67
+}
+}
+,
+{"pk": 348,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:20:16",
+"hora_fin": "2013-12-03T18:57:16",
+"espera": 6,
+"emergencia": 67
+}
+}
+,
+{"pk": 349,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:57:16",
+"hora_fin": "2013-12-03T18:57:16",
+"espera": 8,
+"emergencia": 67
+}
+}
+,
+{"pk": 350,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:57:16",
+"hora_fin": "2013-12-03T18:57:16",
+"espera": 10,
+"emergencia": 67
+}
+}
+,{"pk": 68, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04168409225",
+"fecha_nacimiento": "1927-02-14",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125162072",
+"signos_pb": 0.0,
+"nombres": " CLEMENTINA",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "CAMPOS FARIAS",
+"contacto_tlf": "04149561545",
+"signos_fr": 0,
+"contacto_nom": "MARIELA PALMA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CLEMENTINACAMPOSFARIAS@gmail.com",
+"cedula": "1111179",
+"signos_tmp": 0.0
+}
+},
+{"pk": 68,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 68,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:57:16",
+"hora_egreso": "2013-12-03T16:57:16",
+"fecha_Esp_act": "2013-12-03T16:57:16"
+}
+},
+{"pk": 351,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T16:53:16",
+"espera": 1,
+"emergencia": 68
+}
+}
+,
+{"pk": 352,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:53:16",
+"hora_fin": "2013-12-03T16:54:16",
+"espera": 2,
+"emergencia": 68
+}
+}
+,
+{"pk": 353,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:54:16",
+"hora_fin": "2013-12-03T16:55:16",
+"espera": 3,
+"emergencia": 68
+}
+}
+,
+{"pk": 354,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:55:16",
+"hora_fin": "2013-12-03T16:55:16",
+"espera": 4,
+"emergencia": 68
+}
+}
+,
+{"pk": 355,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:55:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 6,
+"emergencia": 68
+}
+}
+,
+{"pk": 356,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:57:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 7,
+"emergencia": 68
+}
+}
+,
+{"pk": 357,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:57:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 8,
+"emergencia": 68
+}
+}
+,
+{"pk": 358,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:57:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 9,
+"emergencia": 68
+}
+}
+,
+{"pk": 359,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:57:16",
+"hora_fin": "2013-12-03T16:57:16",
+"espera": 10,
+"emergencia": 68
+}
+}
+,{"pk": 69, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04149171954",
+"fecha_nacimiento": "1990-01-18",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122030428",
+"signos_pb": 0.0,
+"nombres": "YOSEF ADELQUI",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "OLIVARES RIVERA",
+"contacto_tlf": "04167575913",
+"signos_fr": 0,
+"contacto_nom": "MIKEL HENRIQUEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "YOSEFADELQUIOLIVARESRIVERA@gmail.com",
+"cedula": "1111180",
+"signos_tmp": 0.0
+}
+},
+{"pk": 69,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 69,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:57:16",
+"hora_egreso": "2013-12-03T19:57:16",
+"fecha_Esp_act": "2013-12-03T19:57:16"
+}
+},
+{"pk": 360,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T16:48:16",
+"espera": 1,
+"emergencia": 69
+}
+}
+,
+{"pk": 361,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:48:16",
+"hora_fin": "2013-12-03T19:27:16",
+"espera": 4,
+"emergencia": 69
+}
+}
+,
+{"pk": 362,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:27:16",
+"hora_fin": "2013-12-03T19:27:16",
+"espera": 5,
+"emergencia": 69
+}
+}
+,
+{"pk": 363,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:27:16",
+"hora_fin": "2013-12-03T19:50:16",
+"espera": 6,
+"emergencia": 69
+}
+}
+,
+{"pk": 364,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:50:16",
+"hora_fin": "2013-12-03T19:54:16",
+"espera": 7,
+"emergencia": 69
+}
+}
+,
+{"pk": 365,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:54:16",
+"hora_fin": "2013-12-03T19:57:16",
+"espera": 9,
+"emergencia": 69
+}
+}
+,{"pk": 70, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04129334632",
+"fecha_nacimiento": "1941-08-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129935177",
+"signos_pb": 0.0,
+"nombres": "ONAN JERAMEL",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "GUTIERREZ CARRASCO",
+"contacto_tlf": "04145219684",
+"signos_fr": 0,
+"contacto_nom": "APARICIO PAREDES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ONANJERAMELGUTIERREZCARRASCO@gmail.com",
+"cedula": "1111181",
+"signos_tmp": 0.0
+}
+},
+{"pk": 70,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 70,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:43:16",
+"hora_egreso": "2013-12-03T19:43:16",
+"fecha_Esp_act": "2013-12-03T19:43:16"
+}
+},
+{"pk": 366,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T18:28:16",
+"espera": 1,
+"emergencia": 70
+}
+}
+,
+{"pk": 367,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:28:16",
+"hora_fin": "2013-12-03T19:38:16",
+"espera": 5,
+"emergencia": 70
+}
+}
+,
+{"pk": 368,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:38:16",
+"hora_fin": "2013-12-03T19:39:16",
+"espera": 6,
+"emergencia": 70
+}
+}
+,
+{"pk": 369,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:39:16",
+"hora_fin": "2013-12-03T19:43:16",
+"espera": 9,
+"emergencia": 70
+}
+}
+,{"pk": 71, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04145941535",
+"fecha_nacimiento": "1929-03-19",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125000552",
+"signos_pb": 0.0,
+"nombres": "NAZARETH AMELIE",
+"contacto_rel": 11,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "TORO CARRASCO",
+"contacto_tlf": "04142349389",
+"signos_fr": 0,
+"contacto_nom": "MARCIA VERGARA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NAZARETHAMELIETOROCARRASCO@gmail.com",
+"cedula": "1111182",
+"signos_tmp": 0.0
+}
+},
+{"pk": 71,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 71,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:55:16",
+"hora_egreso": "2013-12-03T13:55:16",
+"fecha_Esp_act": "2013-12-03T13:55:16"
+}
+},
+{"pk": 370,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T10:29:16",
+"espera": 2,
+"emergencia": 71
+}
+}
+,
+{"pk": 371,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:29:16",
+"hora_fin": "2013-12-03T12:00:16",
+"espera": 4,
+"emergencia": 71
+}
+}
+,
+{"pk": 372,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:00:16",
+"hora_fin": "2013-12-03T13:15:16",
+"espera": 7,
+"emergencia": 71
+}
+}
+,
+{"pk": 373,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:15:16",
+"hora_fin": "2013-12-03T13:54:16",
+"espera": 8,
+"emergencia": 71
+}
+}
+,
+{"pk": 374,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:54:16",
+"hora_fin": "2013-12-03T13:55:16",
+"espera": 10,
+"emergencia": 71
+}
+}
+,{"pk": 72, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147204469",
+"fecha_nacimiento": "1916-05-14",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127458797",
+"signos_pb": 0.0,
+"nombres": " AMAIKE",
+"contacto_rel": 8,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "RUIZ NUNEZ",
+"contacto_tlf": "04146114070",
+"signos_fr": 0,
+"contacto_nom": "KALIL REYES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "AMAIKERUIZNUNEZ@gmail.com",
+"cedula": "1111183",
+"signos_tmp": 0.0
+}
+},
+{"pk": 72,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 72,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:47:16",
+"hora_egreso": "2013-12-03T15:47:16",
+"fecha_Esp_act": "2013-12-03T15:47:16"
+}
+},
+{"pk": 375,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T15:04:16",
+"espera": 2,
+"emergencia": 72
+}
+}
+,
+{"pk": 376,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:04:16",
+"hora_fin": "2013-12-03T15:29:16",
+"espera": 3,
+"emergencia": 72
+}
+}
+,
+{"pk": 377,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:29:16",
+"hora_fin": "2013-12-03T15:29:16",
+"espera": 6,
+"emergencia": 72
+}
+}
+,
+{"pk": 378,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:29:16",
+"hora_fin": "2013-12-03T15:37:16",
+"espera": 7,
+"emergencia": 72
+}
+}
+,
+{"pk": 379,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:37:16",
+"hora_fin": "2013-12-03T15:47:16",
+"espera": 8,
+"emergencia": 72
+}
+}
+,{"pk": 73, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164064966",
+"fecha_nacimiento": "2008-10-24",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125396851",
+"signos_pb": 0.0,
+"nombres": "ANTE DIMITRI",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MUNOZ FERNANDEZ",
+"contacto_tlf": "04148567927",
+"signos_fr": 0,
+"contacto_nom": "KATIA ORRES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ANTEDIMITRIMUNOZFERNANDEZ@gmail.com",
+"cedula": "1111184",
+"signos_tmp": 0.0
+}
+},
+{"pk": 73,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T12:17:16",
+"paciente": 73,
+"hora_ingresoReal": "2013-12-03T12:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T18:34:16",
+"hora_egreso": "2013-12-03T18:34:16",
+"fecha_Esp_act": "2013-12-03T18:34:16"
+}
+},
+{"pk": 380,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:17:16",
+"hora_fin": "2013-12-03T17:14:16",
+"espera": 6,
+"emergencia": 73
+}
+}
+,
+{"pk": 381,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:14:16",
+"hora_fin": "2013-12-03T18:34:16",
+"espera": 8,
+"emergencia": 73
+}
+}
+,{"pk": 74, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125366232",
+"fecha_nacimiento": "1965-08-24",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126034427",
+"signos_pb": 0.0,
+"nombres": "NAYLEA JUANITA",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "CAMPOS BUSTAMANTE",
+"contacto_tlf": "04161676563",
+"signos_fr": 0,
+"contacto_nom": "DIAMELA HENRIQUEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NAYLEAJUANITACAMPOSBUSTAMANTE@gmail.com",
+"cedula": "1111185",
+"signos_tmp": 0.0
+}
+},
+{"pk": 74,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T13:17:16",
+"paciente": 74,
+"hora_ingresoReal": "2013-12-03T13:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T19:50:16",
+"hora_egreso": "2013-12-03T19:50:16",
+"fecha_Esp_act": "2013-12-03T19:50:16"
+}
+},
+{"pk": 382,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:17:16",
+"hora_fin": "2013-12-03T17:14:16",
+"espera": 2,
+"emergencia": 74
+}
+}
+,
+{"pk": 383,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T17:14:16",
+"hora_fin": "2013-12-03T18:22:16",
+"espera": 3,
+"emergencia": 74
+}
+}
+,
+{"pk": 384,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:22:16",
+"hora_fin": "2013-12-03T18:42:16",
+"espera": 4,
+"emergencia": 74
+}
+}
+,
+{"pk": 385,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:42:16",
+"hora_fin": "2013-12-03T18:49:16",
+"espera": 6,
+"emergencia": 74
+}
+}
+,
+{"pk": 386,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T18:49:16",
+"hora_fin": "2013-12-03T19:47:16",
+"espera": 7,
+"emergencia": 74
+}
+}
+,
+{"pk": 387,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T19:47:16",
+"hora_fin": "2013-12-03T19:50:16",
+"espera": 9,
+"emergencia": 74
+}
+}
+,{"pk": 75, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04161329827",
+"fecha_nacimiento": "1988-07-05",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128390978",
+"signos_pb": 0.0,
+"nombres": "DELSAGRADOCORAZON ZOILO",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "PINO RIVERA",
+"contacto_tlf": "04122143105",
+"signos_fr": 0,
+"contacto_nom": "CLARISA MUNOZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "DELSAGRADOCORAZONZOILOPINORIVERA@gmail.com",
+"cedula": "1111186",
+"signos_tmp": 0.0
+}
+},
+{"pk": 75,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 75,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:48:16",
+"hora_egreso": "2013-12-03T12:48:16",
+"fecha_Esp_act": "2013-12-03T12:48:16"
+}
+},
+{"pk": 388,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T09:24:16",
+"espera": 1,
+"emergencia": 75
+}
+}
+,
+{"pk": 389,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:24:16",
+"hora_fin": "2013-12-03T11:07:16",
+"espera": 3,
+"emergencia": 75
+}
+}
+,
+{"pk": 390,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:07:16",
+"hora_fin": "2013-12-03T11:58:16",
+"espera": 6,
+"emergencia": 75
+}
+}
+,
+{"pk": 391,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:58:16",
+"hora_fin": "2013-12-03T12:21:16",
+"espera": 8,
+"emergencia": 75
+}
+}
+,
+{"pk": 392,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:21:16",
+"hora_fin": "2013-12-03T12:42:16",
+"espera": 9,
+"emergencia": 75
+}
+}
+,
+{"pk": 393,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:42:16",
+"hora_fin": "2013-12-03T12:48:16",
+"espera": 10,
+"emergencia": 75
+}
+}
+,{"pk": 76, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04129842575",
+"fecha_nacimiento": "1961-12-06",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122826548",
+"signos_pb": 0.0,
+"nombres": "SIRO GASPAR",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "PENA NAVARRO",
+"contacto_tlf": "04142696052",
+"signos_fr": 0,
+"contacto_nom": " CAMPOS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SIROGASPARPENANAVARRO@gmail.com",
+"cedula": "1111187",
+"signos_tmp": 0.0
+}
+},
+{"pk": 76,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 76,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:57:16",
+"hora_egreso": "2013-12-03T09:57:16",
+"fecha_Esp_act": "2013-12-03T09:57:16"
+}
+},
+{"pk": 394,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T08:24:16",
+"espera": 1,
+"emergencia": 76
+}
+}
+,
+{"pk": 395,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:24:16",
+"hora_fin": "2013-12-03T09:25:16",
+"espera": 4,
+"emergencia": 76
+}
+}
+,
+{"pk": 396,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:25:16",
+"hora_fin": "2013-12-03T09:38:16",
+"espera": 5,
+"emergencia": 76
+}
+}
+,
+{"pk": 397,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:38:16",
+"hora_fin": "2013-12-03T09:46:16",
+"espera": 6,
+"emergencia": 76
+}
+}
+,
+{"pk": 398,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:46:16",
+"hora_fin": "2013-12-03T09:56:16",
+"espera": 8,
+"emergencia": 76
+}
+}
+,
+{"pk": 399,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:56:16",
+"hora_fin": "2013-12-03T09:56:16",
+"espera": 9,
+"emergencia": 76
+}
+}
+,
+{"pk": 400,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:56:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 10,
+"emergencia": 76
+}
+}
+,{"pk": 77, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04127086935",
+"fecha_nacimiento": "1970-04-12",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129819010",
+"signos_pb": 0.0,
+"nombres": "YUCEL VALENTIN",
+"contacto_rel": 11,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "OPEZ ES",
+"contacto_tlf": "04121249486",
+"signos_fr": 0,
+"contacto_nom": "TAMUZ NUNEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "YUCELVALENTINOPEZES@gmail.com",
+"cedula": "1111188",
+"signos_tmp": 0.0
+}
+},
+{"pk": 77,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 77,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:57:16",
+"hora_egreso": "2013-12-03T12:57:16",
+"fecha_Esp_act": "2013-12-03T12:57:16"
+}
+},
+{"pk": 401,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T07:47:16",
+"espera": 2,
+"emergencia": 77
+}
+}
+,
+{"pk": 402,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:47:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 5,
+"emergencia": 77
+}
+}
+,
+{"pk": 403,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:57:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 7,
+"emergencia": 77
+}
+}
+,
+{"pk": 404,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:57:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 8,
+"emergencia": 77
+}
+}
+,
+{"pk": 405,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:57:16",
+"hora_fin": "2013-12-03T12:57:16",
+"espera": 9,
+"emergencia": 77
+}
+}
+,{"pk": 78, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163483331",
+"fecha_nacimiento": "1911-04-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128156304",
+"signos_pb": 0.0,
+"nombres": "MALTE ELISENDA",
+"contacto_rel": 11,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GODOY RAYA",
+"contacto_tlf": "04149685493",
+"signos_fr": 0,
+"contacto_nom": "DAGMAR LAGOS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MALTEELISENDAGODOYRAYA@gmail.com",
+"cedula": "1111189",
+"signos_tmp": 0.0
+}
+},
+{"pk": 78,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 78,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:17:16",
+"hora_egreso": "2013-12-03T15:17:16",
+"fecha_Esp_act": "2013-12-03T15:17:16"
+}
+},
+{"pk": 406,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T09:27:16",
+"espera": 1,
+"emergencia": 78
+}
+}
+,
+{"pk": 407,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:27:16",
+"hora_fin": "2013-12-03T13:50:16",
+"espera": 2,
+"emergencia": 78
+}
+}
+,
+{"pk": 408,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:50:16",
+"hora_fin": "2013-12-03T14:38:16",
+"espera": 4,
+"emergencia": 78
+}
+}
+,
+{"pk": 409,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:38:16",
+"hora_fin": "2013-12-03T14:58:16",
+"espera": 5,
+"emergencia": 78
+}
+}
+,
+{"pk": 410,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:58:16",
+"hora_fin": "2013-12-03T15:08:16",
+"espera": 8,
+"emergencia": 78
+}
+}
+,
+{"pk": 411,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:08:16",
+"hora_fin": "2013-12-03T15:17:16",
+"espera": 10,
+"emergencia": 78
+}
+}
+,{"pk": 79, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04129096398",
+"fecha_nacimiento": "1904-04-13",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124792041",
+"signos_pb": 0.0,
+"nombres": "RHODE SOFIA",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORTIZ VIDAL",
+"contacto_tlf": "04168315729",
+"signos_fr": 0,
+"contacto_nom": "ANDRES GONZALEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "RHODESOFIAORTIZVIDAL@gmail.com",
+"cedula": "1111190",
+"signos_tmp": 0.0
+}
+},
+{"pk": 79,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T08:17:16",
+"paciente": 79,
+"hora_ingresoReal": "2013-12-03T08:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T14:49:16",
+"hora_egreso": "2013-12-03T14:49:16",
+"fecha_Esp_act": "2013-12-03T14:49:16"
+}
+},
+{"pk": 412,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:17:16",
+"hora_fin": "2013-12-03T09:21:16",
+"espera": 1,
+"emergencia": 79
+}
+}
+,
+{"pk": 413,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:21:16",
+"hora_fin": "2013-12-03T09:34:16",
+"espera": 4,
+"emergencia": 79
+}
+}
+,
+{"pk": 414,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:34:16",
+"hora_fin": "2013-12-03T12:11:16",
+"espera": 6,
+"emergencia": 79
+}
+}
+,
+{"pk": 415,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:11:16",
+"hora_fin": "2013-12-03T14:38:16",
+"espera": 8,
+"emergencia": 79
+}
+}
+,
+{"pk": 416,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T14:38:16",
+"hora_fin": "2013-12-03T14:49:16",
+"espera": 10,
+"emergencia": 79
+}
+}
+,{"pk": 80, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04168579683",
+"fecha_nacimiento": "1953-04-21",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129973293",
+"signos_pb": 0.0,
+"nombres": " SIBILA",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "VIDAL CASTRO",
+"contacto_tlf": "04169004740",
+"signos_fr": 0,
+"contacto_nom": "HANNES LEIVA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SIBILAVIDALCASTRO@gmail.com",
+"cedula": "1111191",
+"signos_tmp": 0.0
+}
+},
+{"pk": 80,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 80,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:14:16",
+"hora_egreso": "2013-12-03T08:14:16",
+"fecha_Esp_act": "2013-12-03T08:14:16"
+}
+},
+{"pk": 417,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T05:58:16",
+"espera": 3,
+"emergencia": 80
+}
+}
+,
+{"pk": 418,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:58:16",
+"hora_fin": "2013-12-03T06:48:16",
+"espera": 5,
+"emergencia": 80
+}
+}
+,
+{"pk": 419,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:48:16",
+"hora_fin": "2013-12-03T07:05:16",
+"espera": 8,
+"emergencia": 80
+}
+}
+,
+{"pk": 420,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:05:16",
+"hora_fin": "2013-12-03T08:14:16",
+"espera": 9,
+"emergencia": 80
+}
+}
+,{"pk": 81, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04163910771",
+"fecha_nacimiento": "2009-09-03",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124644973",
+"signos_pb": 0.0,
+"nombres": "CELEDONIA MARILENA",
+"contacto_rel": 10,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORTIZ DONOSO",
+"contacto_tlf": "04124690786",
+"signos_fr": 0,
+"contacto_nom": "DEMETRIO SAN MARTIN",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "CELEDONIAMARILENAORTIZDONOSO@gmail.com",
+"cedula": "1111192",
+"signos_tmp": 0.0
+}
+},
+{"pk": 81,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 81,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:49:16",
+"hora_egreso": "2013-12-03T13:49:16",
+"fecha_Esp_act": "2013-12-03T13:49:16"
+}
+},
+{"pk": 421,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T13:47:16",
+"espera": 1,
+"emergencia": 81
+}
+}
+,
+{"pk": 422,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:47:16",
+"hora_fin": "2013-12-03T13:49:16",
+"espera": 6,
+"emergencia": 81
+}
+}
+,{"pk": 82, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04164245879",
+"fecha_nacimiento": "1960-06-02",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121409183",
+"signos_pb": 0.0,
+"nombres": "ZULEMA SALOME",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "JARA PAREDES",
+"contacto_tlf": "04162060703",
+"signos_fr": 0,
+"contacto_nom": "ARGIMIRO RUIZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ZULEMASALOMEJARAPAREDES@gmail.com",
+"cedula": "1111193",
+"signos_tmp": 0.0
+}
+},
+{"pk": 82,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 82,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:57:16",
+"hora_egreso": "2013-12-03T11:57:16",
+"fecha_Esp_act": "2013-12-03T11:57:16"
+}
+},
+{"pk": 423,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T07:48:16",
+"espera": 2,
+"emergencia": 82
+}
+}
+,
+{"pk": 424,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:48:16",
+"hora_fin": "2013-12-03T10:12:16",
+"espera": 5,
+"emergencia": 82
+}
+}
+,
+{"pk": 425,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:12:16",
+"hora_fin": "2013-12-03T11:28:16",
+"espera": 6,
+"emergencia": 82
+}
+}
+,
+{"pk": 426,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:28:16",
+"hora_fin": "2013-12-03T11:37:16",
+"espera": 7,
+"emergencia": 82
+}
+}
+,
+{"pk": 427,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:37:16",
+"hora_fin": "2013-12-03T11:56:16",
+"espera": 8,
+"emergencia": 82
+}
+}
+,
+{"pk": 428,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:56:16",
+"hora_fin": "2013-12-03T11:56:16",
+"espera": 9,
+"emergencia": 82
+}
+}
+,
+{"pk": 429,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:56:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 10,
+"emergencia": 82
+}
+}
+,{"pk": 83, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125348075",
+"fecha_nacimiento": "1974-10-03",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124953247",
+"signos_pb": 0.0,
+"nombres": "BIENVENIDA CATALINA",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "ORELLANA POBLETE",
+"contacto_tlf": "04162249816",
+"signos_fr": 0,
+"contacto_nom": "INAKI GUERRERO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "BIENVENIDACATALINAORELLANAPOBLETE@gmail.com",
+"cedula": "1111194",
+"signos_tmp": 0.0
+}
+},
+{"pk": 83,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 83,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:52:16",
+"hora_egreso": "2013-12-03T13:52:16",
+"fecha_Esp_act": "2013-12-03T13:52:16"
+}
+},
+{"pk": 430,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T09:09:16",
+"espera": 2,
+"emergencia": 83
+}
+}
+,
+{"pk": 431,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:09:16",
+"hora_fin": "2013-12-03T12:13:16",
+"espera": 3,
+"emergencia": 83
+}
+}
+,
+{"pk": 432,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:13:16",
+"hora_fin": "2013-12-03T12:31:16",
+"espera": 5,
+"emergencia": 83
+}
+}
+,
+{"pk": 433,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:31:16",
+"hora_fin": "2013-12-03T13:26:16",
+"espera": 6,
+"emergencia": 83
+}
+}
+,
+{"pk": 434,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:26:16",
+"hora_fin": "2013-12-03T13:52:16",
+"espera": 7,
+"emergencia": 83
+}
+}
+,{"pk": 84, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142334801",
+"fecha_nacimiento": "1965-05-11",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02124772943",
+"signos_pb": 0.0,
+"nombres": "ELVIA AMADA",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "EPULVEDA NAVARRO",
+"contacto_tlf": "04169011703",
+"signos_fr": 0,
+"contacto_nom": "ZEUS MOLINA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ELVIAAMADAEPULVEDANAVARRO@gmail.com",
+"cedula": "1111195",
+"signos_tmp": 0.0
+}
+},
+{"pk": 84,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T06:17:16",
+"paciente": 84,
+"hora_ingresoReal": "2013-12-03T06:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T12:39:16",
+"hora_egreso": "2013-12-03T12:39:16",
+"fecha_Esp_act": "2013-12-03T12:39:16"
+}
+},
+{"pk": 435,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:17:16",
+"hora_fin": "2013-12-03T12:28:16",
+"espera": 3,
+"emergencia": 84
+}
+}
+,
+{"pk": 436,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:28:16",
+"hora_fin": "2013-12-03T12:29:16",
+"espera": 4,
+"emergencia": 84
+}
+}
+,
+{"pk": 437,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:29:16",
+"hora_fin": "2013-12-03T12:39:16",
+"espera": 7,
+"emergencia": 84
+}
+}
+,{"pk": 85, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146854074",
+"fecha_nacimiento": "1996-03-01",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02122303980",
+"signos_pb": 0.0,
+"nombres": "LLACO DONALDO",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "GARCIA SAN MARTIN",
+"contacto_tlf": "04142942712",
+"signos_fr": 0,
+"contacto_nom": "ROLANDOROLDAN LORES",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "LLACODONALDOGARCIASANMARTIN@gmail.com",
+"cedula": "1111196",
+"signos_tmp": 0.0
+}
+},
+{"pk": 85,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 85,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:38:16",
+"hora_egreso": "2013-12-03T07:38:16",
+"fecha_Esp_act": "2013-12-03T07:38:16"
+}
+},
+{"pk": 438,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T03:22:16",
+"espera": 3,
+"emergencia": 85
+}
+}
+,
+{"pk": 439,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:22:16",
+"hora_fin": "2013-12-03T06:30:16",
+"espera": 8,
+"emergencia": 85
+}
+}
+,
+{"pk": 440,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:30:16",
+"hora_fin": "2013-12-03T07:38:16",
+"espera": 10,
+"emergencia": 85
+}
+}
+,{"pk": 86, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04141198976",
+"fecha_nacimiento": "1939-03-16",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129617576",
+"signos_pb": 0.0,
+"nombres": "SAMIR CAIO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "CAMPOS JIMENEZ",
+"contacto_tlf": "04141545180",
+"signos_fr": 0,
+"contacto_nom": "MAITENA FERNANDEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SAMIRCAIOCAMPOSJIMENEZ@gmail.com",
+"cedula": "1111197",
+"signos_tmp": 0.0
+}
+},
+{"pk": 86,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 86,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:55:16",
+"hora_egreso": "2013-12-03T07:55:16",
+"fecha_Esp_act": "2013-12-03T07:55:16"
+}
+},
+{"pk": 441,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T04:36:16",
+"espera": 1,
+"emergencia": 86
+}
+}
+,
+{"pk": 442,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:36:16",
+"hora_fin": "2013-12-03T07:20:16",
+"espera": 2,
+"emergencia": 86
+}
+}
+,
+{"pk": 443,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:20:16",
+"hora_fin": "2013-12-03T07:26:16",
+"espera": 4,
+"emergencia": 86
+}
+}
+,
+{"pk": 444,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:26:16",
+"hora_fin": "2013-12-03T07:30:16",
+"espera": 6,
+"emergencia": 86
+}
+}
+,
+{"pk": 445,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:30:16",
+"hora_fin": "2013-12-03T07:42:16",
+"espera": 7,
+"emergencia": 86
+}
+}
+,
+{"pk": 446,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:42:16",
+"hora_fin": "2013-12-03T07:55:16",
+"espera": 8,
+"emergencia": 86
+}
+}
+,
+{"pk": 447,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:55:16",
+"hora_fin": "2013-12-03T07:55:16",
+"espera": 10,
+"emergencia": 86
+}
+}
+,{"pk": 87, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04162625962",
+"fecha_nacimiento": "1920-12-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121870302",
+"signos_pb": 0.0,
+"nombres": "NAILEA AZUCENA",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "CAMPOS GONZALEZ",
+"contacto_tlf": "04129647849",
+"signos_fr": 0,
+"contacto_nom": "SABAS ROJAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "NAILEAAZUCENACAMPOSGONZALEZ@gmail.com",
+"cedula": "1111198",
+"signos_tmp": 0.0
+}
+},
+{"pk": 87,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T10:17:16",
+"paciente": 87,
+"hora_ingresoReal": "2013-12-03T10:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T16:56:16",
+"hora_egreso": "2013-12-03T16:56:16",
+"fecha_Esp_act": "2013-12-03T16:56:16"
+}
+},
+{"pk": 448,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:17:16",
+"hora_fin": "2013-12-03T15:12:16",
+"espera": 1,
+"emergencia": 87
+}
+}
+,
+{"pk": 449,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:12:16",
+"hora_fin": "2013-12-03T16:34:16",
+"espera": 3,
+"emergencia": 87
+}
+}
+,
+{"pk": 450,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:34:16",
+"hora_fin": "2013-12-03T16:38:16",
+"espera": 4,
+"emergencia": 87
+}
+}
+,
+{"pk": 451,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:38:16",
+"hora_fin": "2013-12-03T16:54:16",
+"espera": 7,
+"emergencia": 87
+}
+}
+,
+{"pk": 452,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:54:16",
+"hora_fin": "2013-12-03T16:55:16",
+"espera": 8,
+"emergencia": 87
+}
+}
+,
+{"pk": 453,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:55:16",
+"hora_fin": "2013-12-03T16:56:16",
+"espera": 9,
+"emergencia": 87
+}
+}
+,
+{"pk": 454,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T16:56:16",
+"hora_fin": "2013-12-03T16:56:16",
+"espera": 10,
+"emergencia": 87
+}
+}
+,{"pk": 88, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142672717",
+"fecha_nacimiento": "1901-06-27",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123410115",
+"signos_pb": 0.0,
+"nombres": "JASID MANQUEMANUEL",
+"contacto_rel": 6,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ALVAREZ MEDINA",
+"contacto_tlf": "04126370633",
+"signos_fr": 0,
+"contacto_nom": "JORAN SANHUEZA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "JASIDMANQUEMANUELALVAREZMEDINA@gmail.com",
+"cedula": "1111199",
+"signos_tmp": 0.0
+}
+},
+{"pk": 88,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 88,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:37:16",
+"hora_egreso": "2013-12-03T10:37:16",
+"fecha_Esp_act": "2013-12-03T10:37:16"
+}
+},
+{"pk": 455,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T08:52:16",
+"espera": 1,
+"emergencia": 88
+}
+}
+,
+{"pk": 456,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:52:16",
+"hora_fin": "2013-12-03T10:20:16",
+"espera": 6,
+"emergencia": 88
+}
+}
+,
+{"pk": 457,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:20:16",
+"hora_fin": "2013-12-03T10:34:16",
+"espera": 7,
+"emergencia": 88
+}
+}
+,
+{"pk": 458,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:34:16",
+"hora_fin": "2013-12-03T10:37:16",
+"espera": 8,
+"emergencia": 88
+}
+}
+,
+{"pk": 459,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:37:16",
+"hora_fin": "2013-12-03T10:37:16",
+"espera": 9,
+"emergencia": 88
+}
+}
+,{"pk": 89, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04128690703",
+"fecha_nacimiento": "1917-12-28",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125923262",
+"signos_pb": 0.0,
+"nombres": "AQUILES ISRAEL",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "MEDINA SILVA",
+"contacto_tlf": "04129367703",
+"signos_fr": 0,
+"contacto_nom": "MILDRED GUZMAN",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "AQUILESISRAELMEDINASILVA@gmail.com",
+"cedula": "1111200",
+"signos_tmp": 0.0
+}
+},
+{"pk": 89,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T07:17:16",
+"paciente": 89,
+"hora_ingresoReal": "2013-12-03T07:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T13:40:16",
+"hora_egreso": "2013-12-03T13:40:16",
+"fecha_Esp_act": "2013-12-03T13:40:16"
+}
+},
+{"pk": 460,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:17:16",
+"hora_fin": "2013-12-03T11:12:16",
+"espera": 2,
+"emergencia": 89
+}
+}
+,
+{"pk": 461,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:12:16",
+"hora_fin": "2013-12-03T11:45:16",
+"espera": 4,
+"emergencia": 89
+}
+}
+,
+{"pk": 462,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:45:16",
+"hora_fin": "2013-12-03T12:35:16",
+"espera": 5,
+"emergencia": 89
+}
+}
+,
+{"pk": 463,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T12:35:16",
+"hora_fin": "2013-12-03T13:36:16",
+"espera": 8,
+"emergencia": 89
+}
+}
+,
+{"pk": 464,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:36:16",
+"hora_fin": "2013-12-03T13:38:16",
+"espera": 9,
+"emergencia": 89
+}
+}
+,
+{"pk": 465,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T13:38:16",
+"hora_fin": "2013-12-03T13:40:16",
+"espera": 10,
+"emergencia": 89
+}
+}
+,{"pk": 90, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04144465921",
+"fecha_nacimiento": "1992-05-16",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02127957486",
+"signos_pb": 0.0,
+"nombres": "DAVOR URIEL",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "SAN MARTIN MIRANDA",
+"contacto_tlf": "04145292397",
+"signos_fr": 0,
+"contacto_nom": "ROCCO PARRA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "DAVORURIELSANMARTINMIRANDA@gmail.com",
+"cedula": "1111201",
+"signos_tmp": 0.0
+}
+},
+{"pk": 90,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 90,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T05:19:16",
+"hora_egreso": "2013-12-03T05:19:16",
+"fecha_Esp_act": "2013-12-03T05:19:16"
+}
+},
+{"pk": 466,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T04:12:16",
+"espera": 6,
+"emergencia": 90
+}
+}
+,
+{"pk": 467,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:12:16",
+"hora_fin": "2013-12-03T05:19:16",
+"espera": 10,
+"emergencia": 90
+}
+}
+,{"pk": 91, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04143764001",
+"fecha_nacimiento": "1968-01-23",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121879746",
+"signos_pb": 0.0,
+"nombres": "FELICIA REYES",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GODOY FERNANDEZ",
+"contacto_tlf": "04142705499",
+"signos_fr": 0,
+"contacto_nom": "BRENDA GUERRERO",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "FELICIAREYESGODOYFERNANDEZ@gmail.com",
+"cedula": "1111202",
+"signos_tmp": 0.0
+}
+},
+{"pk": 91,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 2,
+"hora_ingreso": "2013-12-03T01:17:16",
+"paciente": 91,
+"hora_ingresoReal": "2013-12-03T01:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T07:54:16",
+"hora_egreso": "2013-12-03T07:54:16",
+"fecha_Esp_act": "2013-12-03T07:54:16"
+}
+},
+{"pk": 468,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T01:17:16",
+"hora_fin": "2013-12-03T04:28:16",
+"espera": 1,
+"emergencia": 91
+}
+}
+,
+{"pk": 469,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:28:16",
+"hora_fin": "2013-12-03T04:44:16",
+"espera": 4,
+"emergencia": 91
+}
+}
+,
+{"pk": 470,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:44:16",
+"hora_fin": "2013-12-03T06:42:16",
+"espera": 5,
+"emergencia": 91
+}
+}
+,
+{"pk": 471,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:42:16",
+"hora_fin": "2013-12-03T07:46:16",
+"espera": 8,
+"emergencia": 91
+}
+}
+,
+{"pk": 472,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T07:46:16",
+"hora_fin": "2013-12-03T07:54:16",
+"espera": 10,
+"emergencia": 91
+}
+}
+,{"pk": 92, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147354200",
+"fecha_nacimiento": "1940-10-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02128812979",
+"signos_pb": 0.0,
+"nombres": "SUMAJ SILVIO",
+"contacto_rel": 9,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "ORELLANA SAN MARTIN",
+"contacto_tlf": "04162882983",
+"signos_fr": 0,
+"contacto_nom": "DEMIAN PARRA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SUMAJSILVIOORELLANASANMARTIN@gmail.com",
+"cedula": "1111203",
+"signos_tmp": 0.0
+}
+},
+{"pk": 92,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 3,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 92,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:57:16",
+"hora_egreso": "2013-12-03T09:57:16",
+"fecha_Esp_act": "2013-12-03T09:57:16"
+}
+},
+{"pk": 473,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T03:21:16",
+"espera": 1,
+"emergencia": 92
+}
+}
+,
+{"pk": 474,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:21:16",
+"hora_fin": "2013-12-03T08:28:16",
+"espera": 2,
+"emergencia": 92
+}
+}
+,
+{"pk": 475,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:28:16",
+"hora_fin": "2013-12-03T09:54:16",
+"espera": 3,
+"emergencia": 92
+}
+}
+,
+{"pk": 476,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:54:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 5,
+"emergencia": 92
+}
+}
+,
+{"pk": 477,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:57:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 6,
+"emergencia": 92
+}
+}
+,
+{"pk": 478,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:57:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 8,
+"emergencia": 92
+}
+}
+,
+{"pk": 479,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:57:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 10,
+"emergencia": 92
+}
+}
+,{"pk": 93, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04125373579",
+"fecha_nacimiento": "1946-10-18",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126265868",
+"signos_pb": 0.0,
+"nombres": "ELISABETH LIBIA",
+"contacto_rel": 7,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "NAVARRETE MORENO",
+"contacto_tlf": "04144984094",
+"signos_fr": 0,
+"contacto_nom": "PAZ ORTIZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "ELISABETHLIBIANAVARRETEMORENO@gmail.com",
+"cedula": "1111204",
+"signos_tmp": 0.0
+}
+},
+{"pk": 93,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T04:17:16",
+"paciente": 93,
+"hora_ingresoReal": "2013-12-03T04:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T10:23:16",
+"hora_egreso": "2013-12-03T10:23:16",
+"fecha_Esp_act": "2013-12-03T10:23:16"
+}
+},
+{"pk": 480,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:17:16",
+"hora_fin": "2013-12-03T04:58:16",
+"espera": 1,
+"emergencia": 93
+}
+}
+,
+{"pk": 481,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T04:58:16",
+"hora_fin": "2013-12-03T05:51:16",
+"espera": 5,
+"emergencia": 93
+}
+}
+,
+{"pk": 482,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:51:16",
+"hora_fin": "2013-12-03T09:11:16",
+"espera": 6,
+"emergencia": 93
+}
+}
+,
+{"pk": 483,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:11:16",
+"hora_fin": "2013-12-03T10:02:16",
+"espera": 8,
+"emergencia": 93
+}
+}
+,
+{"pk": 484,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:02:16",
+"hora_fin": "2013-12-03T10:23:16",
+"espera": 10,
+"emergencia": 93
+}
+}
+,{"pk": 94, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04145316524",
+"fecha_nacimiento": "1902-09-26",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129668143",
+"signos_pb": 0.0,
+"nombres": "MARINUS SANTO",
+"contacto_rel": 1,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "OPEZ PARRA",
+"contacto_tlf": "04122357316",
+"signos_fr": 0,
+"contacto_nom": " GODOY",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MARINUSSANTOOPEZPARRA@gmail.com",
+"cedula": "1111205",
+"signos_tmp": 0.0
+}
+},
+{"pk": 94,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 94,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:57:16",
+"hora_egreso": "2013-12-03T15:57:16",
+"fecha_Esp_act": "2013-12-03T15:57:16"
+}
+},
+{"pk": 485,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T15:03:16",
+"espera": 2,
+"emergencia": 94
+}
+}
+,
+{"pk": 486,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:03:16",
+"hora_fin": "2013-12-03T15:14:16",
+"espera": 3,
+"emergencia": 94
+}
+}
+,
+{"pk": 487,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:14:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 5,
+"emergencia": 94
+}
+}
+,
+{"pk": 488,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 6,
+"emergencia": 94
+}
+}
+,
+{"pk": 489,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 7,
+"emergencia": 94
+}
+}
+,
+{"pk": 490,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:57:16",
+"hora_fin": "2013-12-03T15:57:16",
+"espera": 9,
+"emergencia": 94
+}
+}
+,{"pk": 95, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04123876997",
+"fecha_nacimiento": "1915-09-19",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123673856",
+"signos_pb": 0.0,
+"nombres": "LAIMA ELBIA",
+"contacto_rel": 4,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "GUERRERO LEIVA",
+"contacto_tlf": "04121975679",
+"signos_fr": 0,
+"contacto_nom": "INDIRA LEIVA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "LAIMAELBIAGUERREROLEIVA@gmail.com",
+"cedula": "1111206",
+"signos_tmp": 0.0
+}
+},
+{"pk": 95,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 95,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T09:57:16",
+"hora_egreso": "2013-12-03T09:57:16",
+"fecha_Esp_act": "2013-12-03T09:57:16"
+}
+},
+{"pk": 491,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T06:15:16",
+"espera": 2,
+"emergencia": 95
+}
+}
+,
+{"pk": 492,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T06:15:16",
+"hora_fin": "2013-12-03T09:56:16",
+"espera": 5,
+"emergencia": 95
+}
+}
+,
+{"pk": 493,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:56:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 8,
+"emergencia": 95
+}
+}
+,
+{"pk": 494,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:57:16",
+"hora_fin": "2013-12-03T09:57:16",
+"espera": 10,
+"emergencia": 95
+}
+}
+,{"pk": 96, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04147514234",
+"fecha_nacimiento": "1961-02-10",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02126352126",
+"signos_pb": 0.0,
+"nombres": "HADASA BELLA",
+"contacto_rel": 11,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "SOTO EPULVEDA",
+"contacto_tlf": "04124903070",
+"signos_fr": 0,
+"contacto_nom": "ONOFRE POBLETE",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "HADASABELLASOTOEPULVEDA@gmail.com",
+"cedula": "1111207",
+"signos_tmp": 0.0
+}
+},
+{"pk": 96,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T03:17:16",
+"paciente": 96,
+"hora_ingresoReal": "2013-12-03T03:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T04:03:16",
+"hora_egreso": "2013-12-03T04:03:16",
+"fecha_Esp_act": "2013-12-03T04:03:16"
+}
+},
+{"pk": 495,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T03:17:16",
+"hora_fin": "2013-12-03T04:03:16",
+"espera": 1,
+"emergencia": 96
+}
+}
+,{"pk": 97, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04166401061",
+"fecha_nacimiento": "1999-01-27",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02123206402",
+"signos_pb": 0.0,
+"nombres": "SORAYA ABRIL",
+"contacto_rel": 3,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "VENEGAS SALINAS",
+"contacto_tlf": "04141324096",
+"signos_fr": 0,
+"contacto_nom": "CONSTANCIO VERGARA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "SORAYAABRILVENEGASSALINAS@gmail.com",
+"cedula": "1111208",
+"signos_tmp": 0.0
+}
+},
+{"pk": 97,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 1,
+"hora_ingreso": "2013-12-03T09:17:16",
+"paciente": 97,
+"hora_ingresoReal": "2013-12-03T09:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T15:55:16",
+"hora_egreso": "2013-12-03T15:55:16",
+"fecha_Esp_act": "2013-12-03T15:55:16"
+}
+},
+{"pk": 496,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T09:17:16",
+"hora_fin": "2013-12-03T15:33:16",
+"espera": 1,
+"emergencia": 97
+}
+}
+,
+{"pk": 497,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:33:16",
+"hora_fin": "2013-12-03T15:44:16",
+"espera": 3,
+"emergencia": 97
+}
+}
+,
+{"pk": 498,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:44:16",
+"hora_fin": "2013-12-03T15:49:16",
+"espera": 5,
+"emergencia": 97
+}
+}
+,
+{"pk": 499,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:49:16",
+"hora_fin": "2013-12-03T15:49:16",
+"espera": 7,
+"emergencia": 97
+}
+}
+,
+{"pk": 500,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:49:16",
+"hora_fin": "2013-12-03T15:51:16",
+"espera": 8,
+"emergencia": 97
+}
+}
+,
+{"pk": 501,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T15:51:16",
+"hora_fin": "2013-12-03T15:55:16",
+"espera": 9,
+"emergencia": 97
+}
+}
+,{"pk": 98, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04142074128",
+"fecha_nacimiento": "1973-07-22",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02125998227",
+"signos_pb": 0.0,
+"nombres": "GIOIA QUILLEN",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "OPEZ SOTO",
+"contacto_tlf": "04166970611",
+"signos_fr": 0,
+"contacto_nom": "GALO FERNANDEZ",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "GIOIAQUILLENOPEZSOTO@gmail.com",
+"cedula": "1111209",
+"signos_tmp": 0.0
+}
+},
+{"pk": 98,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 4,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 98,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:55:16",
+"hora_egreso": "2013-12-03T08:55:16",
+"fecha_Esp_act": "2013-12-03T08:55:16"
+}
+},
+{"pk": 502,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T08:23:16",
+"espera": 1,
+"emergencia": 98
+}
+}
+,
+{"pk": 503,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:23:16",
+"hora_fin": "2013-12-03T08:29:16",
+"espera": 2,
+"emergencia": 98
+}
+}
+,
+{"pk": 504,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:29:16",
+"hora_fin": "2013-12-03T08:31:16",
+"espera": 4,
+"emergencia": 98
+}
+}
+,
+{"pk": 505,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:31:16",
+"hora_fin": "2013-12-03T08:37:16",
+"espera": 5,
+"emergencia": 98
+}
+}
+,
+{"pk": 506,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:37:16",
+"hora_fin": "2013-12-03T08:45:16",
+"espera": 6,
+"emergencia": 98
+}
+}
+,
+{"pk": 507,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:45:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 7,
+"emergencia": 98
+}
+}
+,
+{"pk": 508,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:55:16",
+"hora_fin": "2013-12-03T08:55:16",
+"espera": 10,
+"emergencia": 98
+}
+}
+,{"pk": 99, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04124768728",
+"fecha_nacimiento": "2006-12-18",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02129804981",
+"signos_pb": 0.0,
+"nombres": "DEDIOS BRICIA",
+"contacto_rel": 5,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 2,
+"apellidos": "MORENO VEGA",
+"contacto_tlf": "04121574733",
+"signos_fr": 0,
+"contacto_nom": "FEDRA CONTRERAS",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "DEDIOSBRICIAMORENOVEGA@gmail.com",
+"cedula": "1111210",
+"signos_tmp": 0.0
+}
+},
+{"pk": 99,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T05:17:16",
+"paciente": 99,
+"hora_ingresoReal": "2013-12-03T05:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T11:57:16",
+"hora_egreso": "2013-12-03T11:57:16",
+"fecha_Esp_act": "2013-12-03T11:57:16"
+}
+},
+{"pk": 509,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T05:17:16",
+"hora_fin": "2013-12-03T08:06:16",
+"espera": 2,
+"emergencia": 99
+}
+}
+,
+{"pk": 510,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:06:16",
+"hora_fin": "2013-12-03T10:30:16",
+"espera": 3,
+"emergencia": 99
+}
+}
+,
+{"pk": 511,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T10:30:16",
+"hora_fin": "2013-12-03T11:56:16",
+"espera": 5,
+"emergencia": 99
+}
+}
+,
+{"pk": 512,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:56:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 6,
+"emergencia": 99
+}
+}
+,
+{"pk": 513,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:57:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 7,
+"emergencia": 99
+}
+}
+,
+{"pk": 514,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T11:57:16",
+"hora_fin": "2013-12-03T11:57:16",
+"espera": 8,
+"emergencia": 99
+}
+}
+,{"pk": 100, 
+"model": "app_paciente.paciente",
+"fields":
+{
+"tlf_cel": "04146496852",
+"fecha_nacimiento": "1903-10-19",
+"foto": "",
+"signos_fc": 0,
+"tlf_casa": "02121538698",
+"signos_pb": 0.0,
+"nombres": "MAICO TULIO",
+"contacto_rel": 2,
+"signos_pa": 0,
+"signos_saod": 0.0,
+"sexo": 1,
+"apellidos": "VIDAL PINO",
+"contacto_tlf": "04126634064",
+"signos_fr": 0,
+"contacto_nom": "RAIA VEGA",
+"direccion": "calle a, avenida b, ciudad c, estado d",
+"email": "MAICOTULIOVIDALPINO@gmail.com",
+"cedula": "1111211",
+"signos_tmp": 0.0
+}
+},
+{"pk": 100,
+"model": "app_emergencia.emergencia",
+"fields":
+{
+"destino": 5,
+"hora_ingreso": "2013-12-03T02:17:16",
+"paciente": 100,
+"hora_ingresoReal": "2013-12-03T02:17:16",
+"egreso": 2,
+"responsable": 2,
+"ingreso": 2,
+"hora_egresoReal": "2013-12-03T08:57:16",
+"hora_egreso": "2013-12-03T08:57:16",
+"fecha_Esp_act": "2013-12-03T08:57:16"
+}
+},
+{"pk": 515,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:17:16",
+"hora_fin": "2013-12-03T02:22:16",
+"espera": 2,
+"emergencia": 100
+}
+}
+,
+{"pk": 516,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T02:22:16",
+"hora_fin": "2013-12-03T08:06:16",
+"espera": 4,
+"emergencia": 100
+}
+}
+,
+{"pk": 517,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:06:16",
+"hora_fin": "2013-12-03T08:31:16",
+"espera": 6,
+"emergencia": 100
+}
+}
+,
+{"pk": 518,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:31:16",
+"hora_fin": "2013-12-03T08:42:16",
+"espera": 7,
+"emergencia": 100
+}
+}
+,
+{"pk": 519,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:42:16",
+"hora_fin": "2013-12-03T08:51:16",
+"espera": 9,
+"emergencia": 100
+}
+}
+,
+{"pk": 520,
+"model": "app_emergencia.esperaemergencia",
+"fields":
+{
+"estado": 0,
+"hora_comienzo": "2013-12-03T08:51:16",
+"hora_fin": "2013-12-03T08:57:16",
+"espera": 10,
+"emergencia": 100
+}
+}
+]
