@@ -15,50 +15,43 @@
 {% for parte in partecuerpo %} 
   {% if parte.nombre == 'CABEZA_Y_ROSTRO'%}
     <button id='{{parte.nombre}}' 
-            style='width: 120px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width120"
            onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       CABEZA&nbsp;Y&nbsp;ROSTRO
     </button>
   {% elif parte.nombre == 'EXTREMIDADES_SUPERIORES' %}
     <button id='{{parte.nombre}}' 
-            style='width: 170px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width170"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXTREMIDADES&nbsp;SUPERIORES
     </button>
   {% elif parte.nombre == 'EXTREMIDADES_INFERIORES' %}
     <button id='{{parte.nombre}}' 
-            style='width: 170px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width170"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXTREMIDADES&nbsp;INFERIORES
     </button>
   {% elif parte.nombre == 'GENITALES_MASCULINOS' and paciente.sexo == 1 %}
     <button id='{{parte.nombre}}' 
-            style='width: 145px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width140"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       GENITALES&nbsp;MASCULINOS&nbsp;
     </button>
   {% elif parte.nombre == 'GENITALES_FEMENINOS' and paciente.sexo == 2 %}
     <button id='{{parte.nombre}}' 
-            style='width: 140px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width140"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       GENITALES&nbsp;FEMENINOS
     </button>
   {% elif parte.nombre == 'EXAMEN_DE_MAMA' and paciente.sexo == 2 %}
     <button id='{{parte.nombre}}' 
-            style='width: 110px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width110"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXAMEN&nbsp;DE&nbsp;MAMA
     </button>
   {% elif parte.nombre == 'EXAMEN_RECTAL' %}
     <button id='{{parte.nombre}}' 
-            style='width: 105px'
-            class="btn btn-info btn-mini"
+            class="btn btn-info btn-mini width110"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXAMEN&nbsp;RECTAL
     </button>
