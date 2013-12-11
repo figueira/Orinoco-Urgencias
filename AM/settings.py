@@ -15,9 +15,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # 'django.db.backends.sqlite3', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'cmsb',                      # Or path to database file if using sqlite3.
+        'NAME': 'django',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'carlos',
+        'USER': 'montt',
         'PASSWORD': '',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '5432',                      # Set to empty string for default.
@@ -53,7 +53,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/home/carlos/MiniProyecto/media/'
+MEDIA_ROOT = '/home/montt/Documents/Proyecto/TDScopia/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -72,7 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/home/carlos/MiniProyecto/static/',
+    '/home/montt/Documents/Proyecto/TDScopia/static/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -112,7 +112,7 @@ ROOT_URLCONF = 'AM.urls'
 WSGI_APPLICATION = 'AM.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "/home/carlos/MiniProyecto/plantillas/",
+    "/home/montt/Documents/Proyecto/TDScopia/plantillas/",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
