@@ -61,7 +61,7 @@
 <form id="formLIST" method="post" action="">
   {% csrf_token %}
   <center>
-    <div id="report" style='height: 300px; OVERFLOW: auto;'>
+    <div id="report" class = "height300 overflow" >
       <table id="tLIST" class="table table-bordered table-hover">
         <caption>
           <p class="lead">
@@ -106,7 +106,7 @@
               </td>
               <td>
                 <center>
-                  <p style="width: 150px; height: 12px">
+                  <p class = "width150 height12" >
                     {{i.horaA}}
                   </p>
                 </center>
@@ -114,29 +114,29 @@
               <td>
                 <center>
                   {% if i.indicacion.tipo == 'dieta'%}
-                   <p style="width: 70px; height: 12px">
+                   <p class = "width60 height12" >
                      Dieta
                    </p>
                   
                   {% elif i.indicacion.tipo == 'hidrata'%}
-                    <p style="width: 70px; height: 12px">
+                    <p class = "width60 height12" >
                       Hidrataci&oacute;n
                     </p>
                   
                   {% elif i.indicacion.tipo == 'medicamento'%}
-                    <p style="width: 70px; height: 12px">
+                    <p class = "width60 height12" >
                       Medicamento
                     </p>
                   
                   {% elif i.indicacion.tipo == 'lab' or i.indicacion.tipo ==
                   'imagen' or i.indicacion.tipo == 'endoscopico' or
                   i.indicacion.tipo == 'valora' or i.indicacion.tipo == 'otros'%}
-                    <p style="width: 70px; height: 12px">
+                    <p class = "width60 height12" >
                       Diagn&oacute;stico
                     </p>
   
                   {% elif i.indicacion.tipo == 'terapeutico'%}
-                  <p style="width: 70px; height: 12px">
+                  <p class = "width60 height12" >
                     Terap&eacute;utico
                   </p>
                   {% endif %}
@@ -144,7 +144,7 @@
               </td>
               <td>
                 <center>
-                  <p style="width: 250px; height: 12px;">
+                  <p class = "width250 height12" >
                     {{i.indicacion.nombre}}
                   </p>
                 </center>
