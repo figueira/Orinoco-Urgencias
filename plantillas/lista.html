@@ -260,7 +260,7 @@
       
       {% if emergencias %}
 
-        <table class="table table-bordered" style="font-size: 22px;">
+        <table class="table table-bordered fontsize22" >
           <tr>
 
             <th><center>UBICACI&Oacute;N</center></th>
@@ -345,12 +345,18 @@
             {% else %}
               <center>NO ASIGNADO</center>
             {% endif %}
+<<<<<<< HEAD
              <a href='/emergencia/{{emergencia.id}}/daralta' 
                 rel="tooltip" 
                 data-toggle="tooltip" 
                 data-original-title="Dar de Alta">
               <img style="margin-left: 5px; width:35px; height:35px;" 
                    src="/static/img/alta.png"/>
+=======
+            
+             <a href='/emergencia/{{l.id}}/daralta' rel="tooltip" data-toggle="tooltip" data-original-title="Dar de Alta">
+              <img class = " marginleft5 width40 height40" />
+>>>>>>> css
               </a>
 
               <td>
@@ -361,6 +367,7 @@
                 </span>
               </td>
               
+<<<<<<< HEAD
               <td class='tdTriage'>
               {% if emergencia.triage != 0 %}
                 <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
@@ -395,6 +402,20 @@
                        data-original-title="Colocar en Nivel 2"/>
                 </a>
               {% endif %}
+=======
+              <td class='tdTriage'>{% if emergencia.triage != 0 %}
+                <a href="/emergencia/{{emergencia.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
+                <img src="/static/img/estados/nivel{{ emergencia.triage }}.png" class = " marginleft5 width40 height40" title="Nivel {{ emergencia.triage }}" />
+                </a>
+                {% else %}
+                <a href="/emergencia/{{emergencia.id}}/triage/calcular" rel="tooltip" data-toggle="tooltip" data-original-title="Recalcular">
+                <img src="/static/img/estados/nivel0.png" class = " marginleft5 width40 height40" title="Nivel {{ emergencia.triage }}" />
+                </a>
+                <a href="/emergencia/{{emergencia.id}}/t1"><img src="/static/img/estados/nivel1.png" class = " marginleft5 width40 height40" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 1"/></a>
+                <a href="/emergencia/{{emergencia.id}}/t2"><img src="/static/img/estados/nivel2.png" class = " marginleft5 width40 height40" rel="tooltip" data-toggle="tooltip" data-original-title="Colocar en Nivel 1"/></a>
+
+                {% endif %}
+>>>>>>> css
               </td>
 
         <td class='tdEspera boton-espera'>
@@ -474,8 +495,8 @@
 
         <td>
           <div class="progress progress-striped active">
-            <div id="barra_{{emergencia.id}}" class="" style="width:100%;">
-             <span id="tiempo_{{emergencia.id}}" style="font-size: 22px;">{{emergencia.tiempo_esperaR}}</span>
+            <div id="barra_{{emergencia.id}}" >
+             <span id="tiempo_{{emergencia.id}}" class = "fontsize22">{{emergencia.tiempo_esperaR}}</span>
             </div>
           </div>
 

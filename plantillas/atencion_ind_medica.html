@@ -67,24 +67,10 @@
     });
 </script>
 
-<style>
-  .s1 {
-    width: 57px;
-  }
-  
-  .s2 {
-    width: 70px;
-  }
-  
-  .s3 {
-    width: 120px;
-  }
-</style>
-
 <form id="formMED" method="post" action="">
   {% csrf_token %}
   <center>
-    <div id="tablaMed" style='height: 410px; OVERFLOW: auto;'>
+    <div id="tablaMed" class = "height400 overflow" >
       <table id="tabMed" class="table table-bordered">
         <caption>
           <p class="lead">
@@ -126,7 +112,7 @@
                   <input type="text" 
                          name="{{i.id}}nombre"
                          value="{{i.indicacion.nombre}}" 
-                         style="width: 100px">
+                         class = "width100" >
                 </center>
               </td>
               <td>
@@ -134,7 +120,7 @@
                   <input type="text" 
                          name="{{i.id}}dosis" 
                          value="{{i.med_Dosis}}"
-                         style="width: 50px">
+                         class = "width50" >
                 </center>
               </td>
               <td>
@@ -164,7 +150,7 @@
                   <input type="text" 
                          name="{{i.id}}frec" 
                          value="{{i.med_Frec}}"
-                         style="width: 100px">
+                         class = "width100" >
                 </center>
               </td>
               <td>
@@ -230,7 +216,7 @@
                        name="nuevaMed" 
                        value=""
                        onChange="CompruebaCampo(this)" 
-                       style="width: 100px">
+                       class = "width100" >
               </center>
             </td>
             <td id="rem2">
@@ -238,7 +224,7 @@
                 <input type="text" 
                        name="nuevaDosis" 
                        value=""
-                       style="width: 50px">
+                       class = "width50" >
               </center>
             </td>
             <td id="rem">
@@ -262,7 +248,7 @@
                 <input type="text" 
                        name="nuevaFrec" 
                        value=""
-                       style="width: 100px">
+                       class = "width100" >
               </center>
             </td>
             <td>
@@ -305,7 +291,7 @@
               </center>
             </td>
           </tr>
-          <tr id="extra" class="ultimo2" style="display: none;">
+          <tr id="extra" class="ultimo2 displayNone" >
             <td colspan="4">
               <center>
                 <label for="situacion">

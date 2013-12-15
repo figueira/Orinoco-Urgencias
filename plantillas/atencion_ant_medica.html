@@ -12,22 +12,22 @@
   <div>
     <center>
       {% if tipo_ant == 'medica' %}
-        <h4 style='color: #006699;'>
+        <h4 class = "azul" >
           Antecedentes Medicos
         </h4>
         {% elif tipo_ant == 'quirurgica' %}
-        <h4 style='color: #006699;'>
+        <h4 class = "azul" >
           Antecedentes Quirurgicos
         </h4>
       {% elif tipo_ant == 'alergia' %}
-        <h4 style='color: #006699;'>
+        <h4 class = "azul" >
           Antecedentes Alegicos
         </h4>
       {% endif %}
 
     </center>
     <center>
-      <div class="btn btn-info" style='background: rgba(0, 0, 0, 0.05)'>
+      <div class="btn btn-info fondoRojo">
         <input class="btn btn-info btn-mini" 
                type="button" 
                value="Eliminar"
@@ -55,46 +55,46 @@
     <center>
       <div id='div_de_tabla_atecedente'>
         {% if tipo_ant == 'alergia' %}
-          <table class='table table-bordered' style='width: 205px'>
+          <table class='table table-bordered width200' >
         {% else %}
-          <table class='table table-bordered' style='width: 480px'>
+          <table class='table table-bordered widht480' >
         {% endif %}
             <thead>
               <tr class='btn-info'>
-                <th style='width: 40px'>
+                <th class = "width40" >
                   <!-- <center>Elimina</center> -->
                   <center>
                     <i class="icon-trash icon-white"></i>
                   </center>
                 </th> 
                 {% if tipo_ant == 'alergia'%}
-                  <th style='width: 148px'>
+                  <th class = "width150" >
                     <center>
                       Alergeno
                     </center>
                   </th> 
                 {% else%}
-                <th style='width: 148px'>
+                <th class = "width150" >
                   <center>
                     Nombre
                   </center>
                 </th> 
                 {% endif %} 
                 {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica'%}
-                  <th style='width: 150px'>
+                  <th class = "width150" >
                     <center>
                       Fecha
                     </center>
                   </th> 
                   {% if tipo_ant == 'medica' %}
-                    <th style='width: 150px'>
+                    <th class = "width150" >
                       <center>
                         Tratamiento
                       </center>
                     </th> 
                   {%endif %}
                   {% if tipo_ant == 'quirurgica' %}
-                    <th style='width: 150px'>
+                    <th class = "width150" >
                       <center>
                         Lugar
                       </center>
@@ -119,7 +119,7 @@
                       <input type="text" 
                              name="{{i.antecedente.id}}nombre"
                              value="{{i.antecedente.nombre}}"
-                             style="width: 100px; height: 12px"
+                             class = "width100 height12" >
                       />
                       <center>
                   </td>
@@ -130,7 +130,7 @@
                                type="text"
                                name="{{i.antecedente.id}}fecha" 
                                value="{{i.fechaR}}"
-                               style="width: 100px; height: 12px"
+                               class = "width100 height12" >
                         />
                         <center>
                     </td> 
@@ -142,7 +142,7 @@
                                type="text"
                                name="{{i.antecedente.id}}atributo3"
                                value="{{i.tratamientoR}}" 
-                               style="width: 100px; height: 12px"
+                               class = "width100 height12" >
                          />
                         <center>
                     </td> 
@@ -154,7 +154,7 @@
                                type="text"
                                name="{{i.antecedente.id}}atributo3" 
                                value="{{i.lugarR}}"
-                               style="width: 100px; height: 12px">
+                               class = "width100 height12" >
                         <center>
                     </td> 
                   {% endif %}
@@ -176,7 +176,7 @@
                            name="nuevoNombre" 
                            value=""
                            onChange="CompruebaCampo(this,clonLast)"
-                           style="width: 100px; height: 12px;"
+                           class = "width100 height12" >
                     />
                     <center>
                 </td> 
@@ -186,7 +186,7 @@
                       <input type="text" 
                              name="nuevoFecha" 
                              value=""
-                             style="width: 100px; height: 12px"
+                             class = "width100 height12" >
                       />
                       <center>
                   </td>
@@ -196,7 +196,7 @@
                       <input type="text" 
                              name="nuevoAtributo3" 
                              value=""
-                             style="width: 100px; height: 12px">
+                             class = "width100 height12" >
                       <center>
                   </td> 
                 {% endif %}
