@@ -1,5 +1,8 @@
 body {
-  margin-top:65px;
+  font-size: 12px;
+  margin: 20px;
+  font-family: 'Raleway', sans-serif;
+  padding-top: 70px;
 }
 
 .footer {

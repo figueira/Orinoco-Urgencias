@@ -8,11 +8,6 @@
       {{mensaje}}
     </div>
   {% endif %}
-  <style>
-    a.espera:link,a.espera:visited,a.espera:active {
-      text-decoration: none
-    }
-  </style>
   <script>
     $(document).ready(function() {
       $("[rel='tooltip']").tooltip();
@@ -22,8 +17,7 @@
   <div class="container row">
     <div class="span12">
       {% if lista %}
-        <table class="table table-bordered table-striped"
-          style="font-size: 22px;">
+        <table class="table table-bordered table-striped fontsize22" >
           <tr>
             <th>N&uacute;mero</th>
             <th>Nombre</th>
@@ -55,7 +49,7 @@
                      data-toggle="tooltip"
                      data-original-title="Ingresar a Emergencias"> 
                     <img src="/static/img/acceso.png"
-                         style="margin-left: 5px; width: 35px; height: 35px;" />
+                         class = " marginleft5 width40 height40" />
                   </a>
                 </center>
               </td>

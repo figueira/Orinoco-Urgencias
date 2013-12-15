@@ -20,17 +20,6 @@
   </div>
 {% endif %}
 
-<style>
-  form#formIND ul {
-    list-style: none
-  }
-  
-  #formIND {
-    margin-left: 26%;
-    width: 51%;
-  }
-</style>
-
 <script>
   function envia1(pag){
       var formu = $('#formIND').serialize();
@@ -78,7 +67,7 @@
               var val = $(this).attr('value');
               var ch = $('#'+id).is(':checked');
               if (ch == true) {
-                  $(this).parents("label").after("<label id='nuevo_"+id+"'"+"'for='id_Otros' style='font-weight: bold;'>Parte Cuerpo: <input id='id_Otros' maxlength='200' name='c_"+val+"'"+"' type='text'></label>");
+                  $(this).parents("label").after("<label id='nuevo_"+id+"'"+"'for='id_Otros' class = fontWeightBold>Parte Cuerpo: <input id='id_Otros' maxlength='200' name='c_"+val+"'"+"' type='text'></label>");
               }
               else{
                   $('#nuevo_'+id).remove();
@@ -99,7 +88,7 @@
       <!-- Horizontal -->
       <center>
         <div id="tablaHID"
-          style='height: 410px; width: 445px; OVERFLOW: auto;'>
+          class = "height400 width440 overflow" >
           <table>
             <tr>
               <td>
@@ -189,9 +178,7 @@
       <legend>Indicaciones de Laboratorio</legend>
     </center>
     <div id="listaLAB"
-         style='height: 350px; 
-         width: 445px; 
-         OVERFLOW: auto;'>
+         class = "height350 width440 overflow" >
       {{form.as_p }}
     </div>
     {% endif %} 
