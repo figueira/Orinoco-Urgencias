@@ -131,8 +131,7 @@ class Emergencia(models.Model):
     esperas_asignadas = self.esperas_asignadas()
     esperas_no_asignadas = list(Espera.objects.all())
     for espera_emergencia in esperas_asignadas:
-      if(espera_emergencia.hora_fin == None):
-        esperas_no_asignadas.remove(espera_emergencia.espera)
+      esperas_no_asignadas.remove(espera_emergencia.espera)
 
     return esperas_no_asignadas
 
