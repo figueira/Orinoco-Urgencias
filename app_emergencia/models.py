@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.db import models
+from django.db.models import Q
 from app_paciente.models import *
 from app_usuario.models import * 
 from app_enfermedad.models import * 
@@ -116,6 +117,7 @@ class Emergencia(models.Model):
   def esperas_asignadas(self):
     esperas_emergencia = EsperaEmergencia.objects.filter(
                            emergencia = self,
+                           hora_fin = None
                          )
     return esperas_emergencia
 
