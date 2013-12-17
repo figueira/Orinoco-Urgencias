@@ -43,6 +43,44 @@
         });*/
       }
 
+      // Mueve la causa de espera asignada a la lista correspondiente de causas
+      // no asignadas
+      function mover_a_no_asignada(espera_asignada){
+        var id_espera = espera_asignada.data('id-espera');
+        var no_asignadas = espera_asignada.closest('.tabla-esperas')
+                                          .find('.esperas-no-asignadas')
+                                          .first();
+        var item_lista = $('<li></li>');
+        item_lista.addClass('espera-no-asignada');
+        item_lista.attr('data-id-espera', id_espera);
+        no_asignadas.append(item_lista);
+        
+        // Colocar el logo para eliminar la causa
+        var menos = $('<img> </img>');
+        menos.attr('src', '/static/img/Atencion/masim.png');
+        menos.addClass('espera-mas');
+        item_lista.append(menos);
+
+        // Colocar la imagen de la causa de espera
+        var imagen_espera = espera_asignada.children('.imagen-espera-lista')
+                                           .first();
+        item_lista.append(imagen_espera);
+
+        // Colocar la causa de espera
+        item_lista.append(espera_asignada.text());
+
+        // Eliminar la imagen de la causa de espera del td
+        imagen_td = espera_asignada.closest('.causas-espera')
+                                   .siblings('.imagenes-causas-espera')
+                                   .children('[data-id-espera=' + 
+                                             id_espera + ']')
+                                   .first();
+        imagen_td.remove();
+
+        // Eliminar el elemento
+        espera_asignada.remove()
+      }
+
       $(document).ready(function(){
         // Evento que oculta el panel de causas de espera cuando se hace click
         // fuera de el
@@ -86,8 +124,8 @@
           // guardar este cambio
           $.getJSON('/emergencia/' + id_emergencia + '/agregar_espera/' + 
                     id_espera, '', function(id_retorno){
-            var asignadas = mas_activado.closest('.causas-espera')
-                                         .children('.esperas-asignadas')
+            var asignadas = mas_activado.closest('.tabla-esperas')
+                                         .find('.esperas-asignadas')
                                          .first();
             var item_lista = $('<li></li>');
             item_lista.addClass('espera-asignada');
@@ -146,39 +184,7 @@
           // Hacer peticion a la base de datos para eliminar la causa de espera
           $.get('/emergencia/eliminar_espera_emergencia/' + 
                 id_espera_emergencia, function(){
-            var id_espera = menos_activado.parent().data('id-espera');
-            var no_asignadas = menos_activado.closest('.causas-espera')
-                                             .children('.esperas-no-asignadas')
-                                             .first();
-            var item_lista = $('<li></li>');
-            item_lista.addClass('espera-no-asignada');
-            item_lista.attr('data-id-espera', id_espera);
-            no_asignadas.append(item_lista);
-            
-            // Colocar el logo para eliminar la causa
-            var menos = $('<img> </img>');
-            menos.attr('src', '/static/img/Atencion/masim.png');
-            menos.addClass('espera-mas');
-            item_lista.append(menos);
-
-            // Colocar la imagen de la causa de espera
-            var imagen_espera = menos_activado.siblings('.imagen-espera-lista')
-                                              .first();
-            item_lista.append(imagen_espera);
-
-            // Colocar la causa de espera
-            item_lista.append(menos_activado.parent().text());
-
-            // Eliminar la imagen de la causa de espera del td
-            imagen_td = menos_activado.closest('.causas-espera')
-                                        .siblings('.imagenes-causas-espera')
-                                        .children('[data-id-espera=' + 
-                                                  id_espera + ']')
-                                        .first();
-            imagen_td.remove();
-
-            // Eliminar el elemento
-            menos_activado.parent().remove()
+            mover_a_no_asignada(menos_activado.parent())
           });
         });
 
@@ -186,12 +192,8 @@
         // como finalizada
         $('.esperas-asignadas').on('click', '.espera-atendida', function(){
           var checkbox_activado = $(this);
-          console.log(checkbox_activado.attr('checked'))
-          if(checkbox_activado.is(':checked')){
-            if(!confirm('¿Está seguro que desea marcar esta causa como ' +
-                        'atendida? Esta acción no es reversible')){
-              return false;
-            }
+          if(confirm('¿Está seguro que desea marcar esta causa como ' +
+                      'atendida? Esta acción no es reversible')){
             var id_espera_emergencia = checkbox_activado
                                        .parent()
                                        .data('id-espera-emergencia');
@@ -199,45 +201,8 @@
             // Hacer peticion a la base de datos para finalizar la espera
             $.get('/emergencia/espera_finalizada/' + id_espera_emergencia, 
                   function(){
-              // Si se finalizo la espera con exito, devolver la causa a la
-              // lista de esperas por asignar
-              var id_espera = checkbox_activado.parent().data('id-espera');
-              var no_asignadas = checkbox_activado
-                                 .closest('.causas-espera')
-                                 .children('.esperas-no-asignadas')
-                                 .first();
-              var item_lista = $('<li></li>');
-              item_lista.addClass('espera-no-asignada');
-              item_lista.attr('data-id-espera', id_espera);
-              no_asignadas.append(item_lista);
-              
-              // Colocar el logo para eliminar la causa
-              var menos = $('<img> </img>');
-              menos.attr('src', '/static/img/Atencion/masim.png');
-              menos.addClass('espera-mas');
-              item_lista.append(menos);
-
-              // Colocar la imagen de la causa de espera
-              var imagen_espera = checkbox_activado
-                                  .siblings('.imagen-espera-lista')
-                                  .first()
-                                  .clone();
-              item_lista.append(imagen_espera);
-
-              // Colocar la causa de espera
-              item_lista.append(checkbox_activado.parent().text());
-
-              // Eliminar la imagen de la causa de espera del td
-              imagen_td = checkbox_activado.closest('.causas-espera')
-                                           .siblings('.imagenes-causas-espera')
-                                           .children('[data-id-espera=' + 
-                                                     id_espera + ']')
-                                           .first();
-              imagen_td.remove();
+              mover_a_no_asignada(checkbox_activado.parent())
             });
-          } else {
-            // Mantener el checkbox siempre marcado
-            return false;
           }
         });
 
@@ -427,8 +392,8 @@
                 <th> Causas asignadas </th>
               </tr>
               <tr >
-                <td class="columna-esperas esperas-no-asignadas">
-                  <ul>
+                <td class="columna-esperas">
+                  <ul class="esperas-no-asignadas">
                     {% for espera in emergencia.esperas_no_asignadas %}
                       <li class='espera-no-asignada'
                           data-id-espera='{{ espera.id }}'>
@@ -443,8 +408,8 @@
                   </ul>
                 </td>
 
-                <td class="columna-esperas esperas-asignadas">
-                  <ul>
+                <td class="columna-esperas">
+                  <ul class="esperas-asignadas">
                     {% for espera_emergencia in emergencia.esperas_asignadas %}
                       <li class='espera-asignada'
                           data-id-espera='{{ espera_emergencia.espera.id }}'
