@@ -374,14 +374,6 @@
                      title="Nivel {{ emergencia.triage }}"/>
                 </a>
               {% else %}
-                <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
-                   rel="tooltip" 
-                   data-toggle="tooltip" 
-                   data-original-title="Recalcular">
-                  <img src="/static/img/estados/nivel0.png" 
-                       class = " marginleft5 width40 height40" 
-                       title="Nivel {{ emergencia.triage }}"/>
-                </a>
                 <a href="/emergencia/{{emergencia.id}}/t1">
                   <img src="/static/img/estados/nivel1.png" 
                        class = " marginleft5 width40 height40" 
@@ -395,6 +387,14 @@
                        rel="tooltip" 
                        data-toggle="tooltip" 
                        data-original-title="Colocar en Nivel 2"/>
+                </a>
+                <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
+                   rel="tooltip" 
+                   data-toggle="tooltip" 
+                   data-original-title="Calcular">
+                  <img src="/static/img/estados/nivel0.png" 
+                       class = " marginleft5 width40 height40" 
+                       title="Nivel {{ emergencia.triage }}"/>
                 </a>
               {% endif %}
               </td>
@@ -413,64 +413,66 @@
             {% endfor %}
           </div>
           
-<!-- Esto es necesario para que el dropdown siempre salga dentro del td, a causa
-     de la flecha que se coloca sobre la caja -->
-          <br />
-          <br />
-
           <div class="causas-espera caja-dialogo">
             <p class='titulo-esperas'>
-              Lista de esperas
-              <button class='btn btn-small btn-primary'>
+              <button class='btn btn-small btn-primary boton-mantener'>
 <!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
                 Mantener
               </button>
             </p>
 
-            <hr />
+            <table class="tabla-esperas">
+              <tr>
+                <th> Causas no asignadas </th>
+                <th> Causas asignadas </th>
+              </tr>
+              <tr >
+                <td class="columna-espera">
+                  <ul class="esperas-no-asignadas">
+                    {% for espera in emergencia.esperas_no_asignadas %}
+                      <li class='espera-no-asignada'
+                          data-id-espera='{{ espera.id }}'>
+                        <img class='espera-mas'
+                             src='/static/img/Atencion/masim.png' />
+                        <img class="imagen-espera-lista" 
+                             data-id-espera='{{ espera.id }}'
+                             src="/static/img/esperas/espera_{{ espera.id }}.png"/>
+                        {{ espera.nombre }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </td>
 
-            <ul class='esperas-asignadas'>
-              {% for espera_emergencia in emergencia.esperas_asignadas %}
-                <li class='espera-asignada'
-                    data-id-espera='{{ espera_emergencia.espera.id }}'
-                    data-id-espera-emergencia='{{ espera_emergencia.id }}'>
-                  <img class='espera-menos'
-                       src='/static/img/Atencion/menosim.png' />
-                  {% if espera_emergencia.hora_fin == None %}
-                    <input class='espera-atendida' 
-                           type='checkbox' />
-                  {% else %}
-                    <input class='espera-atendida'
-                           type='checkbox'
-                           checked='checked' />
-                  {% endif %}
+                <td class="columna-espera">
+                  <ul class='esperas-asignadas'>
+                    {% for espera_emergencia in emergencia.esperas_asignadas %}
+                      <li class='espera-asignada'
+                          data-id-espera='{{ espera_emergencia.espera.id }}'
+                          data-id-espera-emergencia='{{ espera_emergencia.id }}'>
+                        <img class='espera-menos'
+                             src='/static/img/Atencion/menosim.png' />
+                        {% if espera_emergencia.hora_fin == None %}
+                          <input class='espera-atendida' 
+                                 type='checkbox' />
+                        {% else %}
+                          <input class='espera-atendida'
+                                 type='checkbox'
+                                 checked='checked' />
+                        {% endif %}
 
-                  <img 
-                    class='imagen-espera-lista'
-                    data-id-espera='{{ espera_emergencia.espera.id }}'
-                    src=
-                      '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
-                  />
-                  {{ espera_emergencia.espera.nombre }}
-                </li>
-              {% endfor %}
-            </ul>
-
-            <hr />
-
-            <ul class="esperas-no-asignadas">
-              {% for espera in emergencia.esperas_no_asignadas %}
-                <li class='espera-no-asignada'
-                    data-id-espera='{{ espera.id }}'>
-                  <img class='espera-mas'
-                       src='/static/img/Atencion/masim.png' />
-                  <img class="imagen-espera-lista" 
-                       data-id-espera='{{ espera.id }}'
-                       src="/static/img/esperas/espera_{{ espera.id }}.png"/>
-                  {{ espera.nombre }}
-                </li>
-              {% endfor %}
-            </ul>
+                        <img 
+                          class='imagen-espera-lista'
+                          data-id-espera='{{ espera_emergencia.espera.id }}'
+                          src=
+                            '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                        />
+                        {{ espera_emergencia.espera.nombre }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+            </table>
           </div>
         </td>
 
@@ -482,8 +484,8 @@
           </div>
 
         </td>
-            </tr> 
-          {% endfor %}
+        </tr> 
+        {% endfor %}
 
         </table>
         
