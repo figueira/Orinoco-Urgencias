@@ -21,6 +21,10 @@ span.espera:link, span.espera:visited, span.espera:active
 {
   cursor:pointer;
 }
+
+.boton-mantener{
+  float: right;
+}
 .causas-espera
 {
   background-color: white;
@@ -28,6 +32,7 @@ span.espera:link, span.espera:visited, span.espera:active
   border-radius: 10px;
   display: none;
   font-size: 18px;
+  margin-top: 50px;
   position: absolute;
   z-index: 1;
 }
@@ -54,19 +59,30 @@ span.espera:link, span.espera:visited, span.espera:active
   border-color: rgba(255, 255, 255, 0); 
   border-bottom-color: #ffffff; 
   border-width: 20px; 
-  margin-left: -20px; 
+  margin-left: -150px; 
 } 
 
 .caja-dialogo:before {
   border-color: rgba(0, 0, 0, 0); 
   border-bottom-color: #000000; 
-  border-width: 23px; margin-left: -23px; 
+  border-width: 23px; margin-left: -153px; 
 }
 /* Fin de la definicion de la caja */
+
+.columna-espera{
+  width: 300px;
+}
+
+.fila-emergencia{
+}
 
 .imagen-espera-lista
 {
   padding: 0 5px 0 10px;
+}
+
+.tabla-esperas{
+  margin-top: 30px;
 }
 
 .titulo-esperas
