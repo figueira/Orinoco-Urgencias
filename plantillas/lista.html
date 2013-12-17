@@ -138,13 +138,15 @@
           }
           // Construir el elemento a agregar a la lista de causas no asignadas
           var menos_activado = $(this)
-          var id_espera = menos_activado.parent().data('id-espera');
+          var id_espera_emergencia = menos_activado.parent()
+                                                   .data('id-espera-emergencia');
           var id_emergencia = menos_activado.closest('.fila-emergencia')
                                             .data('id-emergencia');
 
           // Hacer peticion a la base de datos para eliminar la causa de espera
-          $.get('/emergencia/' + id_emergencia + '/eliminar_espera/' + 
-                id_espera, function(){
+          $.get('/emergencia/eliminar_espera_emergencia/' + 
+                id_espera_emergencia, function(){
+            var id_espera = menos_activado.parent().data('id-espera');
             var no_asignadas = menos_activado.closest('.causas-espera')
                                              .children('.esperas-no-asignadas')
                                              .first();

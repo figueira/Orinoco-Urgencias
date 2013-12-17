@@ -7,7 +7,7 @@ urlpatterns = patterns('app_emergencia.views',
     #Acesso a esperas
     url('^emergencia/espera_mantener/(?P<id_emergencia>.*)$','emergencia_espera_mantener'),
     url('^emergencia/(?P<id_emergencia>\d+)/agregar_espera/(?P<id_espera>\d+)$','emergencia_agregar_espera'),
-    url('^emergencia/(?P<id_emergencia>.*)/eliminar_espera/(?P<id_espera>.*)$','emergencia_eliminar_espera'),
+    url('^emergencia/eliminar_espera_emergencia/(?P<id_espera_emergencia>.*)$','emergencia_eliminar_espera_emergencia'),
     url('^emergencia/espera_estado/(?P<id_emergencia>.*)/(?P<id_espera>.*)/(?P<espera>.*)$','emergencia_espera_estado'),
     url('^emergencia/espera_finalizada/(?P<id_espera_emergencia>.*)$','emergencia_espera_finalizada'),
     url('^emergencia/espera_asignadasCheck/(?P<id_emergencia>.*)$','emergencia_espera_asignadasCheck'),

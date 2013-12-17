@@ -690,13 +690,12 @@ def emergencia_agregar_espera(request, id_emergencia, id_espera):
     return HttpResponse(json.dumps(espera_emergencia.id),
                         content_type='application/json')
 
-def emergencia_eliminar_espera(request, id_emergencia, id_espera):
-    emergencia = get_object_or_404(Emergencia, id = id_emergencia)
+def emergencia_eliminar_espera_emergencia(request, id_espera_emergencia):
+    espera_emergencia = get_object_or_404(EsperaEmergencia,
+                                          id = id_espera_emergencia)
+    emergencia = espera_emergencia.emergencia
     emergencia.fecha_Esp_act = datetime.now()
     emergencia.save()
-    espera = get_object_or_404(Espera, id = id_espera)
-    espera_emergencia = EsperaEmergencia.objects.get(emergencia = emergencia, 
-                                                     espera = espera)
     espera_emergencia.delete() 
     return HttpResponse()
 
