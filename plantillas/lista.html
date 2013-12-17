@@ -38,9 +38,9 @@
       {% endif %}
 
       function manito(emer){
-        $(function() {
+/*        $(function() {
           $(this).hover("cursor", "hand");
-        });
+        });*/
       }
 
       $(document).ready(function(){
@@ -427,8 +427,8 @@
                 <th> Causas asignadas </th>
               </tr>
               <tr >
-                <td class="columna-espera">
-                  <ul class="esperas-no-asignadas">
+                <td class="columna-esperas esperas-no-asignadas">
+                  <ul>
                     {% for espera in emergencia.esperas_no_asignadas %}
                       <li class='espera-no-asignada'
                           data-id-espera='{{ espera.id }}'>
@@ -443,23 +443,16 @@
                   </ul>
                 </td>
 
-                <td class="columna-espera">
-                  <ul class='esperas-asignadas'>
+                <td class="columna-esperas esperas-asignadas">
+                  <ul>
                     {% for espera_emergencia in emergencia.esperas_asignadas %}
                       <li class='espera-asignada'
                           data-id-espera='{{ espera_emergencia.espera.id }}'
                           data-id-espera-emergencia='{{ espera_emergencia.id }}'>
                         <img class='espera-menos'
                              src='/static/img/Atencion/menosim.png' />
-                        {% if espera_emergencia.hora_fin == None %}
-                          <input class='espera-atendida' 
-                                 type='checkbox' />
-                        {% else %}
-                          <input class='espera-atendida'
-                                 type='checkbox'
-                                 checked='checked' />
-                        {% endif %}
-
+                        <input class='espera-atendida' 
+                               type='checkbox' />
                         <img 
                           class='imagen-espera-lista'
                           data-id-espera='{{ espera_emergencia.espera.id }}'
