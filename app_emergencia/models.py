@@ -70,6 +70,7 @@ EDOLOR = (
 class AreaEmergencia(models.Model):
   tipo   = models.CharField(max_length=1,choices=AEMERGENCIA)
   nombre = models.CharField(max_length=48)
+
   def __unicode__(self):
     return "%s" % self.nombre
 
@@ -81,8 +82,13 @@ class AreaAdmision(models.Model):
 class Cubiculo(models.Model):
   nombre = models.CharField(max_length=48)
   area   = models.ForeignKey(AreaEmergencia)
+
   def __unicode__(self):
     return "%s" % self.nombre
+
+  def esta_asignado(self):
+    asignaciones = AsignarCub.objects.filter(cubiculo_id = self.id)
+    return asignaciones.count() > 0
 
 class Destino(models.Model):
   nombre = models.CharField(max_length=48)
@@ -162,9 +168,11 @@ class Emergencia(models.Model):
     if len(atenciones) > 0:
       atendido = True
     return atendido
+
   def atenciones(self):
     atenciones = Atencion.objects.filter(emergencia=self.id).order_by("fechaReal")
     return atenciones
+
   def horaR(self):
     return self.hora_ingreso.strftime("%H:%M del %d/%m/%y")
     

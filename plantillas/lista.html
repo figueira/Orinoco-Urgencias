@@ -232,7 +232,6 @@
 
         <table class="table table-bordered fontsize22" >
           <tr>
-
             <th><center>UBICACI&Oacute;N</center></th>
             <th><center>PACIENTE</center></th>
             <th><center>NIVEL DE TRIAGE</center></th>
@@ -240,8 +239,8 @@
             <th>
               <center>TIEMPO DE ATENCI&Oacute;N</center>
             </th>
-
           </tr>
+
           {% for emergencia in emergencias %}
             <tr id ="emergencia_{{emergencia.id}}" 
                 class="fila-emergencia" 
@@ -252,53 +251,28 @@
                     <div class="cubi" 
                          id="cubDir_{{emergencia.id}}" 
                          onclick="actualizar('{{emergencia.id}}')">
-                    <center>
-                      {{emergencia.cubi}}
-                    </center>
+                      <center>
+                        {{ emergencia.cubi }}
+                      </center>
                     </div>
-                    <div id="formCub">
-                    <center>
-                    <form id="formCubi" 
-                          method="post" 
-                          action=
-                            "/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
-                      {% csrf_token %}
-                      <select id="{{emergencia.id}}cub" 
-                              name="{{emergencia.id}}cub" 
-                              class="s1">
-                          <option value="nada">--</option>
+                  {% endif %}
 
-                          <!--Se imprime la lista de cubiculos   -->
-                          
-                        {% for c in cubiculos %}
-                          <option value="{{c.nombre}}">{{c.nombre}}</option>
-                        {% endfor %}
-                        </select>
-                        <button class="btn btn-mini btn-primary" 
-                                onClick="enviaA('{{emergencia.id}}')" 
-                                rel="tooltip" 
-                                data-toggle="tooltip" 
-                                data-original-title="Guardar">
-                          <i class="icon-plus-sign icon-white"></i>
-                        </button>
-                      </form>
-                  </center>
-                  </div>
-                {% else %}
                   <div id="formCub">
                     <center>
-                      <form id="formCubi" 
-                            method="post" 
-                            action=
-                              "/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
+                      <form 
+                        id="formCubi" 
+                        method="post" 
+                        action=
+                          "/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
                         {% csrf_token %}
-                        <select id="{{l.id}}cub" name="{{l.id}}cub" class="s1">
-                          <option value="nada">--</option>
+                        <select name="id_cubiculo"
+                                class="s1">
+                          <option value="">--</option>
 
                           <!--Se imprime la lista de cubiculos   -->
                           
                           {% for c in cubiculos %}
-                            <option value="{{c.nombre}}">{{c.nombre}}</option>
+                            <option value="{{ c.id }}">{{ c.nombre }}</option>
                           {% endfor %}
                         </select>
                         <button class="btn btn-mini btn-primary" 
@@ -310,18 +284,18 @@
                         </button>
                       </form>
                     </center>
-                </div>
-              {% endif %}
-            {% else %}
-              <center>NO ASIGNADO</center>
-            {% endif %}
-             <a href='/emergencia/{{emergencia.id}}/daralta' 
-                rel="tooltip" 
-                data-toggle="tooltip" 
-                data-original-title="Dar de Alta">
-              <img class = " marginleft5 width40 height40" 
-                   src="/static/img/alta.png"/>
-              </a>
+                  </div>
+                {% else %}
+                  <center>SIN TRIAGE</center>
+                {% endif %}
+                <a href='/emergencia/{{emergencia.id}}/daralta' 
+                   rel="tooltip" 
+                   data-toggle="tooltip" 
+                   data-original-title="Dar de Alta">
+                  <img class = " marginleft5 width40 height40" 
+                       src="/static/img/alta.png"/>
+                </a>
+              </td>
 
               <td>
                 <span class="nombreLista">
@@ -436,8 +410,10 @@
 
         <td>
           <div class="progress progress-striped active">
-            <div id="barra_{{emergencia.id}}" >
-             <span id="tiempo_{{emergencia.id}}" class = "fontsize22">{{emergencia.tiempo_esperaR}}</span>
+            <div id="barra_{{ emergencia.id }}" >
+              <span id="tiempo_{{ emergencia.id }}" class = "fontsize22">
+                {{ emergencia.tiempo_esperaR }}
+              </span>
             </div>
           </div>
 
