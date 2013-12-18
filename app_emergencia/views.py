@@ -756,47 +756,43 @@ def emergencia_espera_finalizada(request,id_espera_emergencia):
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_guardar_cubi(request,id_emergencia,accion):
-    emer = get_object_or_404(Emergencia,id=id_emergencia)
-    cubi  = request.POST[str(emer.id)+"cub"]
-    if cubi == "egreso":
-        form = darAlta()
-        info = {'form':form,'emergencia':emer}
-        return render_to_response('darAlta.html',info,context_instance=RequestContext(request))    
+  emergencia = get_object_or_404(Emergencia, id = id_emergencia)
+  cubiculo  = get_object_or_404(Cubiculo, id = request.POST['id_cubiculo'])
 
-    asic = Cubiculo.objects.filter(asignarcub__cubiculo__nombre = cubi)
-    if asic:
-        mensaje = "El cubiculo "+cubi+" esta asignado a otro paciente"
-        return emergencia_listar_atencion(request, mensaje)
+  if cubiculo.esta_asignado():
+    mensaje = "El cubiculo " + cubiculo.nombre + " esta asignado a otro paciente"
+  else:
+    tiene_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
+                                       .count() > 0
+    if not tiene_cubiculo:
+      emergencia.fecha_Esp_act = datetime.now()
+      emergencia.save()
+
+      # Actualizar la causa de espera por ubicacion
+      espera = get_object_or_404(Espera, nombre = 'Ubicacion')
+      espera_emergencia = EsperaEmergencia.objects \
+                                          .filter(espera = espera,
+                                                  emergencia = emergencia) \
+                                          .update(estado = "1")
+
+      triage = Triage.objects.filter(emergencia = id_emergencia) \
+                             .order_by("-fechaReal")
+      triage = triage[0]
+
+      atencion = Atencion.objects.create(emergencia = emergencia,
+                                         medico = emergencia.responsable,
+                                         fecha = datetime.now(),
+                                         fechaReal = datetime.now(),
+                                         area_atencion = triage.areaAtencion.id)
+
+      asignacion_cubiculo = AsignarCub.objects.create(emergencia = emergencia,
+                                                      cubiculo = cubiculo)
+      mensaje = "Cubiculo " + cubiculo.nombre + " asignado exitosamente"
     else:
-        if accion=='guardar':
-
-            emer.fecha_Esp_act = datetime.now()
-            emer.save()
-            espe               = get_object_or_404(Espera,nombre='Ubicacion')
-            espera1            = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
-            espera1.estado     = "1"
-            espera1.save()
-            triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
-            triage = triage[0]
-
-            atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
-            atencion.save()
-
-            mensaje = "Cubiculo "+cubi+" asignado Exitosamente"
-            cubN  = Cubiculo.objects.get(nombre = cubi)
-            asigC = AsignarCub(emergencia=emer,cubiculo=cubN)
-            asigC.save()
-            return emergencia_listar_atencion(request, mensaje)
-        else:
-            mensaje = "Cubiculo "+cubi+" actualizado Exitosamente"
-            cubN  = Cubiculo.objects.get(nombre = cubi)
-            asigCA  = AsignarCub.objects.get(emergencia = emer)
-            asigCA.cubiculo = cubN
-            asigCA.save()
-            return emergencia_listar_atencion(request, mensaje)
-
-
-
+      mensaje = "Cubiculo " + cubiculo.nombre + " actualizado exitosamente"
+      asignacion_cubiculo = AsignarCub.objects.get(emergencia = emergencia) \
+                                              .update(cubiculo = cubiculo)
+  return emergencia_listar_atencion(request, mensaje)
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_tiene_cubiculo(request,id_emergencia):
