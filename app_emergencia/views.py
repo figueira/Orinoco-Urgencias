@@ -188,17 +188,20 @@ def emergencia_listar_atencion(request,mensaje):
     info = {'emergencias': lista, 'form': form, 'titulo': titulo, 'mensaje': mensaje}
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
-def emergencia_listar_observacion(request):
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+def emergencia_listar_observacion(request, mensaje = ''):
+    lista = Emergencia.objects.filter(hora_egreso = None).order_by('hora_ingreso')
     lista = [i for i in lista if i.atendido() == True and i.triage() <= 3]
     form = IniciarSesionForm()
-    titulo = "Observacion"
+    titulo = "Observación"
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista,
             'form': form,
             'titulo': titulo,
-            'cubiculos': cubiculos}
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+            'cubiculos': cubiculos,
+            'mensaje': mensaje}
+    return render_to_response('lista.html',
+                              info,
+                              context_instance = RequestContext(request))
 
 def emergencia_listar_ambulatoria(request):
     lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
@@ -773,7 +776,7 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
       espera_emergencia = EsperaEmergencia.objects \
                                           .filter(espera = espera,
                                                   emergencia = emergencia) \
-                                          .update(estado = "1")
+                                          .update(hora_fin = datetime.now())
 
       triage = Triage.objects.filter(emergencia = id_emergencia) \
                              .order_by("-fechaReal")
@@ -790,9 +793,9 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
       mensaje = "Cubiculo " + cubiculo.nombre + " asignado exitosamente"
     else:
       mensaje = "Cubiculo " + cubiculo.nombre + " actualizado exitosamente"
-      asignacion_cubiculo = AsignarCub.objects.get(emergencia = emergencia) \
+      asignacion_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                               .update(cubiculo = cubiculo)
-  return emergencia_listar_atencion(request, mensaje)
+  return emergencia_listar_observacion(request, mensaje)
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_tiene_cubiculo(request,id_emergencia):
