@@ -371,12 +371,10 @@
           <div class='imagenes-causas-espera'>
             {% for espera_emergencia in emergencia.esperas_asignadas %}
               {% if espera_emergencia.hora_fin == None %}
-                <img 
-                  class='imagen-espera-td'
-                  data-id-espera='{{ espera_emergencia.espera.id }}'
-                  src=
-                    '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
-                   />
+                <img class='imagen-espera-td'
+                     data-id-espera='{{ espera_emergencia.espera.id }}'
+                     src={{ espera_emergencia.espera.url_imagen }}
+                />
               {% endif %}
             {% endfor %}
           </div>
@@ -404,7 +402,8 @@
                              src='/static/img/Atencion/masim.png' />
                         <img class="imagen-espera-lista" 
                              data-id-espera='{{ espera.id }}'
-                             src="/static/img/esperas/espera_{{ espera.id }}.png"/>
+                             src={{ espera.url_imagen }}
+                        />
                         {{ espera.nombre }}
                       </li>
                     {% endfor %}
@@ -421,11 +420,9 @@
                              src='/static/img/Atencion/menosim.png' />
                         <input class='espera-atendida' 
                                type='checkbox' />
-                        <img 
-                          class='imagen-espera-lista'
-                          data-id-espera='{{ espera_emergencia.espera.id }}'
-                          src=
-                            '/static/img/esperas/espera_{{ espera_emergencia.espera.id }}.png'
+                        <img class='imagen-espera-lista'
+                             data-id-espera='{{ espera_emergencia.espera.id }}'
+                             src={{ espera_emergencia.espera.url_imagen }}
                         />
                         {{ espera_emergencia.espera.nombre }}
                       </li>

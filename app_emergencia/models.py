@@ -265,6 +265,10 @@ class Espera(models.Model):
   def __unicode__(self):
     return "%s" % self.nombre
 
+  # Retorna la ruta a la imagen que corresponde a la espera
+  def url_imagen(self):
+    return '/static/img/esperas/espera_' + str(self.id) + '.png'
+
   # Retorna una reresentacion del objeto en froma de diccionario, para que 
   # pueda ser fácilmente convertido a JSON
   def json_dict(self):
