@@ -258,8 +258,7 @@ class Emergencia(models.Model):
     if result:
       return "%s" %(result[0].cubiculo)
     else: 
-      return "%s" % ("")
-
+      return "%s" % ("NO ASIGNADO")
 
 class AsignarCub(models.Model):
   emergencia = models.ForeignKey(Emergencia)

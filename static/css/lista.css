@@ -32,7 +32,7 @@ span.espera:link, span.espera:visited, span.espera:active
   border-radius: 10px;
   display: none;
   font-size: 18px;
-  margin: 50px 0 0 0;
+  margin: 40px 0 0 0;
   position: absolute;
   z-index: 1;
 }
@@ -59,13 +59,13 @@ span.espera:link, span.espera:visited, span.espera:active
   border-color: rgba(255, 255, 255, 0); 
   border-bottom-color: #ffffff; 
   border-width: 20px; 
-  margin-left: -150px; 
+  margin-left: -230px; 
 } 
 
 .caja-dialogo:before {
   border-color: rgba(0, 0, 0, 0); 
   border-bottom-color: #000000; 
-  border-width: 23px; margin-left: -153px; 
+  border-width: 23px; margin-left: -233px; 
 }
 /* Fin de la definicion de la caja */
 

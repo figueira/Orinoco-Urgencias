@@ -210,15 +210,24 @@
         });
 
         // Especialmente para Firefox, se deben asignar las propiedades
-        // correctas a los checkbox
-        $('.espera-atendida').each(function(i, checkbox){
-          checkbox = $(checkbox)
+        // correctas a los checkbox y los option
+        $('.espera-atendida').each(function(){
+          checkbox = $(this)
           if(checkbox.attr('checked') == 'checked'){
             checkbox.prop('checked', 'checked')
           } else {
             checkbox.removeProp('checked')
           }
         });
+        $('option').each(function(){
+          option = $(this);
+          if(option.attr('selected') == 'selected'){
+            option.prop('selected', 'selected')
+          }else{
+            option.removeProp('selected')
+          }
+        })
+
         $(".formCubA").css("display","none");
         $("[rel='tooltip']").tooltip();
         $(".tit_list").html("{{titulo}}")
@@ -239,6 +248,8 @@
             <th>
               <center>TIEMPO DE ATENCI&Oacute;N</center>
             </th>
+            <th>
+            </th>
           </tr>
 
           {% for emergencia in emergencias %}
@@ -247,16 +258,6 @@
                 data-id-emergencia='{{ emergencia.id }}'>
               <td>
                 {% if emergencia.triage != 0 %}
-                  {% if emergencia.cubi != '' %}
-                    <div class="cubi" 
-                         id="cubDir_{{emergencia.id}}" 
-                         onclick="actualizar('{{emergencia.id}}')">
-                      <center>
-                        {{ emergencia.cubi }}
-                      </center>
-                    </div>
-                  {% endif %}
-
                   <div id="formCub">
                     <center>
                       <form 
@@ -272,14 +273,22 @@
                           <!--Se imprime la lista de cubiculos   -->
                           
                           {% for c in cubiculos %}
-                            <option value="{{ c.id }}">{{ c.nombre }}</option>
+                            {% if c.nombre == emergencia.cubi %}
+                              <option value="{{ c.id }}" selected='selected'>
+                                {{ c.nombre }}
+                              </option>
+                            {% else %}
+                              <option value="{{ c.id }}">
+                                {{ c.nombre }} 
+                              </option>
+                            {% endif %}
                           {% endfor %}
                         </select>
                         <button class="btn btn-mini btn-primary" 
                                 onClick="enviaA('{{emergencia.id}}')" 
                                 rel="tooltip" 
                                 data-toggle="tooltip" 
-                                data-original-title="Guardar">
+                                data-original-title="Cambiar cubículo">
                           <i class="icon-plus-sign icon-white"></i>
                         </button>
                       </form>
@@ -288,13 +297,6 @@
                 {% else %}
                   <center>SIN TRIAGE</center>
                 {% endif %}
-                <a href='/emergencia/{{emergencia.id}}/daralta' 
-                   rel="tooltip" 
-                   data-toggle="tooltip" 
-                   data-original-title="Dar de Alta">
-                  <img class = " marginleft5 width40 height40" 
-                       src="/static/img/alta.png"/>
-                </a>
               </td>
 
               <td>
@@ -306,129 +308,141 @@
               </td>
               
               <td class='tdTriage'>
-              {% if emergencia.triage != 0 %}
-                <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
-                   rel="tooltip" 
-                   data-toggle="tooltip" 
-                   data-original-title="Recalcular">
-                <img src="/static/img/estados/nivel{{ emergencia.triage }}.png" 
-                     class = " marginleft5 width40 height40" 
-                     title="Nivel {{ emergencia.triage }}"/>
-                </a>
-              {% else %}
-                <a href="/emergencia/{{emergencia.id}}/t1">
-                  <img src="/static/img/estados/nivel1.png" 
-                       class = " marginleft5 width40 height40" 
-                       rel="tooltip" 
-                       data-toggle="tooltip" 
-                       data-original-title="Colocar en Nivel 1"/>
-                </a>
-                <a href="/emergencia/{{emergencia.id}}/t2">
-                  <img src="/static/img/estados/nivel2.png" 
-                       class = " marginleft5 width40 height40" 
-                       rel="tooltip" 
-                       data-toggle="tooltip" 
-                       data-original-title="Colocar en Nivel 2"/>
-                </a>
-                <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
-                   rel="tooltip" 
-                   data-toggle="tooltip" 
-                   data-original-title="Calcular">
-                  <img src="/static/img/estados/nivel0.png" 
-                       class = " marginleft5 width40 height40" 
-                       title="Nivel {{ emergencia.triage }}"/>
-                </a>
-              {% endif %}
+                {% if emergencia.triage != 0 %}
+                  <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
+                     rel="tooltip" 
+                     data-toggle="tooltip" 
+                     data-original-title="Recalcular">
+                  <img 
+                    src="/static/img/estados/nivel{{ emergencia.triage }}.png" 
+                    class = " marginleft5 width40 height40" 
+                    title="Nivel {{ emergencia.triage }}"/>
+                  </a>
+                {% else %}
+                  <a href="/emergencia/{{emergencia.id}}/t1">
+                    <img src="/static/img/estados/nivel1.png" 
+                         class = " marginleft5 width40 height40" 
+                         rel="tooltip" 
+                         data-toggle="tooltip" 
+                         data-original-title="Colocar en Nivel 1"/>
+                  </a>
+                  <a href="/emergencia/{{emergencia.id}}/t2">
+                    <img src="/static/img/estados/nivel2.png" 
+                         class = " marginleft5 width40 height40" 
+                         rel="tooltip" 
+                         data-toggle="tooltip" 
+                         data-original-title="Colocar en Nivel 2"/>
+                  </a>
+                  <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
+                     rel="tooltip" 
+                     data-toggle="tooltip" 
+                     data-original-title="Calcular">
+                    <img src="/static/img/estados/nivel0.png" 
+                         class = " marginleft5 width40 height40" 
+                         title="Nivel {{ emergencia.triage }}"/>
+                  </a>
+                {% endif %}
               </td>
 
-        <td class='tdEspera boton-espera'>
-          <div class='imagenes-causas-espera'>
-            {% for espera_emergencia in emergencia.esperas_asignadas %}
-              {% if espera_emergencia.hora_fin == None %}
-                <img class='imagen-espera-td'
-                     data-id-espera='{{ espera_emergencia.espera.id }}'
-                     src={{ espera_emergencia.espera.url_imagen }}
-                />
-              {% endif %}
-            {% endfor %}
-          </div>
-          
-          <div class="causas-espera caja-dialogo">
-            <p class='titulo-esperas'>
-              <button class='btn btn-small btn-primary boton-mantener'>
-<!--                      onclick='MantenerEsperas({{ emergencia.id }})'> -->
-                Mantener
-              </button>
-            </p>
+              <td class='tdEspera boton-espera'>
+                <div class='imagenes-causas-espera'>
+                  {% for espera_emergencia in emergencia.esperas_asignadas %}
+                    {% if espera_emergencia.hora_fin == None %}
+                      <img class='imagen-espera-td'
+                           data-id-espera='{{ espera_emergencia.espera.id }}'
+                           src={{ espera_emergencia.espera.url_imagen }}
+                      />
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                
+                <div class="causas-espera caja-dialogo">
+                  <p class='titulo-esperas'>
+                    <button class='btn btn-small btn-primary boton-mantener'>
+                        <!--onclick='MantenerEsperas({{ emergencia.id }})'> -->
+                      Mantener
+                    </button>
+                  </p>
 
-            <table class="tabla-esperas">
-              <tr>
-                <th> Causas no asignadas </th>
-                <th> Causas asignadas </th>
-              </tr>
-              <tr >
-                <td class="columna-esperas">
-                  <ul class="esperas-no-asignadas">
-                    {% for espera in emergencia.esperas_no_asignadas %}
-                      <li class='espera-no-asignada'
-                          data-id-espera='{{ espera.id }}'>
-                        <img class='espera-mas'
-                             src='/static/img/Atencion/masim.png' />
-                        <img class="imagen-espera-lista" 
-                             data-id-espera='{{ espera.id }}'
-                             src={{ espera.url_imagen }}
-                        />
-                        {{ espera.nombre }}
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </td>
+                  <table class="tabla-esperas">
+                    <tr>
+                      <th> Causas no asignadas </th>
+                      <th> Causas asignadas </th>
+                    </tr>
+                    <tr >
+                      <td class="columna-esperas">
+                        <ul class="esperas-no-asignadas">
+                          {% for espera in emergencia.esperas_no_asignadas %}
+                            <li class='espera-no-asignada'
+                                data-id-espera='{{ espera.id }}'>
+                              <img class='espera-mas'
+                                   src='/static/img/Atencion/masim.png' />
+                              <img class="imagen-espera-lista" 
+                                   data-id-espera='{{ espera.id }}'
+                                   src={{ espera.url_imagen }}
+                              />
+                              {{ espera.nombre }}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </td>
 
-                <td class="columna-esperas">
-                  <ul class="esperas-asignadas">
-                    {% for espera_emergencia in emergencia.esperas_asignadas %}
-                      <li class='espera-asignada'
-                          data-id-espera='{{ espera_emergencia.espera.id }}'
-                          data-id-espera-emergencia='{{ espera_emergencia.id }}'>
-                        <img class='espera-menos'
-                             src='/static/img/Atencion/menosim.png' />
-                        <input class='espera-atendida' 
-                               type='checkbox' />
-                        <img class='imagen-espera-lista'
-                             data-id-espera='{{ espera_emergencia.espera.id }}'
-                             src={{ espera_emergencia.espera.url_imagen }}
-                        />
-                        {{ espera_emergencia.espera.nombre }}
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </td>
+                      <td class="columna-esperas">
+                        <ul class="esperas-asignadas">
+                          {% for espera_emergencia in emergencia.esperas_asignadas %}
+                            <li class='espera-asignada'
+                                data-id-espera=
+                                  '{{ espera_emergencia.espera.id }}'
+                                data-id-espera-emergencia=
+                                  '{{ espera_emergencia.id }}'>
+                              <img class='espera-menos'
+                                   src='/static/img/Atencion/menosim.png' />
+                              <input class='espera-atendida' 
+                                     type='checkbox' />
+                              <img class='imagen-espera-lista'
+                                   data-id-espera=
+                                     '{{ espera_emergencia.espera.id }}'
+                                   src={{ espera_emergencia.espera.url_imagen }}
+                              />
+                              {{ espera_emergencia.espera.nombre }}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
 
-        <td>
-          <div class="progress progress-striped active">
-            <div id="barra_{{ emergencia.id }}" >
-              <span id="tiempo_{{ emergencia.id }}" class = "fontsize22">
-                {{ emergencia.tiempo_esperaR }}
-              </span>
-            </div>
-          </div>
+              <td>
+                <div class="progress progress-striped active">
+                  <div id="barra_{{ emergencia.id }}" >
+                    <span id="tiempo_{{ emergencia.id }}" class = "fontsize22">
+                      {{ emergencia.tiempo_esperaR }}
+                    </span>
+                  </div>
+                </div>
+              </td>
 
-        </td>
-        </tr> 
-        {% endfor %}
-
+              <td>
+                <a href='/emergencia/{{ emergencia.id }}/daralta' 
+                   rel="tooltip" 
+                   data-toggle="tooltip" 
+                   data-original-title="Dar de Alta">
+                  <img class = " marginleft5 width40 height40" 
+                       src="/static/img/alta.png"/>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
         </table>
         
-        {% else %}
+      {% else %}
         No hay pacientes en esta area
-        {% endif %}
-      </div>
+      {% endif %}
     </div>
-  {% endblock %}
+  </div>
+{% endblock %}
 
 {% block scripts2 %}
 <script>
