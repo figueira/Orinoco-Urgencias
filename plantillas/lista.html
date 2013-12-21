@@ -88,6 +88,14 @@
           $('.causas-espera').fadeOut();
         })
 
+        // Asociacion del evento click al boton de mantener un grupo  de causas
+        // de espera
+        $('.boton-mantener').click(function(event){
+          event.preventDefault();
+
+          MantenerEsperas($($(this).closest('.fila-emergencia')))
+        })
+
         // Asociacion del evento click sobre las esperas
         $('.boton-espera').click(function(event){
           event.preventDefault();
@@ -117,8 +125,8 @@
           // Construir el elemento a agregar a la lista de causas asignadas
           var mas_activado = $(this);
           var id_espera = mas_activado.parent().data('id-espera');
-          var id_emergencia = mas_activado.closest('.fila-emergencia')
-                                          .data('id-emergencia');
+          var fila_emergencia = $(mas_activado.closest('.fila-emergencia'));
+          var id_emergencia = fila_emergencia.data('id-emergencia');
           
           // Antes que todo se envia una actualizacion a la base de datos para
           // guardar este cambio
@@ -161,7 +169,10 @@
                         .append(imagen_espera);
 
             // Eliminar el elemento
-            mas_activado.parent().remove()
+            mas_activado.parent().remove();
+
+            // Finalmente indicar que se mantengan las causas de espera
+            MantenerEsperas(fila_emergencia)
           });
         });
 
