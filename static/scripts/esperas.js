@@ -1,9 +1,15 @@
-function MantenerEsperas(emer){
-  $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
-  $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
-  $('#emergencia_'+emer).css("background","white");
-  //emergencia/espera_mantener/(?P<id_emergencia>.*)
-  $.get("/emergencia/espera_mantener/"+emer);
+/* 
+  Hace que una serie de causas de espera se mantengan activas
+  Entrada:
+    El objeto de jQuery correspondiente a la fila en la que la espera se 
+    imprime
+*/
+function MantenerEsperas(fila_emergencia){
+  var id_emergencia = fila_emergencia.data('id-emergencia');
+  fila_emergencia.data("tiempoEsp","0:0:0:0");
+  fila_emergencia.data("tiempo_espera_inicio","0");
+  fila_emergencia.css("background","white");
+  $.get("/emergencia/espera_mantener/" + id_emergencia);
 }
 
 function estado(emer,i)
