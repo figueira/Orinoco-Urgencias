@@ -1,4 +1,4 @@
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad (id, descripcion, grupo) VALUES
  ('A00','Cólera','|I1'),
  ('A000','Colera debido a vibrio cholerae o1, biotipo cholerae',NULL),
  ('A001','Colera debido a vibrio cholerae o1, biotipo el tor',NULL),
@@ -1096,7 +1096,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('C401','Tumor maligno de los huesos cortos del miembro superior',NULL),
  ('C402','Tumor maligno de los huesos largos del miembro inferior',NULL),
  ('C403','Tumor maligno de los huesos cortos del miembro inferior',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('C408','Lesion de sitios contiguos de los huesos y de los cartilagos articulares de los miembros',NULL),
  ('C409','Tumor maligno de los huesos y de los cartilagos articulares de los miembros, sin otra especificacion',NULL),
  ('C41','Tumor maligno de los huesos y de los cartilagos articulares, de otros sitios y de sitios no especificados','|II4'),
@@ -2049,7 +2049,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('E144','Diabetes mellitus, no especificada con complicaciones neurologicas',NULL),
  ('E145','Diabetes mellitus, no especificada con complicaciones circulatorias perifericas',NULL),
  ('E146','Diabetes mellitus, no especificada con otras complicaciones especificadas',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('E147','Diabetes mellitus, no especificada con complicaciones multiples',NULL),
  ('E148','Diabetes mellitus, no especificada con complicaciones no especificadas',NULL),
  ('E149','Diabetes mellitus, no especificada sin mencion de complicacion',NULL),
@@ -2957,7 +2957,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('G405','Sindromes epilepticos especiales',NULL),
  ('G406','Ataques de gran mal, no especificados (con o sin pequeño mal)',NULL),
  ('G407','Pequeño mal, no especificado (sin ataque de gran mal)',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES 
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES 
  ('G408','Otras epilepsias',NULL),
  ('G409','Epilepsia, tipo no especificado',NULL),
  ('G41','Estado de mal epileptico','|VI6'),
@@ -4003,7 +4003,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('I723','Aneurisma de arteria iliaca',NULL),
  ('I724','Aneurisma de arteria del miembro inferior',NULL),
  ('I728','Aneurisma de otras arterias especificadas',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES 
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES 
  ('I729','Aneurisma de sitio no especificado',NULL),
  ('I73','Otras enfermedades vasculares perifericas','|IX8'),
  ('I730','Sindrome de raynaud',NULL),
@@ -5095,7 +5095,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('L598','Otros trastornos especificados de la piel y del tejido subcutaneo relacionados con radiacion',NULL),
  ('L599','Trastornos no especificados de la piel y del tejido subcutaneo relacionados con radiacion',NULL),
  ('L60','Trastornos de las uñas','|XII6');
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('L600','Uña encarnada',NULL),
  ('L601','Onicolisis',NULL),
  ('L602','Onicogriposis',NULL),
@@ -6164,7 +6164,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('N499','Trastorno inflamatorio de organo masculino, no especificado',NULL),
  ('N50','Otros trastornos de los organos genitales masculinos','|XIV7'),
  ('N500','Atrofia del testiculo',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES 
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES 
  ('N501','Trastornos vasculares de los organos genitales masculinos',NULL),
  ('N508','Otros trastornos especificados de los organos genitales masculinos',NULL),
  ('N509','Trastorno no especificado de los organos genitales masculinos',NULL),
@@ -7041,7 +7041,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('P270','Sindrome de wilson',NULL),
  ('P271','Displasia broncopulmonar originada en el periodo perinatal',NULL),
  ('P278','Otras enfermedades respiratorias cronicas originadas en el periodo perinatal',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('P279','Enfermedad respiratoria cronica no especificada originada en el periodo perinatal',NULL),
  ('P28','Otros problemas respiratorios del recien nacido originados en el periodo perinatal','|XVI4'),
  ('P280','Atelectasia primaria del recien nacido',NULL),
@@ -8076,7 +8076,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('R27','Otras fallas de coordinacion','|XVIII4'),
  ('R270','Ataxia, no especificada',NULL),
  ('R278','Otras fallas de la coordinacion y las no especificadas',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('R29','Otros sintomas y signos que involucran los sistemas nervioso y osteomuscular','|XVIII4'),
  ('R290','Tetania',NULL),
  ('R291','Meningismo',NULL),
@@ -8969,7 +8969,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('S859','Traumatismo de vaso sanguineo no especificado a nivel de la pierna',NULL),
  ('S86','Traumatismo de tendon y musculo a nivel de la pierna','|XIX9'),
  ('S860','Traumatismo del tendon de aquiles',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('S861','Traumatismo de otro tendon(es) y musculo(s) del grupo muscular posterior a nivel de la pierna',NULL),
  ('S862','Traumatismo del tendon(es) y musculo(s) del grupo muscular anterior a nivel de la pierna',NULL),
  ('S863','Traumatismo del tendon(es) y musculo(s) del grupo muscular peroneo a nivel de la pierna',NULL),
@@ -9671,7 +9671,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('T798','Otras complicaciones precoces de los traumatismos',NULL),
  ('T799','Complicaciones precoces no especificadas de los traumatismos',NULL),
  ('T80','Complicaciones consecutivas a infusion, transfus e inyeccion terapeutica','|XIX22');
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('T800','Embolia gaseosa consecutivas a infusion, transfusion e inyeccion terapeutica',NULL),
  ('T801','Complicaciones vasculares consecutivas a infusion, transfusion e inyeccion terapeutica',NULL),
  ('T802','Infecciones consecutivas a infusion, transfusion e inyeccion terapeutica',NULL),
@@ -10185,7 +10185,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('V459','Ocupante de automovil lesionado por colision con tren o vehiculo de rieles: ocupante no especificado de automovil, lesionado en accidente de transito',NULL),
  ('V46','Ocupante de automovil lesionado por colision con otro vehiculo sin motor','|XX5'),
  ('V460','Ocupante de automovil lesionado por colision con otros vehiculos sin motor: conductor lesionado en accidente no de transito',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('V461','Ocupante de automovil lesionado por colision con otros vehiculos sin motor: pasajero lesionado en accidente no de transito',NULL),
  ('V462','Ocupante de automovil lesionado por colision con otros vehiculos sin motor: persona que viaja fuera del vehiculo, lesionada en accidente no de transito',NULL),
  ('V463','Ocupante de automovil lesionado por colision con otros vehiculos sin motor: ocupante no especificado de automovil, lesionado en accidente no de transito',NULL),
@@ -10621,7 +10621,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('V889','Persona lesionada en otros accidentes especificados de transporte de vehiculo sin motor (con colision) (sin colision), no de transito',NULL),
  ('V89','Accidente de tipo de vehiculo no especificado','|XX9'),
  ('V890','Persona lesionada en accidente no de transito, de vehiculo de motor no especificado',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES 
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES 
  ('V891','Persona lesionada en accidente no de transito, de vehiculo sin motor no especificado',NULL),
  ('V892','Persona lesionada en accidente de transito, de vehiculo de motor no especificado',NULL),
  ('V893','Persona lesionada en accidente de transito, de vehiculo sin motor no especificado',NULL),
@@ -11325,7 +11325,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('W59','Mordedura o aplastamiento por otros reptiles','|XX15'),
  ('W590','Mordedura o aplastamiento por otros reptiles: vivienda',NULL),
  ('W591','Mordedura o aplastamiento por otros reptiles: institucion residencial',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('W592','Mordedura o aplastamiento por otros reptiles: escuelas, otras instituciones y areas administrativas publicas',NULL),
  ('W593','Mordedura o aplastamiento por otros reptiles: areas de deporte y atletismo',NULL),
  ('W594','Mordedura o aplastamiento por otros reptiles: calles y carreteras',NULL),
@@ -11965,7 +11965,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('X28','Contacto traumatico con otras plantas venenosos especificados','|XX21'),
  ('X280','Contacto traumatico con otras plantas venenosas especificadas: vivienda',NULL),
  ('X281','Contacto traumatico con otras plantas venenosas especificadas: institucion residencial',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('X282','Contacto traumatico con otras plantas venenosas especificadas: escuelas, otras instituciones y areas administrativas publicas',NULL),
  ('X283','Contacto traumatico con otras plantas venenosas especificadas: areas de deporte y atletismo',NULL),
  ('X284','Contacto traumatico con otras plantas venenosas especificadas: calles y carreteras',NULL),
@@ -12511,7 +12511,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('X795','Lesion autoinfligida intencionalmente por objeto romo o sin filo: comercio y areas de servicio',NULL),
  ('X796','Lesion autoinfligida intencionalmente por objeto romo o sin filo: area industrial y de la construccion',NULL),
  ('X797','Lesion autoinfligida intencionalmente por objeto romo o sin filo: granja',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('X798','Lesion autoinfligida intencionalmente por objeto romo o sin filo: otro lugar especificado',NULL),
  ('X799','Lesion autoinfligida intencionalmente por objeto romo o sin filo: lugar no especificado',NULL),
  ('X80','Lesion autoinflingida intencionalmente al saltar desde un lugar elevado','|XX26'),
@@ -13096,7 +13096,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('Y323','Colision de vehiculo de motor, de intencion no determinada: areas de deporte y atletismo',NULL),
  ('Y324','Colision de vehiculo de motor, de intencion no determinada: calles y carreteras',NULL),
  ('Y325','Colision de vehiculo de motor, de intencion no determinada: comercio y area de servicios',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES
  ('Y326','Colision de vehiculo de motor, de intencion no determinada: area industrial y de la construccion',NULL),
  ('Y327','Colision de vehiculo de motor, de intencion no determinada: granja',NULL),
  ('Y328','Colision de vehiculo de motor, de intencion no determinada: otro lugar especificado',NULL),
@@ -13892,7 +13892,7 @@ INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES
  ('Z55','Problemas relacionados con la educacion y la alfabetizacion','|XXI5'),
  ('Z550','Problemas relacionados con el analfabetismo o bajo nivel de instruccion',NULL),
  ('Z551','Problemas relacionados con la educacion no disponible o inaccesible',NULL);
-INSERT INTO app_enfermedad_enfermedad (id, descripcion, grupo) VALUES 
+INSERT INTO app_paciente_enfermedad  (id, descripcion, grupo) VALUES 
  ('Z552','Problemas relacionados con la falla en los examenes',NULL),
  ('Z553','Problemas relacionados con el bajo rendimiento escolar',NULL),
  ('Z554','Problemas relacionados con la inadaptacion educacional y desavenencias con maestros y compañeros',NULL),
