@@ -3,6 +3,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 SEXO = (
     (1,'Masculino'),
     (2,'Femenino'),
@@ -23,6 +24,13 @@ RELACION = (
 )
 
 # Create your models here.
+class Enfermedad(models.Model):
+    id =  models.CharField(max_length= 10, primary_key=True)
+    descripcion = models.CharField(max_length= 400)
+    grupo = models.CharField(max_length=200, blank=True, null=True)
+    def __unicode__(self):
+        return "%s" % (self.descripcion)
+        
 class Paciente(models.Model):
     cedula           = models.TextField(default=0)
     nombres          = models.CharField(max_length=64)
@@ -45,6 +53,7 @@ class Paciente(models.Model):
     signos_pa      = models.IntegerField(default=0,blank=True)
     signos_pb      = models.IntegerField(default=0,blank=True)
     signos_saod    = models.FloatField(default=0,blank=True)
+    enfermedades   = models.ManyToManyField(Enfermedad, blank=True)
     def __unicode__(self):
 
         return "%s, %s" % (self.apellidos,self.nombres)
@@ -94,6 +103,7 @@ class Antecedente(models.Model):
     nombre = models.CharField(max_length=64)
     def __unicode__(self):
         return "%s" % (self.nombre)
+
 
 class Pertenencia(models.Model):
     paciente    = models.ForeignKey(Paciente)
