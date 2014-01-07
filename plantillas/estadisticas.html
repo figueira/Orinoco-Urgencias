@@ -11,7 +11,7 @@
   <!--Load the AJAX API-->
   <script src="/static/libs/highcharts/highcharts.js"></script>
   <script src="/static/libs/highcharts/modules/exporting.js"></script>
-  <script type="text/javascript" src="/static/scripts/jsapi"></script>
+  <script type="text/javascript" src="/static/scripts/jsapi.js"></script>
   <script type="text/javascript">
   
     // Load the Visualization API and the piechart package.
@@ -218,16 +218,16 @@
 	      <thead>
 		<tr>
 		  <th>Causa de Espera</th>
-		  <th>0 a 2 horas</th>
-		  <th>2 a 4 horas</th>
-		  <th>4 a 6 horas</th>
-		  <th>6 o m&aacute;s horas</th>
+		  <th>Verde (0 a 2 horas)</th>
+		  <th>Amarillo (2 a 4 horas)</th>
+		  <th>Rojo (4 a 6 horas)</th>
+		  <th>Negro (6 o + horas)</th>
 		</tr>
 	      </thead>
 	      {% for causa, valores in color.1.items %}
 		<tr>
-		  <td>{{causa}}</td>
-		  {% for valor in valores %}
+		  <td><img src="{{valores.1}}"/> {{causa}}</td>
+		  {% for valor in valores.0 %}
 		    <td>{{valor}}</td>
 		  {% endfor %}
 		</tr>
@@ -247,7 +247,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Total fruit consumtion, grouped by gender'
+                text: 'Gráfica de incidencias de causa de espera por duración'
             },
             xAxis: {
                 categories: [{% for color2 in causas %}
@@ -261,7 +261,7 @@
                 allowDecimals: false,
                 min: 0,
                 title: {
-                    text: 'Numero de incidencias'
+                    text: 'Número de incidencias'
                 }
             },
             tooltip: {
@@ -273,7 +273,7 @@
             series: [{% for causa, valores in color.1.items %}
 		{
 		name: '{{causa}}',
-		data: {{valores}}
+		data: {{valores.0}}
 		}{% if not forloop.last %},{% endif %}
 	    {% endfor %}]
         });
