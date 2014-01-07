@@ -514,7 +514,13 @@ def estadisticas_prueba():
     for i in range(5):
       triages.append([(i+1),triagesBien[i]])
     return triages
-  
+
+def obtener_imagenes():
+  objetos_causas_de_espera = Espera.objects.all()
+  imagenes = []
+  for espera in objetos_causas_de_espera:
+    imagenes.append(espera.url_imagen)
+  return imagenes
 
 def obtener_causas_de_espera(emergencias):
     
@@ -525,8 +531,9 @@ def obtener_causas_de_espera(emergencias):
     causas_de_espera = {}
     
     objetos_causas_de_espera = Espera.objects.all()
+    causas = []
     for causa in objetos_causas_de_espera:
-      causas_de_espera[causa.nombre] = [0,0,0,0]
+      causas_de_espera[causa.nombre] = ([0,0,0,0], causa.url_imagen())
       
     for emergencia in emergencias:
       espera_emergencias = EsperaEmergencia.objects.filter(emergencia=emergencia)
@@ -547,7 +554,8 @@ def obtener_causas_de_espera(emergencias):
         else:
           grupo = 3
           
-        causas_de_espera[causa][grupo] += 1
+        (valores, img) = causas_de_espera[causa]
+        valores[grupo] += 1
     return causas_de_espera    
           
       
@@ -605,30 +613,23 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     causas_de_espera = Espera.objects.all()
     causas_pacientes_total = {}
     for causa in causas_de_espera:
-      causas_pacientes_total[causa.nombre] = [
-	sum([causas_pacientes_en_verde[causa.nombre][0],
-	  causas_pacientes_en_amarillo[causa.nombre][0],
-	  causas_pacientes_en_rojo[causa.nombre][0],
-	  causas_pacientes_en_negro[causa.nombre][0]]),
-	sum([causas_pacientes_en_verde[causa.nombre][1],
-	  causas_pacientes_en_amarillo[causa.nombre][1],
-	  causas_pacientes_en_rojo[causa.nombre][1],
-	  causas_pacientes_en_negro[causa.nombre][1]]),
-	sum([causas_pacientes_en_verde[causa.nombre][2],
-	  causas_pacientes_en_amarillo[causa.nombre][2],
-	  causas_pacientes_en_rojo[causa.nombre][2],
-	  causas_pacientes_en_negro[causa.nombre][2]]),
-	sum([causas_pacientes_en_verde[causa.nombre][3],
-	  causas_pacientes_en_amarillo[causa.nombre][3],
-	  causas_pacientes_en_rojo[causa.nombre][3],
-	  causas_pacientes_en_negro[causa.nombre][3]])
-	]
+	(causa_ver, img_ver) = causas_pacientes_en_verde[causa.nombre]
+	(causa_ama, img_ama) = causas_pacientes_en_amarillo[causa.nombre]
+	(causa_roj, img_roj) = causas_pacientes_en_rojo[causa.nombre]
+	(causa_neg, img_neg) = causas_pacientes_en_negro[causa.nombre]
+	causas_pacientes_total[causa.nombre] = ([
+	  sum([causa_ver[0], causa_ama[0], causa_roj[0], causa_neg[0]]),
+	  sum([causa_ver[1], causa_ama[1], causa_roj[1], causa_neg[1]]),
+	  sum([causa_ver[2], causa_ama[2], causa_roj[2], causa_neg[2]]),
+	  sum([causa_ver[3], causa_ama[3], causa_roj[3], causa_neg[3]])
+	], causa.url_imagen())
     causas = [('General', causas_pacientes_total),
 	      ('Verde', causas_pacientes_en_verde),
 	      ('Amarillo', causas_pacientes_en_amarillo),
 	      ('Rojo', causas_pacientes_en_rojo),
 	      ('Negro', causas_pacientes_en_negro)]
     
+    imaganes = obtener_imagenes()
     
     # Resultados de los Triages
     triages = Triage.objects.filter(fecha__range=[fecha_inicio,fecha_fin]) \
@@ -640,16 +641,16 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     triages = []
     for i in range(5):
       triages.append([(i+1),triagesBien[i]])
-    egresos = [['Total',total_egresos],['Menos de 2 horas',horas[0]],
-                ['2 a 4 horas',horas[1]],['4 a 6 horas',horas[2]],
-                ['Más de 6 horas',horas[3]]
+    egresos = [['Total',total_egresos],['Verde (0 a 2 horas)',horas[0]],
+                ['Amarillo (2 a 4 horas)',horas[1]],['Rojo (4 a 6 horas)',horas[2]],
+                ['Negro (6 o + horas)',horas[3]]
               ]
     info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
             'fin':fecha_fin-timedelta(days=1),'sig':siguiente_semana,
              'total_ingresos':len(ingresos_emergencia),
              'total_egresos':total_egresos,
              'egresos':egresos, 'emergencias':emergencias_por_horas,
-             'causas':causas
+             'causas':causas, 'imagenes': imaganes
             }
     return render_to_response('estadisticas.html',info,
                               context_instance=RequestContext(request))

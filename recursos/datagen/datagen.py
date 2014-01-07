@@ -4,6 +4,8 @@ import nombres as nom
 
 
 numero_de_pacientes = 100
+numero_de_cubiculos = 30
+numero_de_areas = 2
 nombres = {}
 apellidos = {}
 cedula_inicial = 1111111
@@ -21,6 +23,24 @@ pk_esperaemergencia = 1
 estado = 0
 
 final = '['
+
+numero_cubiculo = 1
+letra = 'A'
+for pk_cubiculo in range(1, numero_de_cubiculos+1):
+  nombre = str(numero_cubiculo)
+  if (randint(0,1)):
+    nombre += letra
+    letra = chr(ord(letra) + 1)
+  else:
+    numero_cubiculo += 1
+    letra = 'A'
+  area = randint(1, numero_de_areas)
+  cubiculo = '{"pk": %i, \n' % (pk_cubiculo, )
+  cubiculo += '"model": "app_emergencia.cubiculo", \n"fields":\n{\n'
+  cubiculo += '"nombre": "%s",\n' % (nombre, )
+  cubiculo += '"area": %i\n' % (area, )
+  cubiculo +='}\n},\n'
+  final += cubiculo
 
 for pk_paciente in range(1,numero_de_pacientes+1):
   es_hombre = randint(0,1) # 0 = FALSE
