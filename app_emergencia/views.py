@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+  # -*- encoding: utf-8 -*-
 # coding: latin1
 
 # Manejo de Sesion
@@ -31,6 +31,7 @@ import cgi
 import json
 from django.template.loader import render_to_string
 from app_enfermedad.models import *
+from itertools import izip
 ######################################################
 
     
@@ -522,6 +523,10 @@ def obtener_imagenes():
     imagenes.append(espera.url_imagen)
   return imagenes
 
+def ordenar_por_causas(diccionario_de_causas):
+  resultado = sorted(diccionario_de_causas.items(), key = lambda t: t[0])
+  return resultado
+
 def obtener_causas_de_espera(emergencias):
     # Diccionario que mapea el nombre de la causa de espera
     # a un arreglo indicando la cantidad de ocurrencias por
@@ -655,14 +660,14 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
 	  sum([causa_ver[2], causa_ama[2], causa_roj[2], causa_neg[2]]),
 	  sum([causa_ver[3], causa_ama[3], causa_roj[3], causa_neg[3]])
 	], causa.url_imagen())
-    causas = [('General', causas_pacientes_total),
-	      ('Verde', causas_pacientes_en_verde),
-	      ('Amarillo', causas_pacientes_en_amarillo),
-	      ('Rojo', causas_pacientes_en_rojo),
-	      ('Negro', causas_pacientes_en_negro)]
-    causas_transicion = [('Amarillo', causas_transicion_amarillo),
-			 ('Rojo', causas_transicion_rojo),
-			 ('Negro', causas_transicion_negro)]
+    causas = [('General', ordenar_por_causas(causas_pacientes_total)),
+	      ('Verde', ordenar_por_causas(causas_pacientes_en_verde)),
+	      ('Amarillo', ordenar_por_causas(causas_pacientes_en_amarillo)),
+	      ('Rojo', ordenar_por_causas(causas_pacientes_en_rojo)),
+	      ('Negro', ordenar_por_causas(causas_pacientes_en_negro))]
+    causas_transicion = [('Amarillo', ordenar_por_causas(causas_transicion_amarillo)),
+			 ('Rojo', ordenar_por_causas(causas_transicion_rojo)),
+			 ('Negro', ordenar_por_causas(causas_transicion_negro))]
     
     imaganes = obtener_imagenes()
     
