@@ -523,20 +523,21 @@ def obtener_imagenes():
   return imagenes
 
 def obtener_causas_de_espera(emergencias):
-    
     # Diccionario que mapea el nombre de la causa de espera
     # a un arreglo indicando la cantidad de ocurrencias por
     # intervalo de duracion
     # Ej: '[[Ubicacion, [0,2,3,1]], [Laboratorio, [2,0,4,4]]]'
     causas_de_espera = {}
+    causas_transicion = {}
     
     objetos_causas_de_espera = Espera.objects.all()
-    causas = []
     for causa in objetos_causas_de_espera:
       causas_de_espera[causa.nombre] = ([0,0,0,0], causa.url_imagen())
+      causas_transicion[causa.nombre] = ([0,0,0], causa.url_imagen())
       
     for emergencia in emergencias:
       espera_emergencias = EsperaEmergencia.objects.filter(emergencia=emergencia)
+      hora_inicio_emergencia = emergencia.hora_ingreso
       for espera_emergencia in espera_emergencias:
         causa = espera_emergencia.espera.nombre
         if espera_emergencia.hora_fin == None:
@@ -554,11 +555,42 @@ def obtener_causas_de_espera(emergencias):
         else:
           grupo = 3
           
+        dif_inicio = (espera_emergencia.hora_comienzo - hora_inicio_emergencia).seconds
+        dif_fin = (espera_emergencia.hora_fin - hora_inicio_emergencia).seconds
+        
+        if dif_inicio < hora_en_segundos[2]:
+          grupo_trans_inicio = -1
+        elif hora_en_segundos[2] <= dif_inicio and \
+             dif_inicio < hora_en_segundos[4]:
+          grupo_trans_inicio = 0
+        elif hora_en_segundos[4] <= dif_inicio and \
+             dif_inicio < hora_en_segundos[6]:
+          grupo_trans_inicio = 1
+        else:
+          grupo_trans_inicio = 2
+          
+        if dif_fin < hora_en_segundos[2]:
+          grupo_trans_fin = -1
+        elif hora_en_segundos[2] <= dif_fin and dif_fin < hora_en_segundos[4]:
+          grupo_trans_fin = 0
+        elif hora_en_segundos[4] <= dif_fin and dif_fin < hora_en_segundos[6]:
+          grupo_trans_fin = 1
+        else:
+          grupo_trans_fin = 2 
+        
         (valores, img) = causas_de_espera[causa]
         valores[grupo] += 1
-    return causas_de_espera    
+        
+        if (grupo_trans_fin == grupo_trans_inicio):
+	  continue
+        
+        grupo_trans = max(grupo_trans_fin, grupo_trans_inicio)
+        (valores_trans, img_trans) = causas_transicion[causa]
+        valores_trans[grupo_trans] += 1
+        
+    return (causas_de_espera, causas_transicion)
           
-      
+
 
 def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     # Datos generales
@@ -589,9 +621,9 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
         t = egreso.tiempo_emergencia()
         if t < hora_en_segundos[2]:
             grupo = 0
-        elif t >= hora_en_segundos[2] and t < hora_en_segundos[4]:
+        elif hora_en_segundos[2] <= t and t < hora_en_segundos[4]:
             grupo = 1
-        elif t >= hora_en_segundos[4] and t < hora_en_segundos[6]:
+        elif hora_en_segundos[4] <= t and t < hora_en_segundos[6]:
             grupo = 2
         else:
             grupo = 3
@@ -601,14 +633,14 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     total_egresos = sum(horas)
     
     # Causas de espera por grupo
-    causas_pacientes_en_negro = obtener_causas_de_espera\
-      (emergencias_por_horas[3])
-    causas_pacientes_en_rojo = obtener_causas_de_espera\
-      (emergencias_por_horas[2])
-    causas_pacientes_en_amarillo = obtener_causas_de_espera\
-      (emergencias_por_horas[1])
-    causas_pacientes_en_verde = obtener_causas_de_espera\
-      (emergencias_por_horas[0])
+    (causas_pacientes_en_negro, causas_transicion_negro) = \
+      obtener_causas_de_espera(emergencias_por_horas[3])
+    (causas_pacientes_en_rojo, causas_transicion_rojo) = \
+      obtener_causas_de_espera(emergencias_por_horas[2])
+    (causas_pacientes_en_amarillo, causas_transicion_amarillo) = \
+      obtener_causas_de_espera(emergencias_por_horas[1])
+    (causas_pacientes_en_verde, causas_transicion_verde) = \
+      obtener_causas_de_espera(emergencias_por_horas[0])
     total_causas = len(causas_pacientes_en_amarillo)
     causas_de_espera = Espera.objects.all()
     causas_pacientes_total = {}
@@ -628,6 +660,9 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
 	      ('Amarillo', causas_pacientes_en_amarillo),
 	      ('Rojo', causas_pacientes_en_rojo),
 	      ('Negro', causas_pacientes_en_negro)]
+    causas_transicion = [('Amarillo', causas_transicion_amarillo),
+			 ('Rojo', causas_transicion_rojo),
+			 ('Negro', causas_transicion_negro)]
     
     imaganes = obtener_imagenes()
     
@@ -650,7 +685,8 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
              'total_ingresos':len(ingresos_emergencia),
              'total_egresos':total_egresos,
              'egresos':egresos, 'emergencias':emergencias_por_horas,
-             'causas':causas, 'imagenes': imaganes
+             'causas':causas, 'imagenes': imaganes,
+             'causas_transicion': causas_transicion
             }
     return render_to_response('estadisticas.html',info,
                               context_instance=RequestContext(request))
