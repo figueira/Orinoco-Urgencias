@@ -193,7 +193,9 @@
     </div>
   </div>
   
+  
   <hr />
+  
 	  <h4> Incidencia de Causas de Espera de los Pacientes en: </h4>
     <ul class="nav nav-tabs" id="tab-de-incidencias">
     {% for color in causas%}
@@ -224,10 +226,10 @@
 		  <th>Negro (6 o + horas)</th>
 		</tr>
 	      </thead>
-	      {% for causa, valores in color.1.items %}
+	      {% for causa in color.1 %}
 		<tr>
-		  <td><img src="{{valores.1}}"/> {{causa}}</td>
-		  {% for valor in valores.0 %}
+		  <td><img src="{{causa.1.1}}"/> {{causa.0}}</td>
+		  {% for valor in causa.1.0 %}
 		    <td>{{valor}}</td>
 		  {% endfor %}
 		</tr>
@@ -268,10 +270,10 @@
 		  <th>Negro (6 o + horas)</th>
 		</tr>
 	      </thead>
-	      {% for causa, valores in color.1.items %}
+	      {% for causa in color.1%}
 		<tr>
-		  <td><img src="{{valores.1}}"/> {{causa}}</td>
-		  {% for valor in valores.0 %}
+		  <td><img src="{{causa.1.1}}"/> {{causa.0}}</td>
+		  {% for valor in causa.1.0 %}
 		    <td>{{valor}}</td>
 		  {% endfor %}
 		</tr>
@@ -313,10 +315,10 @@
                         this.series.name +': '+ this.y
                 }
             },
-            series: [{% for causa, valores in color.1.items %}
+            series: [{% for causa in color.1 %}
 		{
-		name: '{{causa}}',
-		data: {{valores.0}}
+		name: '{{causa.0}}',
+		data: {{causa.1.0}}
 		}{% if not forloop.last %},{% endif %}
 	    {% endfor %}]
         });
@@ -351,10 +353,10 @@
                         this.series.name +': '+ this.y
                 }
             },
-            series: [{% for causa, valores in color.1.items %}
+            series: [{% for causa in color.1 %}
 		{
-		name: '{{causa}}',
-		data: {{valores.0}}
+		name: '{{causa.0}}',
+		data: {{causa.1.0}}
 		}{% if not forloop.last %},{% endif %}
 	    {% endfor %}]
         });
