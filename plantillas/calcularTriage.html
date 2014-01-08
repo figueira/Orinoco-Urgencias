@@ -4,9 +4,12 @@
   <script type="text/javascript"
           src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
   </script>
+{% endblock %} 
+{% block estilos %}
   <link rel="stylesheet"
         href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-{% endblock %} 
+  <link rel='stylesheet' href='/static/triage.css'>
+{% endblock %}
 {% block cuerpo %}
   {% if mensaje %} 
     {{ mensaje }} 
@@ -24,13 +27,13 @@
               Evaluaci&oacute;n
             </a>
           </li>
-          <li id="litab1">
+          <li id="litab1" class="tab-triage">
             <a href="#tab1" data-toggle="tab">Pregunta 1</a>
           </li>
-          <li id="litab2">
+          <li id="litab2" class="tab-triage">
             <a href="#tab2" data-toggle="tab">Pregunta 2</a>
           </li>
-          <li id="litab3">
+          <li id="litab3" class="tab-triage">
             <a href="#tab3" data-toggle="tab">Pregunta 3</a>
           </li>
         </ul>
@@ -85,14 +88,15 @@
                       </span> 
                       <span class="add-on"> 
                         <i data-time-icon="icon-time"
-                          data-date-icon="icon-calendar"> 
+                           data-date-icon="icon-calendar"> 
                         </i>
                       </span>
-                    </div> <script type="text/javascript">
+                    </div> 
+                    <script type="text/javascript">
                       $(function() {
-                      $('#ingreso_picker').datetimepicker({
-                      language: 'pt-BR'
-                      });
+                        $('#ingreso_picker').datetimepicker({
+                          language: 'pt-BR'
+                        });
                       });
                     </script>
                   </td>

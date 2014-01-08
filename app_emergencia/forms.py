@@ -34,19 +34,32 @@ class BuscarEmergenciaForm(forms.Form):
 
 
 class calcularTriageForm(forms.Form):
-    fecha         = forms.DateTimeField(label="Fecha y hora a la que se realiza la Evaluación",widget=forms.TextInput(attrs={'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))
-    motivo        = forms.ModelChoiceField(label="Motivo de Ingreso",required=False,queryset=Motivo.objects.exclude(nombre__startswith=" "))
-    ingreso       = forms.CharField(label="Tipo de Ingreso",required=False,max_length=1,widget=forms.Select(choices=ICAUSA))
-    
-    signos_tmp    = forms.FloatField(label="Temperatura",required=False)
-    signos_fc     = forms.FloatField(label="Frecuencia Cardíaca",required=False)
-    signos_fr     = forms.IntegerField(label="Frecuencia Respiratoria",required=False)
-    signos_pa     = forms.IntegerField(label="Presión Sistólica",required=False)
-    signos_pb     = forms.IntegerField(label="Presión Diastólica",required=False)
-    signos_saod   = forms.FloatField(label="Saturación de Oxígeno",required=False)
-    signos_avpu   = forms.CharField(label="Valor Obtenido en Escala AVPU",required=False,widget=forms.RadioSelect(choices=AVPU))
-    signos_dolor  = forms.IntegerField(label="Intensidad del Dolor",required=False,widget=forms.Select(choices=EDOLOR))
+    fecha = forms.DateTimeField(
+                    label = "Fecha y hora a la que se realiza la Evaluación",
+                    widget = forms.TextInput(
+                                     attrs = 
+                                       {'placeholder':'dd/MM/aaaa hh:mm:ss',
+                                        'data-format':'dd/MM/yyyy hh:mm:ss'}))
 
+    motivo = forms.ModelChoiceField(
+                     label = "Motivo de ingreso",
+                     queryset = Motivo.objects.exclude(
+                                                 nombre__startswith = " "))
+
+    ingreso = forms.CharField(label = "Tipo de ingreso",
+                              max_length = 1,
+                              widget = forms.Select(choices = ICAUSA))
+    
+    signos_tmp = forms.FloatField(label = "Temperatura")
+    signos_fc = forms.FloatField(label = "Frecuencia cardíaca")
+    signos_fr = forms.IntegerField(label = "Frecuencia respiratoria")
+    signos_pa = forms.IntegerField(label = "Presión sistólica")
+    signos_pb = forms.IntegerField(label = "Presión diastólica")
+    signos_saod = forms.FloatField(label = "Saturación de oxígeno")
+    signos_avpu = forms.CharField(label = "Valor Obtenido en Escala AVPU",
+                                  widget = forms.RadioSelect(choices = AVPU))
+    signos_dolor = forms.IntegerField(label = "Intensidad del dolor",
+                                      widget = forms.Select(choices = EDOLOR))
 
 ##################################################### FORMS ATENCION
 
