@@ -8,7 +8,7 @@
 {% block estilos %}
   <link rel="stylesheet"
         href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-  <link rel='stylesheet' href='/static/triage.css'>
+  <link rel='stylesheet' href='/static/css/triage.css'>
 {% endblock %}
 {% block cuerpo %}
   {% if mensaje %} 
@@ -100,14 +100,17 @@
                       });
                     </script>
                   </td>
+                  <td>{{ form.fecha.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.motivo.label}}</td>
                   <td>{{form.motivo}}</td>
+                  <td>{{ form.motivo.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.ingreso.label}}</td>
                   <td>{{form.ingreso}}</td>
+                  <td>{{ form.ingreso.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_tmp.label}}</td>
@@ -120,6 +123,7 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ form.signos_tmp.errors}}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_fc.label}}</td>
@@ -131,6 +135,7 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ form.signos_fc.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_fr.label}}</td>
@@ -142,6 +147,7 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ forms.signos_fr.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_pa.label}}</td>
@@ -153,6 +159,7 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ forms.signos_pa.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_pb.label}}</td>
@@ -164,6 +171,7 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ forms.signos_pb.errors }}</td>
                 </tr>
                 <tr>
                   <td>{{form.signos_saod.label}}</td>
@@ -175,25 +183,27 @@
                       </span>
                     </div>
                   </td>
+                  <td>{{ form.signos_saod.errors }}</td>
                 </tr>
                 <tr>
                   <td>Escala AVPU</td>
                   <td>{{form.signos_avpu}}</td>
+                  <td>{{ form.signos_avpu.errors }}</td>
                 <tr>
                   <td>Dolor</td>
                   <td>{{form.signos_dolor}}</td>
+                  <td>{{ form.signos_dolor.errors }}</td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>
                     <input class="btn btn-primary" 
                            type="submit"
-                           value="Ingresar" />
+                           value="Registrar" />
                   </td>
                 </tr>
               </table>
             </form>
-  
           </div>
         </div>
       </div>
