@@ -220,60 +220,66 @@ def emergencia_listar_ambulatoria(request):
 
 @login_required(login_url='/')
 def emergencia_agregar(request):
-    mensaje = ""
-    msj_tipo = ""
-    msj_info = ""
-    if request.method == 'POST':
-        form = AgregarEmergenciaForm(request.POST)
-        if form.is_valid():
-            pcd = form.cleaned_data
-            p_cedula           = pcd['cedula']
-            p_nombres          = pcd['nombres']
-            p_apellidos        = pcd['apellidos']
-            p_sexo             = pcd['sexo']
-            p_fecha_nacimiento = pcd['fecha_nacimiento']
-            prueba = Paciente.objects.filter(cedula = p_cedula,
-                                             nombres = p_nombres,
-                                             apellidos = p_apellidos)
-            if len(prueba) == 0:
-                p = Paciente(cedula = p_cedula,
-                             nombres = p_nombres,
-                             apellidos = p_apellidos,
-                             sexo = p_sexo,
-                             fecha_nacimiento = p_fecha_nacimiento,
-                             tlf_cel = "",
-                             email = "",
-                             direccion = "",
-                             tlf_casa = "",
-                             contacto_rel = 11,
-                             contacto_nom = "",
-                             contacto_tlf = "")
-                #p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel=p_cel,email=p_email,direccion=p_direccion,tlf_casa=p_tlf_casa,contacto_rel=p_contacto_rel,contacto_nom=p_contacto_nombre,contacto_tlf=p_contacto_tlf)
-                p.save()
-            else:
-                p = prueba[0]
+  mensaje = ""
+  msj_tipo = ""
+  msj_info = ""
+  if request.method == 'POST':
+    form = AgregarEmergenciaForm(request.POST)
+    if form.is_valid():
+      pcd = form.cleaned_data
+      p_cedula = pcd['cedula']
+      p_nombres = pcd['nombres']
+      p_apellidos = pcd['apellidos']
+      p_sexo = pcd['sexo']
+      p_fecha_nacimiento = pcd['fecha_nacimiento']
+      prueba = Paciente.objects.filter(cedula = p_cedula,
+                                       nombres = p_nombres,
+                                       apellidos = p_apellidos)
+      if len(prueba) == 0:
+        p = Paciente(cedula = p_cedula,
+                     nombres = p_nombres,
+                     apellidos = p_apellidos,
+                     sexo = p_sexo,
+                     fecha_nacimiento = p_fecha_nacimiento,
+                     tlf_cel = "",
+                     email = "",
+                     direccion = "",
+                     tlf_casa = "",
+                     contacto_rel = 11,
+                     contacto_nom = "",
+                     contacto_tlf = "")
+        p.save()
+      else:
+        p = prueba[0]
 
-            e_activa = len(Emergencia.objects.filter(paciente=p).filter(hora_egreso__isnull=True))
-            if e_activa == 0:
-                e_ingreso = Usuario.objects.get(username=request.user)
-                e_responsable= e_ingreso
-                e_horaIngreso = pcd['ingreso']
-                e_horaIngresoReal = datetime.now()
-                e = Emergencia(paciente=p,responsable=e_responsable,ingreso=e_ingreso,hora_ingreso=e_horaIngreso,hora_ingresoReal=e_horaIngresoReal,hora_egreso=None)
-                e.save()
-                espe               = get_object_or_404(Espera,nombre='Ubicacion')
-                espera1            = EsperaEmergencia(espera=espe,emergencia=e,estado='0')
-                espera1.save()
-                print "Creando nueva emergencia objeto creado: ",e
-                return redirect('/emergencia/listar/todas')
-            else:
-                msj_tipo = "error"
-                msj_info = "Ya este usuario esta en una emergencia. No puede ingresar a un usuario 2 veces a la emergencia"
-        info = {'form':form,'msj_tipo':msj_tipo,'msj_info':msj_info}
-        return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
-    form = AgregarEmergenciaForm()
-    info = {'form':form}
+      e_activa = len(Emergencia.objects
+                               .filter(paciente = p)
+                               .filter(hora_egreso__isnull = True))
+      if e_activa == 0:
+        e_ingreso = Usuario.objects.get(username = request.user)
+        e_responsable = e_ingreso
+        e_horaIngreso = pcd['ingreso']
+        e_horaIngresoReal = datetime.now()
+        e  =  Emergencia(paciente = p,
+                       responsable = e_responsable,
+                       ingreso = e_ingreso,
+                       hora_ingreso = e_horaIngreso,
+                       hora_ingresoReal = e_horaIngresoReal,
+                       hora_egreso = None)
+        e.save()
+        espe = get_object_or_404(Espera,nombre = 'Ubicacion')
+        espera1 = EsperaEmergencia(espera = espe,emergencia = e,estado = '0')
+        espera1.save()
+        print "Creando nueva emergencia objeto creado: ",e
+        return redirect('/emergencia/listar/todas')
+      else:
+        msj_tipo = "error"
+        msj_info = "Ya este usuario esta en una emergencia. No puede ingresar a un usuario 2 veces a la emergencia"
+    info = {'form':form,'msj_tipo':msj_tipo,'msj_info':msj_info}
     return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
+  form = AgregarEmergenciaForm()
+  info = {'form':form}
+  return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def emergencia_agrega_emer(request,id_emergencia):
