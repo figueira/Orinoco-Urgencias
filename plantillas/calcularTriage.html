@@ -4,6 +4,34 @@
   <script type="text/javascript"
           src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
   </script>
+
+  <script type='text/javascript'>
+    $(document).ready(function(){
+      $('#ingreso_picker').datetimepicker({
+        language: 'pt-BR'
+      });
+
+      // Asynchronous submission of the form
+      var formulario = $('.formulario-evaluacion');
+      $('.tab-evaluacion').on('submit',
+                              '.formulario-evaluacion',
+                              function(event){
+        event.preventDefault();
+        $.ajax({
+                 data: formulario.serialize(),
+                 dataType: 'script',
+                 type: formulario.attr('method'),
+                 url: formulario.attr('action'),
+                 success: function(){
+                            // Se debe inicializar el datepicker
+                            $('#ingreso_picker').datetimepicker({
+                              language: 'pt-BR'
+                            });
+                          }
+               })
+      })
+    })
+  </script>
 {% endblock %} 
 {% block estilos %}
   <link rel="stylesheet"
@@ -70,7 +98,7 @@
               Varios
             </a>
           </div>
-          <div class="tab-pane active" id="tab4">
+          <div class="tab-pane active tab-evaluacion" id="tab4">
             {% include 'formularios/evaluacionPaciente.html' %}
           </div>
         </div>
