@@ -1540,7 +1540,8 @@ def emergencia_diagnostico(request,id_emergencia):
 def evaluar_paciente(request, id_emergencia):
   if request.method == 'POST':
     form = FormularioEvaluacionPaciente(request.POST)
-    if form.is_valid():
+    es_valido = form.is_valid()
+    if es_valido:
       emergencia = get_object_or_404(Emergencia, id = id_emergencia)
       medico = Usuario.objects.get(username = request.user)
       evaluacion = form.cleaned_data
@@ -1553,8 +1554,13 @@ def evaluar_paciente(request, id_emergencia):
       paciente.signos_pb = evaluacion['presion_sistolica']
       paciente.signos_saod = evaluacion['saturacion_oxigeno']
 
-      return HttpResponse('')
-      paciente.save()
-    else:
-      return HttpResponse("console.log('Error en el formulario');", 
-                          mimetype='text/javascript)')
+      #paciente.save()
+    plantilla_formulario = render_to_string(
+                             'formularios/evaluacionPaciente.html',
+                             { 'form': form })
+    print plantilla_formulario
+    return render(request,
+                  'scripts/evaluacionPaciente.js',
+                  { 'plantilla_formulario': plantilla_formulario,
+                    'es_valido': es_valido },
+                  content_type = 'text/javascript')
