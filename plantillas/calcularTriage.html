@@ -13,21 +13,21 @@
 
       // Asynchronous submission of the form
       var formulario = $('.formulario-evaluacion');
-      $('.tab-evaluacion').on('submit',
-                              '.formulario-evaluacion',
+      $('.tab-evaluacion').on('click',
+                              '.boton-evaluar',
                               function(event){
         event.preventDefault();
         $.ajax({
-                 data: formulario.serialize(),
-                 dataType: 'script',
-                 type: formulario.attr('method'),
-                 url: formulario.attr('action'),
-                 success: function(){
-                            // Se debe inicializar el datepicker
-                            $('#ingreso_picker').datetimepicker({
-                              language: 'pt-BR'
-                            });
-                          }
+                data: formulario.serialize(),
+                dataType: 'script',
+                type: formulario.attr('method'),
+                url: formulario.attr('action'),
+                success: function(){
+                           // Se debe inicializar el datepicker
+                           $('#ingreso_picker').datetimepicker({
+                             language: 'pt-BR'
+                           });
+                         }
                })
       })
     })

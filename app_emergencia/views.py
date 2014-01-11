@@ -1555,12 +1555,14 @@ def evaluar_paciente(request, id_emergencia):
       paciente.signos_saod = evaluacion['saturacion_oxigeno']
 
       #paciente.save()
+    csrf_token_value = request.COOKIES['csrftoken']
     plantilla_formulario = render_to_string(
                              'formularios/evaluacionPaciente.html',
-                             { 'form': form })
-    print plantilla_formulario
+                             { 'idE': id_emergencia, 
+                               'csrf_token_value': csrf_token_value,
+                               'form': form })
     return render(request,
                   'scripts/evaluacionPaciente.js',
-                  { 'plantilla_formulario': plantilla_formulario,
-                    'es_valido': es_valido },
+                  { 'es_valido': es_valido,
+                    'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
