@@ -6,11 +6,20 @@
     form -> El formulario de Python que contiene la información
 -->
 <form action='/emergencia/{{ idE }}/evaluar_paciente'
-      data-remote='true'
       class='tablaAgregar formulario-evaluacion' 
       method='post'
       name='calcularTriage'>
-  {% csrf_token %}
+  <!-- Since this form will be rendered manually, the csrf token must be
+       manually set -->
+  {% if csrf_token_value == None %}
+    {% csrf_token %}
+  {% else %}
+    <div style='display:none'>
+      <input type='hidden' 
+             name='csrfmiddlewaretoken' 
+             value='{{ csrf_token_value }}'/>
+    </div>
+  {% endif %}
   <table>
     <tr>
       <td>{{ form.fecha.label }}</td>
@@ -109,7 +118,7 @@
     <tr>
       <td></td>
       <td>
-        <input class='btn btn-primary' type='submit' value='Registrar' />
+        <input class='btn btn-primary boton-evaluar' type='submit' value='Registrar' />
       </td>
     </tr>
   </table>
