@@ -375,137 +375,11 @@ def emergencia_aplicarTriage(request,idE,vTriage):
 @login_required(login_url='/')
 def emergencia_calcularTriage(request,idE):
   mensaje = ""
-  if request.method == 'POST':
-    form = FormularioEvaluacionPaciente(request.POST)
-    if form.is_valid():
-      emergencia = get_object_or_404(Emergencia,id=idE)
-      medico = Usuario.objects.get(username=request.user)
-      pcd = form.cleaned_data
-      f_fecha  = pcd['fecha']
-      f_motivo   = pcd['motivo']
-      f_ingreso  = pcd['ingreso']
-      f_temp   = pcd['signos_tmp']
-      f_fc     = pcd['signos_fc']
-      f_fr     = pcd['signos_fr']
-      f_pa     = pcd['signos_pa']
-      f_pb     = pcd['signos_pb']
-      f_saod   = pcd['signos_saod']
-      f_avpu   = pcd['signos_avpu']
-
-      f_dolor  = pcd['signos_dolor']
-      f_atencion = False
-      f_esperar = True
-      f_recursos = 2
-
-      print "Evaluar Todo"
-      # Base
-      p = emergencia.paciente
-      fcAlta  = 100
-      frAlta  = 20
-      soBaja  = 92
-      soMBaj  = 90
-      tmpAlta = 40
-      tmpMAlt = 41
-      triage  = 5
-      
-      # Calculo de la edad - limites
-      if (p.edad() < 3):
-        if ((p.edad() == 0) and (p.meses() < 3)):
-          fcAlta  = 180
-          frAlta  = 50
-          tmpAlta = 37
-          tmpMAlt = 38
-        else:
-          fcAlta  = 160
-          frAlta  = 40
-          tmpAlta = 39
-          tmpMAlt = 40
-      elif ((p.edad() >= 3) and (p.edad() <= 8)):
-        fcAlta = 140
-        frAlta = 30
-
-      # Evaluacion de Frecuencia Cardiaca
-      if (f_fc > fcAlta):
-        triage = min(triage,2)
-        print "FC"
-      else:
-        triage = min(triage,3)
-
-      # Evaluacion de Frecuencia Respiratoria
-      if (f_fr > frAlta):
-        triage = min(triage,2)
-        print "FR"
-      else:
-        triage = min(triage,3)
-
-      # Evaluacion de Saturacion de Oxigeno
-      if (f_saod < soBaja):
-        triage = min(triage,2)
-        print "SAOD"
-
-      # Condicion A, Lectura
-      elif (f_saod < soMBaj):
-        triage = min(triage,1)
-      else:
-        triage = min(triage,3)
-
-      # Evaluacion de Temperatura
-      if (f_temp == tmpAlta):
-        triage = min(triage,3)
-      elif (f_temp == tmpMAlt):
-        print "TMP"
-        triage = min(triage,2)
-      elif (f_temp > tmpMAlt):
-        triage = min(triage,1)
-        
-      # Condicion A, Lectura
-      if ((f_avpu == 'U') or (f_avpu == 'P')):
-        triage = min(triage,1)
-        
-      # Condicion B, Lectura
-      if (f_dolor > 7):
-        print "Dolor"
-        triage = min(triage,2)
-        
-      if (triage == 1) or (triage == 2):
-        f_area = AreaEmergencia.objects.get(nombre__startswith="Sala de")
-      else:
-        f_area = AreaEmergencia.objects.get(nombre__startswith="Atenci")
- 
-        t = Triage(emergencia = emergencia,
-             medico = medico,
-             fecha = f_fecha,
-             motivo = f_motivo,
-             areaAtencion = f_area,
-             ingreso = f_ingreso,
-             atencion = f_atencion,
-             esperar = f_esperar,
-             recursos = f_recursos,
-             signos_tmp = f_temp,
-             signos_fc = f_fc,
-             signos_fr = f_fr,
-             signos_pa = f_pb,
-             signos_saod = f_saod,
-             signos_avpu = f_avpu,
-             signos_dolor = f_dolor,
-             nivel = triage)
-
-      paciente = emergencia.paciente
-      paciente.signos_tmp = f_temp
-      paciente.signos_fc = f_fc
-      paciente.signos_fr = f_fr
-      paciente.signos_pa = f_pa
-      paciente.signos_pb = f_pb
-      paciente.signos_saod = f_saod
-      paciente.save()
-      t.save()
-      return redirect("/paciente/"+str(emergencia.paciente.id))
-    else:
-      print "Error 2"
-  else:
-    form = FormularioEvaluacionPaciente()
+  form = FormularioEvaluacionPaciente()
   info = {'form':form,'idE':idE}
-  return render_to_response('calcularTriage.html',info,context_instance=RequestContext(request))
+  return render_to_response('calcularTriage.html',
+                            info,
+                            context_instance = RequestContext(request))
 
 def estadisticas_prueba():
 #    triages = Triage.objects.filter(fecha__year=ano).filter(fecha__month=mes).values('nivel').annotate(Count('nivel')).order_by('nivel')
@@ -1579,47 +1453,6 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
                 asig.status=1
                 asig.save()
 
-
-                # if tipo == 'dieta':
-                #     extra= EspDieta.objects.get(asignacion=asig)
-                #     extra.delete()
-                #     asig.delete()
-
-                # elif tipo == 'hidrata':
-                #     extra = EspHidrata.objects.get(asignacion=asig)
-                #     ver = CombinarHidrata.objects.filter(hidratacion1=extra)
-                #     if ver:
-                #         extra2=ver[0]
-                #         extra2.delete()
-                #     extra.delete()
-                #     asig.delete()
-
-                # elif tipo =="imagen":
-                #     extra = EspImg.objects.get(asignacion=asig)
-                #     extra.delete()
-                #     asig.delete()
-
-                # elif tipo =="lab" or tipo =="endoscopico":
-                #     asig.delete()
-
-                # elif tipo == "medicamento":
-                #     print "objeto asignar a eliminar:",asig
-                #     # Busco la info extra y la borro:
-                #     extra  = EspMedics.objects.get(asignacion=asig)
-                #     ver = tieneSOS.objects.filter(espMed=extra)
-                #     if ver:
-                #         extra2=ver[0]
-                #         extra2.delete()
-                #     extra.delete()
-                #     pastilla = Indicacion.objects.filter(nombre=asig.indicacion.nombre)
-                #     pastilla[0].delete()
-                #     asig.delete()
-
-                # elif tipo == 'valora' or tipo == 'otros' or tipo == 'terapeutico':
-                #     ind  = Indicacion.objects.filter(nombre=asig.indicacion.nombre) 
-                #     ind[0].delete()
-                #     asig.delete()
-
             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
             mensaje = "Cambio de status realizado Exitosamente"
             info = {'mensaje':mensaje, 'emergencia':emer,'triage':triage,'indicaciones':indicaciones, 'tipo_ind':tipo_ind}
@@ -1701,3 +1534,27 @@ def emergencia_diagnostico(request,id_emergencia):
     mensaje = ""
     info = {'mensaje':mensaje, 'emergencia':emer,'triage':triage,'diags':diags,'tipo_ind':tipo_ind}
     return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
+
+# Funcion que recibe el formulario para evaluar a un paciente y lo procesa
+@login_required(login_url='/')
+def evaluar_paciente(request, id_emergencia):
+  if request.method == 'POST':
+    form = FormularioEvaluacionPaciente(request.POST)
+    if form.is_valid():
+      emergencia = get_object_or_404(Emergencia, id = id_emergencia)
+      medico = Usuario.objects.get(username = request.user)
+      evaluacion = form.cleaned_data
+
+      paciente = emergencia.paciente
+      paciente.signos_tmp = evaluacion['temperatura']
+      paciente.signos_fc = evaluacion['frecuencia_cardiaca']
+      paciente.signos_fr = evaluacion['frecuencia_respiratoria']
+      paciente.signos_pa = evaluacion['presion_diastolica']
+      paciente.signos_pb = evaluacion['presion_sistolica']
+      paciente.signos_saod = evaluacion['saturacion_oxigeno']
+
+      return HttpResponse('')
+      paciente.save()
+    else:
+      return HttpResponse("console.log('Error en el formulario');", 
+                          mimetype='text/javascript)')

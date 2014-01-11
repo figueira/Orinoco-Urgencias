@@ -48,7 +48,6 @@ AVPU = (
   ("U","U - Inconciente"),
 )
 EDOLOR = (
-  (-1,"---------------"),
   (0,"No hay dolor"),
   (1,"1"),
   (2,"2"),

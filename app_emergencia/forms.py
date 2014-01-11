@@ -34,7 +34,7 @@ class BuscarEmergenciaForm(forms.Form):
 
 
 class FormularioEvaluacionPaciente(forms.Form):
-    avpu = forms.CharField(label = "Valor Obtenido en Escala AVPU",
+    avpu = forms.CharField(label = "Escala AVPU",
                            widget = forms.RadioSelect(choices = AVPU))
     fecha = forms.DateTimeField(
                     label = "Fecha y hora a la que se realiza la Evaluación",
@@ -59,28 +59,36 @@ class FormularioEvaluacionPaciente(forms.Form):
     presion_sistolica = forms.IntegerField(label = "Presión sistólica")
     presion_diastolica = forms.IntegerField(label = "Presión diastólica")
     saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno")
-    temperatura = forms.FloatField(label = "Temperatura")
+    temperatura = forms.FloatField()
 
     # Validaciones perzonalizadas sobre los campos del formulario
     def clean_frecuencia_cardiaca(self):
       self.__validar_intervalo(self.cleaned_data['frecuencia_cardiaca'], 0, 200)
+      return self.cleaned_data['frecuencia_cardiaca']
 
     def clean_frecuencia_respiratoria(self):
       self.__validar_intervalo(self.cleaned_data['frecuencia_respiratoria'],
                                0,
                                30)
+      return self.cleaned_data['frecuencia_respiratoria']
 
     def clean_presion_diastolica(self):
       self.__validar_intervalo(self.cleaned_data['presion_diastolica'], 0, 200)
+      return self.cleaned_data['presion_diastolica']
 
     def clean_presion_sistolica(self):
       self.__validar_intervalo(self.cleaned_data['presion_sistolica'], 0, 300)
+      return self.cleaned_data['presion_sistolica']
 
     def clean_saturacion_oxigeno(self):
       self.__validar_intervalo(self.cleaned_data['saturacion_oxigeno'], 0, 100)
+      return self.cleaned_data['saturacion_oxigeno']
 
     def clean_temperatura(self):
       self.__validar_intervalo(self.cleaned_data['temperatura'], 36, 42)
+      return self.cleaned_data['temperatura']
+
+    # Metodos privados
 
     def __validar_intervalo(self, valor, limite_inferior, limite_superior):
       if valor < limite_inferior or limite_superior < valor:

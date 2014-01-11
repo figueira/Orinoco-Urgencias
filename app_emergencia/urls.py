@@ -4,7 +4,7 @@ from app_emergencia import views
 
 urlpatterns = patterns('app_emergencia.views',
 
-    #Acesso a esperas
+    # Acesso a esperas
     url('^emergencia/espera_mantener/(?P<id_emergencia>.*)$','emergencia_espera_mantener'),
     url('^emergencia/(?P<id_emergencia>\d+)/agregar_espera/(?P<id_espera>\d+)$','emergencia_agregar_espera'),
     url('^emergencia/eliminar_espera_emergencia/(?P<id_espera_emergencia>.*)$','emergencia_eliminar_espera_emergencia'),
@@ -69,4 +69,8 @@ urlpatterns = patterns('app_emergencia.views',
     # Botones genericos de atencion:
     # Descargar de pdfs: 
     url('^emergencia/descarga/(?P<id_emergencia>.*)/(?P<tipo_doc>.*)$','emergencia_descarga'),
+
+    # Realizar la evaluacion de un paciente asociado a una emergencia
+    url('^emergencia/(?P<id_emergencia>\d+)/evaluar_paciente$', 
+        'evaluar_paciente')
 )
