@@ -33,33 +33,59 @@ class BuscarEmergenciaForm(forms.Form):
     apellidos = forms.CharField(label="Apellidos",max_length=32,required=False)
 
 
-class calcularTriageForm(forms.Form):
+class FormularioEvaluacionPaciente(forms.Form):
+    avpu = forms.CharField(label = "Valor Obtenido en Escala AVPU",
+                           widget = forms.RadioSelect(choices = AVPU))
     fecha = forms.DateTimeField(
                     label = "Fecha y hora a la que se realiza la Evaluación",
                     widget = forms.TextInput(
                                      attrs = 
                                        {'placeholder':'dd/MM/aaaa hh:mm:ss',
                                         'data-format':'dd/MM/yyyy hh:mm:ss'}))
-
-    motivo = forms.ModelChoiceField(
-                     label = "Motivo de ingreso",
-                     queryset = Motivo.objects.exclude(
-                                                 nombre__startswith = " "))
+    frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca")
+    frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria")
 
     ingreso = forms.CharField(label = "Tipo de ingreso",
                               max_length = 1,
                               widget = forms.Select(choices = ICAUSA))
     
-    signos_tmp = forms.FloatField(label = "Temperatura")
-    signos_fc = forms.FloatField(label = "Frecuencia cardíaca")
-    signos_fr = forms.IntegerField(label = "Frecuencia respiratoria")
-    signos_pa = forms.IntegerField(label = "Presión sistólica")
-    signos_pb = forms.IntegerField(label = "Presión diastólica")
-    signos_saod = forms.FloatField(label = "Saturación de oxígeno")
-    signos_avpu = forms.CharField(label = "Valor Obtenido en Escala AVPU",
-                                  widget = forms.RadioSelect(choices = AVPU))
-    signos_dolor = forms.IntegerField(label = "Intensidad del dolor",
-                                      widget = forms.Select(choices = EDOLOR))
+    intensidad_dolor = forms.IntegerField(
+                               label = "Intensidad del dolor",
+                               widget = forms.Select(choices = EDOLOR))
+    motivo = forms.ModelChoiceField(
+                     label = "Motivo de ingreso",
+                     queryset = Motivo.objects.exclude(
+                                                 nombre__startswith = " "))
+    presion_sistolica = forms.IntegerField(label = "Presión sistólica")
+    presion_diastolica = forms.IntegerField(label = "Presión diastólica")
+    saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno")
+    temperatura = forms.FloatField(label = "Temperatura")
+
+    # Validaciones perzonalizadas sobre los campos del formulario
+    def clean_frecuencia_cardiaca(self):
+      self.__validar_intervalo(self.cleaned_data['frecuencia_cardiaca'], 0, 200)
+
+    def clean_frecuencia_respiratoria(self):
+      self.__validar_intervalo(self.cleaned_data['frecuencia_respiratoria'],
+                               0,
+                               30)
+
+    def clean_presion_diastolica(self):
+      self.__validar_intervalo(self.cleaned_data['presion_diastolica'], 0, 200)
+
+    def clean_presion_sistolica(self):
+      self.__validar_intervalo(self.cleaned_data['presion_sistolica'], 0, 300)
+
+    def clean_saturacion_oxigeno(self):
+      self.__validar_intervalo(self.cleaned_data['saturacion_oxigeno'], 0, 100)
+
+    def clean_temperatura(self):
+      self.__validar_intervalo(self.cleaned_data['temperatura'], 36, 42)
+
+    def __validar_intervalo(self, valor, limite_inferior, limite_superior):
+      if valor < limite_inferior or limite_superior < valor:
+        raise forms.ValidationError('Debe estar entre ' + str(limite_inferior) +
+                                    ' y ' + str(limite_superior))
 
 ##################################################### FORMS ATENCION
 

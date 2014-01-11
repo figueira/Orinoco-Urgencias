@@ -367,7 +367,7 @@ def emergencia_aplicarTriage(request,idE,vTriage):
             t.save()
             # return redirect("/paciente/"+str(emergencia.paciente.id))
             #return redirect("/emergencia/listar/clasificados")
-            form = calcularTriageForm()
+            form = FormularioEvaluacionPaciente()
             info = {'form':form,'idE':idE, 'calcular':'calcular'}
             return render_to_response('calcularTriage.html',info,context_instance=RequestContext(request))
     return redirect("/")
@@ -376,7 +376,7 @@ def emergencia_aplicarTriage(request,idE,vTriage):
 def emergencia_calcularTriage(request,idE):
   mensaje = ""
   if request.method == 'POST':
-    form = calcularTriageForm(request.POST)
+    form = FormularioEvaluacionPaciente(request.POST)
     if form.is_valid():
       emergencia = get_object_or_404(Emergencia,id=idE)
       medico = Usuario.objects.get(username=request.user)
@@ -503,7 +503,7 @@ def emergencia_calcularTriage(request,idE):
     else:
       print "Error 2"
   else:
-    form = calcularTriageForm()
+    form = FormularioEvaluacionPaciente()
   info = {'form':form,'idE':idE}
   return render_to_response('calcularTriage.html',info,context_instance=RequestContext(request))
 
