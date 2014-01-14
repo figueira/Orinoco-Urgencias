@@ -1539,9 +1539,12 @@ def emergencia_diagnostico(request,id_emergencia):
 @login_required(login_url='/')
 def evaluar_paciente(request, id_emergencia):
   if request.method == 'POST':
+    print request.POST
     form = FormularioEvaluacionPaciente(request.POST)
+    print form.errors
     es_valido = form.is_valid()
     if es_valido:
+      print "Formulario valido"
       emergencia = get_object_or_404(Emergencia, id = id_emergencia)
       medico = Usuario.objects.get(username = request.user)
       evaluacion = form.cleaned_data
@@ -1554,7 +1557,9 @@ def evaluar_paciente(request, id_emergencia):
       paciente.signos_pb = evaluacion['presion_sistolica']
       paciente.signos_saod = evaluacion['saturacion_oxigeno']
 
-      #paciente.save()
+      paciente.save()
+    else:
+      print "Formulario invalido"
     csrf_token_value = request.COOKIES['csrftoken']
     plantilla_formulario = render_to_string(
                              'formularios/evaluacionPaciente.html',
