@@ -11,11 +11,11 @@
         language: 'pt-BR'
       });
 
-      // Asynchronous submission of the form
-      var formulario = $('.formulario-evaluacion');
+      // Se pide la submision del formulario de manera asincrona
       $('.tab-evaluacion').on('click',
                               '.boton-evaluar',
                               function(event){
+        var formulario = $('.formulario-evaluacion');
         event.preventDefault();
         $.ajax({
                 data: formulario.serialize(),
