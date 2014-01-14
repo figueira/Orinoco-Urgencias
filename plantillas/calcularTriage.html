@@ -5,6 +5,10 @@
           src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
   </script>
 
+  <script type="text/javascript"
+    src="/static/libs/bootstrap/js/bootstrap-tab.js">
+  </script>
+
   <script type='text/javascript'>
     $(document).ready(function(){
       $('#ingreso_picker').datetimepicker({
@@ -30,6 +34,28 @@
                          }
                })
       })
+
+      // Evento sobre respuesta negativa en la primera pregunta
+      $("#no_inmediata").click(function() {
+        $('#litab2').fadeIn();
+        $('#litab3').fadeOut();
+      });
+  
+      $("#si_espera").click(function() {
+        $('#litab3').fadeIn();
+      });
+  
+      $("#ahora").click(function() {
+        var currentTime = new Date()
+        var mes = currentTime.getMonth() + 1;
+        var dia = currentTime.getDate();
+        var ano = currentTime.getFullYear();
+        
+        var horas    = currentTime.getHours()
+        var minutos  = currentTime.getMinutes()
+        var segundos = currentTime.getSeconds()
+        $("#id_fecha").val(dia+"/"+mes+"/"+ano+" "+horas+":"+minutos+":"+segundos)
+      });
     })
   </script>
 {% endblock %} 
@@ -68,7 +94,8 @@
         <div class="tab-content">
           <div class="tab-pane text-center" id="tab1">
             <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
-            <a class="btn btn-danger" href="/emergencia/{{idE}}/t1">
+            <a class="btn btn-danger" 
+               href='/emergencia/{{ idE }}/aplicar_triage/1'>
               Si
             </a> 
             <a id="no_inmediata" class="btn" href="#">
@@ -81,20 +108,25 @@
             <a id="si_espera" class="btn btn-primaryt" href="#">
               Si
             </a>
-            <a class="btn btn-warning" href="/emergencia/{{idE}}/t2">
+            <a class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage/2'>
               No
             </a>
           </div>
   
           <div class="tab-pane text-center" id="tab3">
             <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
-            <a class="btn btn-primary" href="/emergencia/{{idE}}/t5">
+            <a class="btn btn-primary" 
+               href='/emergencia/{{ idE }}/aplicar_triage/5'>
               Ninguno
             </a>
-            <a class="btn btn-success" href="/emergencia/{{idE}}/t4">
+            <a class="btn btn-success" 
+               href='/emergencia/{{ idE }}/aplicar_triage/4'>
               Uno
             </a>
-            <a id="recursos" class="btn btn-warning" href="#">
+            <a id="recursos" 
+               class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage'>
               Varios
             </a>
           </div>
@@ -111,47 +143,3 @@
     </div>
   </div>
 {% endblock %} 
-
-{% block scripts2 %}
-  <script type="text/javascript"
-    src="/static/libs/bootstrap/js/bootstrap-tab.js">
-  </script>
-  <script>
-    $(document).ready(function() {
-        $("#no_inmediata").click(function() {
-          $('#tab1').hide();
-          $('#litab1').removeClass('active');
-          $('#tab2').show();
-          $('#litab2').addClass('active');
-        });
-    
-        $("#si_espera").click(function() {
-          $('#tab2').hide();
-          $('#litab2').removeClass('active');
-          $('#tab3').show();
-          $('#litab3').addClass('active');
-        });
-    
-        $("#recursos").click(function() {
-          $('#tab3').hide();
-          $('#litab3').removeClass('active');
-          $('#tab4').show();
-          $('#litab4').addClass('active');
-        });
-    
-        $("#ahora").click(function() {
-          var currentTime = new Date()
-          var mes = currentTime.getMonth() + 1;
-          var dia = currentTime.getDate();
-          var ano = currentTime.getFullYear();
-          
-          var horas    = currentTime.getHours()
-          var minutos  = currentTime.getMinutes()
-          var segundos = currentTime.getSeconds()
-          $("#id_fecha").val(dia+"/"+mes+"/"+ano+" "+horas+":"+minutos+":"+segundos)
-        });
-    
-    
-    });
-  </script>
-{% endblock %}
