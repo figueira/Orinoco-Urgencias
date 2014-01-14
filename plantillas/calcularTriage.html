@@ -38,11 +38,13 @@
       // Evento sobre respuesta negativa en la primera pregunta
       $("#no_inmediata").click(function() {
         $('#litab2').fadeIn();
+        $('a[href = #tab2]').click();
         $('#litab3').fadeOut();
       });
   
       $("#si_espera").click(function() {
         $('#litab3').fadeIn();
+        $('a[href = #tab3]').click();
       });
   
       $("#ahora").click(function() {
