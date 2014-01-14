@@ -9,6 +9,7 @@ $('.formulario-evaluacion').replaceWith("{{ plantilla_formulario | escapejs }}")
 {% if es_valido %}
   $('.tab-triage').fadeOut();
   $('#litab1').fadeIn();
+  $('a[href = #tab1]').click();
 {% else %}
   $('.tab-triage').fadeOut();
 {% endif %}
