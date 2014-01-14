@@ -341,36 +341,52 @@ def emergencia_darAlta(request,idE):
     return redirect("/emergencia/listar/todas")
 
 @login_required(login_url='/')
-def emergencia_aplicarTriage(request,idE,vTriage):
-    emergencia = get_object_or_404(Emergencia,id=idE)
-    print r'Usuario actualmente en sesion: ' + str(request.user)
-    medico = Usuario.objects.get(username=request.user)
-    if ((medico.tipo == "1") or (medico.tipo == "2")):
-        fechaReal  = datetime.now()
-        if ((int(vTriage) >= 1) and (int(vTriage) <= 5)):
-            motivo = Motivo.objects.get(nombre__startswith=" Ingreso")
-            area = AreaEmergencia.objects.get(nombre__startswith=" Ingreso")
-            recursos = 2
-            if (vTriage == 1):
-                atencion = True
-            elif (vTriage == 2):
-                atencion = False
-                esperar = False
-            else:
-                if (vTriage == 4):
-                    recursos = 1
-                elif (vTriage == 5):
-                    recursos = 0
-                atencion = False
-                esperar = True
-            t = Triage(emergencia = emergencia,medico=medico,fecha=fechaReal,motivo=motivo,atencion=atencion,esperar=esperar,areaAtencion=area,recursos=recursos,nivel=vTriage)
-            t.save()
-            # return redirect("/paciente/"+str(emergencia.paciente.id))
-            #return redirect("/emergencia/listar/clasificados")
-            form = FormularioEvaluacionPaciente()
-            info = {'form':form,'idE':idE, 'calcular':'calcular'}
-            return render_to_response('calcularTriage.html',info,context_instance=RequestContext(request))
-    return redirect("/")
+def emergencia_aplicarTriage(request, idE, vTriage):
+  emergencia = get_object_or_404(Emergencia, id = idE)
+  paciente = emergencia.paciente
+  medico = Usuario.objects.get(username = request.user)
+  if ((medico.tipo == "1") or (medico.tipo == "2")):
+    fechaReal  = datetime.now()
+    motivo = Motivo.objects.get(nombre__startswith = " Ingreso")
+    area = AreaEmergencia.objects.get(nombre__startswith = " Ingreso")
+    recursos = 2
+    if (vTriage == ''):
+      # El paciente debe ser evaluado para asignarle un triage
+      if((paciente.signos_tmp < 37 or 38.4 < paciente.signos_tmp) or
+         (paciente.signos_fc < 60 or 100 < paciente.signos_fc) or
+         (paciente.signos_fr < 14 or 20 < paciente.signos_fr) or
+         (paciente.signos_pa < 60 or 89 < paciente.signos_pa) or
+         (paciente.signos_pb < 100 or 139 < paciente.signos_pb) or
+         (paciente.signos_saod < 95 or 100 < paciente.signos_saod)):
+        vTriage = 2
+      else:
+        vTriage = 3
+
+    if (vTriage == 1):
+      atencion = True
+    elif (vTriage == 2):
+      atencion = False
+      esperar = False
+    else:
+      if (vTriage == 4):
+        recursos = 1
+      elif (vTriage == 5):
+        recursos = 0
+      atencion = False
+      esperar = True
+    t = Triage(emergencia = emergencia,
+               medico = medico,
+               fecha = fechaReal,
+               motivo = motivo,
+               atencion = atencion,
+               esperar = esperar,
+               areaAtencion = area,
+               recursos = recursos,
+               nivel = vTriage)
+    print 'Triage asignado: ' + str(vTriage)
+    t.save()
+    return redirect('/emergencia/listar/todas')
+  return redirect("/")
 
 @login_required(login_url='/')
 def emergencia_calcularTriage(request,idE):
@@ -1539,12 +1555,9 @@ def emergencia_diagnostico(request,id_emergencia):
 @login_required(login_url='/')
 def evaluar_paciente(request, id_emergencia):
   if request.method == 'POST':
-    print request.POST
     form = FormularioEvaluacionPaciente(request.POST)
-    print form.errors
     es_valido = form.is_valid()
     if es_valido:
-      print "Formulario valido"
       emergencia = get_object_or_404(Emergencia, id = id_emergencia)
       medico = Usuario.objects.get(username = request.user)
       evaluacion = form.cleaned_data
@@ -1558,8 +1571,7 @@ def evaluar_paciente(request, id_emergencia):
       paciente.signos_saod = evaluacion['saturacion_oxigeno']
 
       paciente.save()
-    else:
-      print "Formulario invalido"
+
     csrf_token_value = request.COOKIES['csrftoken']
     plantilla_formulario = render_to_string(
                              'formularios/evaluacionPaciente.html',

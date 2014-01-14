@@ -5,8 +5,10 @@
   Entrada:
     form -> El formulario que fue dado
  */
+$('.formulario-evaluacion').replaceWith("{{ plantilla_formulario | escapejs }}")
 {% if es_valido %}
-  console.log('Valido!');
+  $('.tab-triage').fadeOut();
+  $('#litab1').fadeIn();
 {% else %}
-  $('.formulario-evaluacion').replaceWith("{{ plantilla_formulario | escapejs }}")
+  $('.tab-triage').fadeOut();
 {% endif %}
