@@ -228,7 +228,10 @@
 	      </thead>
 	      {% for causa in color.1 %}
 		<tr>
-		  <td><img src="{{causa.1.1}}"/> {{causa.0}}</td>
+		  <td>
+		    <a id="popover-{{color.0}}-{{causa.0}}" href="#" data-toggle="popover" title="" data-content="And here right?" data-original-title=""><img src="{{causa.1.1}}"/> {{causa.0}}</a>
+		    <div style='display: none' id="chart-{{color.0}}-{{causa.0}}" style="margin: 0 auto"></div>
+		  </td>
 		  {% for valor in causa.1.0 %}
 		    <td>{{valor}}</td>
 		  {% endfor %}
@@ -272,7 +275,10 @@
 	      </thead>
 	      {% for causa in color.1%}
 		<tr>
-		  <td><img src="{{causa.1.1}}"/> {{causa.0}}</td>
+		  <td>
+		    <a id="popover-transicion-{{color.0}}-{{causa.0}}" href="#" data-toggle="popover" title="" data-content="And here right?" data-original-title=""><img src="{{causa.1.1}}"/> {{causa.0}}</a>
+		    <div style='display: none' id="chart-transicion-{{color.0}}-{{causa.0}}" style="margin: 0 auto"></div>
+		  </td>
 		  {% for valor in causa.1.0 %}
 		    <td>{{valor}}</td>
 		  {% endfor %}
@@ -322,7 +328,59 @@
 		}{% if not forloop.last %},{% endif %}
 	    {% endfor %}]
         });
-        {% endfor %}
+      {% endfor %}
+      
+      
+      {% for color in causas %}
+	{% for causa in color.1 %}
+	  $('#chart-{{color.0}}-{{causa.0}}').highcharts({
+	    chart: {
+                type: 'column',
+                width: 250,
+                height: 300
+            },
+            title: {
+                text: '{{causa.0}} - {{color.0}}'
+            },
+            xAxis: {
+                categories: [{% for color2 in causas %}
+			    {% if not forloop.first %}
+			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
+			    {% endif %}
+			      {% endfor %}]
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {
+                    text: 'Número de incidencias'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y
+                }
+            },
+            series: [{
+		name: '{{causa.0}}',
+		data: {{causa.1.0}}
+	    }]
+	  });
+	{% endfor %}
+      {% endfor %}
+        
+      {% for color in causas %}
+	{% for causa in color.1 %}
+	  $('#popover-{{color.0}}-{{causa.0}}').popover({
+	    trigger: 'hover',
+	    content: function() {
+	      return $('#chart-{{color.0}}-{{causa.0}}').html();
+	    },
+	    html: true
+	  });
+	{% endfor %}
+      {% endfor %}
     });
     
  $(function () {
@@ -363,6 +421,57 @@
         {% endfor %}
     });
     
+    
+      {% for color in causas_transicion %}
+	{% for causa in color.1 %}
+	  $('#chart-transicion-{{color.0}}-{{causa.0}}').highcharts({
+	    chart: {
+                type: 'column',
+                width: 250,
+                height: 300
+            },
+            title: {
+                text: '{{causa.0}} - {{color.0}}'
+            },
+            xAxis: {
+                categories: [{% for color2 in causas_transicion %}
+			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
+			      {% endfor %}]
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {
+                    text: 'Número de incidencias'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y
+                }
+            },
+            series: [{
+		name: '{{causa.0}}',
+		data: {{causa.1.0}}
+	    }]
+	  });
+	{% endfor %}
+      {% endfor %}
+    
+    
+    
+      {% for color in causas %}
+	{% for causa in color.1 %}
+	  $('#popover-transicion-{{color.0}}-{{causa.0}}').popover({
+	    trigger: 'hover',
+	    content: function() {
+	      return $('#chart-transicion-{{color.0}}-{{causa.0}}').html();
+	    },
+	    html: true
+	  });
+	{% endfor %}
+      {% endfor %}
 </script>
  
  
