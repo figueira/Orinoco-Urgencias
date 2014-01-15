@@ -9,7 +9,13 @@ REVISADO = (
 
 # Create your models here.
 
-
+class Enfermedad(models.Model):
+    id = models.CharField(max_length= 10, primary_key=True)
+    descripcion = models.CharField(max_length= 400)
+    grupo = models.CharField(max_length=200, blank=True, null=True)
+    def __unicode__(self):
+        return "%s" % (self.descripcion)
+        
 class ParteCuerpo(models.Model):
     nombre = models.CharField(max_length=48)
     def __unicode__(self):
