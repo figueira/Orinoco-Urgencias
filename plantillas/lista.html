@@ -488,7 +488,7 @@
       $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
         var enfermedad = JSON.parse(sugerencias);
         $.each(enfermedad,function(i){
-          console.log(lista_autocompletar);
+          console.log(lista_autocompletar.parent());
           lista_autocompletar.append('<option value = ' +this.pk + '>'
                                      +this.fields.descripcion+ '</option>') 
         });
