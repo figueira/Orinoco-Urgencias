@@ -255,7 +255,7 @@
             <th><center>UBICACI&Oacute;N</center></th>
             <th><center>PACIENTE</center></th>
             {% if  buscadorDeEnfermedad %}
-              <th><center>AGREGACI&Oacute;N DE ENFERMEDADES</center></th>
+              <th><center>DIAGNOSTICO</center></th>
             {% else %}
               <th><center>NIVEL DE TRIAGE</center></th>
             {% endif %}
@@ -327,8 +327,8 @@
                 <td >
                   <form>
                     <fieldset class= "raizSugerencias">
-                      <input class="agregarEnfermedad" type="text" list="sugerencias" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
-                      <datalist id="sugerencias">
+                      <input class="agregarEnfermedad" type="text" list="sugerencias_enfermedades" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
+                      <datalist id="sugerencias_enfermedades">
                       </datalist>
                     </fieldset>
                   </form>
@@ -481,15 +481,15 @@
   $(document).ready(function() {
     $('.agregarEnfermedad').keyup(function() {
       var nombre_enfermedad= $(this).val();
-      var deAqui= $(this);
+      var lista_autocompletar = $(this).closest('.raizSugerencias').find('datalist');
+      lista_autocompletar.empty();
       $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
-        $.each(sugerencias,function(i){
-          valor = $(this);
-         
-          
+        var enfermedad = JSON.parse(sugerencias);
+        $.each(enfermedad,function(i){
+          console.log(this.pk);
+          lista_autocompletar.append('<option value = ' +this.pk + '>'
+                                     +this.fields.descripcion+ '</option>') 
         });
-
-
       });
     }); 
 
