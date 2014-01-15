@@ -110,10 +110,12 @@ def emergencia_listar_todas(request):
 
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
+    buscarEnfermedad = False
     info = { 'emergencias': emergencias,
              'cubiculos': cubiculos,
              'form': form, 
-             'titulo': titulo }
+             'titulo': titulo, 
+             'buscadorDeEnfermedad': buscarEnfermedad }
     return render(request,
                   'lista.html', 
                   info)
@@ -136,11 +138,13 @@ def emergencia_listar_triage(request):
     lista1.extend(lista0)
     form = IniciarSesionForm()
     titulo = "Área de Triage"
+    buscarEnfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista1, 
             'form': form, 
             'titulo': titulo,
-            'cubiculos': cubiculos}
+            'cubiculos': cubiculos,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',
                               info,
                               context_instance = RequestContext(request))
@@ -150,11 +154,13 @@ def emergencia_listar_sinclasificar(request):
     lista = [i for i in lista if i.triage() == 0]
     form = IniciarSesionForm()
     titulo = "Sin Clasificar"
+    buscarEnfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista, 
             'form': form, 
             'titulo': titulo,
-            'cubiculos': cubiculos}
+            'cubiculos': cubiculos,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_clasificados(request):    
@@ -171,11 +177,13 @@ def emergencia_listar_clasificados(request):
     lista1.extend(lista5)
     form = IniciarSesionForm()
     titulo = "Clasificados"
+    buscarEnfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista1, 
             'form': form, 
             'titulo': titulo,
-            'cubiculos': cubiculos}
+            'cubiculos': cubiculos,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',
                               info,
                               context_instance = RequestContext(request))
@@ -186,7 +194,9 @@ def emergencia_listar_atencion(request,mensaje):
     lista = [i for i in lista if i.atendido() == True]
     form = IniciarSesionForm()
     titulo = "Atendidos"
-    info = {'emergencias': lista, 'form': form, 'titulo': titulo, 'mensaje': mensaje}
+    buscarEnfermedad = True
+    info = {'emergencias': lista, 'form': form, 'titulo': titulo, 'mensaje': mensaje,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_observacion(request, mensaje = ''):
@@ -194,12 +204,14 @@ def emergencia_listar_observacion(request, mensaje = ''):
     lista = [i for i in lista if i.atendido() == True and i.triage() <= 3]
     form = IniciarSesionForm()
     titulo = "Observación"
+    buscarEnfermedad = True
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista,
             'form': form,
             'titulo': titulo,
             'cubiculos': cubiculos,
-            'mensaje': mensaje}
+            'mensaje': mensaje,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',
                               info,
                               context_instance = RequestContext(request))
@@ -209,11 +221,13 @@ def emergencia_listar_ambulatoria(request):
     #lista = [i for i in lista if i.atendido() == True and i.triage() > 3]
     form = IniciarSesionForm()
     titulo = "Ambulatorio"
+    buscarEnfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {'emergencias': lista,
             'form': form,
             'titulo': titulo,
-            'cubiculos': cubiculos}
+            'cubiculos': cubiculos,
+            'buscadorDeEnfermedad': buscarEnfermedad }
     return render_to_response('lista.html',info,context_instance=RequestContext(request))
 
 
