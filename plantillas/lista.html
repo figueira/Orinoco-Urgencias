@@ -326,8 +326,10 @@
 
                 <td >
                   <form>
-                    <fieldset>
-                      <input id="agregarEnfermedad" type="text" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
+                    <fieldset class= "raizSugerencias">
+                      <input class="agregarEnfermedad" type="text" list="sugerencias" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
+                      <datalist id="sugerencias">
+                      </datalist>
                     </fieldset>
                   </form>
                 </td>
@@ -477,9 +479,15 @@
 <script>
 
   $(document).ready(function() {
-    $('#agregarEnfermedad').keydown(function() {
+    $('.agregarEnfermedad').keyup(function() {
       var nombre_enfermedad= $(this).val();
+      var deAqui= $(this);
       $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
+        $.each(sugerencias,function(i){
+          valor = $(this);
+         
+          
+        });
 
 
       });
