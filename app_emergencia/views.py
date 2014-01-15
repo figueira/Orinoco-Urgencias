@@ -1597,3 +1597,8 @@ def evaluar_paciente(request, id_emergencia):
                   { 'es_valido': es_valido,
                     'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
+
+def agregarEnfermedad(request,nombre_enfermedad):
+  hola = "PASO"
+  return HttpResponse(json.dumps(hola),
+                        content_type='application/json')

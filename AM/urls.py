@@ -29,6 +29,7 @@ urlpatterns = patterns('',
 
     # Emergencias
     url('^emergencia/agregar$','app_emergencia.views.emergencia_agregar'),
+    url('^emergencia/agregarEnfermedad/(?P<nombre_enfermedad>.*)$', 'app_emergencia.views.agregarEnfermedad'),
     url('^emergencia/listar/todas$','app_emergencia.views.emergencia_listar_todas'),
     url('^emergencia/listar/sinclasificar$','app_emergencia.views.emergencia_listar_sinclasificar'),
     url('^emergencia/listar/clasificados$','app_emergencia.views.emergencia_listar_clasificados'),

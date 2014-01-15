@@ -254,7 +254,11 @@
           <tr>
             <th><center>UBICACI&Oacute;N</center></th>
             <th><center>PACIENTE</center></th>
-            <th><center>NIVEL DE TRIAGE</center></th>
+            {% if  buscadorDeEnfermedad %}
+              <th><center>AGREGACI&Oacute;N DE ENFERMEDADES</center></th>
+            {% else %}
+              <th><center>NIVEL DE TRIAGE</center></th>
+            {% endif %}
             <th><center>CAUSAS DE ESPERA</center></th>
             <th>
               <center>TIEMPO DE ATENCI&Oacute;N</center>
@@ -320,10 +324,10 @@
               
               {% if  buscadorDeEnfermedad %}
 
-                <td class='agregarEnfermedad'
+                <td >
                   <form>
                     <fieldset>
-                    <input id="target" type="text" value="" placeholder="Ingrese el nombre de la enfermedad">
+                      <input id="agregarEnfermedad" type="text" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
                     </fieldset>
                   </form>
                 </td>
@@ -473,6 +477,14 @@
 <script>
 
   $(document).ready(function() {
+    $('#agregarEnfermedad').keydown(function() {
+      var nombre_enfermedad= $(this).val();
+      $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
+
+
+      });
+    }); 
+
     $('.dropdown-toggle').dropdown();
       var cont = 1;
       {% for emergencia in emergencias %}
