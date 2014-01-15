@@ -23,6 +23,10 @@ from app_usuario.forms import *
 # Estadisticas
 from django.db.models import Count
 
+# JSON
+from django.core import serializers
+import json
+
 #####################################################
 #Imports Atencion
 import ho.pisa as pisa
@@ -1600,7 +1604,7 @@ def evaluar_paciente(request, id_emergencia):
                   content_type = 'text/javascript')
 
 def agregarEnfermedad(request,nombre_enfermedad):
-  ###MyModel.objects.filter(field__like='10%8%0%')
-  hola = "PASO"
-  return HttpResponse(json.dumps(hola),
+  string = nombre_enfermedad
+  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
+  return HttpResponse(json.dumps(Sugerencias),
                         content_type='application/json')
