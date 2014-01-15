@@ -31,6 +31,7 @@ import cgi
 import json
 from django.template.loader import render_to_string
 from app_enfermedad.models import *
+from app_paciente.models import *
 from itertools import izip
 ######################################################
 
@@ -1599,6 +1600,7 @@ def evaluar_paciente(request, id_emergencia):
                   content_type = 'text/javascript')
 
 def agregarEnfermedad(request,nombre_enfermedad):
+  ###MyModel.objects.filter(field__like='10%8%0%')
   hola = "PASO"
   return HttpResponse(json.dumps(hola),
                         content_type='application/json')
