@@ -54,20 +54,20 @@
 }
 /* Fin de la definicion de la caja */
 
-.columna-esperas{
+.columna-esperas {
   width: 300px;
 }
 
-.encabezado-lista{
+.encabezado-lista {
   font-weight: lighter !important;
 }
 
-.fila-emergencia{
+.imagen-espera-lista {
+  padding: 0 5px 0 10px;
 }
 
-.imagen-espera-lista
-{
-  padding: 0 5px 0 10px;
+.imagen-espera-td{
+  width: 30px;
 }
 
 .nombreLista {
