@@ -420,10 +420,10 @@ def emergencia_aplicarTriage(request, idE, vTriage):
   return redirect("/")
 
 @login_required(login_url='/')
-def emergencia_calcularTriage(request,idE):
+def emergencia_calcular_triage(request, idE, triage_asignado):
   mensaje = ""
   form = FormularioEvaluacionPaciente()
-  info = {'form':form,'idE':idE}
+  info = {'form': form, 'idE': idE, 'triage_asignado': triage_asignado}
   return render_to_response('calcularTriage.html',
                             info,
                             context_instance = RequestContext(request))
@@ -1622,6 +1622,7 @@ def evaluar_paciente(request, id_emergencia):
     return render(request,
                   'scripts/evaluacionPaciente.js',
                   { 'es_valido': es_valido,
+                    'id_emergencia': id_emergencia,
                     'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
 
