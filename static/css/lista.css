@@ -71,6 +71,7 @@
 }
 
 .nombreLista {
+  font-weight: lighter;
   text-transform: uppercase;
 }
 
@@ -91,6 +92,11 @@ span.espera:link, span.espera:visited, span.espera:active
   margin-top: 30px;
 }
 
+.tdTriage img{
+  margin-left: 5px;
+  width: 35px;
+}
+
 .tit-list{
   font-weight: lighter;
 }
@@ -98,8 +104,4 @@ span.espera:link, span.espera:visited, span.espera:active
 .titulo-esperas{
   font-size: 16px;
   padding: 10px 20px 0 20px;
-}
-
-.nombreLista, th{
-  font-weight: lighter;
 }
