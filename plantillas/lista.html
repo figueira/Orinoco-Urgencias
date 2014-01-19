@@ -29,6 +29,8 @@
           minutos = parseInt(tiempo[2]);
           segundos = parseInt(tiempo[3]);
 
+          var minutos_en_emergencia = (dias * 24 * 60) + (horas * 60) + minutos;
+
           // Se incrementa un segundo
           segundos += 1;
 
@@ -56,25 +58,15 @@
           $("#tiempo_{{ emergencia.id }}").text(nuevo_tiempo);
 
           // Se determina el color del contador
-          var minutos_en_emergencia = (dias * 24 * 60) + (horas * 60) + minutos;
           inicio_negro = 360; // 6 horas (360 minutos)
           inicio_rojo = 240; // 4 horas (240 minutos)
           inicio_amarillo = 120; // 2 horas (120 minutos)
 
           if (minutos_en_emergencia > inicio_negro) {
-            var alarma = $("#imagen_{{emergencia.id}}").attr("src");
-            if (alarma != "/static/img/estados/alarmaNegra.png") {
-              $("#imagen_{{emergencia.id}}")
-                .attr("src","/static/img/estados/alarmaNegra.png"); 
-            }
             $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
           } else if (minutos_en_emergencia > inicio_rojo) {
-            $("#imagen_{{emergencia.id}}")
-              .attr("src","/static/img/estados/alarmaRoja.png");
             $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
           } else if (minutos_en_emergencia > inicio_amarillo) {
-            $("#imagen_{{emergencia.id}}")
-              .attr("src","/static/img/estados/alarmaAmarilla.png");
             $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
           }else{
             $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
@@ -84,15 +76,16 @@
           tiempo_espera = +($("#emergencia_{{ emergencia.id }}")
                               .data("tiempoesp"));
 
-          // Se modifica el atributo en el DOM
-          tiempo_espera = tiempo_espera + 1
-          $("#emergencia_{{ emergencia.id }}").data("tiempoesp", tiempo_espera);
-
           // Si el paciente lleva mas de media hora esperando, cambiar el fondo
           // de la celda
           if (tiempo_espera > 1800){
             $('#emergencia_{{emergencia.id}}')
               .css("background","rgba(230, 230, 230, 0.5)");
+          } else {
+            // Se modifica el atributo en el DOM solo cuando es necesario
+            tiempo_espera = tiempo_espera + 1
+            $("#emergencia_{{ emergencia.id }}").data("tiempoesp", 
+                                                      tiempo_espera);
           }
 
         {% endfor %}
