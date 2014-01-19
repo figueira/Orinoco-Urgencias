@@ -47,6 +47,7 @@ AVPU = (
   ("P","P - Responde a estimulos doloros"),
   ("U","U - Inconciente"),
 )
+
 EDOLOR = (
   (0,"No hay dolor"),
   (1,"1"),
@@ -352,6 +353,7 @@ class Atencion(models.Model):
   fecha      = models.DateTimeField()
   fechaReal    = models.DateTimeField(auto_now_add=True)
   area_atencion  = models.CharField(max_length=1)
+
   def __unicode__(self):
     return "Paciente:%s- Doctor:%s - Area:%s" % (self.emergencia.paciente.apellidos,self.medico.cedula,self.area_atencion)
   def horaA(self):
