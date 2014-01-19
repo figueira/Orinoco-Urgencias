@@ -1,6 +1,7 @@
 {% extends "base.html" %}
   {% block estilos %}
     <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
+    <meta http-equiv="refresh" content="300" >
   {% endblock %}
 
   {% block cuerpo %}
@@ -412,14 +413,33 @@
                 </span>
               </td>
               
+              <!--Se imprime el autocompletar en caso 
+              de estar en lista de observacion o atencion
+              La funcion de los 2 elementos hidden es para poder 
+              guardar en un input el codigo de la enfermdad
+              para usos futuros
+              -->
               {% if  buscadorDeEnfermedad %}
 
                 <td >
                   <form>
-                    <fieldset class= "raizSugerencias_{{emergencia.id}}">
-                      <input class="agregarEnfermedad" type="text" list="sugerencias_enfermedades_{{emergencia.id}}" name= "enfermedad_agregada" value="" placeholder= "Ingrese el nombre de la enfermedad" autocomplete="off" >
+                    <fieldset class= "raizSugerencias">
+                      <input class="agregarEnfermedad form-control" 
+                             type="text" 
+                             list="sugerencias_enfermedades_{{emergencia.id}}" 
+                             name= "enfermedad_agregada" 
+                             value="" 
+                             placeholder= "Ingrese el nombre de la enfermedad" 
+                             autocomplete="off">
                       <datalist id="sugerencias_enfermedades_{{emergencia.id}}" >
                       </datalist>
+                      <input class="agregarCodigoEnfermedad hidden" 
+                             type="text" 
+                             name="codigo_enfermedad"  
+                             value="" 
+                             autocomplete="off">
+                      <select class="CodigoEnfermedad hidden">
+                      </select>
                     </fieldset>
                   </form>
                 </td>
@@ -565,19 +585,45 @@
 <script>
 
   $(document).ready(function() {
+
+    // Carga las sugerencias de la base de datos 
     $('.agregarEnfermedad').keyup(function() {
       var nombre_enfermedad= $(this).val();
-      var id_de_la_emergencia= this.list.id
+      var id_de_la_emergencia= this.list.id;
       var lista_autocompletar = $('#'+id_de_la_emergencia);
+      var lista_codigo=  $(this).closest('.raizSugerencias').find('.CodigoEnfermedad');
       lista_autocompletar.empty();
+      lista_codigo.empty();
       $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
         var enfermedad = JSON.parse(sugerencias);
         $.each(enfermedad,function(i){
-          lista_autocompletar.append('<option value = ' +this.pk + '>'
-                                     +this.fields.descripcion+ '</option>') 
+          var nombre = this.fields.descripcion
+          var codigo = this.pk
+          var option_autocompletar = "<option value = \'" + nombre + "\'></option>";
+          var option_codigo = "<option id = \'" + nombre + "\' value = \'" + codigo + "\'></option>";
+          lista_autocompletar.append(option_autocompletar);
+          lista_codigo.append(option_codigo);  
         });
       });
+    });
+
+    /*Se agrega el codigo de la enfermedad al input invisible 
+      y se reemplaza en el input visible 
+
+      DEPENDE de la carga de sugerencias en el autocompletar
+    */
+    $('.raizSugerencias').on('change','.agregarEnfermedad', function(){
+      var posicion = $(this).closest('.raizSugerencias');
+      var select= $(posicion).find(".CodigoEnfermedad")
+      var codigo = $(select).find("option[id=\'"+this.value+"\']").val();
+      posicion.find('.agregarCodigoEnfermedad').val(codigo);
+      console.log(posicion.find('.agregarCodigoEnfermedad').val());
+
     }); 
+
+    $('option').on('click', function(){
+      console.log("yo");
+    });
 
     $('.dropdown-toggle').dropdown();
   });
