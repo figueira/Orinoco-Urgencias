@@ -134,7 +134,7 @@ class Emergencia(models.Model):
     # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
     # las esperas aquellas que ya estan asignadas
     esperas_asignadas = self.esperas_asignadas()
-    esperas_no_asignadas = list(Espera.objects.all())
+    esperas_no_asignadas = list(Espera.objects.all().order_by('nombre'))
     for espera_emergencia in esperas_asignadas:
       esperas_no_asignadas.remove(espera_emergencia.espera)
 
