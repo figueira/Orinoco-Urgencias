@@ -87,41 +87,41 @@
                   <li>
                     <a href="/emergencia/listar/todas">Listado General</a>
                   </li>
-                  <li class="nav-header">Listado por Area</li>
+                  <li class="nav-header">Listado por área</li>
                   <li>
                     <a href="/emergencia/listar/triage">
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      Triage
+                      Área de triage
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/sinclasificar">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      Pacientes por Clasificar
+                      Pacientes por clasificar
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/clasificados">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      Pacientes Clasificados
+                      Pacientes clasificados, no atendidos
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/atencion/nada">
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      Atencion
+                      Área de atencion
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/observacion">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      &Aacute;rea de Observaci&oacute;n
+                      Área de Observación
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/ambulatoria">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      &Aacute;rea de Atenci&oacute;n Ambulatoria
+                      Área de atención ambulatoria
                     </a>
                   </li>
                 </ul>
@@ -154,54 +154,54 @@
                 </h3>
               </li>
               <li class="dropdown">
-                <h3 class="tit_list"></h3>
+                <h3 class="tit-list"></h3>
               </li> 
             {% else %}
               <li>
                <a href="/emergencia/buscar">Paciente</a>
               </li>
               <li>
-               <a href="/emergencia/listar/todas">Ver Emergencias</a>
+               <a href="/emergencia/listar/todas">Ver emergencias</a>
               </li>
               <li class="dropdown">
                 <a  href="#" class="dropdown-toggle"
                     data-toggle="dropdown">
-                  Listas Por Categor&iacute;a
+                  Listas por categoría
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
                    <a href="/emergencia/listar/todas">
-                     Pacientes en Emergencia
+                     Pacientes en emergencia
                    </a>
                   </li>
                   <li class="divider">
                   </li>
-                  <li class="nav-header">Por &Aacute;rea
+                  <li class="nav-header">Por área
                   </li>
                   <li>
                     <a href="/emergencia/listar/triage">
-                      Pacientes en Triage
+                      Pacientes en triage
                     </a>
                   </li>
                   <li>
                     <a href="/emergencia/listar/atencion">
-                      Pacientes en Atención
+                      Pacientes en atención
                     </a>
                   </li>
                   <li class="divider">
                   </li>
                   <li class="nav-header">
-                    Sub &Aacute;reas de Triage
+                    Subáreas de triage
                   </li>
                   <li>
                     <a href="/emergencia/listar/sinclasificar"> 
-                      Pacientes Sin Clasificar
+                      Pacientes sin clasificar
                     </a>
                   </li>
                   <li>
                   <a href="/emergencia/listar/clasificados">
-                    Pacientes Clasificados
+                    Pacientes clasificados, no atendidos
                   </a>
                   </li>
                 </ul>
@@ -212,7 +212,7 @@
         {% if user.is_authenticated %}
           <div class="usuario navbar-form pull-right">
             {{user}} 
-            (<a href="/sesion/cerrar">Cerrar Sesión</a>)
+            (<a href="/sesion/cerrar">Cerrar sesión</a>)
           </div>
         {% else %}
           <form method='POST' 
@@ -225,9 +225,9 @@
                     type="submit"
                     value="Iniciar Sesi&oacute;n" />
               <br> 
-              <a href="/usuario/restablecer">Recuperar Clave</a> 
+              <a href="/usuario/restablecer">Recuperar clave</a> 
               |
-              <a href="/usuario/solicitar">Solicitar Cuenta</a>
+              <a href="/usuario/solicitar">Solicitar cuenta</a>
           </form>
         {% endif %}
       </div>
@@ -244,7 +244,7 @@
     
     {% if not user.is_authenticated %}
 
-      <h3 class="tit_list"></h3>
+      <h3 class="tit-list"></h3>
     {% endif %} 
     
     {% block cuerpo %} 
