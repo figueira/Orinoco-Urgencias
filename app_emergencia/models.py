@@ -123,7 +123,7 @@ class Emergencia(models.Model):
     esperas_emergencia = EsperaEmergencia.objects.filter(
                            emergencia = self,
                            hora_fin = None
-                         )
+                         ).order_by('espera__nombre')
     return esperas_emergencia
 
   # Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
