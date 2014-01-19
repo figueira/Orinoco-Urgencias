@@ -27,6 +27,9 @@ from django.db.models import Count
 from django.core import serializers
 import json
 
+# Expresiones regulares
+import re
+
 #####################################################
 #Imports Atencion
 import ho.pisa as pisa
@@ -109,7 +112,7 @@ def emergencia_buscar(request):
 #   Busca en la base de datos las emergencias y los 
 #   cubiculos que seran utilizados en la vista lista.hmtl
 #
-def emergencia_listar_todas(request):
+def emergencia_listar_todas(request, mensaje = ''):
   emergencias = Emergencia.objects.filter(hora_egreso = None) \
                                   .order_by('hora_ingreso')
   cubiculos = Cubiculo.objects.all()
@@ -120,6 +123,7 @@ def emergencia_listar_todas(request):
   info = { 'emergencias': emergencias,
            'cubiculos': cubiculos,
            'form': form, 
+           'mensaje': mensaje,
            'titulo': titulo, 
            'buscadorDeEnfermedad': buscar_enfermedad }
   return render(request,
@@ -190,9 +194,11 @@ def emergencia_listar_atencion(request, mensaje):
   form = IniciarSesionForm()
   titulo = "Atendidos"
   buscar_enfermedad = True
+  cubiculos = Cubiculo.objects.all()
   info = {'emergencias': emergencias, 
           'form': form, 
           'titulo': titulo, 
+          'cubiculos': cubiculos,
           'mensaje': mensaje,
           'buscadorDeEnfermedad': buscar_enfermedad }
   return render_to_response('lista.html', 
@@ -200,17 +206,17 @@ def emergencia_listar_atencion(request, mensaje):
                             context_instance = RequestContext(request))
 
 def emergencia_listar_observacion(request, mensaje = ''):
-  lista = Emergencia.objects \
-                    .filter(hora_egreso = None,
-                            asignarcub__cubiculo__area__nombre__icontains = \
-                              'observación',
-                            atencion__isnull = False)\
-                    .order_by('hora_ingreso')
+  emergencias = Emergencia \
+                .objects \
+                .filter(hora_egreso = None,
+                        asignarcub__cubiculo__area__nombre__icontains =
+                          'observación') \
+                .order_by('hora_ingreso')
   form = IniciarSesionForm()
   titulo = "Observación"
   buscarEnfermedad = True
   cubiculos = Cubiculo.objects.all()
-  info = {'emergencias': lista,
+  info = {'emergencias': emergencias,
           'form': form,
           'titulo': titulo,
           'cubiculos': cubiculos,
@@ -220,19 +226,26 @@ def emergencia_listar_observacion(request, mensaje = ''):
                             info,
                             context_instance = RequestContext(request))
 
-def emergencia_listar_ambulatoria(request):
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    #lista = [i for i in lista if i.atendido() == True and i.triage() > 3]
-    form = IniciarSesionForm()
-    titulo = "Ambulatorio"
-    buscarEnfermedad = False
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista,
-            'form': form,
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+def emergencia_listar_ambulatoria(request, mensaje = ''):
+  emergencias = Emergencia \
+                .objects \
+                .filter(hora_egreso = None,
+                        asignarcub__cubiculo__area__nombre__icontains =
+                          'ambulatoria') \
+                .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Ambulatorio"
+  buscar_enfermedad = True
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias,
+          'form': form,
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'mensaje': mensaje,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance=RequestContext(request))
 
 
 
@@ -715,12 +728,13 @@ def emergencia_espera_finalizada(request,id_espera_emergencia):
 #########################################################
 
 #------------------------------------------ Funciones para agregar un cubiculo
-def emergencia_guardar_cubi(request,id_emergencia,accion):
+def emergencia_guardar_cubi(request, id_emergencia, accion):
   emergencia = get_object_or_404(Emergencia, id = id_emergencia)
   cubiculo  = get_object_or_404(Cubiculo, id = request.POST['id_cubiculo'])
 
   if cubiculo.esta_asignado():
-    mensaje = "El cubiculo " + cubiculo.nombre + " esta asignado a otro paciente"
+    mensaje = "Error: El cubiculo " + cubiculo.nombre + \
+              " esta asignado a otro paciente"
   else:
     tiene_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                        .count() > 0
@@ -747,12 +761,21 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
 
       asignacion_cubiculo = AsignarCub.objects.create(emergencia = emergencia,
                                                       cubiculo = cubiculo)
-      mensaje = "Cubiculo " + cubiculo.nombre + " asignado exitosamente"
+      mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
     else:
-      mensaje = "Cubiculo " + cubiculo.nombre + " actualizado exitosamente"
+      mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " actualizado"
       asignacion_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                               .update(cubiculo = cubiculo)
-  return emergencia_listar_observacion(request, mensaje)
+    
+    print mensaje
+    if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
+      print 'Enviando a ambulatoria'
+      return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+    else:
+      print 'Enviando a observación'
+      return emergencia_listar_observacion(request, mensaje)
+
+  return emergencia_listar_todas(request, mensaje = mensaje)
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_tiene_cubiculo(request,id_emergencia):
