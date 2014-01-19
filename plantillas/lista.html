@@ -18,6 +18,86 @@
 
     <script src ="/static/scripts/esperas.js"> </script>
     <script>
+      // Funcion que modifica cada segundo los tiempos de espera
+      function myTimer() {
+        {% for emergencia in emergencias %}
+          // Se toma el contenido actual del tiempo de espera
+          var tiempo = $("#tiempo_{{ emergencia.id }}").text()
+                                                       .split(":");
+          dias = parseInt(tiempo[0]);
+          horas = parseInt(tiempo[1]);
+          minutos = parseInt(tiempo[2]);
+          segundos = parseInt(tiempo[3]);
+
+          // Se incrementa un segundo
+          segundos += 1;
+
+          if (segundos == 60) {
+            segundos = 0;
+            minutos = minutos + 1;
+            if (minutos == 60) {
+              minutos = 0;
+              horas = horas + 1;
+              if (horas == 24) {
+                horas = 0;
+                dias = dias + 1;
+              }
+            }
+          }
+
+          // Se colocan los 0 iniciales
+          if (segundos < 10) segundos = "0" + segundos;
+          if (minutos < 10) minutos = "0" + minutos;
+          if (horas < 10) horas = "0" + horas;
+          if (dias < 10) dias = "0" + dias;
+
+          // Se reimprime el contador
+          nuevo_tiempo = dias + ":" + horas + ":" + minutos + ":" + segundos;
+          $("#tiempo_{{ emergencia.id }}").text(nuevo_tiempo);
+
+          // Se determina el color del contador
+          var minutos_en_emergencia = (dias * 24 * 60) + (horas * 60) + minutos;
+          inicio_negro = 360; // 6 horas (360 minutos)
+          inicio_rojo = 240; // 4 horas (240 minutos)
+          inicio_amarillo = 120; // 2 horas (120 minutos)
+
+          if (minutos_en_emergencia > inicio_negro) {
+            var alarma = $("#imagen_{{emergencia.id}}").attr("src");
+            if (alarma != "/static/img/estados/alarmaNegra.png") {
+              $("#imagen_{{emergencia.id}}")
+                .attr("src","/static/img/estados/alarmaNegra.png"); 
+            }
+            $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
+          } else if (minutos_en_emergencia > inicio_rojo) {
+            $("#imagen_{{emergencia.id}}")
+              .attr("src","/static/img/estados/alarmaRoja.png");
+            $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
+          } else if (minutos_en_emergencia > inicio_amarillo) {
+            $("#imagen_{{emergencia.id}}")
+              .attr("src","/static/img/estados/alarmaAmarilla.png");
+            $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
+          }else{
+            $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
+          }
+
+          // Ahora se calcula cuanto tiempo lleva el paciente esperando
+          tiempo_espera = +($("#emergencia_{{ emergencia.id }}")
+                              .data("tiempoesp"));
+
+          // Se modifica el atributo en el DOM
+          tiempo_espera = tiempo_espera + 1
+          $("#emergencia_{{ emergencia.id }}").data("tiempoesp", tiempo_espera);
+
+          // Si el paciente lleva mas de media hora esperando, cambiar el fondo
+          // de la celda
+          if (tiempo_espera > 1800){
+            $('#emergencia_{{emergencia.id}}')
+              .css("background","rgba(230, 230, 230, 0.5)");
+          }
+
+        {% endfor %}
+      }
+
       function enviaA(emercy){
         $(function() {
           $('#'+emercy+'cub').change(function() {
@@ -82,6 +162,17 @@
       }
 
       $(document).ready(function(){
+        // Se empieza la funcion que actualiza los contadores
+        var intervalo_tiempo = setInterval(function(){ myTimer() }, 1000);
+
+        // Se inicializan contadores de filas
+        var cont = 1;
+        {% for emergencia in emergencias %}
+          $("#emergencia_{{emergencia.id}}").data("fila",cont);
+          $("#emergencia_{{emergencia.id}}").data("flat","0");
+          cont++;
+        {% endfor %}
+
         // Evento que oculta el panel de causas de espera cuando se hace click
         // fuera de el
         $(document.body).click(function(){
@@ -269,9 +360,10 @@
           </tr>
 
           {% for emergencia in emergencias %}
-            <tr id ="emergencia_{{emergencia.id}}" 
+            <tr id="emergencia_{{emergencia.id}}" 
                 class="fila-emergencia" 
-                data-id-emergencia='{{ emergencia.id }}'>
+                data-id-emergencia='{{ emergencia.id }}'
+                data-tiempoesp='{{ emergencia.tiempo_espera_causas }}'>
               <td>
                 {% if emergencia.triage != 0 %}
                   <div id="formCub">
@@ -495,104 +587,6 @@
     }); 
 
     $('.dropdown-toggle').dropdown();
-    var cont = 1;
-    {% for emergencia in emergencias %}
-      $("#emergencia_{{emergencia.id}}").data("tiempoEsp","{{emergencia.tiempo_espera_causasR}}");
-      $("#emergencia_{{emergencia.id}}").data("fila",cont);
-      $("#emergencia_{{emergencia.id}}").data("flat","0");
-      cont++;
-    {% endfor %}
-
-    var myVar = setInterval(function(){ myTimer() }, 1000);
-    var tiempoMax = 360;
-    function myTimer() {
-      {% for emergencia in emergencias %}
-        var idE = "{{ emergencia.paciente.apellidos }}"
-        var tiempo=$("#tiempo_{{ emergencia.id }}").text();
-        tiempo = tiempo.split(":");
-        dias = parseInt(tiempo[0]);
-        hors = parseInt(tiempo[1]);
-        mins = parseInt(tiempo[2]);
-        segs = parseInt(tiempo[3]);
-        var tiempoC = (dias * 24 * 60) + (hors * 60) + mins;
-
-        segs += 1;
-
-        if (segs == 60) {
-          segs = 0;
-          mins = mins + 1;
-          if (mins == 60) {
-            mins = 0;
-            hors = hors + 1;
-            if (hors == 24) {
-              hors = 0;
-              dias = dias + 1;
-            }
-          }
-        }
-
-        if (segs < 10) segs = "0" + segs;
-        if (mins < 10) mins = "0" + mins;
-        if (hors < 10) hors = "0" + hors;
-        if (dias < 10) dias = "0" + dias;
-
-        tiempo = dias + ":" + hors + ":" + mins + ":" + segs;
-        $("#tiempo_{{ emergencia.id }}").text(tiempo);
-        tiempoEsp = $("#emergencia_{{ emergencia.id }}").data("tiempoEsp")
-                                                        .split(":");
-        diasEsp = parseInt(tiempoEsp[0]);
-        horsEsp = parseInt(tiempoEsp[1]);
-        minsEsp = parseInt(tiempoEsp[2]);
-        segsEsp = parseInt(tiempoEsp[3]);
-        segsEsp += 1;
-        if (segsEsp == 60) {
-          segsEsp = 0;
-          minsEsp = minsEsp + 1;
-          if (minsEsp == 60) {
-            minsEsp = 0;
-            horsEsp = horsEsp + 1;
-            if (horsEsp == 24) {
-              horsEsp = 0;
-              diasEsp = diasEsp + 1;
-            }
-          }
-        }
-
-        tiempoEsp = diasEsp + ":" + horsEsp + ":" + minsEsp + ":" + segsEsp
-        $("#emergencia_{{ emergencia.id }}").data("tiempoEsp", tiempoEsp);
-
-        if (diasEsp > 0 || horsEsp > 0 || minsEsp > 30){
-          $('#emergencia_{{emergencia.id}}').css("background","rgba(230, 230, 230, 0.5)");
-        }
-
-        tiempo = (dias * 24 * 60) + (hors * 60) + mins;
-        tExc = tiempoMax;
-        tRoj = tiempoMax * .66;
-        tAma = tiempoMax * .33;
-        if (tiempo  > tExc) {
-          var alarma = $("#imagen_{{emergencia.id}}").attr("src");
-          if (alarma != "/static/img/estados/alarmaNegra.png") {
-            $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
-          }
-        } else if (tiempo > tRoj) {
-          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaRoja.png");
-        } else if (tiempo > tAma) {
-          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
-        }
-
-        t = Math.floor((tiempoC /tiempoMax) * 100);
-        if (t >= 100) {
-          $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
-        } else if (t < 100 && t >= 66) {
-          $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
-        } else if (t < 66 && t >= 33) {
-          $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
-        } else {
-          $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
-        }
-
-      {% endfor %}
-    }
   });
 </script>
 

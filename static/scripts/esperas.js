@@ -6,7 +6,7 @@
 */
 function MantenerEsperas(fila_emergencia){
   var id_emergencia = fila_emergencia.data('id-emergencia');
-  fila_emergencia.data("tiempoEsp","0:0:0:0");
+  fila_emergencia.data("tiempoesp", 0);
   fila_emergencia.data("tiempo_espera_inicio","0");
   fila_emergencia.css("background","white");
   $.get("/emergencia/espera_mantener/" + id_emergencia);
@@ -39,7 +39,7 @@ function estado(emer,i)
     $('#causas_' + emer).after(imagenEspera)
   }
   
-  $("#emergencia_"+emer).data("tiempoEsp","0:0:0:0");
+  $("#emergencia_"+emer).data("tiempoesp","0:0:0:0");
   $("#emergencia_"+emer).data("tiempo_espera_inicio","0");
   $('#emergencia_'+emer).css("background","white");
 
@@ -72,7 +72,7 @@ function eliminar(emer,i){
     $('#' + emer + '-' + i).find('.imagenIcono').attr('onClick','agregar(' + emer + ',' + i + ')');
     $('#' + emer + '-' + i).find('input').remove();
 
-    $("#emergencia_" + emer).data("tiempoEsp","0:0:0:0");
+    $("#emergencia_" + emer).data("tiempoesp","0:0:0:0");
     $("#emergencia_" + emer).data("tiempo_espera_inicio","0");
     $('#emergencia_' + emer).css("background","white");
   });
@@ -102,7 +102,7 @@ function agregar(emer,i){
                               '" style="width:50px;height:50px;" ' +
                               'src="/static/img/esperas/espera_' + i + 
                               '.png"/>');
-  $("#emergencia_" + emer).data("tiempoEsp","0:0:0:0");
+  $("#emergencia_" + emer).data("tiempoesp","0:0:0:0");
   $("#emergencia_" + emer).data("tiempo_espera_inicio","0");
   $('#emergencia_' + emer).css("background","white");
 }
