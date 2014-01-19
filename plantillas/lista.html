@@ -4,15 +4,15 @@
   {% endblock %}
 
   {% block cuerpo %}
-    {% if "Exitosamente" in mensaje %} 
+    {% if "Logrado:" in mensaje %} 
       <div class= "alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{mensaje}}
+        {{ mensaje }}
       </div>
-    {% elif "cubiculo" in mensaje %}
+    {% elif "Error:" in mensaje %}
       <div class= "alert alert-error">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-          {{mensaje}}
+          {{ mensaje }}
         </div>
     {% endif %}
 
