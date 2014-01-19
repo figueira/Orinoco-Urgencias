@@ -188,25 +188,17 @@ class Emergencia(models.Model):
     return NoAten
   
   def tiempo_espera(self):
-    """triages = self.triages()
-    if triages:
-      triage = triages[0]
-      tiempo = triage.fecha.replace(tzinfo=None)
-    else:
-      tiempo = self.hora_ingreso.replace(tzinfo=None)
-    """
     tiempo = self.hora_ingreso.replace(tzinfo=None)
     tiempo = datetime.now() - tiempo
     return ceil(tiempo.total_seconds())
 
   def tiempo_espera_causas(self):
-    triages = self.triages()
     tiempo  = self.fecha_Esp_act.replace(tzinfo=None)
     if self.fecha_Esp_act:    
       tiempo  = datetime.now() - tiempo
     else:
       tiempo  = datetime.now()
-    return ceil(tiempo.total_seconds())
+    return int(ceil(tiempo.total_seconds()))
 
   def tiempo_esperaR(self):
     tiempo = self.tiempo_espera()
