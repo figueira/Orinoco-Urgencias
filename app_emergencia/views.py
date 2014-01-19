@@ -109,18 +109,19 @@ def emergencia_buscar(request):
 #   Busca en la base de datos las emergencias y los 
 #   cubiculos que seran utilizados en la vista lista.hmtl
 #
-def emergencia_listar_todas(request):   
-    emergencias = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
+def emergencia_listar_todas(request):
+    emergencias = Emergencia.objects.filter(hora_egreso = None) \
+                                    .order_by('hora_ingreso')
     cubiculos = Cubiculo.objects.all()
 
     form = IniciarSesionForm()
     titulo = "Área de Emergencias"
-    buscarEnfermedad = False
+    buscar_enfermedad = False
     info = { 'emergencias': emergencias,
              'cubiculos': cubiculos,
              'form': form, 
              'titulo': titulo, 
-             'buscadorDeEnfermedad': buscarEnfermedad }
+             'buscadorDeEnfermedad': buscar_enfermedad }
     return render(request,
                   'lista.html', 
                   info)
