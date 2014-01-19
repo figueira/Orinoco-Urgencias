@@ -434,20 +434,17 @@
                        data-original-title="Recalcular">
                     <img 
                       src="/static/img/estados/nivel{{ emergencia.triage }}.png" 
-                      class = " marginleft5 width40 height40" 
                       title="Nivel {{ emergencia.triage }}"/>
                     </a>
                   {% else %}
-                    <a href="/emergencia/{{emergencia.id}}/t1">
+                    <a href="/emergencia/{{ emergencia.id }}/t1">
                       <img src="/static/img/estados/nivel1.png" 
-                           class = " marginleft5 width40 height40" 
                            rel="tooltip" 
                            data-toggle="tooltip" 
                            data-original-title="Colocar en Nivel 1"/>
                     </a>
                     <a href="/emergencia/{{emergencia.id}}/t2">
                       <img src="/static/img/estados/nivel2.png" 
-                           class = " marginleft5 width40 height40" 
                            rel="tooltip" 
                            data-toggle="tooltip" 
                            data-original-title="Colocar en Nivel 2"/>
@@ -457,7 +454,6 @@
                        data-toggle="tooltip" 
                        data-original-title="Calcular">
                       <img src="/static/img/estados/nivel0.png" 
-                           class = " marginleft5 width40 height40" 
                            title="Nivel {{ emergencia.triage }}"/>
                     </a>
                   {% endif %}
