@@ -495,108 +495,101 @@
     }); 
 
     $('.dropdown-toggle').dropdown();
-      var cont = 1;
-      {% for emergencia in emergencias %}
-        $("#emergencia_{{emergencia.id}}").data("tiempoEsp","{{emergencia.tiempo_espera_causasR}}");
-        $("#emergencia_{{emergencia.id}}").data("fila",cont);
-        $("#emergencia_{{emergencia.id}}").data("flat","0");
-        cont++;
-      {% endfor %}
+    var cont = 1;
+    {% for emergencia in emergencias %}
+      $("#emergencia_{{emergencia.id}}").data("tiempoEsp","{{emergencia.tiempo_espera_causasR}}");
+      $("#emergencia_{{emergencia.id}}").data("fila",cont);
+      $("#emergencia_{{emergencia.id}}").data("flat","0");
+      cont++;
+    {% endfor %}
 
-      $('td:not(".tdEspera,.tdTriage")').click(function(){
-      $('.espera').popover('hide'); 
-    });
-
-    $('.espera').click(function(e){
-      e.stopPropagation();
-      $('.espera').not(this).popover('hide');
-    });
- 
-
-    var myVar=setInterval(function(){myTimer()},1000);
+    var myVar = setInterval(function(){ myTimer() }, 1000);
     var tiempoMax = 360;
     function myTimer() {
+      {% for emergencia in emergencias %}
+        var idE = "{{ emergencia.paciente.apellidos }}"
+        var tiempo=$("#tiempo_{{ emergencia.id }}").text();
+        tiempo = tiempo.split(":");
+        dias = parseInt(tiempo[0]);
+        hors = parseInt(tiempo[1]);
+        mins = parseInt(tiempo[2]);
+        segs = parseInt(tiempo[3]);
+        var tiempoC = (dias * 24 * 60) + (hors * 60) + mins;
 
-    {% for emergencia in emergencias %}
-      var idE= "{{emergencia.paciente.apellidos}}"
-      var tiempo=$("#tiempo_{{emergencia.id}}").html();
-      tiempo = tiempo.split(":");
-      dias = parseInt(tiempo[0]);
-      hors = parseInt(tiempo[1]);
-      mins = parseInt(tiempo[2]);
-      segs = parseInt(tiempo[3]);
-      var tiempoC = (dias*24*60)+(hors*60)+mins;
+        segs += 1;
 
-      segs += 1;
-
-      if (segs == 60) {
-        segs = segs%60;
-        mins = mins +1;
-        if (mins == 60) {
-          mins = mins%60;
-          hors = hors + 1;
-          if (hors == 24) {
-            hors = hors % 24;
-            dias = dias + 1;
+        if (segs == 60) {
+          segs = 0;
+          mins = mins + 1;
+          if (mins == 60) {
+            mins = 0;
+            hors = hors + 1;
+            if (hors == 24) {
+              hors = 0;
+              dias = dias + 1;
+            }
           }
         }
-      }
 
-      if (segs < 10) segs = "0"+segs;
-      if (mins < 10) mins = "0"+mins;
-      if (hors < 10) hors = "0"+hors;
-      if (dias < 10) dias = "0"+dias;
+        if (segs < 10) segs = "0" + segs;
+        if (mins < 10) mins = "0" + mins;
+        if (hors < 10) hors = "0" + hors;
+        if (dias < 10) dias = "0" + dias;
 
-      tiempo = dias+":"+hors+":"+mins+":"+segs;
-      $("#tiempo_{{emergencia.id}}").html(tiempo);
-      tiempoEsp = $("#emergencia_{{emergencia.id}}").data("tiempoEsp").split(":");
-      diasEsp = parseInt(tiempoEsp[0]);
-      horsEsp = parseInt(tiempoEsp[1]);
-      minsEsp = parseInt(tiempoEsp[2]);
-      segsEsp = parseInt(tiempoEsp[3]);
-      segsEsp += 1;
-      if (segsEsp == 60) {
-        segsEsp = segsEsp%60;
-        minsEsp = minsEsp +1;
-        if (minsEsp == 60) {
-          minsEsp = minsEsp%60;
-          horsEsp = horsEsp + 1;
-          if (horsEsp == 24) {
-            horsEsp = horsEsp % 24;
-            diasEsp = diasEsp + 1;
+        tiempo = dias + ":" + hors + ":" + mins + ":" + segs;
+        $("#tiempo_{{ emergencia.id }}").text(tiempo);
+        tiempoEsp = $("#emergencia_{{ emergencia.id }}").data("tiempoEsp")
+                                                        .split(":");
+        diasEsp = parseInt(tiempoEsp[0]);
+        horsEsp = parseInt(tiempoEsp[1]);
+        minsEsp = parseInt(tiempoEsp[2]);
+        segsEsp = parseInt(tiempoEsp[3]);
+        segsEsp += 1;
+        if (segsEsp == 60) {
+          segsEsp = 0;
+          minsEsp = minsEsp + 1;
+          if (minsEsp == 60) {
+            minsEsp = 0;
+            horsEsp = horsEsp + 1;
+            if (horsEsp == 24) {
+              horsEsp = 0;
+              diasEsp = diasEsp + 1;
+            }
           }
         }
-      }
-      $("#emergencia_{{emergencia.id}}").data("tiempoEsp",diasEsp+":"+horsEsp+":"+minsEsp+":"+segsEsp)
-      if (diasEsp > 0 || horsEsp> 0 || minsEsp > 0){
-        $('#emergencia_{{emergencia.id}}').css("background","rgba(230, 230, 230, 0.5)");
-      }
 
-      tiempo = (dias*24*60)+(hors*60)+mins;
-      tExc = tiempoMax;
-      tRoj = tiempoMax * .66;
-      tAma = tiempoMax * .33;
-      if (tiempo  > tExc) {
-        var alarma = $("#imagen_{{emergencia.id}}").attr("src");
-        if (alarma != "/static/img/estados/alarmaNegra.png") {
-          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
+        tiempoEsp = diasEsp + ":" + horsEsp + ":" + minsEsp + ":" + segsEsp
+        $("#emergencia_{{ emergencia.id }}").data("tiempoEsp", tiempoEsp);
+
+        if (diasEsp > 0 || horsEsp > 0 || minsEsp > 30){
+          $('#emergencia_{{emergencia.id}}').css("background","rgba(230, 230, 230, 0.5)");
         }
-      } else if (tiempo > tRoj) {
-        $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaRoja.png");
-      } else if (tiempo > tAma) {
-        $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
-      }
 
-      t = Math.floor((tiempoC /tiempoMax)*100);
-      if (t >= 100) {
-        $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
-      } else if (t < 100 && t >= 66) {
-        $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
-      } else if (t < 66 && t >= 33) {
-        $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
-      } else {
-        $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
-      }
+        tiempo = (dias * 24 * 60) + (hors * 60) + mins;
+        tExc = tiempoMax;
+        tRoj = tiempoMax * .66;
+        tAma = tiempoMax * .33;
+        if (tiempo  > tExc) {
+          var alarma = $("#imagen_{{emergencia.id}}").attr("src");
+          if (alarma != "/static/img/estados/alarmaNegra.png") {
+            $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaNegra.png"); 
+          }
+        } else if (tiempo > tRoj) {
+          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaRoja.png");
+        } else if (tiempo > tAma) {
+          $("#imagen_{{emergencia.id}}").attr("src","/static/img/estados/alarmaAmarilla.png");
+        }
+
+        t = Math.floor((tiempoC /tiempoMax) * 100);
+        if (t >= 100) {
+          $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
+        } else if (t < 100 && t >= 66) {
+          $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
+        } else if (t < 66 && t >= 33) {
+          $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
+        } else {
+          $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
+        }
 
       {% endfor %}
     }
