@@ -101,16 +101,19 @@ class Motivo(models.Model):
 
 
 class Emergencia(models.Model):
-  paciente     = models.ForeignKey(Paciente)
-  responsable    = models.ForeignKey(Usuario,related_name="A cargo")
-  ingreso      = models.ForeignKey(Usuario,related_name="Ingresado por")
-  hora_ingreso   = models.DateTimeField()
-  fecha_Esp_act  = models.DateTimeField(auto_now_add=True)
-  hora_ingresoReal = models.DateTimeField(auto_now_add=True)
-  hora_egreso    = models.DateTimeField(blank=True,null=True)
-  hora_egresoReal  = models.DateTimeField(blank=True,null=True)
-  egreso       = models.ForeignKey(Usuario,related_name="De alta por",blank=True,null=True)
-  destino      = models.ForeignKey(Destino,blank=True,null=True)
+  paciente = models.ForeignKey(Paciente)
+  responsable = models.ForeignKey(Usuario,related_name = "A cargo")
+  ingreso = models.ForeignKey(Usuario,related_name = "Ingresado por")
+  hora_ingreso = models.DateTimeField()
+  fecha_Esp_act = models.DateTimeField(auto_now_add = True)
+  hora_ingresoReal = models.DateTimeField(auto_now_add = True)
+  hora_egreso = models.DateTimeField(blank = True,null = True)
+  hora_egresoReal = models.DateTimeField(blank = True,null = True)
+  egreso = models.ForeignKey(Usuario,
+                             related_name = "De alta por",
+                             blank = True,
+                             null = True)
+  destino = models.ForeignKey(Destino,blank = True,null = True)
   
   def __unicode__(self):
     return "%s - %s " % (self.id,self.paciente)
@@ -163,7 +166,7 @@ class Emergencia(models.Model):
 
   def atendido(self):
     atendido = False
-    atenciones = Atencion.objects.filter(emergencia=self.id)
+    atenciones = Atencion.objects.filter(emergencia = self.id)
     if len(atenciones) > 0:
       atendido = True
     return atendido
