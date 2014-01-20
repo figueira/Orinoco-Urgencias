@@ -501,14 +501,22 @@
   $(document).ready(function() {
 
     // Carga las sugerencias de la base de datos 
-    $('.agregarEnfermedad').keyup(function() {
+    $('.agregarEnfermedad').keyup(function(e) {
+
+      // obtenemos el codigo de la tecla presionada
+      var code = (e.keyCode ? e.keyCode : e.which);
+
+      // no hacer nada si es una flecha
+      if(code == 37 || code == 38 || code == 39 || code == 40) {
+          return;
+      }
       var nombre_enfermedad= $(this).val();
       var id_de_la_emergencia= this.list.id;
       var lista_autocompletar = $('#'+id_de_la_emergencia);
       var lista_codigo=  $(this).closest('.raizSugerencias').find('.CodigoEnfermedad');
       lista_autocompletar.empty();
       lista_codigo.empty();
-      $.getJSON("/emergencia/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
+      $.getJSON("/paciente/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
         var enfermedad = JSON.parse(sugerencias);
         $.each(enfermedad,function(i){
           var nombre = this.fields.descripcion
