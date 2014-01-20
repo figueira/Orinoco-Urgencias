@@ -10,6 +10,8 @@
   </script>
 
   <script type='text/javascript'>
+    // Funcion que responde al exito de la llamada a ajax para hacer la
+    // evaluacion
     $(document).ready(function(){
       $('#ingreso_picker').datetimepicker({
         language: 'pt-BR'
@@ -25,13 +27,7 @@
                 data: formulario.serialize(),
                 dataType: 'script',
                 type: formulario.attr('method'),
-                url: formulario.attr('action'),
-                success: function(){
-                           // Se debe inicializar el datepicker
-                           $('#ingreso_picker').datetimepicker({
-                             language: 'pt-BR'
-                           });
-                         }
+                url: formulario.attr('action')
                })
       })
 
@@ -133,6 +129,7 @@
             </a>
           </div>
           <div class="tab-pane active tab-evaluacion" id="tab4">
+            <p class='triage-asignado'>{{ triage_asignado }}</p>
             {% include 'formularios/evaluacionPaciente.html' %}
           </div>
         </div>

@@ -27,6 +27,9 @@ from django.db.models import Count
 from django.core import serializers
 import json
 
+# Expresiones regulares
+import re
+
 #####################################################
 #Imports Atencion
 import ho.pisa as pisa
@@ -109,131 +112,140 @@ def emergencia_buscar(request):
 #   Busca en la base de datos las emergencias y los 
 #   cubiculos que seran utilizados en la vista lista.hmtl
 #
-def emergencia_listar_todas(request):   
-    emergencias = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    cubiculos = Cubiculo.objects.all()
+def emergencia_listar_todas(request, mensaje = ''):
+  emergencias = Emergencia.objects.filter(hora_egreso = None) \
+                                  .order_by('hora_ingreso')
+  cubiculos = Cubiculo.objects.all()
 
-    form = IniciarSesionForm()
-    titulo = "Área de Emergencias"
-    buscarEnfermedad = False
-    info = { 'emergencias': emergencias,
-             'cubiculos': cubiculos,
-             'form': form, 
-             'titulo': titulo, 
-             'buscadorDeEnfermedad': buscarEnfermedad }
-    return render(request,
-                  'lista.html', 
-                  info)
+  form = IniciarSesionForm()
+  titulo = "Área de emergencias"
+  buscar_enfermedad = False
+  info = { 'emergencias': emergencias,
+           'cubiculos': cubiculos,
+           'form': form, 
+           'mensaje': mensaje,
+           'titulo': titulo, 
+           'buscadorDeEnfermedad': buscar_enfermedad }
+  return render(request,
+                'lista.html', 
+                info)
 
 def emergencia_listar_triage(request):
-    lista = Emergencia.objects \
-                      .filter(hora_egreso = None) \
-                      .order_by('hora_ingreso')
-    lista = [i for i in lista if i.atendido() == False]
-    lista0 = [i for i in lista if  i.triage() == 0]
-    lista1 = [i for i in lista if  i.triage() == 1]
-    lista2 = [i for i in lista if  i.triage() == 2]
-    lista3 = [i for i in lista if  i.triage() == 3]
-    lista4 = [i for i in lista if  i.triage() == 4]
-    lista5 = [i for i in lista if  i.triage() == 5]
-    lista1.extend(lista2)
-    lista1.extend(lista3)
-    lista1.extend(lista4)
-    lista1.extend(lista5)
-    lista1.extend(lista0)
-    form = IniciarSesionForm()
-    titulo = "Área de Triage"
-    buscarEnfermedad = False
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista1, 
-            'form': form, 
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',
-                              info,
-                              context_instance = RequestContext(request))
+  emergencias = Emergencia.objects \
+                          .filter(hora_egreso = None,
+                                  triage__isnull = False) \
+                          .distinct() \
+                          .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Área de triage"
+  buscar_enfermedad = False
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias, 
+          'form': form, 
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance = RequestContext(request))
 
 def emergencia_listar_sinclasificar(request):    
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    lista = [i for i in lista if i.triage() == 0]
-    form = IniciarSesionForm()
-    titulo = "Sin Clasificar"
-    buscarEnfermedad = False
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista, 
-            'form': form, 
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+  emergencias = Emergencia.objects.filter(hora_egreso = None,
+                                          triage__isnull = True) \
+                                  .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Sin clasificar"
+  buscar_enfermedad = False
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias, 
+          'form': form, 
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance=RequestContext(request))
 
-def emergencia_listar_clasificados(request):    
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    lista = [i for i in lista if i.triage() != 0 and i.atendido() == False]
-    lista1 = [i for i in lista if  i.triage() == 1]
-    lista2 = [i for i in lista if  i.triage() == 2]
-    lista3 = [i for i in lista if  i.triage() == 3]
-    lista4 = [i for i in lista if  i.triage() == 4]
-    lista5 = [i for i in lista if  i.triage() == 5]
-    lista1.extend(lista2)
-    lista1.extend(lista3)
-    lista1.extend(lista4)
-    lista1.extend(lista5)
-    form = IniciarSesionForm()
-    titulo = "Clasificados"
-    buscarEnfermedad = False
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista1, 
-            'form': form, 
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',
-                              info,
-                              context_instance = RequestContext(request))
+def emergencia_listar_clasificados(request):
+  emergencias = Emergencia.objects \
+                          .filter(hora_egreso = None,
+                                  triage__isnull = False,
+                                  atencion__isnull = True) \
+                          .distinct() \
+                          .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Clasificados"
+  buscar_enfermedad = False
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias,
+          'form': form, 
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance = RequestContext(request))
 
-def emergencia_listar_atencion(request,mensaje):
-    print "ver mensaje con el que entra a listar atencion: ",mensaje
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    lista = [i for i in lista if i.atendido() == True]
-    form = IniciarSesionForm()
-    titulo = "Atendidos"
-    buscarEnfermedad = True
-    info = {'emergencias': lista, 'form': form, 'titulo': titulo, 'mensaje': mensaje,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+def emergencia_listar_atencion(request, mensaje):
+  emergencias = Emergencia.objects.filter(hora_egreso = None,
+                                          atencion__isnull = False) \
+                                  .distinct() \
+                                  .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Atendidos"
+  buscar_enfermedad = True
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias, 
+          'form': form, 
+          'titulo': titulo, 
+          'cubiculos': cubiculos,
+          'mensaje': mensaje,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html', 
+                            info, 
+                            context_instance = RequestContext(request))
 
 def emergencia_listar_observacion(request, mensaje = ''):
-    lista = Emergencia.objects.filter(hora_egreso = None).order_by('hora_ingreso')
-    lista = [i for i in lista if i.atendido() == True and i.triage() <= 3]
-    form = IniciarSesionForm()
-    titulo = "Observación"
-    buscarEnfermedad = True
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista,
-            'form': form,
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'mensaje': mensaje,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',
-                              info,
-                              context_instance = RequestContext(request))
+  emergencias = Emergencia \
+                .objects \
+                .filter(hora_egreso = None,
+                        asignarcub__cubiculo__area__nombre__icontains =
+                          'observación') \
+                .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Observación"
+  buscarEnfermedad = True
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias,
+          'form': form,
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'mensaje': mensaje,
+          'buscadorDeEnfermedad': buscarEnfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance = RequestContext(request))
 
-def emergencia_listar_ambulatoria(request):
-    lista = Emergencia.objects.filter(hora_egreso=None).order_by('hora_ingreso')
-    #lista = [i for i in lista if i.atendido() == True and i.triage() > 3]
-    form = IniciarSesionForm()
-    titulo = "Ambulatorio"
-    buscarEnfermedad = False
-    cubiculos = Cubiculo.objects.all()
-    info = {'emergencias': lista,
-            'form': form,
-            'titulo': titulo,
-            'cubiculos': cubiculos,
-            'buscadorDeEnfermedad': buscarEnfermedad }
-    return render_to_response('lista.html',info,context_instance=RequestContext(request))
+def emergencia_listar_ambulatoria(request, mensaje = ''):
+  emergencias = Emergencia \
+                .objects \
+                .filter(hora_egreso = None,
+                        asignarcub__cubiculo__area__nombre__icontains =
+                          'ambulatoria') \
+                .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Ambulatorio"
+  buscar_enfermedad = True
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias,
+          'form': form,
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'mensaje': mensaje,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance=RequestContext(request))
 
 
 
@@ -408,10 +420,10 @@ def emergencia_aplicarTriage(request, idE, vTriage):
   return redirect("/")
 
 @login_required(login_url='/')
-def emergencia_calcularTriage(request,idE):
+def emergencia_calcular_triage(request, idE, triage_asignado):
   mensaje = ""
   form = FormularioEvaluacionPaciente()
-  info = {'form':form,'idE':idE}
+  info = {'form': form, 'idE': idE, 'triage_asignado': triage_asignado}
   return render_to_response('calcularTriage.html',
                             info,
                             context_instance = RequestContext(request))
@@ -716,12 +728,13 @@ def emergencia_espera_finalizada(request,id_espera_emergencia):
 #########################################################
 
 #------------------------------------------ Funciones para agregar un cubiculo
-def emergencia_guardar_cubi(request,id_emergencia,accion):
+def emergencia_guardar_cubi(request, id_emergencia, accion):
   emergencia = get_object_or_404(Emergencia, id = id_emergencia)
   cubiculo  = get_object_or_404(Cubiculo, id = request.POST['id_cubiculo'])
 
   if cubiculo.esta_asignado():
-    mensaje = "El cubiculo " + cubiculo.nombre + " esta asignado a otro paciente"
+    mensaje = "Error: El cubiculo " + cubiculo.nombre + \
+              " esta asignado a otro paciente"
   else:
     tiene_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                        .count() > 0
@@ -748,12 +761,21 @@ def emergencia_guardar_cubi(request,id_emergencia,accion):
 
       asignacion_cubiculo = AsignarCub.objects.create(emergencia = emergencia,
                                                       cubiculo = cubiculo)
-      mensaje = "Cubiculo " + cubiculo.nombre + " asignado exitosamente"
+      mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
     else:
-      mensaje = "Cubiculo " + cubiculo.nombre + " actualizado exitosamente"
+      mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " actualizado"
       asignacion_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                               .update(cubiculo = cubiculo)
-  return emergencia_listar_observacion(request, mensaje)
+    
+    print mensaje
+    if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
+      print 'Enviando a ambulatoria'
+      return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+    else:
+      print 'Enviando a observación'
+      return emergencia_listar_observacion(request, mensaje)
+
+  return emergencia_listar_todas(request, mensaje = mensaje)
 
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_tiene_cubiculo(request,id_emergencia):
@@ -1600,6 +1622,15 @@ def evaluar_paciente(request, id_emergencia):
     return render(request,
                   'scripts/evaluacionPaciente.js',
                   { 'es_valido': es_valido,
+                    'id_emergencia': id_emergencia,
                     'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
 
+<<<<<<< HEAD
+=======
+def agregarEnfermedad(request,nombre_enfermedad):
+  string = nombre_enfermedad
+  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
+  return HttpResponse(json.dumps(Sugerencias),
+                        content_type='application/json')
+>>>>>>> 60f258bb89ea59e62d134712fc4ce87cc71beaa2

@@ -8,8 +8,14 @@ Introducción
 
 A continuación se presenta un documento con las instrucciones detalladas de cómo
 instalar la aplicación TDS en un sistema operativo Windows 8, recién instalado,
-de 32 bits. Es recomendable que durante todo el proceso se cuente con una conexión
-estable a internet.
+de 32 bits, configurado en inglés. Es recomendable que durante todo el proceso
+se cuente con una conexión estable a internet.
+
+Si se está haciendo la instalación en un sistema con características diferentes,
+algunos pasos deben ser adaptados a dichas características. En particular es muy
+común el cambio de un sistema de 32-bits a uno de 64-bits. En dicho caso
+particular sólo es necesario hacer la salvedad de descargar los programas en la
+versión apropiada.
 
 A lo largo del proceso se instalarán diversos programas, es conveniente que se
 verifique la correcta instalación de los mismos antes de seguir con pasos 
@@ -33,7 +39,11 @@ archivo obtenido. En el dialogo inicial haga click en 'Install' y espere a que
 finalice el proceso de descarga.
 
 Inicie el instalador, coloque sus credenciales de GitHub y realice los pasos de
-configuración.
+configuración. Es posible que la aplicación tenga problemas recuperando las
+credenciales del servidor de GitHub. Si ésto ocurre, pruebe descargando la
+última actualización para el '.NET Framework', que se puede conseguir en:
+
+  http://support.microsoft.com/kb/2468871
 
 El programa se ejecuta utilizando el framework 'Django', escrito en el lenguaje de
 programación 'Python', por lo que será necesario descargar e instalar el
@@ -45,16 +55,22 @@ en dicha página haga click en el enlace que dice 'individual releases'. En la p
 siguiente haga click en el enlace 'Python 2.7.6'. Busque en la página siguiente
 el enlace 'Windows x86 MSI Installer (2.7.6) (sig)' y haga click en él.
 
-En la primera pantalla seleccione 'Install for al users' y haga click en 'Next'.
-Luego tome nota del directorio de instalación y haga click en 'Next' hasta que 
-inicie la instalación. Cuando finalice la instalación haga click en 'Finish' y 
-reinicie la computadora.
+Puede que no se encuentre la versión específica, en dicho caso es importante
+descargar la versión más cercana, asegurándose que la misma se mantiene en el
+rango 2.7.x. Ésto se debe a que en la versión 3.x se hicieron importantes
+cambios sobre el lenguaje, los cuales no han sido contemplados en el código.
+
+En la primera pantalla seleccione 'Install for all users' y haga click en 'Next'.
+Luego tome nota del directorio de instalación, al cual de ahora en adelante
+llamaremos <python_home>, y haga click en 'Next' hasta que inicie la
+instalación. Cuando finalice la instalación haga click en 'Finish' y reinicie
+la computadora.
 
 Para utilizar correctamente Python será necesario cambiar las variables de
 ambiente de Windows. Para ésto vaya al 'Control Panel', busque la opción
 'Edit the system environment variables'. En la caja de diálogo que aparece haga
 click en 'Environment Variables...'. En el panel 'System variables' busque la
-variable 'Path', seleccionela y haga click en 'Edit...'. Al final de el valor
+variable 'Path', seleccionela y haga click en 'Edit...'. Al final del valor
 'Variable value' AGREGUE el valor 
 ';<python_home>;<python_home>\Scripts', donde
 <python_home> es el directorio en el que se instaló Python, y del que
@@ -71,12 +87,18 @@ y péguelo en un archivo en su escritorio llamado 'ez_setup.py'.
 Haga doble click sobre el archivo generado. Ésto debería iniciar una consola de 
 Python que ejecutará una serie de comandos y, al finalizar, se cerrará sola.
 
+Si al hacer doble click no se inicia la consola, entonces haga click derecho
+sobre el archivo, escoja la opción 'Open With...' y escoja manualmente el
+intérprete de Python, el cual encontrará bajo el directorio
+<python_home>\python.exe.
+
 Ahora copie el contenido de la página:
 
   https://raw.github.com/pypa/pip/master/contrib/get-pip.py
   
 y péguelo nuevamente en el escritorio, en un archivo llamado 'get-pip.py' y haga
-doble click sobre el archivo. Nuevamente se iniciará la consola de Python.
+doble click sobre el archivo. Nuevamente se iniciará la consola de Python. Si no
+inicia, seguir los mismos pasos que en la sugerencia anterior.
 
 Ahora que se tiene Pip, se puede fácilmente instalar el framework Django 
 abriendo la aplicación 'PowerShell' con derechos de administrador y colocando el
@@ -109,8 +131,8 @@ PostgreSQL, el cual se puede descargar de:
   
 haciendo click en el link 'Win x86-32' bajo la versión 9.3.1. Cuando finalice la
 descarga, arranque el instalador. Acepte las configuraciones por defecto, y
-escoja una clave para el super-usuario cuando se le pida la misma. Espere a que
-finalice la instalación.
+escoja una clave para el super-usuario cuando se le pida la misma. Tome nota de
+la clave que escogió y espere a que finalice la instalación.
 
 Desmarque la opción para lanzar el 'Stack Builder' y haga click en 'Finish'
 
@@ -150,7 +172,25 @@ un 'PowerShell' y escriba los comandos:
   pip install pisa
   pip install reportlab
   pip install html5lib
+
+Si se genera algún error durante la instalación de alguna de estas extensiones,
+lo que reconocerá por un mensaje de error, resaltado e rojo, que aparecerá en la
+consola, pruebe cerrar PowerShell, volver a abrirlo y reintentar la instalación.
+Si ésto falla, deberá descargar manualmente los complementos e instalarlo con
+los programas que se brindan. Los mismos se pueden encontrar en:
+
+  django_extensions: https://github.com/django-extensions/django-extensions
+  Pillow: https://pypi.python.org/pypi/Pillow/2.3.0#downloads
+  pisa: https://pypi.python.org/pypi/pisa/#downloads
+  reportlab: http://www.reportlab.com/software/opensource/rl-toolkit/download/
+  html5lib: https://pypi.python.org/pypi/html5lib
   
+En cualquiera de estas páginas buscar preferiblemente la versión del programa
+que indique que es un 'Windows Installer' o similar y descargar la versión más
+actualizada, adecuada al sistema de operación que se tenga. De no contar con un
+instalador para Windows, debe seguir las instrucciones que se den en la página
+particular para hacer una instalación manual del paquete.
+
 Configurar la base de datos
 ---------------------------
 
@@ -170,11 +210,13 @@ Instalar la aplicación
 ----------------------
 
 Para obtener el cógigo fuente de la aplicación, el mismo debe ser descargado
-desde el repositorio en GitHub al cual habrá sido invitado como colaborador.
+desde el repositorio en GitHub al cual habrá sido invitado como colaborador. Si
+no ha sido invitado como colaborador, debe solicitar dicha autorización al
+equipo de desarrollo de la aplicación.
 
 Lance la aplicación de GitHub que se instaló en pasos anteriores. Bajo la pestaña
 'github' tendrá su nombre de usuario. Haga click en él y busque en la derecha el
-repositorio 'ramiroso/TDScopia'. Haga click en 'clone', la opción que sale al
+repositorio 'ramiroso/TDScopia'. Haga click en 'clone', la opción que aparece al
 pasar el mouse sobre el nombre del repositorio.
 
 Una vez que se termine de copiar el repositorio, haga click sobre la opción
@@ -218,6 +260,6 @@ consola:
   python manage.py runserver
 
 que iniciará la aplicación, a la que se podrá acceder con cualquier navegador
-accediendo a la url:
+(preferiblemente Mozilla Firefox) introduciendo a la url:
 
   localhost:8000
