@@ -29,7 +29,6 @@ urlpatterns = patterns('',
 
     # Emergencias
     url('^emergencia/agregar$','app_emergencia.views.emergencia_agregar'),
-    url('^emergencia/agregarEnfermedad/(?P<nombre_enfermedad>.*)$', 'app_emergencia.views.agregarEnfermedad'),
     url('^emergencia/listar/todas$','app_emergencia.views.emergencia_listar_todas'),
     url('^emergencia/listar/sinclasificar$','app_emergencia.views.emergencia_listar_sinclasificar'),
     url('^emergencia/listar/clasificados$','app_emergencia.views.emergencia_listar_clasificados'),
@@ -51,6 +50,7 @@ urlpatterns = patterns('',
     url('^estadisticas/(?P<dia>\d+)-(?P<mes>\d+)-(?P<anho>\d+)/(?P<dia2>\d+)-(?P<mes2>\d+)-(?P<anho2>\d+)$','app_emergencia.views.estadisticas_per'),
 
     # Paciente
+    url('^paciente/agregarEnfermedad/(?P<nombre_enfermedad>.*)$', 'app_paciente.views.agregarEnfermedad'),
     url('^paciente/listarPacientes$','app_paciente.views.paciente_listarPacientes'),
     url('^paciente/buscarjson/(?P<ced>\w+)$','app_paciente.views.buscarPacienteJson'),                           
     url('^paciente/(?P<idP>\w+)$','app_perfil.views.paciente_perfil'),
