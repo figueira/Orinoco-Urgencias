@@ -1,18 +1,3 @@
-span.espera:link, span.espera:visited, span.espera:active 
-{ 
-  text-decoration: none 
-}
-.s1 {
-  width:57px;
-}
-.s2 {
-  width:25px;
-}
-
-.nombreLista {
-  text-transform: uppercase;
-}
-
 .cubi:hover, .imagenIcono{
   cursor: pointer;
 }
@@ -69,24 +54,54 @@ span.espera:link, span.espera:visited, span.espera:active
 }
 /* Fin de la definicion de la caja */
 
-.columna-esperas{
+.columna-esperas {
   width: 300px;
 }
 
-.fila-emergencia{
+.encabezado-lista {
+  font-weight: lighter !important;
 }
 
-.imagen-espera-lista
-{
+.imagen-espera-lista {
   padding: 0 5px 0 10px;
+}
+
+.imagen-espera-td{
+  width: 30px;
+}
+
+.nombreLista {
+  font-weight: lighter;
+  text-transform: uppercase;
+}
+
+.s1 {
+  width:57px;
+}
+
+.s2 {
+  width:25px;
+}
+
+span.espera:link, span.espera:visited, span.espera:active 
+{ 
+  text-decoration: none 
 }
 
 .tabla-esperas{
   margin-top: 30px;
 }
 
-.titulo-esperas
-{
+.tdTriage img{
+  margin-left: 5px;
+  width: 30px;
+}
+
+.tit-list{
+  font-weight: lighter;
+}
+
+.titulo-esperas{
   font-size: 16px;
   padding: 10px 20px 0 20px;
 }

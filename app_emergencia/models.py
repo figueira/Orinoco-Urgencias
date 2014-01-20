@@ -47,6 +47,7 @@ AVPU = (
   ("P","P - Responde a estimulos doloros"),
   ("U","U - Inconciente"),
 )
+
 EDOLOR = (
   (0,"No hay dolor"),
   (1,"1"),
@@ -101,16 +102,19 @@ class Motivo(models.Model):
 
 
 class Emergencia(models.Model):
-  paciente     = models.ForeignKey(Paciente)
-  responsable    = models.ForeignKey(Usuario,related_name="A cargo")
-  ingreso      = models.ForeignKey(Usuario,related_name="Ingresado por")
-  hora_ingreso   = models.DateTimeField()
-  fecha_Esp_act  = models.DateTimeField(auto_now_add=True)
-  hora_ingresoReal = models.DateTimeField(auto_now_add=True)
-  hora_egreso    = models.DateTimeField(blank=True,null=True)
-  hora_egresoReal  = models.DateTimeField(blank=True,null=True)
-  egreso       = models.ForeignKey(Usuario,related_name="De alta por",blank=True,null=True)
-  destino      = models.ForeignKey(Destino,blank=True,null=True)
+  paciente = models.ForeignKey(Paciente)
+  responsable = models.ForeignKey(Usuario,related_name = "A cargo")
+  ingreso = models.ForeignKey(Usuario,related_name = "Ingresado por")
+  hora_ingreso = models.DateTimeField()
+  fecha_Esp_act = models.DateTimeField(auto_now_add = True)
+  hora_ingresoReal = models.DateTimeField(auto_now_add = True)
+  hora_egreso = models.DateTimeField(blank = True,null = True)
+  hora_egresoReal = models.DateTimeField(blank = True,null = True)
+  egreso = models.ForeignKey(Usuario,
+                             related_name = "De alta por",
+                             blank = True,
+                             null = True)
+  destino = models.ForeignKey(Destino,blank = True,null = True)
   
   def __unicode__(self):
     return "%s - %s " % (self.id,self.paciente)
@@ -123,7 +127,7 @@ class Emergencia(models.Model):
     esperas_emergencia = EsperaEmergencia.objects.filter(
                            emergencia = self,
                            hora_fin = None
-                         )
+                         ).order_by('espera__nombre')
     return esperas_emergencia
 
   # Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
@@ -134,7 +138,7 @@ class Emergencia(models.Model):
     # Aqui calculamos el conjunto de esperas no asignadas eliminando de todas
     # las esperas aquellas que ya estan asignadas
     esperas_asignadas = self.esperas_asignadas()
-    esperas_no_asignadas = list(Espera.objects.all())
+    esperas_no_asignadas = list(Espera.objects.all().order_by('nombre'))
     for espera_emergencia in esperas_asignadas:
       esperas_no_asignadas.remove(espera_emergencia.espera)
 
@@ -163,7 +167,7 @@ class Emergencia(models.Model):
 
   def atendido(self):
     atendido = False
-    atenciones = Atencion.objects.filter(emergencia=self.id)
+    atenciones = Atencion.objects.filter(emergencia = self.id)
     if len(atenciones) > 0:
       atendido = True
     return atendido
@@ -184,25 +188,17 @@ class Emergencia(models.Model):
     return NoAten
   
   def tiempo_espera(self):
-    """triages = self.triages()
-    if triages:
-      triage = triages[0]
-      tiempo = triage.fecha.replace(tzinfo=None)
-    else:
-      tiempo = self.hora_ingreso.replace(tzinfo=None)
-    """
     tiempo = self.hora_ingreso.replace(tzinfo=None)
     tiempo = datetime.now() - tiempo
     return ceil(tiempo.total_seconds())
 
   def tiempo_espera_causas(self):
-    triages = self.triages()
     tiempo  = self.fecha_Esp_act.replace(tzinfo=None)
     if self.fecha_Esp_act:    
       tiempo  = datetime.now() - tiempo
     else:
       tiempo  = datetime.now()
-    return ceil(tiempo.total_seconds())
+    return int(ceil(tiempo.total_seconds()))
 
   def tiempo_esperaR(self):
     tiempo = self.tiempo_espera()
@@ -349,6 +345,7 @@ class Atencion(models.Model):
   fecha      = models.DateTimeField()
   fechaReal    = models.DateTimeField(auto_now_add=True)
   area_atencion  = models.CharField(max_length=1)
+
   def __unicode__(self):
     return "Paciente:%s- Doctor:%s - Area:%s" % (self.emergencia.paciente.apellidos,self.medico.cedula,self.area_atencion)
   def horaA(self):
