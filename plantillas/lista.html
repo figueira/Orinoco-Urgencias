@@ -441,6 +441,11 @@
                              autocomplete="off">
                       <select class="CodigoEnfermedad hidden">
                       </select>
+                      {% for enfermedad_del_paciente in emergencia.paciente.enfermedades.all %}
+                        <div>
+                          <h6>{{ enfermedad_del_paciente }}</h6>
+                        </div>
+                      {% endfor%}
                     </fieldset>
                   </form>
                 </td>
