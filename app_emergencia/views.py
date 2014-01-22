@@ -1625,12 +1625,3 @@ def evaluar_paciente(request, id_emergencia):
                     'id_emergencia': id_emergencia,
                     'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
-
-<<<<<<< HEAD
-=======
-def agregarEnfermedad(request,nombre_enfermedad):
-  string = nombre_enfermedad
-  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
-  return HttpResponse(json.dumps(Sugerencias),
-                        content_type='application/json')
->>>>>>> 60f258bb89ea59e62d134712fc4ce87cc71beaa2
