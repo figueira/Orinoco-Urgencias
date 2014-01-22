@@ -67,6 +67,8 @@ urlpatterns = patterns('',
     # Paciente
     url('^paciente/agregarEnfermedad/(?P<nombre_enfermedad>.*)$',
         'app_paciente.views.agregarEnfermedad'),
+    url('^paciente/buscarEnfermedad/(?P<nombre_enfermedad>.*)$',
+        'app_paciente.views.buscarEnfermedad'),
     url('^paciente/listarPacientes$',
         'app_paciente.views.paciente_listarPacientes'),
     url('^paciente/buscarjson/(?P<ced>\w+)$',

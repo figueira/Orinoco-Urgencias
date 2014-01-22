@@ -595,6 +595,15 @@
       // no hacer nada si es una flecha
       if(code == 37 || code == 38 || code == 39 || code == 40) {
           return;
+        }
+      else if( code == 13){
+        var se_agrega_enfermedad = window.confirm("¿Esta seguro que desea agregar esta enfermedad a este paciente?")
+        if (se_agrega_enfermedad == true){
+           var codigo_emfermedad =  $(this).closest('.raizSugerencias').find('.agregarCodigoEnfermedad').val();
+           $.get()
+
+        }
+
       }
       var nombre_enfermedad= $(this).val();
       var id_de_la_emergencia= this.list.id;
@@ -602,7 +611,7 @@
       var lista_codigo=  $(this).closest('.raizSugerencias').find('.CodigoEnfermedad');
       lista_autocompletar.empty();
       lista_codigo.empty();
-      $.getJSON("/paciente/agregarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
+      $.getJSON("/paciente/buscarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
         var enfermedad = JSON.parse(sugerencias);
         $.each(enfermedad,function(i){
           var nombre = this.fields.descripcion
@@ -625,13 +634,9 @@
       var select= $(posicion).find(".CodigoEnfermedad")
       var codigo = $(select).find("option[id=\'"+this.value+"\']").val();
       posicion.find('.agregarCodigoEnfermedad').val(codigo);
-      console.log(posicion.find('.agregarCodigoEnfermedad').val());
 
     }); 
 
-    $('option').on('click', function(){
-      console.log("yo");
-    });
 
     $('.dropdown-toggle').dropdown();
   });
