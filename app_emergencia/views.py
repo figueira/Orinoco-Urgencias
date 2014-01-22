@@ -301,7 +301,6 @@ def emergencia_agregar(request):
         espe = get_object_or_404(Espera,nombre = 'Ubicacion')
         espera1 = EsperaEmergencia(espera = espe,emergencia = e,estado = '0')
         espera1.save()
-        print "Creando nueva emergencia objeto creado: ",e
         return redirect('/emergencia/listar/todas')
       else:
         msj_tipo = "error"
