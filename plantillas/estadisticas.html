@@ -195,7 +195,8 @@
   
   
   <hr />
-  
+ 
+      
 	  <h4> Incidencia de Causas de Espera de los Pacientes en: </h4>
     <ul class="nav nav-tabs" id="tab-de-incidencias">
     {% for color in causas%}
@@ -276,8 +277,8 @@
 	      {% for causa in color.1%}
 		<tr>
 		  <td>
-		    <a id="popover-transicion-{{color.0}}-{{causa.0}}" href="#" data-toggle="popover" title="" data-content="And here right?" data-original-title=""><img src="{{causa.1.1}}"/> {{causa.0}}</a>
 		    <div style='display: none' id="chart-transicion-{{color.0}}-{{causa.0}}" style="margin: 0 auto"></div>
+		    <a id="popover-transicion-{{color.0}}-{{causa.0}}" href="#" data-toggle="popover" title="" data-content="And here right?" data-original-title=""><img src="{{causa.1.1}}"/>{{causa.0}}</a>
 		  </td>
 		  {% for valor in causa.1.0 %}
 		    <td>{{valor}}</td>
@@ -292,7 +293,14 @@
  
  <script>
  $(function () {
-      {% for color in causas %}
+ 
+ 
+ 
+      
+         
+ 
+ 
+      {% for color in causas_invertidas %}
         $('#chart-{{color.0}}').highcharts({
             chart: {
                 type: 'column'
@@ -301,12 +309,10 @@
                 text: 'Gráfica de incidencias de causa de espera por duración'
             },
             xAxis: {
-                categories: [{% for color2 in causas %}
-			    {% if not forloop.first %}
-			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
-			    {% endif %}
-			      {% endfor %}
-			     ]
+                categories: [{% for color2 in color.1.0.1 %}
+			      '{{color2.0}}'{% if not forloop.last %},{% endif %}
+				{% endfor %}
+				]
             },
             yAxis: {
                 allowDecimals: false,
@@ -315,18 +321,21 @@
                     text: 'Número de incidencias'
                 }
             },
+            colors: ['yellow','black','red','green'],
             tooltip: {
                 formatter: function() {
                     return '<b>'+ this.x +'</b><br/>'+
                         this.series.name +': '+ this.y
                 }
             },
-            series: [{% for causa in color.1 %}
-		{
-		name: '{{causa.0}}',
-		data: {{causa.1.0}}
-		}{% if not forloop.last %},{% endif %}
-	    {% endfor %}]
+            series: [
+            {% for color2 in color.1 %} {
+		name: '{{color2.0}}',
+		data: [{% for causa in color2.1 %}{{causa.1}}{% if not forloop.last %},{% endif %}
+		    {% endfor %}]
+		    } {% if not forloop.last %},{% endif %}
+	    {% endfor%}
+	    ]
         });
       {% endfor %}
       
@@ -342,6 +351,7 @@
             title: {
                 text: '{{causa.0}} - {{color.0}}'
             },
+            colors: ['#FFF'],
             xAxis: {
                 categories: [{% for color2 in causas %}
 			    {% if not forloop.first %}
@@ -364,7 +374,10 @@
             },
             series: [{
 		name: '{{causa.0}}',
-		data: {{causa.1.0}}
+		data: [{y:{{causa.1.0.0}}, color: 'green'},
+			{y:{{causa.1.0.1}}, color: 'yellow'},
+			{y:{{causa.1.0.2}}, color: 'red'},
+			{y:{{causa.1.0.3}}, color: 'black'}]
 	    }]
 	  });
 	{% endfor %}
@@ -384,7 +397,7 @@
     });
     
  $(function () {
-      {% for color in causas_transicion %}
+      {% for color in causas_transicion_invertidas %}
         $('#chart-transicion-{{color.0}}').highcharts({
             chart: {
                 type: 'column'
@@ -393,7 +406,7 @@
                 text: 'Gráfica de incidencias de causa de espera por duración'
             },
             xAxis: {
-                categories: [{% for color2 in causas_transicion %}
+                categories: [{% for color2 in color.1.0.1 %}
 			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
 			      {% endfor %}
 			     ]
@@ -405,18 +418,21 @@
                     text: 'Número de incidencias'
                 }
             },
+            colors: ['yellow','black','red','green'],
             tooltip: {
                 formatter: function() {
                     return '<b>'+ this.x +'</b><br/>'+
                         this.series.name +': '+ this.y
                 }
             },
-            series: [{% for causa in color.1 %}
-		{
-		name: '{{causa.0}}',
-		data: {{causa.1.0}}
-		}{% if not forloop.last %},{% endif %}
-	    {% endfor %}]
+            series: [
+            {% for color2 in color.1 %} {
+		name: '{{color2.0}}',
+		data: [{% for causa in color2.1 %}{{causa.1}}{% if not forloop.last %},{% endif %}
+		    {% endfor %}]
+		    } {% if not forloop.last %},{% endif %}
+	    {% endfor%}
+            ]
         });
         {% endfor %}
     });
@@ -433,6 +449,7 @@
             title: {
                 text: '{{causa.0}} - {{color.0}}'
             },
+            colors: ['#FFF'],
             xAxis: {
                 categories: [{% for color2 in causas_transicion %}
 			    '{{color2.0}}'{% if not forloop.last %},{% endif %}
@@ -453,7 +470,9 @@
             },
             series: [{
 		name: '{{causa.0}}',
-		data: {{causa.1.0}}
+		data: [{y:{{causa.1.0.0}}, color: 'yellow'},
+			{y:{{causa.1.0.1}}, color: 'red'},
+			{y:{{causa.1.0.2}}, color: 'black'}]
 	    }]
 	  });
 	{% endfor %}
