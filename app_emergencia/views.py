@@ -524,6 +524,18 @@ def obtener_causas_de_espera(emergencias):
     return (causas_de_espera, causas_transicion)
           
 
+def invertir_orden_de_diccionario(diccionario, colores):
+    causas_invertidas = {}
+    for color in colores:
+      causas_invertidas[color]=[]
+      
+    for causa in diccionario.keys():
+      (valores,img) = diccionario[causa]
+      for i in range(0,len(colores)):
+        causas_invertidas[colores[i]].append((causa,valores[i]))
+        
+    return causas_invertidas
+
 
 def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     # Datos generales
@@ -599,6 +611,27 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     
     imaganes = obtener_imagenes()
     
+    lista_auxiliar = [causas_pacientes_en_verde,\
+      causas_pacientes_en_amarillo, causas_pacientes_en_rojo, \
+	causas_pacientes_en_negro]
+    lista_auxiliar_transicion = [causas_transicion_amarillo, \
+      causas_transicion_rojo, causas_transicion_negro]
+    
+    colores = ['Verde','Amarillo','Rojo','Negro']
+    colores_transicion = ['Amarillo','Rojo','Negro']
+    causas_invertidas = []
+    for x, y in zip(lista_auxiliar, colores):
+      causas_invertidas.append((y,\
+	ordenar_por_causas(invertir_orden_de_diccionario(x,colores))))
+    causas_transicion_invertidas = []
+    for x, y in zip(lista_auxiliar_transicion, colores_transicion):
+      causas_transicion_invertidas.append((y,\
+	ordenar_por_causas(\
+	  invertir_orden_de_diccionario(x,colores_transicion))))
+    
+    causas_invertidas=[('General', \
+      ordenar_por_causas(invertir_orden_de_diccionario(\
+	causas_pacientes_total,colores)))] + causas_invertidas
     # Resultados de los Triages
     triages = Triage.objects.filter(fecha__range=[fecha_inicio,fecha_fin]) \
               .values('nivel').annotate(Count('nivel')).order_by('nivel')
@@ -613,13 +646,22 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
                 ['Amarillo (2 a 4 horas)',horas[1]],['Rojo (4 a 6 horas)',horas[2]],
                 ['Negro (6 o + horas)',horas[3]]
               ]
+    
+    prueba = ordenar_por_causas(invertir_orden_de_diccionario(lista_auxiliar[0], colores))
+    
     info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
             'fin':fecha_fin-timedelta(days=1),'sig':siguiente_semana,
              'total_ingresos':len(ingresos_emergencia),
              'total_egresos':total_egresos,
              'egresos':egresos, 'emergencias':emergencias_por_horas,
              'causas':causas, 'imagenes': imaganes,
-             'causas_transicion': causas_transicion
+             'causas_transicion': causas_transicion,
+             'causas_invertidas': causas_invertidas,
+             'causas_transicion_invertidas': causas_transicion_invertidas,
+             'colores': colores,
+             'colores_transicion': colores_transicion,
+             'lista_auxiliar': lista_auxiliar,
+             'prueba': prueba
             }
     return render_to_response('estadisticas.html',info,
                               context_instance=RequestContext(request))
@@ -1625,3 +1667,9 @@ def evaluar_paciente(request, id_emergencia):
                     'id_emergencia': id_emergencia,
                     'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
+
+def agregarEnfermedad(request,nombre_enfermedad):
+  string = nombre_enfermedad
+  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
+  return HttpResponse(json.dumps(Sugerencias),
+                        content_type='application/json')
