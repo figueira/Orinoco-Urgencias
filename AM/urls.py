@@ -65,7 +65,7 @@ urlpatterns = patterns('',
         'app_emergencia.views.estadisticas_per'),
 
     # Paciente
-    url('^paciente/agregarEnfermedad/(?P<nombre_enfermedad>.*)$',
+    url('^paciente/agregarEnfermedad/(?P<codigo_enfermedad>\w*)/(?P<codigo_paciente>\w*)$',
         'app_paciente.views.agregarEnfermedad'),
     url('^paciente/buscarEnfermedad/(?P<nombre_enfermedad>.*)$',
         'app_paciente.views.buscarEnfermedad'),
