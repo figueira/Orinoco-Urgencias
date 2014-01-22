@@ -424,7 +424,8 @@
                 <td >
                   <form>
                     <fieldset class= "raizSugerencias">
-                      <input class="agregarEnfermedad form-control" 
+                      <input class="agregarEnfermedad form-control"
+                             id = "{{ emergencia.paciente.id }}"
                              type="text" 
                              list="sugerencias_enfermedades_{{emergencia.id}}" 
                              name= "enfermedad_agregada" 
@@ -599,10 +600,19 @@
       else if( code == 13){
         var se_agrega_enfermedad = window.confirm("¿Esta seguro que desea agregar esta enfermedad a este paciente?")
         if (se_agrega_enfermedad == true){
-           var codigo_emfermedad =  $(this).closest('.raizSugerencias').find('.agregarCodigoEnfermedad').val();
-           $.get()
+           var codigo_enfermedad =  $(this).closest('.raizSugerencias').find('.agregarCodigoEnfermedad').val();
+           var codigo_paciente = $(this).attr('id');
+           if (codigo_enfermedad == ""){
+             codigo_enfermedad ='DOES_NOT_EXIST'
+           }
+
+           $.getJSON("/paciente/agregarEnfermedad/"+ codigo_enfermedad+"/"+codigo_paciente, function( respuesta ) {
+            window.alert(respuesta.result)
+           });
+
 
         }
+
 
       }
       var nombre_enfermedad= $(this).val();

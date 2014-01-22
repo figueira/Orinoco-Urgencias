@@ -17,6 +17,8 @@ import json
 from forms import *
 from models import *
 
+# Manejo de exepciones
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 @login_required(login_url='/')
@@ -71,3 +73,17 @@ def buscarEnfermedad(request,nombre_enfermedad):
   Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
   return HttpResponse(json.dumps(Sugerencias),
                         content_type='application/json')
+
+
+@login_required(login_url='/')
+def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
+  try:
+    enfermedad = Enfermedad.objects.get(id=codigo_enfermedad)
+    paciente = Paciente.objects.get(id=codigo_paciente)
+    paciente.enfermedades.add(enfermedad)
+    success = { 'result' : "Enfermead agregada exitosamente" }
+    return HttpResponse(json.dumps(success), mimetype="application/json")
+
+  except ObjectDoesNotExist:
+    fail = { 'result' : u'Agregacion fallida. Esta enfermedad no se encuentra en la base de datos'.encode('utf-8') }
+    return HttpResponse(json.dumps(fail), mimetype="application/json") 
