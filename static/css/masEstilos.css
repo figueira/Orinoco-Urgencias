@@ -18,6 +18,15 @@
   width: 80px;
 }
 
+.width5p{
+  width: 5% !important;
+}
+
+.tablaEnfermedadesPaciente{
+  width: 95%;
+  border-left-color:transparent !important;
+}
+
 .width110{
   width: 110px;
 }
@@ -105,6 +114,10 @@
 
 .displayNone{
   display: none;
+}
+
+.displayInline{
+  display: inline;
 }
 
 .marginleft5{

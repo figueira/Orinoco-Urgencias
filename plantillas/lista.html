@@ -434,6 +434,24 @@
                              autocomplete="off">
                       <datalist id="sugerencias_enfermedades_{{emergencia.id}}" >
                       </datalist>
+                      <table class = "listaEnfermedadesPaciente" >
+                      {% for enfermedad_del_paciente in emergencia.paciente.enfermedades.all %}
+                        <tr>
+                          <td class= "tablaEnfermedadesPaciente" >
+                            <h6 class= 'displayInline'> 
+                                {{enfermedad_del_paciente.descripcion}}
+                            </h6>
+                          </td>
+                          <td class= "width5p"> 
+                            <img src = '/static/img/Atencion/menosim.png'
+                                 data-codigo-enfermedad="{{enfermedad_del_paciente.id}}"
+                                 data-codigo-paciente="{{emergencia.paciente.id}}"
+                                 class='eliminarEnfermedadPaciente'>
+                            </img> 
+                          </td>
+                        </tr>
+                      {% endfor%}
+                      </table>
                       <input class="agregarCodigoEnfermedad hidden" 
                              type="text" 
                              name="codigo_enfermedad"  
@@ -441,11 +459,6 @@
                              autocomplete="off">
                       <select class="CodigoEnfermedad hidden">
                       </select>
-                      {% for enfermedad_del_paciente in emergencia.paciente.enfermedades.all %}
-                        <div>
-                          <h6>{{ enfermedad_del_paciente }}</h6>
-                        </div>
-                      {% endfor%}
                     </fieldset>
                   </form>
                 </td>
@@ -598,32 +611,51 @@
       // obtenemos el codigo de la tecla presionada
       var code = (e.keyCode ? e.keyCode : e.which);
 
+      var raiz = $(this).closest('.raizSugerencias')
+      var nombre_enfermedad= $(this).val();
+
+
       // no hacer nada si es una flecha
       if(code == 37 || code == 38 || code == 39 || code == 40) {
           return;
         }
+      // Si es ENTER la tecla presionada se procede a agregar la enfermedad al apaciente.
       else if( code == 13){
         var se_agrega_enfermedad = window.confirm("¿Esta seguro que desea agregar esta enfermedad a este paciente?")
         if (se_agrega_enfermedad == true){
-           var codigo_enfermedad =  $(this).closest('.raizSugerencias').find('.agregarCodigoEnfermedad').val();
+           var codigo_enfermedad =  $(raiz).find('.agregarCodigoEnfermedad').val();
            var codigo_paciente = $(this).attr('id');
            if (codigo_enfermedad == ""){
              codigo_enfermedad ='DOES_NOT_EXIST'
            }
 
            $.getJSON("/paciente/agregarEnfermedad/"+ codigo_enfermedad+"/"+codigo_paciente, function( respuesta ) {
-            window.alert(respuesta.result)
+            if (respuesta.result == 1) {
+              var display_enfermedad_agregada = "<tr> \
+                                                  <td class= 'tablaEnfermedadesPaciente' > \
+                                                    <h6 class= 'list-inline'> \
+                                                        "+nombre_enfermedad+" \
+                                                    </h6> \
+                                                  </td> \
+                                                  <td class= 'width5p'> \
+                                                    <img src = '/static/img/Atencion/menosim.png' \
+                                                         data-codigo-enfermedad='"+codigo_enfermedad+"' \
+                                                         data-codigo-paciente='"+codigo_paciente+"' \
+                                                         class='eliminarEnfermedadPaciente' >\
+                                                    </img> \
+                                                  </td> \
+                                                </tr>";
+              $(raiz).find('.listaEnfermedadesPaciente').append(display_enfermedad_agregada);
+            } else {
+              window.alert(respuesta.message)
+            };
            });
-
-
+           $(this).val("");          
         }
-
-
       }
-      var nombre_enfermedad= $(this).val();
       var id_de_la_emergencia= this.list.id;
       var lista_autocompletar = $('#'+id_de_la_emergencia);
-      var lista_codigo=  $(this).closest('.raizSugerencias').find('.CodigoEnfermedad');
+      var lista_codigo=  $(raiz).find('.CodigoEnfermedad');
       lista_autocompletar.empty();
       lista_codigo.empty();
       $.getJSON("/paciente/buscarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
@@ -651,6 +683,20 @@
       posicion.find('.agregarCodigoEnfermedad').val(codigo);
 
     }); 
+
+    $('.listaEnfermedadesPaciente').on('click','.eliminarEnfermedadPaciente', function(){
+      var eliminar_enfermedad = window.confirm("¿Esta seguro que desea eliminar esta enfermedad de este paciente?")
+        if (eliminar_enfermedad == true){
+          var codigo_enfermedad = $(this).attr('data-codigo-enfermedad');
+          var codigo_paciente = $(this).attr('data-codigo-paciente');
+          var fila_a_eliminar = $(this).closest('tr');
+          $.getJSON("/paciente/eliminarEnfermedad/"+codigo_enfermedad+"/"+codigo_paciente , function( respuesta ) {
+            if( respuesta.result == 1 ){
+              $(fila_a_eliminar).remove();
+            }
+          });
+        };
+    });
 
 
     $('.dropdown-toggle').dropdown();
