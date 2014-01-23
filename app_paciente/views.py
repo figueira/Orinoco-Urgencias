@@ -81,9 +81,20 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     enfermedad = Enfermedad.objects.get(id=codigo_enfermedad)
     paciente = Paciente.objects.get(id=codigo_paciente)
     paciente.enfermedades.add(enfermedad)
-    success = { 'result' : "Enfermead agregada exitosamente" }
+    success = { 'message' : "Enfermead agregada exitosamente",
+                'result' : 1 }
     return HttpResponse(json.dumps(success), mimetype="application/json")
 
   except ObjectDoesNotExist:
-    fail = { 'result' : u'Agregacion fallida. Esta enfermedad no se encuentra en la base de datos'.encode('utf-8') }
+    fail = { 'message' : u'Agregacion fallida. Esta enfermedad no se encuentra en la base de datos'.encode('utf-8'),
+             'resutl' : 0 }
     return HttpResponse(json.dumps(fail), mimetype="application/json") 
+
+@login_required(login_url='/')
+def eliminarEnfermedad(request,codigo_enfermedad,codigo_paciente):
+    paciente = Paciente.objects.get(id=codigo_paciente)
+    enfermedad = Enfermedad.objects.get(id=codigo_enfermedad)
+    paciente.enfermedades.remove(enfermedad)
+    success = { 'result' : 1 }
+    return HttpResponse(json.dumps(success), mimetype="application/json")
+ 
