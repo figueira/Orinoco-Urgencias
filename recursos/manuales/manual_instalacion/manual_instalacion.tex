@@ -424,4 +424,22 @@
 
     \end{description}
 
+  \section{Dependencias de nombres}
+
+    En su versión actual, el código de TDS depende de que ciertos elementos
+    introducidos posean nombres particulares. Éste es el caso de las áreas de
+    atención que se pueden visualizar.
+
+    Actualmente el sistema permite observar una ``Sala de atención ambulatoria''
+    y una ``Sala de observación''. Para garantizar el correcto funcionamiento de
+    dichas vistas, al momento de agregar las áreas de emergencia al sistema se
+    debe garantizar que haya una cuyo nombre incluya la palabara ``ambulatoria''
+    y una que incluya la palabra ``observación''. Si ésto se configura
+    correctamente, los pacientes que se asignen a cubículos en dichas áreas,
+    serán correctamente mostrados en las pantallas correspondientes.
+
+    Es un objetivo a corto plazo corregir ésto para garantizar independencia de
+    la elección del nombre del área de atención. Cuando esta meta se logre, el
+    hecho será notificado a las instancias apropiadas.
+
 \end{document}
