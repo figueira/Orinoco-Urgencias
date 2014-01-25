@@ -14,3 +14,10 @@ AM/settings.py
 #####################################
 *~
 *.swp*
+
+# Archivos generados en compilacion de LaTeX #
+##############################################
+*.toc
+*.aux
+*.log
+*.out

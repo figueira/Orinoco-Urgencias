@@ -1,0 +1,427 @@
+\documentclass[9pt, letterpaper, oneside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+
+\hypersetup{
+  pdfstartpage = 1, 
+  pdftitle = {Manual de instalación TDS},
+  pdfauthor = {Carlos Ledezma},%
+  pdfcreator = {Carlos Ledezma},
+  pdfproducer = {LaTeX with hyperref},
+  pdfdisplaydoctitle = true,
+  pdflang = es,
+  plainpages = false,
+}
+
+% Definicion del titulo
+\title{Manual de instalación del sistema TDS}
+\author{Carlos Ledezma}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\chapter{Introducción}
+
+  A continuación se presenta un documento con las instrucciones detalladas de cómo
+  instalar la aplicación TDS en un sistema operativo Windows 8, recién instalado,
+  de 32 bits, configurado en inglés. Es recomendable que durante todo el proceso
+  se cuente con una conexión estable a internet.
+
+  Si se está haciendo la instalación en un sistema con características diferentes,
+  algunos pasos deben ser adaptados a dichas características. En particular es muy
+  común el cambio de un sistema de 32-bits a uno de 64-bits. En dicho caso
+  particular sólo es necesario hacer la salvedad de descargar los programas en la
+  versión apropiada.
+
+  A lo largo del proceso se instalarán diversos programas, es conveniente que se
+  verifique la correcta instalación de los mismos antes de seguir con pasos 
+  subsiguientes.
+
+  Así pues, empecemos.
+
+\chapter{Dependencias}
+
+  \section{GitHub}
+    Dado que el sistema se encuentra alojado en un repositorio de GitHub, será
+    conveniente descargar la aplicación que dicha página nos brinda para manipular
+    los repositorios. Para ello vaya a la siguiente dirección:
+
+    \vspace{3mm}
+    \url{http://windows.github.com/}
+    \vspace{3mm}
+
+    y oprima el botón que dice \textbf{Download GitHub for Windows}.
+
+    Cuando finalice la descarga, inicie el instalador haciendo doble click en el
+    archivo obtenido. En el dialogo inicial haga click en \textbf{Install} y espere a que
+    finalice el proceso de descarga.
+
+    Inicie el instalador, coloque sus credenciales de GitHub y realice los pasos de
+    configuración. Es posible que la aplicación tenga problemas recuperando las
+    credenciales del servidor de GitHub. Si ésto ocurre, pruebe descargando la
+    última actualización para el ``.NET Framework'', que se puede conseguir en:
+
+    \vspace{3mm}
+    \url{http://support.microsoft.com/kb/2468871}
+    \vspace{3mm}
+
+  \section{Python}
+    El programa se ejecuta utilizando el framework ``Django'', escrito en el lenguaje de
+    programación ``Python'', por lo que será necesario descargar e instalar el
+    intérprete para este lenguaje. El mismo se puede conseguir en:
+
+    \vspace{3mm}
+    \url{http://www.python.org/getit/windows/}
+    \vspace{3mm}
+      
+    en dicha página haga click en el enlace que dice \textbf{individual
+    releases}. En la página
+    siguiente haga click en el enlace \textbf{Python 2.7.6}. Busque en la página siguiente
+    el enlace \textbf{Windows x86 MSI Installer (2.7.6) (sig)} y haga click en él.
+
+    Puede que no se encuentre la versión específica, en dicho caso es importante
+    descargar la versión más cercana, asegurándose que la misma se mantiene en el
+    rango 2.7.x. Ésto se debe a que en la versión 3.x se hicieron importantes
+    cambios sobre el lenguaje, los cuales no han sido contemplados en el código.
+
+    En la primera pantalla seleccione \textbf{Install for all users} y haga
+    click en \textbf{Next}.
+    Luego tome nota del directorio de instalación, al cual de ahora en adelante
+    llamaremos $<python\_home>$, y haga click en \textbf{Next} hasta que inicie la
+    instalación. Cuando finalice la instalación haga click en \textbf{Finish} y reinicie
+    la computadora.
+
+    Para utilizar correctamente Python será necesario cambiar las variables de
+    ambiente de Windows. Para ésto vaya al \textbf{Control Panel}, busque la opción
+    \textbf{Edit the system environment variables}. En la caja de diálogo que aparece haga
+    click en \textbf{Environment Variables...}. En el panel ``System variables'' busque la
+    variable ``Path'', seleccionela y haga click en \textbf{Edit...}. Al final del valor
+    ``Variable value'' AGREGUE el valor:
+
+    \begin{verbatim}
+    ;<python_home>;<python_home>\Scripts
+    \end{verbatim}
+
+    donde $<python\_home>$ es el directorio en el que se instaló Python, y del que
+    tomó nota en el paso de instalación. Cuando haya hecho ésto, haga click en
+    \textbf{Ok}.
+
+  \section{Pip}
+    Para instalar ciertas extensiones de Python que son necesarias para la aplicación
+    es conveniente utilizar ``Pip'', un manejador de paquetes de Python. Para ello tome
+    el contenido de:
+
+    \vspace{3mm}
+    \url{https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez\_setup.py}
+    \vspace{3mm}
+      
+    y péguelo en un archivo en su escritorio con el nombre ``ez\_setup.py''.
+
+    Haga doble click sobre el archivo generado. Ésto debería iniciar una consola de 
+    Python que ejecutará una serie de comandos y que, al finalizar, se cerrará sola.
+
+    Si al hacer doble click no se inicia la consola, entonces haga click derecho
+    sobre el archivo, escoja la opción \textbf{Open With...} y escoja manualmente el
+    intérprete de Python, el cual encontrará bajo el directorio:
+
+    \begin{verbatim}
+    <python_home>\python.exe
+    \end{verbatim}
+
+    Ahora copie el contenido de la página:
+
+    \vspace{3mm}
+    \url{https://raw.github.com/pypa/pip/master/contrib/get-pip.py}
+    \vspace{3mm}
+      
+    y péguelo nuevamente en el escritorio, en un archivo llamado 'get-pip.py' y haga
+    doble click sobre el archivo. Nuevamente se iniciará la consola de Python. Si no
+    inicia, seguir los mismos pasos que en la sugerencia anterior.
+
+  \section{Django}
+    Ahora que se tiene Pip, se puede fácilmente instalar el framework Django 
+    abriendo la aplicación ``PowerShell'' con derechos de administrador y colocando el
+    siguiente comando:
+
+    \begin{verbatim}
+    pip install Django
+    \end{verbatim}
+
+    Se mostrará el progreso de la descarga. Espere a que finalice.
+
+    Para verificar que Django se instaló correctamente ejecute el intérprete de
+    Python corriendo en el ``PowerShell'' el siguiente comando:
+
+    \begin{verbatim}
+      python
+    \end{verbatim}
+
+    y en la consola que obtendrá coloque:
+
+    \begin{verbatim}
+      import django
+      django.VERSION
+    \end{verbatim}
+      
+    Lo que debería dar un resultado parecido a ``(1, 6, 0, 'final', 0)'',
+    que indica
+    la version del framework instalada. Puede salir de la consola interactiva de
+    Python con el comando:
+
+    \begin{verbatim}
+      quit()
+    \end{verbatim}
+
+  \section{PostgreSQL}
+    Luego será necesario descargar la base de datos. El programa a utilizar será
+    PostgreSQL, el cual se puede descargar de:
+
+    \vspace{3mm}
+    \url{http://www.enterprisedb.com/products-services-training/pgdownload#windows}
+    \vspace{3mm}
+      
+    haciendo click en el link ``Win x86-32'' bajo la versión 9.3.1. Cuando finalice la
+    descarga, arranque el instalador. Acepte las configuraciones por defecto, y
+    escoja una clave para el super-usuario cuando se le pida la misma. Tome nota de
+    la clave que escogió y espere a que finalice la instalación.
+
+    Desmarque la opción para lanzar el ``Stack Builder'' y haga click en
+    \textbf{Finish}.
+
+  \section{Compilador de C}
+    Más adelante será necesario instalar algunas extensiones de Django que la aplicación
+    utiliza. Para ello será necesario tener, primero, un compilador de C. Éste
+    se puede obtener en:
+
+    \vspace{3mm}
+    \url{http://tdm-gcc.tdragon.net/download}
+    \vspace{3mm}
+      
+    en el enlace que indica la versión de 32-bits.
+
+    Cuando finalice la descarga ejecute el instalador. En la primera pantalla
+    seleccione la opción \textbf{Create}. Cuando finalice la descarga seleccione la opción
+    de 32-bits y haga click en \textbf{Next}. En adelante acepte las opciones por defecto 
+    hasta que inicie la instalación. Espere a que la misma finalice.
+
+    Ahora cree el archivo
+    
+    \begin{verbatim}
+      <python_home>\Lib\distutils\distutils.cfg'
+    \end{verbatim}
+    
+    con el siguiente contenido:
+
+    \begin{verbatim}
+      [build]
+      compiler=mingw32
+    \end{verbatim}
+
+  \section{Extensiones de Django}
+    Para utilizar la base de datos será necesario instalar un paquete de Python que 
+    hace la interfaz entre el lenguaje y la base de datos. Para ello vaya a la
+    siquiente página:
+      
+    \vspace{3mm}
+    \url{http://www.stickpeople.com/projects/python/win-psycopg/}
+    \vspace{3mm}
+      
+    y descargue el archivo en la fila '2.5.1 (For Python 2.7)'. Al finalizar la
+    descarga ejecute el instalador usando los valores que se dan por defecto.
+
+    También será necesario obtener algunas extensiones de Django. Para ello abra
+    un ``PowerShell'' y escriba los comandos:
+
+    \begin{verbatim}
+      pip install django_extensions
+      pip install Pillow
+      pip install pisa
+      pip install reportlab
+      pip install html5lib
+    \end{verbatim}
+
+    Si se genera algún error durante la instalación de alguna de estas extensiones,
+    lo que reconocerá por un mensaje de error, resaltado e rojo, que aparecerá en la
+    consola, pruebe cerrar PowerShell, volver a abrirlo y reintentar la instalación.
+    Si ésto falla, deberá descargar manualmente el complemento que falla e 
+    instalarlo con
+    los programas que se brindan. Los mismos se pueden encontrar en:
+
+    \begin{description}
+      \item[django\_extensions:]
+        \url{https://github.com/django-extensions/django-extensions}
+      \item[Pillow:] \url{https://pypi.python.org/pypi/Pillow/2.3.0#downloads}
+      \item[pisa:] \url{https://pypi.python.org/pypi/pisa/#downloads}
+      \item[reportlab:]
+        \url{http://www.reportlab.com/software/opensource/rl-toolkit/download/}
+      \item[html5lib:] \url{https://pypi.python.org/pypi/html5lib}
+    \end{description}
+      
+    En cualquiera de estas páginas buscar preferiblemente la versión del programa
+    que indique que es un ``Windows Installer'' o similar y descargar la versión más
+    actualizada, adecuada al sistema de operación que se tenga. De no contar con un
+    instalador para Windows, debe seguir las instrucciones que se den en la página
+    particular para hacer una instalación manual del paquete.
+
+\chapter{Configuración de la base de datos}
+
+  Para realizar esta configuración inicie la aplicación ``pgAdmin III'', instalada
+  con la base de datos. 
+
+  En la lista de la izquierda haga doble click sobre el único servidor que
+  debería haber (PostgreSQL 9.3 (x86) (localhost:5432)) e ingrese la contraseña
+  escogida para el super-usuario de la base de datos.
+
+  Debería obtener varias listas desplegables bajo el servidor. Haga click derecho
+  sobre la lista ``Databases'' y seleccione la opción \textbf{New Database...}.
+  Asigne a 'Name' el valor:
+  
+  \begin{verbatim}
+    cmsb
+  \end{verbatim}
+  
+  y en 'Owner' escoja de la lista desplegable el valor
+  
+  \begin{verbatim}
+    postgres
+  \end{verbatim}
+  
+  Haga click en \textbf{Ok}.
+
+\chapter{Instalación de la aplicación}
+
+  Para obtener el cógigo fuente de la aplicación, el mismo debe ser descargado
+  desde el repositorio en GitHub al cual habrá sido invitado como colaborador. Si
+  no ha sido invitado como colaborador, debe solicitar dicha autorización al
+  equipo de desarrollo de la aplicación.
+
+  Lance la aplicación de GitHub que se instaló en pasos anteriores. Bajo la pestaña
+  ``github'' tendrá su nombre de usuario. Haga click en él y busque en la derecha el
+  repositorio ``ramiroso/TDScopia''. Haga click en \textbf{clone}, la opción
+  que aparece al pasar el mouse sobre el nombre del repositorio.
+
+  Una vez que se termine de copiar el repositorio, haga click sobre la opción
+  \textbf{repositories} bajo la pestaña ``local'' y haga click sobre la flecha que se
+  encuentra a la derecha del nombre del repositorio que se acaba de clonar.
+
+  En la parte superior derecha encontrará la imágen de un engranaje. Haga click
+  sobre ella, y luego sobre la opción \textbf{open in explorer}. Ésto abrirá
+  la ubicación en la computadora del código de la aplicación.
+
+  Si se hace click sobre la barra superior (donde se encuentra la ubicación) se 
+  mostrará la ruta real del archivo. A ésta la llamaremos $<home\_tds>$.
+
+  Ahora será necesario realizar ciertos pasos de configuración sobre la aplicación.
+  Para ello abra en un editor de texto (Notepad, Notepad ++) el archivo:
+
+  \begin{verbatim}
+    <home_tds>/AM/settings.py
+  \end{verbatim}
+
+  Vaya a la opción llamada ``DATABASES'' y asigne a la entrada ``ENGINE'' el
+  valor:
+
+  \begin{verbatim}
+    'django.db.backends.postgresql_psycopg2'
+  \end{verbatim}
+  
+  borrando la opción que se encuentre presente. A la opción ``NAME'' asígnele el
+  valor: 
+  
+  \begin{verbatim}
+    'cmsb'
+  \end{verbatim}
+
+  A la opción ``USER'' asignele el valor:
+  
+  \begin{verbatim}
+    'postgres'
+  \end{verbatim}
+
+  y a ``PASSWORD'' la contraseña escogida durante la instalación de la base de
+  datos, escrita entre comillas. Guarde los cambios.
+
+  Ahora abra ``PowerShell'' y escriba los siguientes comandos:
+
+  \begin{verbatim}
+    cd <home_tds>
+    python manage.py syncdb
+  \end{verbatim}
+    
+  Cuando se pregunte si se desea crear un super-usuario para la aplicación escribir
+
+  \begin{verbatim}
+    yes
+  \end{verbatim}
+
+  y escoger un nombre de usuario, correo electrónico y contraseña.
+
+  Cuando termine la sincronización de la base de datos puede ejecutar en la misma
+  consola:
+
+  \begin{verbatim}
+    python manage.py runserver
+  \end{verbatim}
+
+  que iniciará la aplicación, a la que se podrá acceder con cualquier navegador
+  (preferiblemente Mozilla Firefox) navegando a la url:
+
+  \vspace{3mm}
+  \url{localhost:8000}
+  \vspace{3mm}
+
+\chapter{Otras consideraciones}
+  \section{Lista de instaladores}
+    A continuación se presenta una lista de los programas que fueron descargados
+    durante el proceso de instalación descrito anteriormente, junto con las
+    direcciónes en las cuales se pueden conseguir. Podría ser útil visitar cada una
+    de las páginas mencionadas, antes de iniciar el proceso, de modo que se
+    puedan descargar en paralelo todos los programas, y así se finalice más
+    rápido.
+
+    \begin{description}
+      \item[GitHub:] \url{http://windows.github.com/}
+
+      \item[Actualización para ``.NET Framework'':]
+        \url{http://support.microsoft.com/kb/2468871}
+
+      \item[Python:] \url{http://www.python.org/getit/windows/}
+
+      \item[Pip:]
+        \begin{itemize}
+          \item \url{https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez\_setup.py}
+          \item \url{https://raw.github.com/pypa/pip/master/contrib/get-pip.py}
+        \end{itemize}
+
+      \item[PostgreSQL:]
+        \url{http://www.enterprisedb.com/products-services-training/pgdownload#windows}
+
+      \item[Compilador de C:] \url{http://tdm-gcc.tdragon.net/download}
+      
+      \item[Psycopg:] \url{http://www.stickpeople.com/projects/python/win-psycopg/}
+
+      \item[django\_extensions:]
+        \url{https://github.com/django-extensions/django-extensions}
+
+      \item[Pillow:] \url{https://pypi.python.org/pypi/Pillow/2.3.0#downloads}
+
+      \item[pisa:] \url{https://pypi.python.org/pypi/pisa/#downloads}
+
+      \item[reportlab:]
+        \url{http://www.reportlab.com/software/opensource/rl-toolkit/download/}
+
+      \item[html5lib:] \url{https://pypi.python.org/pypi/html5lib}
+
+    \end{description}
+
+\end{document}
