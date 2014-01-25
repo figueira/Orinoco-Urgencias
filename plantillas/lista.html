@@ -292,7 +292,8 @@
             // Hacer peticion a la base de datos para finalizar la espera
             $.get('/emergencia/espera_finalizada/' + id_espera_emergencia, 
                   function(){
-              mover_a_no_asignada(checkbox_activado.parent())
+              MantenerEsperas($(checkbox_activado.closest('.fila-emergencia')));
+              mover_a_no_asignada(checkbox_activado.parent());
             });
           } else {
             checkbox_activado.prop('checked', false)
@@ -515,7 +516,6 @@
                 <div class="causas-espera caja-dialogo">
                   <p class='titulo-esperas'>
                     <button class='btn btn-small btn-primary boton-mantener'>
-                        <!--onclick='MantenerEsperas({{ emergencia.id }})'> -->
                       Mantener
                     </button>
                   </p>
