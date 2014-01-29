@@ -1,0 +1,95 @@
+\documentclass[9pt, letterpaper, oneside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+
+\hypersetup{
+  pdfstartpage = 1, 
+  pdftitle = {Recomendaciones para obtener mayor Modularidad},
+  pdfauthor = {Jonathan Queipo},%
+  pdfcreator = {Jonathan Queipo},
+  pdfproducer = {LaTeX with hyperref},
+  pdfdisplaydoctitle = true,
+  pdflang = es,
+  plainpages = false,
+}
+
+% Definicion del titulo
+\title{Recomendaciones para obtener mayor Modularidad}
+\author{Jonathan Queipo}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\chapter{Introducción}
+
+  En el presente documento se plantean algunas sugerencias y recomendaciones para obtener
+  mayor modularidad en el programa TDS. Esto debido a la creciente necesidad de
+  descentralizar la programación, que actualmente se encuentra notoriamente concentrando
+  en una sola aplicación de todo el programa, la cual es \textbf{app\_emergencia}.
+  
+  Para mayor escalabilidad y mantenibilidad del desarrollo realizada, es de importancia
+  crítica poder modularizar el código de la aplicación app\_emergencia, y distribuir el
+  mismo a través de las aplicaciones ya existentes o, de ser necesario, en aplicaciones
+  nuevas.
+  
+  Durante el transcurso del documento nos referiremos a el programa TDS como 
+  la \textbf{aplicación} y cada componente de la misma como \textbf{módulos}.
+  
+  Dicho todo esto, procedemos a exponer las recomendaciones.
+  
+
+\chapter{Recomendaciones}
+
+  \section{Interfaz Gráfica}
+    Actualmente la página de inicio de la aplicación, lugo de haber realizado
+    inicio de sesión, se presenta accesos a las
+    cuatro (4) áreas principales de TDS, \textbf{Ingreso}, \textbf{Listados},
+    \textbf{Historia Médica} y \textbf{Estadísticas}. En el presente estado de
+    la apliación el módulo de Historia Médica (HM) se encuentra inhabilitado, sin
+    embargo sigue apareciendo en la página de inicio, y al dar click sobre el
+    logo que le representa nos dirige hacia el listado de pacientes atendidos.
+    
+    Lo ideal sería que el módulo HM no esté presente en la página de inicio, pero
+    sin eliminar el código de la interfaz gráfica, para que se deje abierta la
+    posibilidad de reincorporarlo a la vista en el momento en el que se termine
+    de desarrollar el módulo.
+    
+    Se plantean dos opciones\footnote{Queda a total facultad del lector el
+    aceptar o rechazar las sugerencias aquí expuestas, pues son simplemente eso...
+    sugerencias. No obstante estas recomendaciones son el resultado de un trimestre
+    de desarrollo y de ensayo y error en otras áreas de la aplicación, lo que nos
+    brindó cierta experiencia.}:
+    
+    \subsection{Creación de nueva plantilla HTML}
+    
+    En principio la opción más evidente sería crear una plantilla nueva que no
+    contenga la parte gráfica del módulo HM, diferente a \textbf{loged.html} que
+    es la plantilla actual de la vista posterior al inicio de sesión.
+    
+    La idea es que al momento de desear habilitar o deshabilitar el módulo HM
+    se puede \emph{jugar} con las redirecciones en los archivos \textbf{urls.py}.
+    
+    \subsection{Creación de tabla auxiliar en la base de datos}
+
+  	La segunda opción que se plantea es la creación de una tabla auxiliar en la
+  	base de datos que almacene los nombres, nombres de imágenes, urls bases y demás
+  	información relevante sobre las aplicaciones instaladas.
+  	
+  	Cuando ya se tiene la información almacenada en la base de datos, se puede hacer
+  	una consulta desde el \textbf{views.py} que nos devuelve todas las aplicaciones
+  	instaladas al momento de utilizar el sistema, sin la necesidad de crear más de
+  	una plantilla para la página sucesiva al inicio de sesión exitoso.
+  	
+  	
+
+\end{document}
