@@ -454,6 +454,19 @@ def ordenar_por_causas(diccionario_de_causas):
   resultado = sorted(diccionario_de_causas.items(), key = lambda t: t[0])
   return resultado
 
+def ordenar_por_color(diccionario_de_causas):
+  resultado = [('Verde', diccionario_de_causas['Verde']),
+	       ('Amarillo', diccionario_de_causas['Amarillo']),
+	       ('Rojo', diccionario_de_causas['Rojo']),
+	       ('Negro', diccionario_de_causas['Negro'])]
+  return resultado
+
+def ordenar_por_color_transicion(diccionario_de_causas):
+  resultado = [('Amarillo', diccionario_de_causas['Amarillo']),
+	       ('Rojo', diccionario_de_causas['Rojo']),
+	       ('Negro', diccionario_de_causas['Negro'])]
+  return resultado
+
 def obtener_causas_de_espera(emergencias):
     # Diccionario que mapea el nombre de la causa de espera
     # a un arreglo indicando la cantidad de ocurrencias por
@@ -514,7 +527,7 @@ def obtener_causas_de_espera(emergencias):
         valores[grupo] += 1
         
         if (grupo_trans_fin == grupo_trans_inicio):
-	  continue
+          continue
         
         grupo_trans = max(grupo_trans_fin, grupo_trans_inicio)
         (valores_trans, img_trans) = causas_transicion[causa]
@@ -524,15 +537,22 @@ def obtener_causas_de_espera(emergencias):
           
 
 def invertir_orden_de_diccionario(diccionario, colores):
-    causas_invertidas = {}
-    for color in colores:
-      causas_invertidas[color]=[]
-      
+    pos_negro = len(colores)-1
+  
+    intermedio = []
     for causa in diccionario.keys():
-      (valores,img) = diccionario[causa]
-      for i in range(0,len(colores)):
-        causas_invertidas[colores[i]].append((causa,valores[i]))
+      intermedio.append((causa, diccionario[causa]))
+    intermedio = sorted(intermedio, key=lambda t: -t[1][0][pos_negro])
         
+    causas_invertidas = []
+    for color in colores:
+      causas_invertidas.append((color,[]))
+     
+    aux = [x[0] for x in causas_invertidas]
+    for causa in intermedio:
+      (valores,img) = causa[1]
+      for i in range(0,len(colores)):
+        causas_invertidas[aux.index(colores[i])][1].append((causa[0],valores[i]))
     return causas_invertidas
 
 
@@ -562,17 +582,17 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     emergencias_por_horas = [[],[],[],[]]
     
     for egreso in egresos_emergencia:
-        t = egreso.tiempo_emergencia()
-        if t < hora_en_segundos[2]:
-            grupo = 0
-        elif hora_en_segundos[2] <= t and t < hora_en_segundos[4]:
-            grupo = 1
-        elif hora_en_segundos[4] <= t and t < hora_en_segundos[6]:
-            grupo = 2
-        else:
-            grupo = 3
-        horas[grupo] += 1
-        emergencias_por_horas[grupo].append(egreso)
+	t = egreso.tiempo_emergencia()
+	if t < hora_en_segundos[2]:
+	    grupo = 0
+	elif hora_en_segundos[2] <= t and t < hora_en_segundos[4]:
+	    grupo = 1
+	elif hora_en_segundos[4] <= t and t < hora_en_segundos[6]:
+	    grupo = 2
+	else:
+	    grupo = 3
+	horas[grupo] += 1
+	emergencias_por_horas[grupo].append(egreso)
             
     total_egresos = sum(horas)
     
@@ -620,17 +640,14 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     colores_transicion = ['Amarillo','Rojo','Negro']
     causas_invertidas = []
     for x, y in zip(lista_auxiliar, colores):
-      causas_invertidas.append((y,\
-	ordenar_por_causas(invertir_orden_de_diccionario(x,colores))))
+      causas_invertidas.append((y,invertir_orden_de_diccionario(x,colores)))
     causas_transicion_invertidas = []
     for x, y in zip(lista_auxiliar_transicion, colores_transicion):
       causas_transicion_invertidas.append((y,\
-	ordenar_por_causas(\
-	  invertir_orden_de_diccionario(x,colores_transicion))))
+	  invertir_orden_de_diccionario(x,colores_transicion)))
     
-    causas_invertidas=[('General', \
-      ordenar_por_causas(invertir_orden_de_diccionario(\
-	causas_pacientes_total,colores)))] + causas_invertidas
+    causas_invertidas=[('General',invertir_orden_de_diccionario(\
+	causas_pacientes_total,colores))] + causas_invertidas
     # Resultados de los Triages
     triages = Triage.objects.filter(fecha__range=[fecha_inicio,fecha_fin]) \
               .values('nivel').annotate(Count('nivel')).order_by('nivel')
@@ -646,7 +663,7 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
                 ['Negro (6 o + horas)',horas[3]]
               ]
     
-    prueba = ordenar_por_causas(invertir_orden_de_diccionario(lista_auxiliar[0], colores))
+    prueba = invertir_orden_de_diccionario(lista_auxiliar[3],colores)
     
     info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
             'fin':fecha_fin-timedelta(days=1),'sig':siguiente_semana,
