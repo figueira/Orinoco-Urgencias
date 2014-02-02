@@ -79,7 +79,7 @@
 
           // Si el paciente lleva mas de media hora esperando, cambiar el fondo
           // de la celda
-          if (tiempo_espera > 5){
+          if (tiempo_espera > 1800){
             $('#emergencia_{{emergencia.id}}')
               .css("background","rgba(230, 230, 230, 0.5)");
           } else {
