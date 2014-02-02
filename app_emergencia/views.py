@@ -788,15 +788,20 @@ def emergencia_espera_finalizada(request,id_espera_emergencia):
 #------------------------------------------ Funciones para agregar un cubiculo
 def emergencia_guardar_cubi(request, id_emergencia, accion):
   emergencia = get_object_or_404(Emergencia, id = id_emergencia)
-  cubiculo  = get_object_or_404(Cubiculo, id = request.POST['id_cubiculo'])
 
-  if cubiculo.esta_asignado():
+  id_cubiculo = request.GET['id_cubiculo']
+  if id_cubiculo == '':
+    cubiculo = None
+  else:
+    cubiculo  = get_object_or_404(Cubiculo, id = id_cubiculo)
+
+  if (cubiculo != None) and (cubiculo.esta_asignado()):
     mensaje = "Error: El cubiculo " + cubiculo.nombre + \
               " esta asignado a otro paciente"
   else:
     tiene_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                        .count() > 0
-    if not tiene_cubiculo:
+    if (cubiculo != None) and (not tiene_cubiculo):
       emergencia.fecha_Esp_act = datetime.now()
       emergencia.save()
 
@@ -817,21 +822,33 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
                                          fechaReal = datetime.now(),
                                          area_atencion = triage.areaAtencion.id)
 
+      # Aqui se garantiza que el 'cubiculo' no va a ser None, puesto que se tuvo
+      # que haber seleccionado un cubiculo para llegar aqui
       asignacion_cubiculo = AsignarCub.objects.create(emergencia = emergencia,
                                                       cubiculo = cubiculo)
       mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
     else:
-      mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " actualizado"
-      asignacion_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
-                                              .update(cubiculo = cubiculo)
-    
-    print mensaje
-    if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
-      print 'Enviando a ambulatoria'
-      return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+      # Aqui necesariamente hay un cubiculo asignado
+      asignacion_cubiculo = AsignarCub.objects \
+                                      .filter(emergencia = emergencia)[0]
+      if cubiculo == None:
+        # Aqui se pidio no asignar ningun cubiculo
+        asignacion_cubiculo.delete()
+        mensaje = 'Logrado: Eliminación de asignación de cubículo'
+      else:
+        asignacion_cubiculo.cubiculo = cubiculo
+        asignacion_cubiculo.save()
+        mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " actualizado"
+
+    if cubiculo == None:
+      return emergencia_listar_todas(request, mensaje = mensaje)
     else:
-      print 'Enviando a observación'
-      return emergencia_listar_observacion(request, mensaje)
+      if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
+        print 'Enviando a ambulatoria'
+        return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+      else:
+        print 'Enviando a observación'
+        return emergencia_listar_observacion(request, mensaje)
 
   return emergencia_listar_todas(request, mensaje = mensaje)
 

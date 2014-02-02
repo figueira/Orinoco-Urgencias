@@ -67,7 +67,7 @@
 }
 
 .imagen-espera-td{
-  width: 40px;
+  width: 50px;
 }
 
 .nombreLista {
@@ -75,8 +75,17 @@
   text-transform: uppercase;
 }
 
-.s1 {
-  width:57px;
+.opcion-cubiculo {
+  font-size: 15px;
+}
+
+.select-cubiculos {
+  -moz-appearance: none;
+  font-size: 30px;
+  height: 50px;
+  text-indent: 1px;
+  text-overflow: '';
+  width: auto;
 }
 
 .s2 {

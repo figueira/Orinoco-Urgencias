@@ -79,7 +79,7 @@
 
           // Si el paciente lleva mas de media hora esperando, cambiar el fondo
           // de la celda
-          if (tiempo_espera > 1800){
+          if (tiempo_espera > 5){
             $('#emergencia_{{emergencia.id}}')
               .css("background","rgba(230, 230, 230, 0.5)");
           } else {
@@ -166,6 +166,15 @@
         $(document.body).click(function(){
           $('.causas-espera').fadeOut();
         })
+
+        // Hacer que al cambiar de cubículo se redireccione apropiadamente
+        $('.select-cubiculos').on('change', function(){
+          var id_emergencia = $(this).closest('.fila-emergencia')
+                                     .data('id-emergencia');
+          window.location = 
+            '/emergencia/guardar_cubi/' + id_emergencia + 
+            '/guardar?id_cubiculo=' + this.options[this.selectedIndex].value
+        });
 
         // Asociacion del evento click al boton de mantener un grupo  de causas
         // de espera
@@ -345,7 +354,7 @@
               </th>
             {% else %}
               <th class='encabezado-lista'>
-                <center>NIVEL DE TRIAGE</center>
+                <center>TRIAGE</center>
               </th>
             {% endif %}
             <th class='encabezado-lista'>
@@ -367,38 +376,41 @@
                 {% if emergencia.triage != 0 %}
                   <div id="formCub">
                     <center>
-                      <form 
+                      <!-- <form 
                         id="formCubi" 
                         method="post" 
                         action=
                           "/emergencia/guardar_cubi/{{emergencia.id}}/guardar">
-                        {% csrf_token %}
+                        {% csrf_token %} -->
                         <select name="id_cubiculo"
-                                class="s1">
-                          <option value="">--</option>
+                                class="select-cubiculos">
+                          <option class='opcion-cubiculo' value="">N/A</option>
 
                           <!--Se imprime la lista de cubiculos   -->
                           
                           {% for c in cubiculos %}
                             {% if c.nombre == emergencia.cubi %}
-                              <option value="{{ c.id }}" selected='selected'>
+                              <option class='opcion-cubiculo'
+                                      value="{{ c.id }}" 
+                                      selected='selected'>
                                 {{ c.nombre }}
                               </option>
                             {% else %}
-                              <option value="{{ c.id }}">
+                              <option class='opcion-cubiculo'
+                                      value="{{ c.id }}">
                                 {{ c.nombre }} 
                               </option>
                             {% endif %}
                           {% endfor %}
                         </select>
-                        <button class="btn btn-mini btn-primary" 
+                        <!-- <button class="btn btn-mini btn-primary" 
                                 onClick="enviaA('{{emergencia.id}}')" 
                                 rel="tooltip" 
                                 data-toggle="tooltip" 
                                 data-original-title="Cambiar cubículo">
                           <i class="icon-plus-sign icon-white"></i>
                         </button>
-                      </form>
+                      </form> -->
                     </center>
                   </div>
                 {% else %}
