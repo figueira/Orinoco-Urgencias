@@ -140,7 +140,8 @@ class Emergencia(models.Model):
     esperas_asignadas = self.esperas_asignadas()
     esperas_no_asignadas = list(Espera.objects.all().order_by('nombre'))
     for espera_emergencia in esperas_asignadas:
-      esperas_no_asignadas.remove(espera_emergencia.espera)
+      if espera_emergencia.espera in esperas_no_asignadas:
+        esperas_no_asignadas.remove(espera_emergencia.espera)
 
     return esperas_no_asignadas
 
