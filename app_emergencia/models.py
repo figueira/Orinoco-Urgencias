@@ -282,12 +282,12 @@ class Espera(models.Model):
     return json
 
 class EsperaEmergencia(models.Model):
-  espera   = models.ForeignKey(Espera)
+  espera = models.ForeignKey(Espera)
   emergencia = models.ForeignKey(Emergencia)
-  estado   = models.CharField(max_length=1,choices=REALIZADO)
+  estado = models.CharField(max_length = 1,choices = REALIZADO)
   #Hora en la que se comienza a contabilizar esa causa de espera para esa emergencia	
-  hora_comienzo = models.DateTimeField(auto_now_add=True)
-  hora_fin    = models.DateTimeField(blank=True,null=True)
+  hora_comienzo = models.DateTimeField(auto_now_add = True)
+  hora_fin = models.DateTimeField(blank = True, null = True)
 
   def __unicode__(self):
     return "%s" % self.espera.nombre
