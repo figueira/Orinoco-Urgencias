@@ -279,11 +279,19 @@
         // asignadas
         $('.causas-espera').on('click', '.espera-menos', function(event){
           var menos_activado = $(this)
-            if(confirm('¿Esta seguro que desea eliminar "' + 
-                       $.trim(menos_activado.parent().text()) + '"? ' +
-                       "Esto no la marcará como cumplida, para ello use la " +
-                       "caja adyacente"))
-            {
+          if(confirm('¿Esta seguro que desea eliminar "' + 
+                     $.trim(menos_activado.parent().text()) + '"? ' +
+                     "Esto no la marcará como cumplida, para ello use la " +
+                     "caja adyacente"))
+          {
+            // Ocultar el menos y el checkbox y colocar un AJAX loader
+            checkbox = menos_activado.siblings('.espera-atendida')
+            menos_activado.hide();
+            checkbox.hide();
+            var ajax_loader = $('<img> </img');
+            ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+            menos_activado.after(ajax_loader)
+
             // Construir el elemento a agregar a la lista de causas no asignadas
             var id_espera_emergencia = menos_activado.parent()
                                                      .data('id-espera-emergencia');
@@ -294,6 +302,11 @@
             $.get('/emergencia/eliminar_espera_emergencia/' + 
                   id_espera_emergencia, function(){
               mover_a_no_asignada(menos_activado.parent())
+            }).fail(function(){
+              // Si la llamada falla, colocar los elementos y quitar el loader
+              ajax_loader.remove();
+              menos_activado.show();
+              checkbox.show();
             });
           }
         });
