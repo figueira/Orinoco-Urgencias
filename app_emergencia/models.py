@@ -260,7 +260,8 @@ class AsignarCub(models.Model):
   emergencia = models.ForeignKey(Emergencia)
   cubiculo   = models.ForeignKey(Cubiculo)
   def __unicode__(self):
-    return "emer: %s-cubi: %s" % (self.emergencia,self.cubiculo)
+    return "Emergencia: %s, Cubiculo: %s" % (self.emergencia.paciente, \
+                                             self.cubiculo)
 
 class Espera(models.Model):
   nombre = models.CharField(max_length=48)
@@ -285,17 +286,19 @@ class EsperaEmergencia(models.Model):
   espera = models.ForeignKey(Espera)
   emergencia = models.ForeignKey(Emergencia)
   estado = models.CharField(max_length = 1,choices = REALIZADO)
-  #Hora en la que se comienza a contabilizar esa causa de espera para esa emergencia	
+  # Hora en la que se comienza a contabilizar esa causa de espera para esa
+  # emergencia	
   hora_comienzo = models.DateTimeField(auto_now_add = True)
   hora_fin = models.DateTimeField(blank = True, null = True)
 
   def __unicode__(self):
-    return "{0}, {1}, Fin: {3}, Egreso? {4}" \
+    return "{0}, {1}, Fin: {3}, Egreso? {4}, Hora egreso: {5}" \
              .format(self.espera.nombre,
                      self.emergencia.paciente,
                      str(self.hora_comienzo),
                      str(self.hora_fin),
-                     str(self.emergencia.hora_egreso != None))
+                     str(self.emergencia.hora_egreso != None),
+                     str(self.emergencia.hora_egreso))
 
 class ComentarioEmergencia(models.Model):
   emergencia = models.ForeignKey(Emergencia)
