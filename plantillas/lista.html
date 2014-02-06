@@ -285,7 +285,7 @@
                      "caja adyacente"))
           {
             // Ocultar el menos y el checkbox y colocar un AJAX loader
-            checkbox = menos_activado.siblings('.espera-atendida')
+            var checkbox = menos_activado.siblings('.espera-atendida')
             menos_activado.hide();
             checkbox.hide();
             var ajax_loader = $('<img> </img');
@@ -318,6 +318,14 @@
           if(confirm('¿Está seguro que desea marcar "' +
                       $.trim(checkbox_activado.parent().text()) + 
                       '" como cumplida? Esta acción no es reversible')){
+            // Ocultar el menos y el checkbox y colocar un ajax loader
+            var menos = checkbox_activado.siblings('.espera-menos');
+            checkbox_activado.hide();
+            menos.hide();
+            var ajax_loader = $('<img> </img>');
+            ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+            checkbox_activado.after(ajax_loader)
+
             var id_espera_emergencia = checkbox_activado
                                        .parent()
                                        .data('id-espera-emergencia');
@@ -327,6 +335,12 @@
                   function(){
               MantenerEsperas($(checkbox_activado.closest('.fila-emergencia')));
               mover_a_no_asignada(checkbox_activado.parent());
+            }).fail(function(){
+              // Si la llamada falla, quitar el loader y poner los mandos
+              ajax_loader.remove();
+              menos.show();
+              checkbox_activado.show();
+              checkbox_activado.prop('checked', false)
             });
           } else {
             checkbox_activado.prop('checked', false)
