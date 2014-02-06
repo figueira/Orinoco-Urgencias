@@ -212,10 +212,17 @@
         $('.causas-espera').on('click', '.espera-mas', function(event){
           // Construir el elemento a agregar a la lista de causas asignadas
           var mas_activado = $(this);
+          // Ocultar el botón para evitar que se presione numerosas veces,
+          // colocar un ajax loader en su lugar
+          mas_activado.hide();
+          var ajax_loader = $('<img> </img>');
+          ajax_loader.addClass('ajax-loader');
+          ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+          mas_activado.after(ajax_loader);
+
           var id_espera = mas_activado.parent().data('id-espera');
           var fila_emergencia = $(mas_activado.closest('.fila-emergencia'));
           var id_emergencia = fila_emergencia.data('id-emergencia');
-          
           // Antes que todo se envia una actualizacion a la base de datos para
           // guardar este cambio
           $.getJSON('/emergencia/' + id_emergencia + '/agregar_espera/' + 
@@ -261,7 +268,11 @@
 
             // Finalmente indicar que se mantengan las causas de espera
             MantenerEsperas(fila_emergencia)
-          });
+          }).fail(function(){
+            // Si la llamada falla, volver a colocar el mas
+            ajax_loader.remove()
+            mas_activado.show()
+          })
         });
 
         // Método que elimina causas de espera a partir de la lista de causas
