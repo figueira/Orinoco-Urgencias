@@ -362,7 +362,6 @@ def emergencia_darAlta(request,idE):
 
           # Liberar el cubiculo que estaba asignado
           asigCA = AsignarCub.objects.filter(emergencia = emergencia)
-          print "El cubiculo que estaba asignado: " + str(asigCA)
           if asigCA:
             asigCA.delete()
           else:
@@ -372,7 +371,6 @@ def emergencia_darAlta(request,idE):
           esperas = EsperaEmergencia.objects.filter(emergencia = emergencia,
                                                     hora_fin = None)
           for espera in esperas:
-            print "Marcada la espera " + str(espera.espera) + " como atendida"
             espera.hora_fin = f_darAlta
             espera.save()
 
