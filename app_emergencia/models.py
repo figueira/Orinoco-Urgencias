@@ -117,7 +117,7 @@ class Emergencia(models.Model):
   destino = models.ForeignKey(Destino,blank = True,null = True)
   
   def __unicode__(self):
-    return "%s - %s " % (self.id,self.paciente)
+    return "%s - %s " % (self.id, self.paciente)
 
   # Dado un objeto de emergencia, devuelve la lista de causas de eséra que han
   # sido asignadas a ella
@@ -290,7 +290,12 @@ class EsperaEmergencia(models.Model):
   hora_fin = models.DateTimeField(blank = True, null = True)
 
   def __unicode__(self):
-    return "%s" % self.espera.nombre
+    return "{0}, {1}, Fin: {3}, Egreso? {4}" \
+             .format(self.espera.nombre,
+                     self.emergencia.paciente,
+                     str(self.hora_comienzo),
+                     str(self.hora_fin),
+                     str(self.emergencia.hora_egreso != None))
 
 class ComentarioEmergencia(models.Model):
   emergencia = models.ForeignKey(Emergencia)
