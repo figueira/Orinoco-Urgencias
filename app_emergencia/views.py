@@ -134,9 +134,11 @@ def emergencia_listar_todas(request, mensaje = ''):
                 info)
 
 def emergencia_listar_triage(request):
+  # En el area de triage se listan todos los pacientes que no tienen cubiculo
+  # asignado y no han sido egresados
   emergencias = Emergencia.objects \
-                          .filter(hora_egreso = None,
-                                  triage__isnull = False) \
+                          .filter(asignarcub__isnull = True, \
+                                  hora_egreso = None) \
                           .distinct() \
                           .order_by('hora_ingreso')
   form = IniciarSesionForm()
