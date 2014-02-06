@@ -30,6 +30,9 @@ import json
 # Expresiones regulares
 import re
 
+# Cuestiones de manejo de la base de datos
+from django.db import transaction
+
 #####################################################
 #Imports Atencion
 import ho.pisa as pisa
@@ -335,40 +338,52 @@ def emergencia_agrega_emer(request,id_emergencia):
         return redirect('/emergencia/listar/todas')
         
 
-#@login_required(login_url='/')
+@login_required(login_url='/')
 def emergencia_darAlta(request,idE):
-    emergencia = get_object_or_404(Emergencia,id=idE)
-    medico = Usuario.objects.get(username=request.user)
-    if (medico.tipo == "1"):
-        if request.method == 'POST':
-            form = darAlta(request.POST)
-            if form.is_valid():
-                pcd = form.cleaned_data
-                f_destino  = pcd['destino']
-                f_area     = pcd['area']
-                f_darAlta  = pcd['darAlta']
-                f_traslado = pcd['traslado']
-                emergencia.egreso=medico
-                emergencia.hora_egreso=f_darAlta
-                emergencia.hora_egresoReal=datetime.now()
-                emergencia.destino=f_destino
-                emergencia.save()
+  emergencia = get_object_or_404(Emergencia,id=idE)
+  medico = Usuario.objects.get(username=request.user)
+  if (medico.tipo == "1"):
+    if request.method == 'POST':
+      form = darAlta(request.POST)
+      if form.is_valid():
+        # Iniciar una transaccion para asegurar que las dos operaciones se
+        # realicen
+        with transaction.atomic():
+          pcd = form.cleaned_data
+          f_destino = pcd['destino']
+          f_area = pcd['area']
+          f_darAlta = pcd['darAlta']
+          f_traslado = pcd['traslado']
+          emergencia.egreso = medico
+          emergencia.hora_egreso = f_darAlta
+          emergencia.hora_egresoReal = datetime.now()
+          emergencia.destino = f_destino
+          emergencia.save()
 
-                # Aqui libero el cubiculo
-                asigCA  = AsignarCub.objects.filter(emergencia = emergencia)
-                if asigCA:
-                    asigCA.delete()
-                else:
-                    print "Entre a dar de alta por otro lado"
+          # Liberar el cubiculo que estaba asignado
+          asigCA = AsignarCub.objects.filter(emergencia = emergencia)
+          print "El cubiculo que estaba asignado: " + str(asigCA)
+          if asigCA:
+            asigCA.delete()
+          else:
+            print "Dando de alta sin cubiculo asignado"
 
-            else:
-                info = {'form':form,'emergencia':emergencia}
-                return render_to_response('darAlta.html',info,context_instance=RequestContext(request))
-        else:
-            form = darAlta()
-            info = {'form':form,'emergencia':emergencia}
-            return render_to_response('darAlta.html',info,context_instance=RequestContext(request))    
-    return redirect("/emergencia/listar/todas")
+          # Si habia alguna espera activa, marcarla como atendida
+          esperas = EsperaEmergencia.objects.filter(emergencia = emergencia,
+                                                    hora_fin = None)
+          for espera in esperas:
+            print "Marcada la espera " + str(espera.espera) + " como atendida"
+            espera.hora_fin = f_darAlta
+            espera.save()
+
+      else:
+        info = {'form':form,'emergencia':emergencia}
+        return render_to_response('darAlta.html',info,context_instance = RequestContext(request))
+    else:
+      form = darAlta()
+      info = {'form':form,'emergencia':emergencia}
+      return render_to_response('darAlta.html',info,context_instance = RequestContext(request))  
+  return redirect("/emergencia/listar/todas")
 
 @login_required(login_url='/')
 def emergencia_aplicarTriage(request, idE, vTriage):
