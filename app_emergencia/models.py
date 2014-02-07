@@ -260,7 +260,7 @@ class AsignarCub(models.Model):
   emergencia = models.ForeignKey(Emergencia)
   cubiculo   = models.ForeignKey(Cubiculo)
   def __unicode__(self):
-    return "Emergencia: %s, Cubiculo: %s" % (self.emergencia.paciente, \
+    return "Emergencia: %s, Cubiculo: %s" % (self.emergencia.id, \
                                              self.cubiculo)
 
 class Espera(models.Model):
