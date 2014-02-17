@@ -15,7 +15,7 @@ HTML:
     . causas-espera
     . id-emergencia
   - La asociación de eventos se hace por jQuery, no en el tag.
-  - La ubicación de elementos en el DOM se prefire en la jerarquía:
+  - La ubicación de elementos en el DOM se prefiere en la jerarquía:
     . Tag
     . Clase CSS
     . Identificador
