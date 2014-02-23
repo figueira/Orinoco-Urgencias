@@ -1,0 +1,276 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\title{Manual de Instalación del Sistema TDS para Ambientes de Desarrollo Linux}
+\author{Luis Crespo, María José Ramos, Daniel Azocar}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introducción}
+Este manual contempla la explicación de la instalación y configuración de cada uno de los componentes necesarios para la ejecución del sistema TDS en un ambiente de desarrollo Linux. \\
+
+Muchos de los paquetes de instalación se encuentran en los repositorios correspondientes a cada distribución de Linux. En el presente documento se utilizará el manejador de repositorios \emph{yum} para ambientes basados en Red Hat Linux, y el manejador de repositorios \emph{apt-get} para ambientes basados en Debian Linux. \\
+
+Es importante destacar que la mayoría de los procedimientos para la instalación de los componentes necesarios, requieren de privilegios de super usuario (administrador), por lo tanto,  se deben ejecutar las instrucciones correspondientes como usuario \emph{root}; o simplemente precediendo cada instrucción con el modificador \emph{sudo}.
+
+\newpage
+\section{Instalación de Dependencias}
+\subsection{Instalación de Git}
+El código fuente de la aplicación se encuentra almacenado en un repositorio remoto en GitHub, para interactuar con dicho repositorio y manejar el control de versiones se utilizará \emph{Git}. \\
+
+Para instalar \emph{Git}, abra una línea de comandos y ejecute la siguiente instrucción:
+
+\begin{quote}
+Ambientes Debian:
+\begin{verbatim}
+$ apt-get install git
+\end{verbatim}
+\end{quote}
+
+\begin{quote}
+Ambientes Red Hat:
+\begin{verbatim}
+$ yum install git
+\end{verbatim}
+\end{quote}
+
+\subsection{Instalación de Python}
+Es común que los sistemas de operación Linux tengan Python instalado por defecto. Para chequear si ya posee Python, y obtener la versión instalada, abra una línea de comandos y ejecute:
+
+\begin{quote}
+\begin{verbatim}
+$ python --version
+\end{verbatim}
+\end{quote}
+
+Si no se encuentra el comando, o la versión es menor a \emph{2.7.x}, ejecute las siguientes instrucciones:
+
+\begin{quote}
+Ambientes Debian:
+\begin{verbatim}
+$ apt-get update
+$ apt-get install python
+\end{verbatim}
+\end{quote}
+
+\begin{quote}
+Ambientes Red Hat:
+\begin{verbatim}
+$ yum update
+$ yum install python
+\end{verbatim}
+\end{quote}
+
+\newpage
+\subsection{Instalación de Pip}
+Para instalar ciertas dependencias de Python es necesario el manejador de paquetes \emph{pip}. Para instalarlo abra una línea de comandos y ejecute las siguientes instrucciones:
+
+\begin{quote}
+Ambientes Debian:
+\begin{verbatim}
+$ apt-get install python-pip
+\end{verbatim}
+\end{quote}
+
+\begin{quote}
+Ambientes Red Hat:
+\begin{verbatim}
+$ yum install python-pip
+\end{verbatim}
+\end{quote}
+
+\subsection{Instalación de Django}
+Para la instalación del framework Django, se debe utilizar el manejador de paquetes de Python instalado anteriormente. A continuación, abra una línea de comandos y ejecute la siguiente instrucción:
+
+\begin{quote}
+\begin{verbatim}
+$ pip install django
+\end{verbatim}
+\end{quote}
+
+Para verificar que la instalación ha sido exitosa, ejecute:
+
+\begin{quote}
+\begin{verbatim}
+$ python
+\end{verbatim}
+\end{quote}
+
+Se ejecutará el interpretador de Python, allí ejecute:
+
+\begin{quote}
+\begin{verbatim}
+>>> import django
+>>> django.VERSION
+\end{verbatim}
+\end{quote}
+
+Debería aparecer en pantalla un resultado similar a:
+
+\begin{quote}
+(1, 6, 2, 'final', 0)
+\end{quote}
+
+Ésto indica la versión de Django instalada actualmente, verificando así la correcta instalación del framework.
+
+\subsection{Instalación de PostgreSQL}
+El manejador de base de datos utilizado por la aplicación es PostgreSQL. Para instalarlo, abra una línea de comandos y ejecute la siguiente instrucción:
+
+\begin{quote}
+Ambientes Debian:
+\begin{verbatim}
+$ apt-get install postgresql
+\end{verbatim}
+\end{quote}
+
+\begin{quote}
+Ambientes Red Hat:
+\begin{verbatim}
+$ yum install postgresql-server
+\end{verbatim}
+\end{quote}
+
+Luego, para hacer más sencillo el manejo y la configuración de bases de datos con PostgreSQL, se puede instalar pgAdmin3, para ésto simplemente ejecute la siguiente instrucción:
+
+\begin{quote}
+Ambientes Debian:
+\begin{verbatim}
+$ apt-get install pgadmin3
+\end{verbatim}
+\end{quote}
+
+\begin{quote}
+Ambientes Red Hat:
+\begin{verbatim}
+$ yum install pgadmin3
+\end{verbatim}
+\end{quote}
+
+\subsection{Instalación de Extensiones para Django}
+Para utilizar la base de datos a partir del framework, es necesario un paquete de Python, llamado \emph{psycopg2}, que funciona como interfaz entre el lenguaje y el manejador de bases de datos de PostgreSQL. Para instalarlo simplemente abra una línea de comandos y ejecute:
+
+\begin{quote}
+\begin{verbatim}
+$ pip install psycopg2
+\end{verbatim}
+\end{quote}
+
+También serán necesarias otras extensiones de Django, para instalarlas ejecute:
+
+\begin{quote}
+\begin{verbatim}
+$ pip install django_extensions
+$ pip install pillow
+$ pip install pisa
+$ pip install reportlab
+$ pip install html5lib
+\end{verbatim}
+\end{quote}
+
+\section{Configuración de la Base de Datos}
+Haciendo uso del programa instalado anteriormente, pgAdmin3, a continuación se realizará la configuración de la base de datos que será utilizada por la aplicación. \\
+
+Abra pgAdmin3. Es posible que la conexión al servidor de PostgreSQL no esté establecida. Para hacerlo, diríjase a \emph{File $>$ Add Server}. Ésto abrira una ventana en donde debe llenar los siguientes datos:
+
+\begin{quote}
+Name: $<$nombre que desee$>$ \\
+Host: \emph{localhost} \\
+Port: \emph{5432} \\
+Service: $<$dejarlo vacío$>$ \\
+Maintenance DB: \emph{postgres} \\
+Username: \emph{postgres} \\
+Password: $<$dejarlo vacío$>$ \\
+Store password: $<$desmarcarlo$>$ \\
+Group: \emph{Servers}
+\end{quote}
+
+Presione \emph{Ok}. Podrá observar que se ha añadido el servidor en la lista de servidores ubicada en el panel izquierdo de la ventana. Al expandir el servidor añadido, que podrá ubicar con el nombre que le colocó, haga click derecho en la lista llamada \emph{Databases} y luego haga click en \emph{New database}. En la ventana que se abre coloque los siguientes datos:
+
+\begin{quote}
+Name: \emph{cmsb} \\
+Owner: \emph{postgres}
+\end{quote}
+
+\newpage
+\section{Instalación de la Aplicación}
+Para obtener el código fuente de la aplicación, el mismo debe ser descargado desde el repositorio en GitHub al cual debe haber sido invitado como colaborador. Si no ha sido invitado como colaborador, debe solicitar dicha autorización al equipo de desarrollo de la aplicación. \\
+
+Si ya tiene acceso a dicho repositorio, puede clonarlo en su computadora abriendo una línea de comandos y ejecutando:
+
+\begin{quote}
+\begin{verbatim}
+$ git clone git@github.com:figueira/TDScopia.git
+\end{verbatim}
+\end{quote}
+
+De esta manera, se creará una carpeta llamada \emph{TDScopia}, ubicada en el directorio en el que se encuentra actualmente, que contiene el código fuente de la aplicación. A partir de ahora, nos referiremos a la ruta de dicha carpeta como \emph{home\_tds}. \\
+
+Ahora es necesario realizar ciertas configuraciones para el correcto funcionamiento de la aplicación. Para ésto, debe crearse el archivo \emph{settings.py} dentro de la carpeta \emph{home\_tds/AM/}. El contenido de este archivo debe ser copiado del archivo \emph{home\_tds/recursos/configuracion/settings.py.template} y luego modificar los siguientes datos: \\
+
+En la opción llamada \emph{DATABASES}, asigne a la entrada \emph{ENGINE} el valor:
+
+\begin{quote}
+`django.db.backends.postgresql\_psycopg2'
+\end{quote}
+
+Luego, asigne a la entrada \emph{NAME} el valor:
+
+\begin{quote}
+`cmsb'
+\end{quote}
+
+A la entrada \emph{USER} asígnele el valor:
+
+\begin{quote}
+`postgres'
+\end{quote}
+
+Por último, asigne a la entrada \emph{PASSWORD} la contraseña del usuario \emph{postgres}. Si no la ha cambiado, el valor de este campo debe ser vacío (`'). \\
+
+A continuación, para realizar la sincronización de la base de datos, abra una línea de comandos, ubíquese en \emph{home\_tds} y ejecute:
+
+\begin{quote}
+\begin{verbatim}
+$ python manage.py syncdb
+\end{verbatim}
+\end{quote}
+
+Acepte la creación de un super usuario para la aplicación e ingrese un nombre de usuario, email y contraseña. \\
+
+Una vez sincronizada la base de datos, se podrá ejecutar la aplicación ejecutando la siguiente instrucción:
+
+\begin{quote}
+\begin{verbatim}
+$ python manage.py runserver
+\end{verbatim}
+\end{quote}
+
+Luego, podrá acceder a la aplicación desde cualquier navegador a través del url:
+
+\begin{quote}
+localhost:8000
+\end{quote}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
