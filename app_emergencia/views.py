@@ -73,7 +73,7 @@ def emergencia_buscar(request):
             if len(p_cedula) > 0:
                 print "Se busco por cedula"
                 print p_cedula
-                pacientes = Paciente.objects.filter(cedula__startswith=p_cedula)
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula)
                 if len(pacientes) > 0:
                     for p in pacientes:
                         resultados.append(p)
