@@ -28,13 +28,13 @@
         <p class ="categoria"> 
           Email: {{usuario.email}}
         </p></br>
-        <p class ="categoria"> Tel&eacute;fonos: M&oacute;vil: 
-          {{usuario.tlf_cel}} Casa: {{usuario.tlf_casa}} </p>
+        <p class ="categoria"> Tel&eacute;fonos:<br> M&oacute;vil: 
+          {{usuario.tlf_cel}} <br>Casa: {{usuario.tlf_casa}} </p>
         <div class="iconos">
-          <a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobar" >
+          <a href="/usuario/pendientes/{{usuario.cedula}}/aprobar" >
             <img src="/static/img/usuarios/aprobar.png" title="Autorizar"/>
           </a>
-          <a href="/usuario/pendientes/{{l.usuario.cedula}}/rechazar">
+          <a href="/usuario/pendientes/{{usuario.cedula}}/rechazar">
             <img src="/static/img/usuarios/negar.png" title="Rechazar"/>
           </a>
           <a href="/usuario/pendientes">
