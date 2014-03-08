@@ -25,14 +25,25 @@ def sesion_iniciar(request):
         info = {}
         return render_to_response('loged.html',info,context_instance=RequestContext(request))
     if request.method == 'POST':
-        unombre = request.POST['unombre']
-        uclave  = request.POST['uclave']
+        unombre = request.POST.get('unombre', 'userDefault')
+        uclave  = request.POST.get('uclave', 'psswdDefault')
         user = authenticate(username=unombre,password=uclave)
+        
+        #Si le doy a iniciar sesion y NO estoy en el home, tengo userDefault y
+        #psswdDefault, redirecciono al home para introducir datos
+        if unombre == "userDefault" and uclave=="psswdDefault":
+            msj_tipo = ""
+            msj_info = ""
+            form = IniciarSesionForm()
+            info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
+            return render_to_response('index.html',info,context_instance=RequestContext(request))
+
         if user is not None:
             if user.is_active:
                 login(request,user)
                 info = {}
-                return render_to_response('loged.html',info,context_instance=RequestContext(request))                
+                return render_to_response('loged.html',info,context_instance=RequestContext(request))
+
         msj_tipo = "error"
         msj_info = "Error en clave"
         form = IniciarSesionForm()
