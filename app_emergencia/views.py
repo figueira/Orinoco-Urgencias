@@ -1688,11 +1688,11 @@ def evaluar_paciente(request, id_emergencia):
   if request.method == 'POST':
     form = FormularioEvaluacionPaciente(request.POST)
     es_valido = form.is_valid()
+
     if es_valido:
       emergencia = get_object_or_404(Emergencia, id = id_emergencia)
       medico = Usuario.objects.get(username = request.user)
       evaluacion = form.cleaned_data
-
       paciente = emergencia.paciente
       paciente.signos_tmp = evaluacion['temperatura']
       paciente.signos_fc = evaluacion['frecuencia_cardiaca']
