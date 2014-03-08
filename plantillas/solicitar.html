@@ -11,7 +11,15 @@
         <table>
           <tr>
             <td>C&eacute;dula</td>
-            <td>{{form.cedula}}</td>
+            <td>
+				<input id="cedula" 
+					   maxlength="9" 
+					   name="cedula"
+					   type="text" 
+					   class = ""
+					   onkeypress="return justNumbers(event);" 
+				/>
+			</td>
             <td>
               <span class="msj-error">{{form.cedula.errors}}</span>
             </td>
@@ -109,4 +117,14 @@
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts2 %}
+<script>
+  function justNumbers(e){
+    var keynum = window.event ? window.event.keyCode : e.which;
+    if ((keynum == 8) || (keynum == 46)) return true;   
+    return /\d/.test(String.fromCharCode(keynum));
+  }
+</script>
 {% endblock %}
