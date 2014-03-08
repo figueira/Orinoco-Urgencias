@@ -829,8 +829,8 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
 
       triage = Triage.objects.filter(emergencia = id_emergencia) \
                              .order_by("-fechaReal")
-      triage = triage[0]
 
+      triage = triage[0]
       atencion = Atencion.objects.create(emergencia = emergencia,
                                          medico = emergencia.responsable,
                                          fecha = datetime.now(),
@@ -990,23 +990,31 @@ def emergencia_enfermedad_actual(request,id_emergencia):
 def emergencia_atencion(request,id_emergencia,tipo):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
-    triage = triage[0]
-    ctx    = {'emergencia':emer,'triage':triage}
+    #aqui cambie cosas atte Carla
+    if len(triage) != 0:
+      triage = triage[0]
+      ctx    = {'emergencia':emer,'triage':triage}
 
-    paci = Paciente.objects.filter(emergencia__id=id_emergencia)
-    paci = paci[0]
-    atList = Atencion.objects.filter(emergencia=id_emergencia)
-    
-    if len(atList) == 0:
-        atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
-        atencion.save()
-        atList = Atencion.objects.filter(emergencia=id_emergencia)
+      paci = Paciente.objects.filter(emergencia__id=id_emergencia)
+      paci = paci[0]
+      atList = Atencion.objects.filter(emergencia=id_emergencia)
+      
+      if len(atList) == 0:
+          atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion_id)
+          atencion.save()
+          atList = Atencion.objects.filter(emergencia=id_emergencia)
 
-    if tipo == "listado":
-        return redirect('/emergencia/listar/atencion')
-    elif tipo == "historia":
-        return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
-    
+      if tipo == "listado":
+          return redirect('/emergencia/listar/atencion')
+      elif tipo == "historia":
+          return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
+    else:
+      if tipo == "listado":
+          return redirect('/emergencia/listar/atencion')
+      elif tipo == "historia":
+          ctx = {'emergencia':emer,'triage': None}
+          return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
+
 
 def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     emer    = get_object_or_404(Emergencia,id=id_emergencia)
