@@ -5,6 +5,24 @@
   Entrada:
     form -> El formulario de Python que contiene la información
 -->
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
+  </script>
+
+  <script type="text/javascript"
+    src="/static/libs/bootstrap/js/bootstrap-tab.js">
+  </script>
+
+
+  <script type="text/javascript"
+          src="../scripts/scriptDatePicker">
+  </script>
+{% endblock %}
+
+
+
 <form action='/emergencia/{{ idE }}/evaluar_paciente'
       class='tablaAgregar formulario-evaluacion' 
       method='post'
@@ -64,7 +82,7 @@
           <span class='add-on'>ppm</span>
         </div>
       </td>
-      <td>{{ form.frecuencia_cardiaca.errors }}</td>
+      <td>{{ form.frecuencia_cardiaca.errors   }}</td>
     </tr>
     <tr>
       <td>{{ form.frecuencia_respiratoria.label }}</td>
