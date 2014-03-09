@@ -112,6 +112,11 @@
           $('#fecha_inicio').datetimepicker({
             pickTime: false
           });
+		  
+		  // Se cierra el calendario al seleccionar fecha
+		  $('#fecha_inicio').on('changeDate', function(e) {
+		    $('#fecha_inicio').datetimepicker('hide');
+		  });	
         });
       </script>
       Hasta:&nbsp;
@@ -133,6 +138,11 @@
           $('#fecha_fin').datetimepicker({
             pickTime: false
           });
+		  
+		  // Se cierra el calendario al seleccionar fecha
+		  $('#fecha_fin').on('changeDate', function(e) {
+		    $('#fecha_fin').datetimepicker('hide');
+		  });
         });
       </script>
   
