@@ -26,12 +26,11 @@ from django.http import HttpResponse
 @login_required(login_url='/')
 def paciente_perfil(request,idP):
     p = get_object_or_404(Paciente,pk=idP)
-    ea = Emergencia.objects.filter(paciente=p)
-    print "emergencia en perfil",ea
-    tam = len(ea)
-    ea = ea[tam-1]
+    es = Emergencia.objects.filter(paciente=p) \
+                                  .order_by('hora_egreso')
+    tam = len(es)
+    ea = es[tam-1]
     # ea = ea[0]
-    es = Emergencia.objects.filter(paciente=p)
     info = {'p':p,'ea':ea,'es':es}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))
 
