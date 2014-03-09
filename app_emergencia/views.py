@@ -858,12 +858,13 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
     if cubiculo == None:
       return emergencia_listar_todas(request, mensaje = mensaje)
     else:
-      if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
-        print 'Enviando a ambulatoria'
-        return emergencia_listar_ambulatoria(request, mensaje = mensaje)
-      else:
-        print 'Enviando a observación'
-        return emergencia_listar_observacion(request, mensaje)
+	  mensaje = ""
+    # if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
+    #    print 'Enviando a ambulatoria'
+    #    return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+    #  else:
+    #    print 'Enviando a observación'
+    #    return emergencia_listar_observacion(request, mensaje)
 
   return emergencia_listar_todas(request, mensaje = mensaje)
 

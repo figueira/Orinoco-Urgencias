@@ -41,6 +41,11 @@
                         $('#ingreso_picker').datetimepicker({
                           language: 'pt-BR'
                         });
+						
+						// Se cierra el calendario al seleccionar fecha
+						$('#ingreso_picker').on('changeDate', function(e) {
+						  $('#ingreso_picker').datetimepicker('hide');
+						});
                       });
                     </script>
                 </td>
