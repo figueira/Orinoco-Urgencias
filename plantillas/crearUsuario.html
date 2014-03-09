@@ -11,7 +11,7 @@
       <form class= "tablaAgregar" method="post" action="/usuario/crear">
         {% csrf_token %}
         <table>
-            <tr>
+          <tr>
             <td>C&eacute;dula</td>
             <td>{{form.cedula}}</td>
             <td><span class="msj-error"> {{form.cedula.errors}} </span></td>
@@ -58,20 +58,11 @@
 
           <tr>
             <td>N&uacute;mero de M&oacute;vil</td>
-            <td>{{form.cod_cel}}{{form.num_cel}}</td>
+            <td>
+                {{form.cod_cel}}{{form.num_cel}}</td>
             <td>
               <span class="msj-error">
                 {{form.cod_cel.errors}}{{form.num_cel.errors}} 
-              </span>
-            </td>
-          </tr>
-
-          <tr>
-            <td>Direcci&oacute;n de Residencia</td>
-            <td>{{form.direccion}}</td>
-            <td>
-              <span class="msj-error"> 
-                {{form.direccion.errors}}
               </span>
             </td>
           </tr>
@@ -85,6 +76,16 @@
               </span>
             </td>
           </tr>
+
+          <tr>
+            <td>Direcci&oacute;n de Residencia</td>
+            <td>{{form.direccion}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.direccion.errors}}
+              </span>
+            </td>
+          </tr>          
 
           <tr>
             <td>Email</td>
