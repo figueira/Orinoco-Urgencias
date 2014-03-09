@@ -268,9 +268,7 @@ def emergencia_agregar(request):
       p_apellidos = pcd['apellidos']
       p_sexo = pcd['sexo']
       p_fecha_nacimiento = pcd['fecha_nacimiento']
-      prueba = Paciente.objects.filter(cedula = p_cedula,
-                                       nombres = p_nombres,
-                                       apellidos = p_apellidos)
+      prueba = Paciente.objects.filter(cedula = p_cedula)
       if len(prueba) == 0:
         p = Paciente(cedula = p_cedula,
                      nombres = p_nombres,
@@ -328,6 +326,9 @@ def emergencia_agrega_emer(request,id_emergencia):
         e_horaIngresoReal = datetime.now()
         e = Emergencia(paciente=p[0],responsable=e_responsable,ingreso=e_ingreso,hora_ingreso=e_horaIngreso,hora_ingresoReal=e_horaIngresoReal,hora_egreso=None)
         e.save()
+        espe = get_object_or_404(Espera,nombre = 'Ubicacion')
+        espera1 = EsperaEmergencia(espera = espe,emergencia = e,estado = '0')
+        espera1.save()
         print "Creando nueva emergencia objeto creado: ",e
         return redirect('/emergencia/listar/todas')
     else:

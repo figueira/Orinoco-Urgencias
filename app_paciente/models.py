@@ -32,7 +32,7 @@ class Enfermedad(models.Model):
         return "%s" % (self.descripcion)
         
 class Paciente(models.Model):
-    cedula = models.TextField(default = 0)
+    cedula = models.TextField(unique = True, default = 0)
     nombres = models.CharField(max_length = 64)
     apellidos = models.CharField(max_length = 64)
     sexo = models.IntegerField(choices = SEXO)
