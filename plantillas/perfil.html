@@ -48,10 +48,13 @@
           </a>
         {% endif %}
         
-        <a href='/emergencia/atencion/{{ ea.id }}/historia' 
-           class="btn btn-primary">
-          Realizar Atenci&oacute;n 
-        </a>
+
+        {% if ea.triage != 0 %}
+          <a href='/emergencia/atencion/{{ ea.id }}/historia' 
+             class="btn btn-primary">
+            Realizar Atenci&oacute;n 
+          </a>
+        {% endif %}
         <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">
           Ver Informe Triage
         </a> 
