@@ -42,8 +42,8 @@ class FormularioEvaluacionPaciente(forms.Form):
                                      attrs = 
                                        {'placeholder':'dd/MM/aaaa hh:mm:ss',
                                         'data-format':'dd/MM/yyyy hh:mm:ss'}))
-    frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca")
-    frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria")
+    frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
+    frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria",min_value=0,max_value=30)
 
     ingreso = forms.CharField(label = "Tipo de ingreso",
                               max_length = 1,
@@ -56,10 +56,10 @@ class FormularioEvaluacionPaciente(forms.Form):
                      label = "Motivo de ingreso",
                      queryset = Motivo.objects.exclude(
                                                  nombre__startswith = " "))
-    presion_sistolica = forms.IntegerField(label = "Presión sistólica")
-    presion_diastolica = forms.IntegerField(label = "Presión diastólica")
-    saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno")
-    temperatura = forms.FloatField()
+    presion_sistolica = forms.IntegerField(label = "Presión sistólica",min_value=0,max_value=300)
+    presion_diastolica = forms.IntegerField(label = "Presión diastólica",min_value=0,max_value=200)
+    saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno",min_value=0,max_value=100)
+    temperatura = forms.FloatField(min_value=0)
 
     # Validaciones perzonalizadas sobre los campos del formulario
     def clean_frecuencia_cardiaca(self):
