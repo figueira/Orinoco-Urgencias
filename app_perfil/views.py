@@ -38,7 +38,7 @@ def paciente_perfil(request,idP):
 def reporte_triage(request,idP):
     p = get_object_or_404(Paciente,pk=idP)
     ea = Emergencia.objects.filter(paciente=p)
-    ea = ea[0]
+    ea = ea[len(ea)-1]  #obtengo la ultima posicion de la lista, es el triage mas reciente
     es = Emergencia.objects.filter(paciente=p)
     info = {'p':p,'ea':ea,'es':es}
     html = render_to_string('reporteTriage.html',info, context_instance=RequestContext(request))
