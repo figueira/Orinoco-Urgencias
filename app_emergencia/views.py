@@ -992,7 +992,7 @@ def emergencia_enfermedad_actual(request,id_emergencia):
 def emergencia_atencion(request,id_emergencia,tipo):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
-    #aqui cambie cosas atte Carla
+    
     if len(triage) != 0:
       triage = triage[0]
       ctx    = {'emergencia':emer,'triage':triage}
@@ -1010,13 +1010,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
           return redirect('/emergencia/listar/atencion')
       elif tipo == "historia":
           return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
-    else:
-      if tipo == "listado":
-          return redirect('/emergencia/listar/atencion')
-      elif tipo == "historia":
-          ctx = {'emergencia':emer,'triage': None}
-          return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
-
+    
 
 def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     emer    = get_object_or_404(Emergencia,id=id_emergencia)
