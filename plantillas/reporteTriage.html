@@ -15,7 +15,7 @@
     <img src="/static/img/logo.png"/><p class= "titulo">Reporte Triage</p>
     <div class="container row">
       <div class="cuerpo">
-        <p class = "fecha"> Fecha y hora de la evaluaci&oacute;n: {{ea.fecha_triage}}</p><br/>
+        <p class = "fecha"> Fecha y hora de la evaluaci&oacute;n: {{ea.hora_ingresoReal}}</p><br/>
         <div class="izquierda">
           <br/><p class = "subtitulos">Paciente</p>
           <strong> Nombres:</strong> {{p.nombres}}<br/>
@@ -28,61 +28,66 @@
               <strong> Nombres: </strong> {{t.medico.first_name}}<br/>
               <strong> Apellidos: </strong> {{t.medico.last_name}}<br/><br/>
               <p class = "subtitulos"> Resultado del Triage </p><h2 >NIVEL {{t.nivel}}</h2>
-            {% endfor %}
-          {% endfor %}
-        </div>
-        <div class="derecha">
-          <p class = "subtitulos">Respuestas</p>
-          {% for e in es %}
-            {% for t in e.triages %}
-              <p>
-                <strong>
-                  El paciente requiere Atenci&oacute;n Inmediata: 
-                </strong>
-                {% if t.atencion %}
-                  Si
-                {% else %}
-                  No
-                {% endif %}
-              </p>
-              <p>
+              <p class = "fecha"> Fecha y hora: {{e.hora_ingresoReal}}</p><br/>
+              <div class="derecha">
+                <p class = "subtitulos">Respuestas</p>
+                <p>
+                  <strong>
+                    El paciente requiere Atenci&oacute;n Inmediata: 
+                  </strong>
+                  {% if t.atencion %}
+                    Si
+                  {% else %}
+                    No
+                  {% endif %}
+                </p>
+
+
+                <p>
                 <strong>El paciente puede esperar: </strong>
                 {% if t.esperar %}
                   Si
                 {% else %}
                   No
                 {% endif %}
-              </p>
-              <p><strong>Recursos que necesita: </strong>{{t.recursos}}</p>
-              <p><strong>Motivo de Ingreso: </strong>{{t.motivo}}</p>
-              <p>
-                <strong>Temperatura: </strong>{{t.emergencia.paciente.signos_tmp}} &deg; Centigrados
-              </p>
-              <p>
-                <strong>Frecuencia Card&iacute;aca: </strong>
-                  {{t.emergencia.paciente.signos_fc}} por minuto
-              </p>
-              <p>
-                <strong>Frecuencia Respiratoria: </strong>
-                  {{t.emergencia.paciente.signos_fr}} por  minuto
-              </p>
-              <p>
-                <strong>Presi&oacute;n Sist&oacute;lica: </strong>
-                  {{t.emergencia.paciente.signos_pa}} mmHg 
-              </p>
-              <p>
-                <strong>Presi&oacute;n Diast&oacute;lica: </strong>
-                  {{t.emergencia.paciente.signos_pb}} mmHg
-              </p>
-              <p>
-                <strong>Saturaci&oacute;n de Ox&iacute;geno: </strong>
-                  {{t.emergencia.paciente.signos_saod}} %
-              </p>
-              <p><strong>Escala AVPU: </strong>{{t.signos_avpu}}</p>
-              <p><strong>Dolor: </strong>{{t.signos_dolor}}</p>
+                </p>
+
+              
+                <p><strong>Recursos que necesita: </strong>{{t.recursos}}</p>
+                <p><strong>Motivo de Ingreso: </strong>{{t.motivo}}</p>
+                <p>
+                  <strong>Temperatura: </strong>{{t.emergencia.paciente.signos_tmp}} &deg; Centigrados
+                </p>
+                <p>
+                  <strong>Frecuencia Card&iacute;aca: </strong>
+                    {{t.emergencia.paciente.signos_fc}} por minuto
+                </p>
+                <p>
+                  <strong>Frecuencia Respiratoria: </strong>
+                    {{t.emergencia.paciente.signos_fr}} por  minuto
+                </p>
+                <p>
+                  <strong>Presi&oacute;n Sist&oacute;lica: </strong>
+                    {{t.emergencia.paciente.signos_pa}} mmHg 
+                </p>
+                <p>
+                  <strong>Presi&oacute;n Diast&oacute;lica: </strong>
+                    {{t.emergencia.paciente.signos_pb}} mmHg
+                </p>
+                <p>
+                  <strong>Saturaci&oacute;n de Ox&iacute;geno: </strong>
+                    {{t.emergencia.paciente.signos_saod}} %
+                </p>
+                <p><strong>Escala AVPU: </strong>{{t.signos_avpu}}</p>
+                <p><strong>Dolor: </strong>{{t.signos_dolor}}</p>
+                </div>
+
+
+
             {% endfor %}
           {% endfor %}
         </div>
+       
       </div>
     </div>
   </body>
