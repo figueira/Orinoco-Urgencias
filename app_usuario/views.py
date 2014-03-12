@@ -129,7 +129,7 @@ def usuario_aprobar(request,cedulaU):
 	usuario.habilitado = True
 	usuario.is_active = True
 	usuario.save()
-	email = EmailMessage('[GenSE] Admin - Activacion de Cuenta','Estimado/a '+usuario.first_name+' '+usuario.last_name+'\n\nSe aprobo su solicitud de activacion de cuenta\n\nSaludos,\nAdministrador del Sistema', to=[usuario.email]) 
+	email = EmailMessage(b'[GenSE] Admin - Activaci\xc3\xb3n de Cuenta', b'Estimado/a {0} {1}, \n\n	La solicitud de cuenta que usted ha realizado para acceder al Sistema de Atenci\xc3\xb3n M\xc3\xa9dica del Centro M\xc3\xa9dico de Caracas ha sido aprobada. Podr\xc3\xa1 disfrutar de los servicios ingresando con su n\xc3\xbamero de c\xc3\xa9dula y su clave. \n\nAtentamente,\nAdministrador del Sistema'.format(usuario.first_name, usuario.last_name), to=[usuario.email]) 
 	email.send()
 	return redirect("/usuario/pendientes")
 
