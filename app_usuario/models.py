@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -7,7 +9,7 @@ SEXO = (
 )
 
 USUARIO = (
-    ('1','Medico'),
+    ('1','Médico'),
     ('2','Enfermero/a'),
     ('3','Secretario/a'),
 )
@@ -32,7 +34,7 @@ class Usuario(User):
     def tipoR(self):
         resp = "Administrador"
         if (self.tipo == '1'):
-            resp = "Medico"
+            resp = "Médico"
         if (self.tipo == '2'):
             resp = "Secretaria"
         if (self.tipo == '3'):
