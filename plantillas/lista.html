@@ -23,7 +23,7 @@
       function myTimer() {
         {% for emergencia in emergencias %}
           // Se toma el contenido actual del tiempo de espera
-          var tiempo = $("#tiempo_{{ emergencia.id }}").text()0
+          var tiempo = $("#tiempo_{{ emergencia.id }}").text()
                                                        .split(":");
           dias = parseInt(tiempo[0]);
           horas = parseInt(tiempo[1]);
@@ -264,7 +264,7 @@
             imagen_espera.addClass('imagen-espera-td');
             mas_activado.closest('.causas-espera')
                         .siblings('.imagenes-causas-espera')
-                        .append(imagen_espera);
+                        .append(imagen_espera);              
 
             // Eliminar el elemento
             mas_activado.parent().remove();
