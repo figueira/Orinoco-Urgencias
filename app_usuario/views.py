@@ -39,13 +39,17 @@ def sesion_iniciar(request):
             return render_to_response('index.html',info,context_instance=RequestContext(request))
 
         if user is not None:
-            if user.is_active:
+            usuario = Usuario.objects.filter(id=user.id)
+            usuario = usuario[0]
+            if usuario.habilitado:
                 login(request,user)
                 info = {}
-                return render_to_response('loged.html',info,context_instance=RequestContext(request))
-
-        msj_tipo = "error"
-        msj_info = "Error en clave"
+                return render_to_response('loged.html',info,context_instance=RequestContext(request))				
+            else:
+                msj_info = b"Usted no ha sido habilitado para usar el sistema. Por favor, espere por aprobaci\xc3\xb3n"
+        else:
+			msj_info = "Usuario o clave erronea"
+        msj_tipo = "error"        
         form = IniciarSesionForm()
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
         return render_to_response('index.html',info,context_instance=RequestContext(request))
