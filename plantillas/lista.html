@@ -23,7 +23,7 @@
       function myTimer() {
         {% for emergencia in emergencias %}
           // Se toma el contenido actual del tiempo de espera
-          var tiempo = $("#tiempo_{{ emergencia.id }}").text()
+          var tiempo = $("#tiempo_{{ emergencia.id }}").text()0
                                                        .split(":");
           dias = parseInt(tiempo[0]);
           horas = parseInt(tiempo[1]);
@@ -81,7 +81,10 @@
           // de la celda
           if (tiempo_espera > 1800){
             $('#emergencia_{{emergencia.id}}')
-              .css("background","rgba(230, 230, 230, 0.5)");
+              .css("background","rgba(200, 200, 200, 0.4)");
+
+            //$('#circulo_{{ emergencia.id }}').attr("src","/static/img/esperas/circuloBlink.gif")
+
           } else {
             // Se modifica el atributo en el DOM solo cuando es necesario
             tiempo_espera = tiempo_espera + 1
@@ -380,6 +383,9 @@
 
         <table class="table table-bordered fontsize22" >
           <tr>
+            <!--<th class='encabezado-lista'>
+
+            </th>-->
             <th class='encabezado-lista'>
               <center>UBICACIÓN</center>
             </th>
@@ -410,6 +416,9 @@
                 class="fila-emergencia" 
                 data-id-emergencia='{{ emergencia.id }}'
                 data-tiempoesp='{{ emergencia.tiempo_espera_causas }}'>
+              <!--<td>
+                  <img id="circulo_{{ emergencia.id }}"/>
+              </td>-->
               <td>
                 {% if emergencia.triage != 0 %}
                   <div id="formCub">

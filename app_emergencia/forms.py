@@ -41,7 +41,8 @@ class FormularioEvaluacionPaciente(forms.Form):
                     widget = forms.TextInput(
                                      attrs = 
                                        {'placeholder':'dd/MM/aaaa hh:mm:ss',
-                                        'data-format':'dd/MM/yyyy hh:mm:ss'}))
+                                        'data-format':'dd/MM/yyyy hh:mm:ss',
+                                        'class':'span2'}))
     frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
     frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria",min_value=0,max_value=30)
 
