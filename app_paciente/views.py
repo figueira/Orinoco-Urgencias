@@ -67,6 +67,27 @@ def buscarPacienteJson(request,ced):
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
 
+    
+@login_required(login_url='/')    
+def editarPaciente(request):
+
+    if request.method == 'POST':
+        # formulario enviado
+        EditarPacienteForm = UserForm(request.POST, instance=request.user)
+
+        if user_form.is_valid() and perfil_form.is_valid():
+            # formulario validado correctamente
+            user_form.save()
+            perfil_form.save()
+            return HttpResponseRedirect('/formulario-guardado/')
+
+    else:
+        # formulario inicial
+        user_form = UserForm(instance=request.user)
+        perfil_form = PerfilForm(instance=request.user.perfil)
+
+    return render_to_response('editar_perfil.html', { 'user_form': user_form,  'perfil_form': perfil_form }, context_instance=RequestContext(request))   
+    
 @login_required(login_url='/')
 def buscarEnfermedad(request,nombre_enfermedad):
   string = nombre_enfermedad

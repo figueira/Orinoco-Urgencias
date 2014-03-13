@@ -97,6 +97,9 @@ class Paciente(models.Model):
             if (self.sexo == 2):
                 resp = "/static/img/pacientes/mujer.png"
         return resp
+        
+    def editarPerfil(self, nombrePaciente, apellidoPaciente):
+		
                 
 class Antecedente(models.Model):
     tipo   = models.CharField(max_length=64)
