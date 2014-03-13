@@ -349,6 +349,17 @@
             checkbox_activado.prop('checked', false)
           }
         });
+		
+		// Método de confirmacion para dar el alta
+        $('.dar-alta').on('click', function(event){
+		  var id_emergencia = $(this).closest('.fila-emergencia')
+                                     .data('id-emergencia');
+          if(confirm('Existen causas de espera sin finalizar para este paciente. '
+					+ ' ¿Desea egresarlo igual?','dfd'))
+          {
+			window.location = '/emergencia/' + id_emergencia + '/daralta'
+          }
+        });		
 
         // Especialmente para Firefox, se deben asignar las propiedades
         // correctas a los checkbox y los option
@@ -394,7 +405,7 @@
             </th>
             {% if  buscadorDeEnfermedad %}
               <th class='encabezado-lista'>
-                <center>DIAGNOSTICO</center>
+                <center>DIAGNÓSTICO</center>
               </th>
             {% else %}
               <th class='encabezado-lista'>
@@ -640,20 +651,17 @@
               </td>
 
               <td>
-                <a href='/emergencia/{{ emergencia.id }}/daralta' 
-                   rel="tooltip" 
-                   data-toggle="tooltip" 
-                   data-original-title="Dar de Alta">
-                  <img class = "marginleft5 width40"
+                  <img class = "marginleft5 width40 dar-alta"
                        src="/static/img/esperas/espera_14.png"/>
-                </a>
               </td>
             </tr>
           {% endfor %}
         </table>
         
       {% else %}
-        No hay pacientes en esta area
+        <h4>
+          <center>No hay pacientes en esta área </center>
+        </h4>
       {% endif %}
     </div>
   </div>
