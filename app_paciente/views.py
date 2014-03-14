@@ -66,27 +66,7 @@ def buscarPacienteJson(request,ced):
     'message' : pacientes,
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
-
-    
-@login_required(login_url='/')    
-def editarPaciente(request):
-
-    if request.method == 'POST':
-        # formulario enviado
-        EditarPacienteForm = UserForm(request.POST, instance=request.user)
-
-        if user_form.is_valid() and perfil_form.is_valid():
-            # formulario validado correctamente
-            user_form.save()
-            perfil_form.save()
-            return HttpResponseRedirect('/formulario-guardado/')
-
-    else:
-        # formulario inicial
-        user_form = UserForm(instance=request.user)
-        perfil_form = PerfilForm(instance=request.user.perfil)
-
-    return render_to_response('editar_perfil.html', { 'user_form': user_form,  'perfil_form': perfil_form }, context_instance=RequestContext(request))   
+  
     
 @login_required(login_url='/')
 def buscarEnfermedad(request,nombre_enfermedad):
@@ -111,6 +91,42 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
              'resutl' : 0 }
     return HttpResponse(json.dumps(fail), mimetype="application/json") 
 
+    
+@login_required(login_url='/')    
+def editarPaciente(request,idP):
+
+	if request.method == 'POST':
+		paciente = Paciente.objects.get(id = idp)
+		form = EditarPacienteForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+			cedula = request.POST['cedula']
+			nombres = data['nombres']
+			apellidos = data['apellidos']
+			Paciente.objects.editar(cedula, nombres, apellidos, idP)
+	else:
+		print "No se pudo modificar el usuario"
+		print form.errors
+		lista = []
+		cedula = request.POST['cedula']
+		lista.append(request.POST['nombres'])
+		lista.append(request.POST['apellidos'])
+		return render(request, 'plantillas/editarPerfil.html', { 'cedula': cedula, 'lista': lista, })
+
+	return paciente_listarPacientes(request)    
+    
+    
+@login_required(login_url='/')
+def editar_form(request,idP):
+    lista = []
+    if request.method == 'POST':
+        cedula = request.POST['cedula']
+        lista.append(request.POST['nombres'])
+        lista.append(request.POST['apellidos'])       
+        return render(request, 'plantillas/editarPerfil.html', { 'cedula' : cedula, 'lista' : lista })
+    return paciente_listarPacientes(request)
+    
+    
 @login_required(login_url='/')
 def eliminarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     paciente = Paciente.objects.get(id=codigo_paciente)

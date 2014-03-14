@@ -98,7 +98,19 @@ class Paciente(models.Model):
                 resp = "/static/img/pacientes/mujer.png"
         return resp
         
-    def editarPerfil(self, nombrePaciente, apellidoPaciente):
+	def editar(self, cedula, nombre, apellido, idP):
+
+		paciente = Paciente.objects.filter(id = idP)
+
+		nombreP = False
+        apellidoP = False
+        if nombre == "":
+            nombreP = True
+        if apellido == "":
+            apellidoP = True
+
+        if not nombreB and not apellidoB:
+            Paciente.update(nombres = nombre, apellidos = apellido)
 		
                 
 class Antecedente(models.Model):

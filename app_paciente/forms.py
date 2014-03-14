@@ -25,20 +25,20 @@ def validate_telefono(value):
   
   
 class AgregarPacienteForm(forms.Form):
-    cedula           = forms.CharField(max_length=9)
+	cedula           = forms.CharField(max_length=9)
 	nombres          = forms.CharField(max_length=64,validators=[validate_nombre])
-    apellidos        = forms.CharField(max_length=64,validators=[validate_apellido])
-    sexo             = forms.ChoiceField(choices=SEXO)
-    fecha_nacimiento = forms.DateField()
-    cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
-    num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
-    email            = forms.EmailField(max_length=64)
-    direccion        = forms.CharField(max_length=128)
-    cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
-    num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
-    contacto_nombre  = forms.CharField(max_length=80,validators=[validate_nombre])
-    contacto_cod_tlf = forms.ChoiceField(choices=COD_TELEFONICOS)
-    contacto_num_tlf = forms.CharField(max_length=10,validators=[validate_telefono])
+	apellidos        = forms.CharField(max_length=64,validators=[validate_apellido])
+	sexo             = forms.ChoiceField(choices=SEXO)
+	fecha_nacimiento = forms.DateField()
+	cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
+	num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
+	email            = forms.EmailField(max_length=64)
+	direccion        = forms.CharField(max_length=128)
+	cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
+	num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
+	contacto_nombre  = forms.CharField(max_length=80,validators=[validate_nombre])
+	contacto_cod_tlf = forms.ChoiceField(choices=COD_TELEFONICOS)
+	contacto_num_tlf = forms.CharField(max_length=10,validators=[validate_telefono])
 
 
 class EditarPacienteForm(forms.Form):
