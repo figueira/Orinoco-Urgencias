@@ -39,9 +39,13 @@ def sesion_iniciar(request):
             return render_to_response('index.html',info,context_instance=RequestContext(request))
 
         if user is not None:
+            usuario_habilitado = False
             usuario = Usuario.objects.filter(id=user.id)
-            usuario = usuario[0]
-            if usuario.habilitado:
+            if len(usuario) > 0:
+                usuario = usuario[0]
+                usuario_habilitado = usuario.habilitado
+            
+            if usuario_habilitado or user.is_superuser:
                 login(request,user)
                 info = {}
                 return render_to_response('loged.html',info,context_instance=RequestContext(request))				
