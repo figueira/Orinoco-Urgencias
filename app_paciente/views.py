@@ -16,6 +16,7 @@ import json
 # Manejo de Informacion de esta aplicacion
 from forms import *
 from models import *
+from app_perfil.views import paciente_perfil
 
 # Manejo de exepciones
 from django.core.exceptions import ObjectDoesNotExist
@@ -96,24 +97,23 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
 def editarPaciente(request,idP):
 
 	if request.method == 'POST':
-		paciente = Paciente.objects.get(id = idp)
 		form = EditarPacienteForm(request.POST)
+		
 		if form.is_valid():
+			paciente = Paciente.objects.get(id = idp)
 			data = form.cleaned_data
-			cedula = request.POST['cedula']
 			nombres = data['nombres']
 			apellidos = data['apellidos']
-			Paciente.objects.editar(cedula, nombres, apellidos, idP)
-	else:
-		print "No se pudo modificar el usuario"
-		print form.errors
-		lista = []
-		cedula = request.POST['cedula']
-		lista.append(request.POST['nombres'])
-		lista.append(request.POST['apellidos'])
-		return render(request, 'plantillas/editarPerfil.html', { 'cedula': cedula, 'lista': lista, })
+			Paciente.objects.editar(nombres, apellidos, idP)
+		else:
+			print "No se pudo modificar el usuario"
+			print form.errors
+			lista = []           
+			lista.append(request.POST['nombre'])
+			lista.append(request.POST['apellido'])
+			return render(request, 'editarPerfil.html', {'lista': lista, })
 
-	return paciente_listarPacientes(request)    
+	return paciente_perfil(request,idP)    
     
     
 @login_required(login_url='/')
@@ -123,8 +123,8 @@ def editar_form(request,idP):
         cedula = request.POST['cedula']
         lista.append(request.POST['nombres'])
         lista.append(request.POST['apellidos'])       
-        return render(request, 'plantillas/editarPerfil.html', { 'cedula' : cedula, 'lista' : lista })
-    return paciente_listarPacientes(request)
+        return render(request, 'editarPerfil.html', {'lista' : lista })
+    return paciente_perfil(request,idP)
     
     
 @login_required(login_url='/')

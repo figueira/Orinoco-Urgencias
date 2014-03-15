@@ -98,7 +98,7 @@ class Paciente(models.Model):
                 resp = "/static/img/pacientes/mujer.png"
         return resp
         
-	def editar(self, cedula, nombre, apellido, idP):
+	def editar(self, nombre, apellido, idP):
 
 		paciente = Paciente.objects.filter(id = idP)
 

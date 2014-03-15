@@ -61,35 +61,11 @@
         <a href="/emergencia/{{ea.id}}/daralta" class="btn btn-primary">
           Egreso
         </a> 
-        <a href="/paciente/{{ p.id }}/editarForm" class="btn btn-primary">
+		<a href="/paciente/{{ p.id }}/editar" class="btn btn-primary">
           Editar Perfil
-        </a> 
+        </a>
       
-      
-        {% endif %}
-		{% for objeto in lista%}
-		<td>
-			{{objeto.cedula}}
-		</td>
-		<td>
-			{{objeto.nombres}}
-		</td>
-		<td>
-			{{objeto.apellidos}}
-		</td>
-		<td>
-			<form action="/paciente/{{ p.id }}/editarForm" onsubmit="return false;" method="post">
-				{% csrf_token %}
-				<input id="id_cedula" name="cedula" type="hidden" value="{{objeto.cedula}}"/>
-				<input id="id_nombre" name="nombres" type="hidden" value="{{objeto.nombres}}"/>
-				<input id="id_apellido" name="apellidos" type="hidden" value="{{objeto.apellidos}}"/>
-				
-				<button type="submit" class="btn btn-primary" onclick="Dajaxice.app_paciente.modificarUsuarioAjax(my_js_callbackModificarUsuario, {'idP' : {{objeto.id}}});">Modificar</button>
-				
-			</form>
-		</td>    
-        {% endfor %}
-      </div>
+	{% endif %}
     
     <div class="span12">
       <h3>Historia M&eacute;dica Completa</h3>
