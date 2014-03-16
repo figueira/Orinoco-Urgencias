@@ -682,7 +682,7 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     prueba = invertir_orden_de_diccionario(lista_auxiliar[3],colores)
     
     info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
-            'fin':fecha_fin-timedelta(days=1),'sig':siguiente_semana,
+            'fin':fecha_fin,'sig':siguiente_semana,
              'total_ingresos':len(ingresos_emergencia),
              'total_egresos':total_egresos,
              'egresos':egresos, 'emergencias':emergencias_por_horas,

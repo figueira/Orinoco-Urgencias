@@ -39,13 +39,21 @@ def sesion_iniciar(request):
             return render_to_response('index.html',info,context_instance=RequestContext(request))
 
         if user is not None:
-            if user.is_active:
+            usuario_habilitado = False
+            usuario = Usuario.objects.filter(id=user.id)
+            if len(usuario) > 0:
+                usuario = usuario[0]
+                usuario_habilitado = usuario.habilitado
+            
+            if usuario_habilitado or user.is_superuser:
                 login(request,user)
                 info = {}
-                return render_to_response('loged.html',info,context_instance=RequestContext(request))
-
-        msj_tipo = "error"
-        msj_info = "Error en clave"
+                return render_to_response('loged.html',info,context_instance=RequestContext(request))				
+            else:
+                msj_info = b"Usted no ha sido habilitado para usar el sistema. Por favor, espere por aprobaci\xc3\xb3n"
+        else:
+			msj_info = "Usuario o clave erronea"
+        msj_tipo = "error"        
         form = IniciarSesionForm()
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
         return render_to_response('index.html',info,context_instance=RequestContext(request))
@@ -129,7 +137,7 @@ def usuario_aprobar(request,cedulaU):
 	usuario.habilitado = True
 	usuario.is_active = True
 	usuario.save()
-	email = EmailMessage('[GenSE] Admin - Activacion de Cuenta','Estimado/a '+usuario.first_name+' '+usuario.last_name+'\n\nSe aprobo su solicitud de activacion de cuenta\n\nSaludos,\nAdministrador del Sistema', to=[usuario.email]) 
+	email = EmailMessage(b'[GenSE] Admin - Activaci\xc3\xb3n de Cuenta', b'Estimado/a {0} {1}, \n\n	La solicitud de cuenta que usted ha realizado para acceder al Sistema de Atenci\xc3\xb3n M\xc3\xa9dica del Centro M\xc3\xa9dico de Caracas ha sido aprobada. Podr\xc3\xa1 disfrutar de los servicios ingresando con su n\xc3\xbamero de c\xc3\xa9dula y su clave. \n\nAtentamente,\nAdministrador del Sistema'.format(usuario.first_name, usuario.last_name), to=[usuario.email]) 
 	email.send()
 	return redirect("/usuario/pendientes")
 

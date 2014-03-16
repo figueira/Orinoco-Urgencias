@@ -6,7 +6,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext
 
 # General HTML
-from django.shortcuts import render_to_response,redirect
+from django.shortcuts import render_to_response,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
 # JSON
@@ -16,6 +16,8 @@ import json
 # Manejo de Informacion de esta aplicacion
 from forms import *
 from models import *
+from app_perfil.views import paciente_perfil
+from app_emergencia.models import Emergencia
 
 # Manejo de exepciones
 from django.core.exceptions import ObjectDoesNotExist
@@ -66,7 +68,8 @@ def buscarPacienteJson(request,ced):
     'message' : pacientes,
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
-
+  
+    
 @login_required(login_url='/')
 def buscarEnfermedad(request,nombre_enfermedad):
   string = nombre_enfermedad
@@ -90,6 +93,30 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
              'resutl' : 0 }
     return HttpResponse(json.dumps(fail), mimetype="application/json") 
 
+    
+@login_required(login_url='/')    
+def editarPaciente(request,idP):
+	paciente = get_object_or_404(Paciente, pk= idP)
+	if request.method == 'POST':
+		form = EditarPacienteForm(request.POST)
+		
+		if form.is_valid():
+			data = form.cleaned_data
+			nombre = data['nombres']
+			apellido = data['apellidos']
+			paciente.nombres = nombre
+			paciente.apellidos = apellido
+			paciente.save()
+		else:
+			info = {'form':form,'paciente':paciente}
+			return render_to_response('editarPerfil.html', info,context_instance = RequestContext(request))
+	else:
+		form = EditarPacienteForm()
+		info = {'form':form,'paciente':paciente}
+		return render_to_response('editarPerfil.html', info,context_instance = RequestContext(request))
+	return paciente_perfil(request,idP)    
+    
+    
 @login_required(login_url='/')
 def eliminarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     paciente = Paciente.objects.get(id=codigo_paciente)
