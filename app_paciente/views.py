@@ -6,7 +6,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext
 
 # General HTML
-from django.shortcuts import render_to_response,redirect
+from django.shortcuts import render_to_response,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
 # JSON
@@ -95,36 +95,25 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     
 @login_required(login_url='/')    
 def editarPaciente(request,idP):
-
+	paciente = get_object_or_404(Paciente, id= idP)
 	if request.method == 'POST':
 		form = EditarPacienteForm(request.POST)
 		
 		if form.is_valid():
-			paciente = Paciente.objects.get(id = idp)
 			data = form.cleaned_data
-			nombres = data['nombres']
-			apellidos = data['apellidos']
-			Paciente.objects.editar(nombres, apellidos, idP)
+			nombre = data['nombres']
+			apellido = data['apellidos']
+			paciente.nombres = nombre
+			paciente.apellidos = apellidos
+			paciente.save()
 		else:
-			print "No se pudo modificar el usuario"
-			print form.errors
-			lista = []           
-			lista.append(request.POST['nombre'])
-			lista.append(request.POST['apellido'])
-			return render(request, 'editarPerfil.html', {'lista': lista, })
-
+			info = {'form':form,'paciente':paciente}
+			return render_to_response('editarPerfil.html', info,context_instance = RequestContext(request))
+	else:
+		form = EditarPacienteForm()
+		info = {'form':form,'paciente':paciente}
+		return render_to_response('editarPerfil.html', info,context_instance = RequestContext(request))
 	return paciente_perfil(request,idP)    
-    
-    
-@login_required(login_url='/')
-def editar_form(request,idP):
-    lista = []
-    if request.method == 'POST':
-        cedula = request.POST['cedula']
-        lista.append(request.POST['nombres'])
-        lista.append(request.POST['apellidos'])       
-        return render(request, 'editarPerfil.html', {'lista' : lista })
-    return paciente_perfil(request,idP)
     
     
 @login_required(login_url='/')

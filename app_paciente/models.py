@@ -97,20 +97,6 @@ class Paciente(models.Model):
             if (self.sexo == 2):
                 resp = "/static/img/pacientes/mujer.png"
         return resp
-        
-	def editar(self, nombre, apellido, idP):
-
-		paciente = Paciente.objects.filter(id = idP)
-
-		nombreP = False
-        apellidoP = False
-        if nombre == "":
-            nombreP = True
-        if apellido == "":
-            apellidoP = True
-
-        if not nombreB and not apellidoB:
-            Paciente.update(nombres = nombre, apellidos = apellido)
 		
                 
 class Antecedente(models.Model):
