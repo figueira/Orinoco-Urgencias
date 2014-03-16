@@ -911,8 +911,12 @@ def emergencia_descarga(request,id_emergencia,tipo_doc):
         # Faltan consultas:
         triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
         triage2=triage[0]
+
+
         dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
         dieta2 = dieta[0]
+
+        # enfA = get_object_or_404(EnfermedadActual, atencion=atList[0].id)
         enfA = EnfermedadActual.objects.get(atencion=atList[0].id)
         print "Triage en descarga",triage2
         ctx  = {'emergencia':emer,'ingreso':ingreso,'triage':triage2,'atencion':atList2,'enfA':enfA,'diags':diags,'dieta':dieta2,'medicamento':medicamento}
