@@ -17,6 +17,7 @@ import json
 from forms import *
 from models import *
 from app_perfil.views import paciente_perfil
+from app_emergencia.models import Emergencia
 
 # Manejo de exepciones
 from django.core.exceptions import ObjectDoesNotExist
@@ -95,7 +96,7 @@ def agregarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     
 @login_required(login_url='/')    
 def editarPaciente(request,idP):
-	paciente = get_object_or_404(Paciente, id= idP)
+	paciente = get_object_or_404(Paciente, pk= idP)
 	if request.method == 'POST':
 		form = EditarPacienteForm(request.POST)
 		
@@ -104,7 +105,7 @@ def editarPaciente(request,idP):
 			nombre = data['nombres']
 			apellido = data['apellidos']
 			paciente.nombres = nombre
-			paciente.apellidos = apellidos
+			paciente.apellidos = apellido
 			paciente.save()
 		else:
 			info = {'form':form,'paciente':paciente}

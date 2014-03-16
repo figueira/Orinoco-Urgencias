@@ -1,0 +1,40 @@
+{% extends "base.html" %} 
+{% block cuerpo %}
+  <div class="centrar">
+    <div class="cuadroGrande">
+      <center>
+        <h3>
+          Editar Perfil
+        </h3>
+        
+        <form class="tablaAgregar" 
+              method="post"
+              action="/paciente/{{paciente.pk}}/editar">
+          {% csrf_token %}
+          <table>
+            <tr>
+              <td>Paciente</td>
+              <td><strong>{{paciente.nombres}}</strong> <strong>{{paciente.apellidos}}</strong></td>
+            </tr>
+            
+            <tr>
+              <td>Nombres</td>
+              <td>{{form.nombres}}</td>
+            </tr>
+            
+            <tr>
+              <td>Apellidos</td>
+              <td>{{form.apellidos}}</td>
+            </tr>
+            
+            <tr>
+              <td></td>
+              <td>
+                <input class="btn btn-primary" type="submit" value="Guardar" />
+              </td>
+            </tr>
+          </table>
+        </form>
+    </div>
+  </div>
+{% endblock %}

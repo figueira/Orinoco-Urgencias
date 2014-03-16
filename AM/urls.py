@@ -78,7 +78,7 @@ urlpatterns = patterns('',
         'app_perfil.views.paciente_perfil'),
     url('^paciente/(?P<idP>\w+)/triage$','app_perfil.views.reporte_triage'),
     url('^paciente/(?P<idP>\w+)/editar$','app_paciente.views.editarPaciente'),
-
+		
     ## COSAS DJANGISTICAS
     # Admin
     url(r'^admin/', include(admin.site.urls)),
