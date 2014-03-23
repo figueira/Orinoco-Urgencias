@@ -55,7 +55,7 @@
     <center>
       <div id='div_de_tabla_atecedente'>
         {% if tipo_ant == 'alergia' %}
-          <table class='table table-bordered width200' >
+          <table class='table table-bordered width600' >
         {% else %}
           <table class='table table-bordered widht480' >
         {% endif %}
@@ -111,7 +111,7 @@
                       <input type="checkbox" 
                              name="check"
                              value="{{i.antecedente.id}}" 
-                      />
+                      
                     </center>Médicos
                   </td>
                   <td>
@@ -120,7 +120,7 @@
                              name="{{i.antecedente.id}}nombre"
                              value="{{i.antecedente.nombre}}"
                              class = "width100 height12" >
-                      />
+                      
                       <center>
                   </td>
                   {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica' %}
@@ -131,7 +131,7 @@
                                name="{{i.antecedente.id}}fecha" 
                                value="{{i.fechaR}}"
                                class = "width100 height12" >
-                        />
+                        
                         <center>
                     </td> 
                   {% endif %} 
@@ -143,7 +143,7 @@
                                name="{{i.antecedente.id}}atributo3"
                                value="{{i.tratamientoR}}" 
                                class = "width100 height12" >
-                         />
+                         
                         <center>
                     </td> 
                   {% endif %} 
@@ -167,7 +167,7 @@
                            type="checkbox" 
                            name="nuevoCheck"
                            value="nuevo" 
-                    />
+                    
                   </center>
                 </td>
                 <td>
@@ -177,7 +177,7 @@
                            value=""
                            onChange="CompruebaCampo(this,clonLast)"
                            class = "width100 height12" >
-                    />
+                    
                     <center>
                 </td> 
                 {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica'%}
@@ -187,7 +187,7 @@
                              name="nuevoFecha" 
                              value=""
                              class = "width100 height12" >
-                      />
+                      
                       <center>
                   </td>
       
