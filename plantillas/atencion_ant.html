@@ -10,25 +10,19 @@
   }
 </script>
 <span3>
-  <div class="btn-group btn-group-vertical">
-      <div 
-          <input class="btn btn-info padding2 width100" 
-                 type="button" 
-                 value="Medicos" 
-                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/medica')" />
-      </div>
-      <div 
-          <input class="btn btn-info padding2 width100" 
-                 type="button"              
-                 value="Quirurgicos" 
-                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')"/>
-      </div>
-      <div 
-          <input class="btn btn-info padding2 width100" 
-                 type="button" 
-                 value="Alergicos" 
-                 onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/alergia')"/>
-      </div>
+  <div class="btn-group btn-group-vertical" style="with:99px;">
+      <button type="button" class="btn btn-info" 
+      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/medica')">
+      Medicos
+      </button>
+      <button type="button" class="btn btn-info"
+      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')">
+      Quirurgicos
+      </button>
+      <button type="button" class="btn btn-info"
+      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/alergia')">
+      Alergicos
+      </button>
   </div>
 </span3>
 
