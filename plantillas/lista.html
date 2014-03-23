@@ -352,13 +352,23 @@
 		
 		// Método de confirmacion para dar el alta
         $('.dar-alta').on('click', function(event){
-		  var id_emergencia = $(this).closest('.fila-emergencia')
-                                     .data('id-emergencia');
-          if(confirm('Existen causas de espera sin finalizar para este paciente. '
-					+ ' ¿Desea egresarlo igual?','dfd'))
-          {
-			window.location = '/emergencia/' + id_emergencia + '/daralta'
-          }
+			var fila_emergencia = $(this).closest('.fila-emergencia');
+			var id_emergencia = fila_emergencia.data('id-emergencia');					
+
+			var lista_esperas_asignadas = fila_emergencia.find('.esperas-asignadas').children();
+
+			if(lista_esperas_asignadas.length > 0)
+			{
+				if(confirm('Existen causas de espera sin finalizar para este paciente. '
+						+ ' ¿Desea egresarlo igual?'))
+				{
+					window.location = '/emergencia/' + id_emergencia + '/daralta'
+				}
+			}
+			else
+			{
+				window.location = '/emergencia/' + id_emergencia + '/daralta'
+			}
         });		
 
         // Especialmente para Firefox, se deben asignar las propiedades
