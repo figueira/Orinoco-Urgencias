@@ -14,7 +14,7 @@ from datetime import datetime
 from app_emergencia.forms import *
 
 # PDF
-import ho.pisa as pisa
+import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 import cgi
 from django.template import RequestContext
@@ -39,8 +39,13 @@ def reporte_triage(request,idP):
     p = get_object_or_404(Paciente,pk=idP)
     ea = Emergencia.objects.filter(paciente=p)
     ea = ea[len(ea)-1]  #obtengo la ultima posicion de la lista, es el triage mas reciente
-    es = Emergencia.objects.filter(paciente=p)
-    info = {'p':p,'ea':ea,'es':es}
+    es = Emergencia.objects.filter(paciente=p) #lista de emergencias del paciente
+    
+    print "\n\n\nREPORTE \n\n\n"
+    print str(es) + "\n"
+    print str(ea.triage) + "\n"
+
+    info = {'p':p,'ea':ea}
     html = render_to_string('reporteTriage.html',info, context_instance=RequestContext(request))
     response = HttpResponse(content_type='application/pdf')
     return generar_pdf(html)
