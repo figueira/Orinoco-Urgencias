@@ -131,6 +131,7 @@
   
       <center>
         <div class="btn-group">
+		{% if histMed %}
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/historia'"
                   rel="tooltip"
@@ -139,6 +140,8 @@
             <a href="#" data-icon="&#xe007;">
             </a>
           </button>
+		{% endif %}
+		{% if constancia %}  
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/constancia'"
                   rel="tooltip" 
@@ -147,6 +150,8 @@
             <a href="#" data-icon="&#xe008;">
             </a>
           </button>
+		{% endif %}
+		{% if indicaciones %}
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/reportInd'"
                   rel="tooltip" 
@@ -155,6 +160,7 @@
             <a href="#" data-icon="&#xe009;">
             </a>
           </button>
+		{% endif %}
         </div>
         <!-- Cierra botones -->
       </center>

@@ -46,8 +46,7 @@
              class="btn btn-primary">
             Aplicar Triage
           </a>
-        {% endif %}
-        
+        {% endif %}        
 
         {% if ea.triage != 0 %}
           <a href='/emergencia/atencion/{{ ea.id }}/historia' 
@@ -55,6 +54,7 @@
             Realizar Atenci&oacute;n 
           </a>
         {% endif %}
+		
         <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">
           Ver Informe Triage
         </a> 
@@ -66,18 +66,6 @@
         </a>
       
 	{% endif %}
-    
-    <div class="span12">
-      <h3>Historia M&eacute;dica Completa</h3>
-        {% for e in es %}
-          <h4> Emergencia ID:{{ e.id }} </h4>
-          <strong>Inicio:</strong> {{ e.hora_ingreso }}
-          <strong>Fin:</strong> {% if e.hora_egreso %}{{ e.hora_egreso }}{%else%}Activa{%endif%}<br/>
-          {% for t in e.triages %}
-            <strong>Triage - Resultado:</strong> {{ t.nivel}}
-          {% endfor %}
-        {% endfor %}
-    </div>
   </div>
 
 {% endblock %}

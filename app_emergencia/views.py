@@ -998,9 +998,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     
     if len(triage) != 0:
-      triage = triage[0]
-      ctx    = {'emergencia':emer,'triage':triage}
-
+      triage = triage[0]     
       paci = Paciente.objects.filter(emergencia__id=id_emergencia)
       paci = paci[0]
       atList = Atencion.objects.filter(emergencia=id_emergencia)
@@ -1011,8 +1009,31 @@ def emergencia_atencion(request,id_emergencia,tipo):
           atList = Atencion.objects.filter(emergencia=id_emergencia)
 
       if tipo == "listado":
-          return redirect('/emergencia/listar/atencion')
+          return redirect('/emergencia/listar/atencion')	
+		  
       elif tipo == "historia":
+	      # Operaciones para determinar si se muestran los botones de descarga
+          historia_medica = False
+          constancia = False
+          indicaciones = False
+
+          if len(atList)>0:
+            medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
+            diags = EstablecerDiag.objects.filter(atencion = atList[0])
+            enfA = EnfermedadActual.objects.filter(atencion = atList[0].id)
+            dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
+            indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
+			 
+            if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(dieta)>0:
+              historia_medica = True
+			
+            if len(medicamento)>0 and len(diags)>0 and len(dieta)>0:
+              constancia = True
+			 
+            if len(indicaciones)>0:
+			 indicaciones = True
+			 
+          ctx = {'emergencia':emer,'triage':triage,'histMed':historia_medica,'constancia':constancia, 'indicaciones':indicaciones}
           return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
     
 
@@ -1286,6 +1307,8 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 
                 # Condicional para validar/agregar indicaciones de tipo lab/endoscopicos:
                 if tipo_ind == 'lab' or tipo_ind == 'endoscopico':
+                    agregado = False
+					# Es multichoice entonces hago un for por todas las opciones elegidas
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
                         
@@ -1299,8 +1322,18 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
                             i= Indicacion.objects.get(nombre = nombre[i])
                             a = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
-                            a.save()
-
+                            a.save()	
+                            agregado = True
+							
+                    if tipo_ind == 'lab' and agregado:
+                        espe = get_object_or_404(Espera,nombre = 'Laboratorio')
+                        espera_lab = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
+						
+                        # Se verifica que ya la causa de espera de lab no este agregada
+                        if len(espera_lab) == 0:
+                            espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
+                            espera1.save()
+					
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))

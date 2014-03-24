@@ -31,7 +31,7 @@ def paciente_perfil(request,idP):
     tam = len(es)
     ea = es[tam-1]
     # ea = ea[0]
-    info = {'p':p,'ea':ea,'es':es}
+    info = {'p':p,'ea':ea}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
