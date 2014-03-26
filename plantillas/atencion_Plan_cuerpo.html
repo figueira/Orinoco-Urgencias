@@ -55,8 +55,7 @@
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXAMEN&nbsp;RECTAL
     </button>
-  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre !=
-  'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
+  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre != 'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
     <button id='{{parte.nombre}}' 
             class="btn btn-info btn-mini"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">{{parte.nombre}}

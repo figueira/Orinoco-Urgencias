@@ -14,18 +14,19 @@
 /* atencion_Plan_partecuerpo */
 #div_boton1{
 	margin:5px;
-	width: 99px;
+	width: 0px; /*99*/
 	text-align: right;
 }
 
 #Parte_Cuerpo_Guardar{
 	margin-top:4px;
+	width: 500px; /*BORRAR*/
 	height:425px;
 }
 
 #div_Parte_Cuerpo{
 	display:inline-table;
-	width:380px;
+	width:380px;/*380*/
 	height:64%;
 	padding:3px 0px 0px 5px;
 	OVERFLOW: auto;
@@ -34,7 +35,8 @@
 /* atencion_Plan_partecuerpo */
 
 #div_de_tabla_cuerpo{
-	height:400px;
+	height:380px;/*400*/
+	/*width:500px;*/
 	padding:3px 0px 0px 5px;
 	OVERFLOW: auto;
 }

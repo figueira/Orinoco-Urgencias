@@ -1031,7 +1031,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
               constancia = True
 			 
             if len(indicaciones)>0:
-			 indicaciones = True
+              indicaciones = True
 			 
           ctx = {'emergencia':emer,'triage':triage,'histMed':historia_medica,'constancia':constancia, 'indicaciones':indicaciones}
           return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
@@ -1191,7 +1191,7 @@ def emergencia_enfermedad_partecuerpo(request,id_emergencia,parte_cuerpo):
     aspectos    = Aspecto.objects.filter(parteaspecto__partecuerpo__nombre=parte_cuerpo)
     if not(aspectoAten):
         for aspe in aspectos:
-            AspeAten = AspectoAtencion(revisado='no',aspecto=aspe,atencion=atencion)
+            AspeAten = AspectoAtencion(revisado='0',aspecto=aspe,atencion=atencion)
             AspeAten.save()
     aspectoAten = AspectoAtencion.objects.filter(atencion=atencion,aspecto__parteaspecto__partecuerpo__nombre=parte_cuerpo)
     ctx = {'emergencia':emer,'triage':triage,'causa':causa,'aspectoAtencion':aspectoAten,'parte_cuerpo':parte_cuerpo}
