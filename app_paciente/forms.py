@@ -43,5 +43,13 @@ class AgregarPacienteForm(forms.Form):
 
 
 class EditarPacienteForm(forms.Form):
-    nombres = forms.CharField(max_length=64,validators=[validate_nombre])
-    apellidos = forms.CharField(max_length=64,validators=[validate_apellido])
+	
+	nombres   = forms.CharField(max_length=64,validators=[validate_nombre])
+	apellidos = forms.CharField(max_length=64,validators=[validate_apellido])
+	cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
+	num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
+	email            = forms.EmailField(max_length=64)
+	direccion        = forms.CharField(max_length=128)
+	cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
+	num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
+    
