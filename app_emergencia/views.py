@@ -1033,7 +1033,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
             if len(indicaciones)>0:
               indicaciones = True
 			 
-          ctx = {'emergencia':emer,'triage':triage,'histMed':historia_medica,'constancia':constancia, 'indicaciones':indicaciones}
+          ctx = {'emergencia':emer,'triage':triage,'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
           return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
     
 

@@ -130,37 +130,52 @@
       <!--Cierra wellsmall-->
   
       <center>
-        <div class="btn-group">
-		{% if histMed %}
+        <div class="btn-group">		
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/historia'"
                   rel="tooltip"
                   data-toggle="tooltip"
-                  data-original-title="Historia Médica">
-            <a href="#" data-icon="&#xe007;">
-            </a>
-          </button>
-		{% endif %}
-		{% if constancia %}  
+                  data-original-title="Historia Médica"
+				  {% if not hm_habilitado %}
+					disabled
+					data-icon="&#xe007;"
+					>
+				  {% else %}
+				    >
+					<a href="#" data-icon="&#xe007;">
+					</a>
+				  {% endif %}
+          </button>	
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/constancia'"
                   rel="tooltip" 
                   data-toggle="tooltip"
-                  data-original-title="Constancia Atenci&oacute;n">
-            <a href="#" data-icon="&#xe008;">
-            </a>
-          </button>
-		{% endif %}
-		{% if indicaciones %}
+                  data-original-title="Constancia Atenci&oacute;n"
+				  {% if not const_habilitado %} 
+					disabled
+					data-icon="&#xe008;"
+				    >
+				  {% else %}
+				    >
+					<a href="#" data-icon="&#xe008;">
+					</a>
+				  {% endif %}
+          </button>		
           <button class="btn button btn-large"
                   onclick="location='/emergencia/descarga/{{emergencia.id}}/reportInd'"
                   rel="tooltip" 
                   data-toggle="tooltip"
-                  data-original-title="Reporte Indicaciones">
-            <a href="#" data-icon="&#xe009;">
-            </a>
-          </button>
-		{% endif %}
+                  data-original-title="Reporte Indicaciones"
+				  {% if not ind_habilitado %}
+					disabled
+					data-icon="&#xe009;"
+				    >
+				  {% else %}
+				    >
+					<a href="#" data-icon="&#xe009;">
+					</a>
+				  {% endif %}	
+          </button>		
         </div>
         <!-- Cierra botones -->
       </center>
