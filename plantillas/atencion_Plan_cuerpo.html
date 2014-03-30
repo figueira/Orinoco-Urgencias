@@ -10,8 +10,8 @@
 <div id='div_boton1'>
   <button class="btn btn-small" id="boton1">X</button>
 </div>
-<center></center>
 
+<div id='botones'>
 {% for parte in partecuerpo %} 
   {% if parte.nombre == 'CABEZA_Y_ROSTRO'%}
     <button id='{{parte.nombre}}' 
@@ -62,6 +62,7 @@
     </button>
   {% endif %} 
 {% endfor %}
+</div>
 
 <div id='Parte_Cuerpo_Guardar'>
   <div id='div_Parte_Cuerpo'></div>

@@ -8,57 +8,19 @@
       method="post"
       action="">
   {% csrf_token %}
-
-  <div>
-    <center>
-      {% if tipo_ant == 'medica' %}
-        <h4 class = "azul" >
-          Antecedentes Médicos
-        </h4>
-        {% elif tipo_ant == 'quirurgica' %}
-        <h4 class = "azul" >
-          Antecedentes Quirúrgicos
-        </h4>
-      {% elif tipo_ant == 'alergia' %}
-        <h4 class = "azul" >
-          Antecedentes Alérgicos
-        </h4>
-      {% endif %}
-
-    </center>
-    <center>
-      <div class="btn btn-info fondoRojo">
-        <input class="btn btn-info btn-mini" 
-               type="button" 
-               value="Eliminar"
-              onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/eliminar')" 
-        />
-        <input class="btn btn-info btn-mini" 
-               type="button"
-               value="Modificar"
-               onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/modificar')" 
-        />
-        <input class="btn btn-info btn-mini" 
-               type="button" 
-               value="Agregar"
-               onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/agregar')" 
-        />
-        <input class="btn btn-info btn-mini" 
-               type="button"
-               value="Deshacer"
-               onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}')" 
-        />
-      </div>
-    </center>
-
-
-    <center>
+    <center>			
       <div id='div_de_tabla_atecedente'>
-        {% if tipo_ant == 'alergia' %}
-          <table class='table table-bordered width600' >
-        {% else %}
-          <table class='table table-bordered widht480' >
-        {% endif %}
+          <table id='tabla_antecedente' class='table table-bordered' >	
+			<legend>			  
+				{% if tipo_ant == 'medica' %}
+					Antecedentes Médicos
+				{% elif tipo_ant == 'quirurgica' %}
+					Antecedentes Quirúrgicos
+				{% elif tipo_ant == 'alergia' %}
+					Antecedentes Alérgicos			
+				{% endif %}
+			</legend>
+	
             <thead>
               <tr class='btn-info'>
                 <th class = "width40" >
@@ -66,35 +28,33 @@
                   <center>
                     <i class="icon-trash icon-white"></i>
                   </center>
-                </th> 
-                {% if tipo_ant == 'alergia'%}
-                  <th class = "width150" >
-                    <center>
-                      Alergeno
-                    </center>
-                  </th> 
-                {% else%}
-                <th class = "width150" >
-                  <center>
-                    Nombre
-                  </center>
-                </th> 
-                {% endif %} 
+                </th> 				
+				<th>
+					<center>
+						{% if tipo_ant == 'alergia'%}					
+							Medicamento / Alergeno
+						{% elif tipo_ant == 'medica'%}
+							Diagnóstico
+						{% elif tipo_ant == 'quirurgica'%}
+							Intervención Quirúrgica
+						{% endif %} 
+					</center>
+				</th>  
                 {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica'%}
-                  <th class = "width150" >
+                  <th>
                     <center>
                       Fecha
                     </center>
                   </th> 
                   {% if tipo_ant == 'medica' %}
-                    <th class = "width150" >
+                    <th>
                       <center>
                         Tratamiento
                       </center>
                     </th> 
                   {%endif %}
                   {% if tipo_ant == 'quirurgica' %}
-                    <th class = "width150" >
+                    <th>
                       <center>
                         Lugar
                       </center>
@@ -111,17 +71,16 @@
                       <input type="checkbox" 
                              name="check"
                              value="{{i.antecedente.id}}" 
-                      
-                    </center>Médicos
+							>
+                    </center>
                   </td>
                   <td>
                     <center>
                       <input type="text" 
                              name="{{i.antecedente.id}}nombre"
-                             value="{{i.antecedente.nombre}}"
-                             class = "width100 height12" >
-                      
-                      <center>
+                             value="{{i.antecedente.nombre}}" 
+							 onchange="validarCampo(this)">                      
+                      </center>
                   </td>
                   {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica' %}
                     <td>
@@ -130,9 +89,8 @@
                                type="text"
                                name="{{i.antecedente.id}}fecha" 
                                value="{{i.fechaR}}"
-                               class = "width100 height12" >
-                        
-                        <center>
+							   onchange="validarFecha(this)">                        
+                        </center>
                     </td> 
                   {% endif %} 
                   {% if tipo_ant == 'medica'%}
@@ -141,10 +99,10 @@
                         <input id='iatributo3' 
                                type="text"
                                name="{{i.antecedente.id}}atributo3"
-                               value="{{i.tratamientoR}}" 
-                               class = "width100 height12" >
+                               value="{{i.tratamientoR}}"
+							   onchange="validarCampo(this)">
                          
-                        <center>
+                        </center>
                     </td> 
                   {% endif %} 
                   {% if tipo_ant == 'quirurgica' %}
@@ -154,57 +112,88 @@
                                type="text"
                                name="{{i.antecedente.id}}atributo3" 
                                value="{{i.lugarR}}"
-                               class = "width100 height12" >
-                        <center>
+							   onchange="validarCampo(this)">
+                        </center>
                     </td> 
                   {% endif %}
                 </tr>
               {% endfor %}
               <tr class="ultimo">
                 <td>
-                  <center>
                     <input id='inombre' 
                            type="checkbox" 
                            name="nuevoCheck"
                            value="nuevo" 
-                    
-                  </center>
-                </td>
-                <td>
-                  <center>
-                    <input type="text" 
-                           name="nuevoNombre" 
-                           value=""
-                           onChange="CompruebaCampo(this,clonLast)"
-                           class = "width100 height12" >
-                    
-                    <center>
-                </td> 
+						>
+                </td>	                
                 {% if tipo_ant == 'medica' or tipo_ant == 'quirurgica'%}
-                  <td>
-                    <center>
-                      <input type="text" 
-                             name="nuevoFecha" 
-                             value=""
-                             class = "width100 height12" >
-                      
-                      <center>
-                  </td>
-      
-                  <td>
-                    <center>
-                      <input type="text" 
-                             name="nuevoAtributo3" 
-                             value=""
-                             class = "width100 height12" >
-                      <center>
-                  </td> 
+					<td>
+						<input id="id_nuevoNombre"
+							   type="text" 
+							   name="nuevoNombre"
+							   onchange="validarCampo(this);CompruebaCampo(this,clonLast, '{{tipo_ant}}')">
+					</td> 	
+					<td>
+						<input id="id_fecha"
+							type="text" 
+							name="nuevoFecha" 
+							data-format="dd/MM/yyyy"
+							placeholder="DD/MM/AAAA"
+							onchange="validarFecha(this); CompruebaCampo(this,clonLast, '{{tipo_ant}}')">					 
+					</td>
+					<td>
+						<input id="id_nuevoAtributo3"
+							   type="text" 
+							   name="nuevoAtributo3"
+							   onchange="validarCampo(this)"
+							   oninput="CompruebaCampo(this,clonLast, '{{tipo_ant}}')">
+					</td> 
+				
+				{% elif tipo_ant == 'alergia' %}
+					<td>
+						<input id="id_nuevoNombre"
+							   type="text" 
+							   name="nuevoNombre"
+							   onchange="validarCampo(this)"
+							   oninput="CompruebaCampo(this,clonLast, '{{tipo_ant}}')">
+					</td> 
                 {% endif %}
               </tr>
             </tbody>
           </table>
-      </div>
+        </div>
     </center>
-  </div>
-
 </form>
+	
+<center>
+  <div class="btn-group">
+	<button class="btn btn-mini btn-primary"
+			onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/eliminar')" >
+	  <i class="icon-remove-sign icon-white"></i>
+	  &nbsp;
+	  Eliminar
+	</button>
+  </div>
+  <div class="btn-group">
+	<button class="btn btn-mini btn-primary"
+			onClick="mandarInfo('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/modificar')">
+	  <i class="icon-edit icon-white"></i>
+	  Modificar
+	</button>
+  </div>
+  <div class="btn-group">
+	<button class="btn btn-mini btn-primary"
+			onClick="mandarInfo('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}/agregar')">
+	  <i class="icon-plus icon-white"></i>
+	  Agregar
+	</button>
+  </div>
+  <div class="btn-group">
+	<button class="btn btn-mini btn-primary"
+			onClick="envia('/emergencia/antecedentes/{{emergencia.id}}/{{tipo_ant}}')">
+	  <i class="icon-arrow-left icon-white"></i>
+	  Deshacer
+	</button>
+  </div>
+</center>
+	

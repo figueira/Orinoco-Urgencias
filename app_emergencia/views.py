@@ -268,6 +268,7 @@ def emergencia_agregar(request):
       p_apellidos = pcd['apellidos']
       p_sexo = pcd['sexo']
       p_fecha_nacimiento = pcd['fecha_nacimiento']
+      print p_fecha_nacimiento
       prueba = Paciente.objects.filter(cedula = p_cedula)
       if len(prueba) == 0:
         p = Paciente(cedula = p_cedula,
@@ -1051,8 +1052,10 @@ def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
             ant.save()
             pertenece = Pertenencia(paciente=paci,antecedente=ant)
             pertenece.save()
-            if tipo_ant =='medica' or tipo_ant =='quirurgica':                
-                fecha = Fecha(fecha=int(fechas[i]),pertenencia=pertenece) 
+            if tipo_ant =='medica' or tipo_ant =='quirurgica':
+                dia,mes,ano = fechas[i].split("/") 	
+                fechaF = ano + "-" + mes + "-" + dia
+                fecha = Fecha(fecha=fechaF,pertenencia=pertenece) 
                 fecha.save()
                 if tipo_ant == 'medica':
                     tratamiento = Tratamiento(nombre=atributo[i])
@@ -1080,8 +1083,9 @@ def emergencia_antecedentes_modificar(request,id_emergencia,tipo_ant):
         if tipo_ant == 'medica' or tipo_ant == 'quirurgica':
             pertenece = Pertenencia.objects.filter(paciente=paci,antecedente=ant)
             if pertenece:
-                fecha             = Fecha.objects.get(pertenencia=pertenece[0])
-                fecha.fecha       = int(request.POST[str(ant.id)+"fecha"])
+                fecha             = Fecha.objects.get(pertenencia=pertenece[0])				
+                dia,mes,ano 	  = request.POST[str(ant.id)+"fecha"].split("/") 					
+                fecha.fecha       = ano + "-" + mes + "-" + dia
                 fecha.pertenencia = pertenece[0]
                 fecha.save()
             if tipo_ant == 'medica':
@@ -1115,11 +1119,18 @@ def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
                 fecha.delete()
                 lugarpertence = LugarPertenencia.objects.filter(pertenencia=pertenece[0])
                 if lugarpertence:
-                    lugarpertence.delete()
-                tratamiento = TratamientoPertenencia.objects.filter(pertenencia=pertenece[0])
-                if tratamiento:
-                    tratamiento.delete() 
+                    lugar = Lugar.objects.filter(id=lugarpertence)
+                    if lugar:
+                        lugar.delete()
+                    lugarpertence.delete()					
+                tratamientoPert = TratamientoPertenencia.objects.filter(pertenencia=pertenece[0])				
+                if tratamientoPert:                    
+                    tratamiento = Tratamiento.objects.filter(id=tratamientoPert)
+                    if tratamiento:
+                        tratamiento.delete() 
+                    tratamientoPert.delete() 					
             pertenece.delete()
+            ant.delete();
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
