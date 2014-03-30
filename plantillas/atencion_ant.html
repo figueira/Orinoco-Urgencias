@@ -4,28 +4,26 @@
      {{mensaje}}
    </center>
 {% endif %}
-<script>
-  function envia2(pag){
-    $('#Dant').load(pag);
-  }
-</script>
-<span3>
-<div class="btn-toolbar" style="margin-left:-25px;"> 
-  <div class="btn-group" style="with:99px;">
-      <button type="button" class="btn btn-info" 
-      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/medica')">
-      Medicos
-      </button>
-      <button type="button" class="btn btn-info"
-      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')">
-      Quirurgicos
-      </button>
-      <button type="button" class="btn btn-info"
-      onClick="envia2('/emergencia/antecedentes/{{emergencia.id}}/alergia')">
-      Alergicos
-      </button>
-  </div>
-  </div>
-</span3>
 
-        
+<div class="btn-toolbar" > 
+	<center>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info" 
+					onClick="mandarInfo2('/emergencia/antecedentes/{{emergencia.id}}/medica')">
+			Médicos
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info"
+					onClick="mandarInfo2('/emergencia/antecedentes/{{emergencia.id}}/quirurgica')">
+			Quirúrgicos
+			</button>
+		</div>		
+		<div class="btn-group">
+			<button type="button" class="btn btn-info"
+					onClick="mandarInfo2('/emergencia/antecedentes/{{emergencia.id}}/alergia')">
+			Alérgicos
+			</button>
+		</div>
+  </center>
+</div>

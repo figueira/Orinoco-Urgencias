@@ -115,7 +115,7 @@ class Pertenencia(models.Model):
     def fechaR(self):
         result = Fecha.objects.filter(pertenencia=self)
         if result:
-            return "%s" %(result[0].fecha)
+            return result[0].fecha.strftime("%d/%m/%Y")
         else: 
             return "%s" % ("no hay fecha")
     
@@ -148,5 +148,5 @@ class TratamientoPertenencia(models.Model):
     tratamiento = models.ForeignKey(Tratamiento)
 
 class Fecha(models.Model):
-    fecha       = models.IntegerField(default=2013,blank=True)
+    fecha       = models.DateField()
     pertenencia = models.ForeignKey(Pertenencia)

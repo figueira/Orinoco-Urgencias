@@ -13,19 +13,23 @@
 
 /* atencion_Plan_partecuerpo */
 #div_boton1{
-	margin:5px;
-	width: 99px;
-	text-align: right;
+	margin: 5px 35px 5px auto;
+	width: 0px; /*99*/
+}
+
+#botones{
+	margin-left: 10px;
 }
 
 #Parte_Cuerpo_Guardar{
 	margin-top:4px;
+	width: 500px; /*BORRAR*/
 	height:425px;
 }
 
 #div_Parte_Cuerpo{
 	display:inline-table;
-	width:380px;
+	width:380px;/*380*/
 	height:64%;
 	padding:3px 0px 0px 5px;
 	OVERFLOW: auto;
@@ -34,7 +38,8 @@
 /* atencion_Plan_partecuerpo */
 
 #div_de_tabla_cuerpo{
-	height:400px;
+	height:380px;/*400*/
+	/*width:500px;*/
 	padding:3px 0px 0px 5px;
 	OVERFLOW: auto;
 }
@@ -42,8 +47,27 @@
 /* atencion_ant_medica */
 
 #div_de_tabla_atecedente{
-	height:440px;
+	height:auto;
 	width: 580px;
-	margin-left: -80px;
+	margin-top: 40px;
 	OVERFLOW: auto;
+}
+
+#tabla_antecedente td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top: 10px;
+	padding-bottom: 2px;
+}
+
+#tabla_antecedente td:first-child{
+	padding-top: 0;
+}
+
+#tabla_antecedente input[type="text"] {
+    width: 90%;
+}
+
+input.errorCampoAnte{
+	box-shadow: 0 0 5px darkred;
 }

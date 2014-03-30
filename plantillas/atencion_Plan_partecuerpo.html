@@ -7,12 +7,6 @@
     botones_sintomas();
   });
 </script>
-<div>
-  <button class="btn btn-info btn-mini"
-    onClick="cargar('{{emergencia.id}}','{{parte_cuerpo}}');">
-    Guardar
-  </button>
-</div>
 <form id='formularioCuerpo' 
       name="cuerpo" 
       method="post"
@@ -20,10 +14,10 @@
   {% csrf_token %}
   <div id='div_de_tabla_cuerpo'>
     <table class='table table-bordered' 
-           class = "width350"
+           class= "width350">
       <thead>
         <tr class='btn-info'>
-          <th class = "width200"
+          <th class = "width200">
             {% if parte_cuerpo == 'CABEZA_Y_ROSTRO' %}
               CABEZA&nbsp;Y&nbsp;ROSTRO
             {% elif parte_cuerpo == 'EXTREMIDADES_SUPERIORES' %}
@@ -42,10 +36,10 @@
               {{parte_cuerpo}}
             {% endif %}
           </th>
-          <th class = "width80"
+          <th class = "width80">
             <center>
-              <button id="b{{parte.id}}1" class='BNAD width40' >NAD</button>
-              <button id="b{{parte.id}}2" class='BABN width40' >ABN</button>
+              <button id="b{{parte.id}}1" class='BNAD width40' >NOR</button>
+              <button id="b{{parte.id}}2" class='BABN width40' >ALT</button>
             </center>
           </th>
         </tr>
@@ -53,7 +47,7 @@
       <tbody>
 
         {% for asp_ante in aspectoAtencion %}
-          <tr class='well width140' 
+          <tr class='well width140'> 
             <td>
               {{asp_ante.aspecto.nombre}}
             </td>
@@ -66,12 +60,12 @@
                 <button id='p{{asp_ante.aspecto.id}}1' 
                         class='NAD width40'
                         input='{{asp_ante.aspecto.id}}'>
-                    NAD
+                  NOR
                 </button>
                 <button id='p{{asp_ante.aspecto.id}}2' 
                         class='ABN width40'
                         input='{{asp_ante.aspecto.id}}'>
-                  ABN
+                  ALT
                 </button>
               </center>
             </td>
@@ -92,3 +86,11 @@
     </table>
   </div>
 </form>
+<center>
+  <div>
+    <button class="btn btn-info btn-mini"
+      onClick="cargar('{{emergencia.id}}','{{parte_cuerpo}}');">
+      Guardar
+    </button>
+  </div>
+</center>

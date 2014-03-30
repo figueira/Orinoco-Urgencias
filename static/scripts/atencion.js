@@ -42,11 +42,75 @@ function envia(pag){
   });
 }
 
-function CompruebaCampo(obj,clonLast){
-    if ($(obj).parents("tr").hasClass("ultimo")){
-      var ultimo = $(".ultimo:last");
-      ultimo.removeClass("ultimo");
-      var clonte = clonLast.clone();
-      clonte.insertAfter($(ultimo));
-    }
+function envia2(pag){
+    $('#Dant').load(pag);
+}
+
+var numErrores = 0;
+
+function mandarInfo2(dir){
+	numErrores=0;
+	envia2(dir);
+}
+
+function CompruebaCampo(obj,clonLast,tipo_ant){
+	padre = $(obj).parents("tr");
+	if (padre.hasClass("ultimo")){			
+		var duplicar = false;
+		var nuevoNombre = padre.find("#id_nuevoNombre").val();		
+		
+		if(tipo_ant=='medica' || tipo_ant=='quirurgica'){
+			var fecha = padre.find("#id_fecha");
+			var nuevoAtributo = padre.find("#id_nuevoAtributo3").val();
+			
+			if(nuevoNombre!="" && fecha.val()!="" && nuevoAtributo!=""){		
+				duplicar = true;
+			}
+		}else{
+			if(nuevoNombre!=""){
+				duplicar = true;
+			}
+		}
+		
+		if(duplicar){
+			var ultimo = $(".ultimo:last");
+			ultimo.removeClass("ultimo");
+			var clonte = clonLast.clone();
+			clonte.insertAfter($(ultimo));
+		}    
+	}
+}
+
+function validarFecha(fecha){
+	// dd/mm/aaaa
+	var formato = /^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/;
+	fecha.value = fecha.value.trim();
+	if(!fecha.value.match(formato)) { 
+		$(fecha).addClass('errorCampoAnte');
+		numErrores++;
+	}else{
+		if ($(fecha).hasClass("errorCampoAnte")){
+			$(fecha).removeClass('errorCampoAnte');
+			numErrores--;
+		}		
+	}
+}
+
+function validarCampo(campo){
+	if(campo.value.trim()=="") { 
+		$(campo).addClass('errorCampoAnte');
+		numErrores++;
+	}else{
+		if ($(campo).hasClass("errorCampoAnte")){
+			$(campo).removeClass('errorCampoAnte');
+			numErrores--;
+		}
+	}
+}
+
+function mandarInfo(dir){
+	if(numErrores==0)
+	{
+		envia(dir);
+	}
 }

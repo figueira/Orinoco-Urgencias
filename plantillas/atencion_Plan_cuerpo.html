@@ -10,8 +10,8 @@
 <div id='div_boton1'>
   <button class="btn btn-small" id="boton1">X</button>
 </div>
-<center></center>
 
+<div id='botones'>
 {% for parte in partecuerpo %} 
   {% if parte.nombre == 'CABEZA_Y_ROSTRO'%}
     <button id='{{parte.nombre}}' 
@@ -55,14 +55,14 @@
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">
       EXAMEN&nbsp;RECTAL
     </button>
-  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre !=
-  'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
+  {% elif parte.nombre != 'GENITALES_FEMENINOS' and parte.nombre != 'EXAMEN_DE_MAMA' and parte.nombre != 'GENITALES_MASCULINOS' %}
     <button id='{{parte.nombre}}' 
             class="btn btn-info btn-mini"
             onClick="parteCuerpo('{{parte.nombre}}','{{emergencia.id}}');">{{parte.nombre}}
     </button>
   {% endif %} 
 {% endfor %}
+</div>
 
 <div id='Parte_Cuerpo_Guardar'>
   <div id='div_Parte_Cuerpo'></div>
