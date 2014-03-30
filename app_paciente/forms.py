@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django import forms
 from models import *
 import re
@@ -32,8 +34,8 @@ class AgregarPacienteForm(forms.Form):
 	sexo             = forms.ChoiceField(choices=SEXO)
 	fecha_nacimiento = forms.DateField()
 	cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
-	num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
-	email            = forms.EmailField(max_length=64)
+	num_cel          = forms.CharField(max_length=10,validators=[validate_telefono]) 
+	email			 = forms.EmailField(max_length=50, error_messages={'invalid': ('La direccion de correo es invalida')})
 	direccion        = forms.CharField(max_length=128)
 	cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
 	num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
@@ -44,12 +46,13 @@ class AgregarPacienteForm(forms.Form):
 
 class EditarPacienteForm(forms.Form):
 	
-	nombres   = forms.CharField(max_length=64,validators=[validate_nombre])
-	apellidos = forms.CharField(max_length=64,validators=[validate_apellido])
-	cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
-	num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
-	email            = forms.EmailField(max_length=64)
+	cedula           = forms.CharField(max_length=9)
+	nombres          = forms.CharField(max_length=64,validators=[validate_nombre])
+	apellidos 		 = forms.CharField(max_length=64,validators=[validate_apellido])
+	email			 = forms.EmailField(max_length=50, error_messages={'invalid': ('La direccion de correo es invalida')})
 	direccion        = forms.CharField(max_length=128)
-	cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
-	num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
+	#cod_cel          = forms.ChoiceField(choices=COD_TELEFONICOS)
+	#num_cel          = forms.CharField(max_length=10,validators=[validate_telefono])  
+	#cod_tlf_casa     = forms.ChoiceField(choices=COD_TELEFONICOS)
+	#num_tlf_casa     = forms.CharField(max_length=10,validators=[validate_telefono])    
     

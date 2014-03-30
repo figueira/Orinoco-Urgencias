@@ -103,24 +103,25 @@ def editarPaciente(request,idP):
 		if form.is_valid():
 			data     = form.cleaned_data
 			
+			cedulas   = data['cedula']
 			nombre   = data['nombres']
 			apellido = data['apellidos']			
-			codcel   = data['cod_cel']
- 			numcel   = data['num_cel']
  			correo	 = data['email']
  			direcc   = data['direccion']
- 			codCasa  = data['cod_tlf_casa']
- 			numcasa  = data['num_tlf_casa']
+			#codcel   = data['cod_cel']
+ 			#numcel   = data['num_cel']
+ 			#codCasa  = data['cod_tlf_casa']
+ 			#numcasa  = data['num_tlf_casa']
  			
- 			
+ 			paciente.cedula           = cedulas
 			paciente.nombres   		  = nombre
 			paciente.apellidos        = apellido
-			paciente.cod_cel		  = codcel
-			paciente.num_cel		  = num_cel
-			paciente.email 			  = correo
 			paciente.direccion		  = direcc
-			paciente.cod_tlf_casa	  = codCasa
-			paciente.num_tlf_casa	  = numcasa
+			paciente.email 			  = correo
+			#paciente.cod_cel		  = codcel
+			#paciente.num_cel		  = numcel
+			#paciente.cod_tlf_casa	  = codCasa
+			#paciente.num_tlf_casa	  = numcasa
 			
 			paciente.save()
 		else:
