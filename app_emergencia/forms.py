@@ -1,23 +1,35 @@
 # -*- encoding: utf-8 -*-
-
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django import forms
 from models import *
 from django.contrib.admin.widgets import AdminDateWidget, AdminSplitDateTime
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.utils.safestring import mark_safe, SafeData
+import re
 
 ATENCION = (
   (True,'Si'),
   (False,'No'),
 )
 
+def validate_nombre(value):
+	if re.match('^[a-zA-Z \']+$',value)==None:
+		raise ValidationError(u'\"%s\" no es un nombre valido, debe estar compuesto solo por letras.' % value)
+
+def validate_apellido(value):
+	if re.match('^[a-zA-Z \']+$',value)==None:
+		raise ValidationError(u'\"%s\" no es un apellido valido, debe estar compuesto solo por letras' % value)
+	
+def validate_telefono(value):
+	if re.match('^[0-9]+[-]?[0-9]+$', value) == None:
+		raise ValidationError(u'\"%s\" no es un telefono valido' % value)
+
 class AgregarEmergenciaForm(forms.Form):
-    ingreso = forms.DateTimeField(
-                label = "FECHA Y HORA DE INGRESO",
-                widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss','class':'span2'}))
-    cedula = forms.CharField(label = "DOCUMENTO DE IDENTIDAD")
-    nombres = forms.CharField(label = "NOMBRE", max_length = 64)
-    apellidos = forms.CharField(label = "APELLIDO", max_length = 64)
+    ingreso 	= forms.DateTimeField( label = "FECHA Y HORA DE INGRESO", widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss','class':'span2'}))
+    cedula = forms.CharField(label = "DOCUMENTO DE IDENTIDAD")     
+    nombres = forms.CharField(label="NOMBRE",  max_length=64,validators=[validate_nombre])
+    apellidos = forms.CharField(label="APELLIDO",max_length=64,validators=[validate_apellido])
     sexo = forms.ChoiceField(label = "SEXO", choices = SEXO,required = False)
     fecha_nacimiento = forms.DateField(label = "FECHA DE NACIMIENTO")
 
@@ -29,8 +41,8 @@ class darAlta(forms.Form):
 
 class BuscarEmergenciaForm(forms.Form):
     cedula = forms.CharField(label="Número de Cédula",max_length=11,required=False)
-    nombres = forms.CharField(label="Nombres",max_length=32,required=False)
-    apellidos = forms.CharField(label="Apellidos",max_length=32,required=False)
+    nombres = forms.CharField(label="Nombres",max_length=32,required=False,validators=[validate_nombre])
+    apellidos = forms.CharField(label="Apellidos",max_length=32,required=False,validators=[validate_apellido])
 
 
 class FormularioEvaluacionPaciente(forms.Form):
