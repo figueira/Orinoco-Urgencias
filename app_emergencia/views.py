@@ -389,51 +389,42 @@ def emergencia_darAlta(request,idE):
 
 @login_required(login_url='/')
 def emergencia_aplicarTriage(request, idE, vTriage):
-  emergencia = get_object_or_404(Emergencia, id = idE)
-  paciente = emergencia.paciente
-  medico = Usuario.objects.get(username = request.user)
-  if ((medico.tipo == "1") or (medico.tipo == "2")):
-    fechaReal  = datetime.now()
-    motivo = Motivo.objects.get(nombre__startswith = " Ingreso")
-    area = AreaEmergencia.objects.get(nombre__startswith = " Ingreso")
-    recursos = 2
-    if (vTriage == ''):
-      # El paciente debe ser evaluado para asignarle un triage
-      if((paciente.signos_tmp < 37 or 38.4 < paciente.signos_tmp) or
-         (paciente.signos_fc < 60 or 100 < paciente.signos_fc) or
-         (paciente.signos_fr < 14 or 20 < paciente.signos_fr) or
-         (paciente.signos_pa < 60 or 89 < paciente.signos_pa) or
-         (paciente.signos_pb < 100 or 139 < paciente.signos_pb) or
-         (paciente.signos_saod < 95 or 100 < paciente.signos_saod)):
-        vTriage = 2
-      else:
-        vTriage = 3
-
-    if (vTriage == 1):
-      atencion = True
-    elif (vTriage == 2):
-      atencion = False
-      esperar = False
-    else:
-      if (vTriage == 4):
-        recursos = 1
-      elif (vTriage == 5):
-        recursos = 0
-      atencion = False
-      esperar = True
-    t = Triage(emergencia = emergencia,
-               medico = medico,
-               fecha = fechaReal,
-               motivo = motivo,
-               atencion = atencion,
-               esperar = esperar,
-               areaAtencion = area,
-               recursos = recursos,
-               nivel = vTriage)
-    print 'Triage asignado: ' + str(vTriage)
-    t.save()
-    return redirect('/emergencia/listar/todas')
-  return redirect("/")
+	emergencia = get_object_or_404(Emergencia, id = idE)
+	triage = get_object_or_404(Triage, emergencia = emergencia)
+	recursos = 2
+	atencion = False
+	esperar = False
+	if (vTriage == ''):
+		# El paciente debe ser evaluado para asignarle un triage
+		if((triage.signos_tmp < 37 or 38.4 < triage.signos_tmp) or
+         (triage.signos_fc < 60 or 100 < triage.signos_fc) or
+         (triage.signos_fr < 14 or 20 < triage.signos_fr) or
+         (triage.signos_pa < 60 or 89 < triage.signos_pa) or
+         (triage.signos_pb < 100 or 139 < triage.signos_pb) or
+         (triage.signos_saod < 95 or 100 < triage.signos_saod)):
+			vTriage = "2"
+		else:
+			vTriage = "3"	
+		
+	if (vTriage == "1"):
+		atencion = True
+	elif (vTriage == "2"):
+		atencion = False
+		esperar = False
+	else:
+		if (vTriage == "4"):
+			recursos = 1
+		elif (vTriage == "5"):
+			recursos = 0
+		atencion = False
+		esperar = True	
+	
+	triage.atencion = atencion
+	triage.esperar = esperar
+	triage.recursos = recursos
+	triage.nivel = vTriage
+	triage.save()
+	return redirect('/emergencia/listar/todas')
 
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
@@ -1344,12 +1335,22 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                         if len(espera_lab) == 0:
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
+						
+                    elif tipo_ind == 'endoscopico' and agregado:
+                        espe = get_object_or_404(Espera,nombre = 'Estudios')
+                        espera_est = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
+						
+                        # Se verifica que ya la causa de espera de estudio no este agregada
+                        if len(espera_est) == 0:
+                            espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
+                            espera1.save()
 					
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
 
                 if tipo_ind == 'imagen':
+                    agregado = False
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
                         if indicacionesQ:
@@ -1366,6 +1367,16 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             p_cuerpo = request.POST["c_"+str(i.id)]
                             ex = EspImg(asignacion=a,parte_cuerpo=p_cuerpo)
                             ex.save()
+                            agregado = True
+							
+                    if agregado:
+                        espe = get_object_or_404(Espera,nombre = 'Imagenologia')
+                        espera_img = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
+						
+                        # Se verifica que ya la causa de espera de imagenologia no este agregada
+                        if len(espera_img) == 0:
+                            espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
+                            espera1.save()
 
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
@@ -1737,37 +1748,69 @@ def emergencia_diagnostico(request,id_emergencia):
 # Funcion que recibe el formulario para evaluar a un paciente y lo procesa
 @login_required(login_url='/')
 def evaluar_paciente(request, id_emergencia):
-  if request.method == 'POST':
-    form = FormularioEvaluacionPaciente(request.POST)
-    es_valido = form.is_valid()
+	medico = Usuario.objects.get(username = request.user)
+	# Si usuario es doctor o enfermero
+	if ((medico.tipo == "1") or (medico.tipo == "2")):
+		if request.method == 'POST':
+			emergencia = get_object_or_404(Emergencia, id = id_emergencia)
+			triage = Triage.objects.filter(emergencia = emergencia)
+			form = FormularioEvaluacionPaciente(request.POST)
+			es_valido = form.is_valid()
 
-    if es_valido:
-      emergencia = get_object_or_404(Emergencia, id = id_emergencia)
-      medico = Usuario.objects.get(username = request.user)
-      evaluacion = form.cleaned_data
-      paciente = emergencia.paciente
-      paciente.signos_tmp = evaluacion['temperatura']
-      paciente.signos_fc = evaluacion['frecuencia_cardiaca']
-      paciente.signos_fr = evaluacion['frecuencia_respiratoria']
-      paciente.signos_pa = evaluacion['presion_diastolica']
-      paciente.signos_pb = evaluacion['presion_sistolica']
-      paciente.signos_saod = evaluacion['saturacion_oxigeno']
+			if es_valido:
+				fechaReal  = datetime.now()
+				motivo = Motivo.objects.get(nombre__startswith = " Ingreso")
+				area = AreaEmergencia.objects.get(nombre__startswith = " Ingreso")				
+				evaluacion = form.cleaned_data
+				
+				# Si no existe triage para esa emergencia crea uno
+				if len(triage)==0:			
+					t = Triage(emergencia = emergencia,
+							   medico = medico,
+							   fecha = fechaReal,
+							   motivo = motivo,
+							   areaAtencion = area,
+							   signos_tmp = evaluacion['temperatura'],
+							   signos_fc = evaluacion['frecuencia_cardiaca'],
+							   signos_fr = evaluacion['frecuencia_respiratoria'],
+							   signos_pa = evaluacion['presion_diastolica'],
+							   signos_pb = evaluacion['presion_sistolica'],
+							   signos_saod = evaluacion['saturacion_oxigeno'],					   
+							   signos_avpu = evaluacion['avpu'],
+							   signos_dolor = evaluacion['intensidad_dolor'])			
+					t.save()
+				# Si existe triage para esa emergencia lo actualiza
+				else:
+					triage = triage[0]
+					triage.medico = medico
+					triage.fecha = fechaReal
+					triage.motivo = motivo
+					triage.areaAtencion = area
+					triage.signos_tmp = evaluacion['temperatura']
+					triage.signos_fc = evaluacion['frecuencia_cardiaca']
+					triage.signos_fr = evaluacion['frecuencia_respiratoria']
+					triage.signos_pa = evaluacion['presion_diastolica']
+					triage.signos_pb = evaluacion['presion_sistolica']
+					triage.signos_saod = evaluacion['saturacion_oxigeno']				   
+					triage.signos_avpu = evaluacion['avpu']
+					triage.signos_dolor = evaluacion['intensidad_dolor']
+					triage.save()
 
-      paciente.save()
-
-    csrf_token_value = request.COOKIES['csrftoken']
-    plantilla_formulario = render_to_string(
-                             'formularios/evaluacionPaciente.html',
-                             { 'idE': id_emergencia, 
-                               'csrf_token_value': csrf_token_value,
-                               'form': form })
-    return render(request,
-                  'scripts/evaluacionPaciente.js',
-                  { 'es_valido': es_valido,
-                    'id_emergencia': id_emergencia,
-                    'plantilla_formulario': plantilla_formulario },
+		csrf_token_value = request.COOKIES['csrftoken']
+		plantilla_formulario = render_to_string(
+								 'formularios/evaluacionPaciente.html',
+								 { 'idE': id_emergencia, 
+								   'csrf_token_value': csrf_token_value,
+								   'form': form })
+		return render(request,
+					  'scripts/evaluacionPaciente.js',
+					  { 'es_valido': es_valido,
+						'id_emergencia': id_emergencia,
+						'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
-
+				  
+	return redirect("/")
+		
 def agregarEnfermedad(request,nombre_enfermedad):
   string = nombre_enfermedad
   Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])

@@ -14,13 +14,16 @@
   <script type="text/javascript"
     src="/static/libs/bootstrap/js/bootstrap-tab.js">
   </script>
-
-
-  <script type="text/javascript"
-          src="/static/js/scriptDatePicker.js">
-  </script>
 {% endblock %}
 
+<script>
+// inicializa el calendario
+$(document).ready(function(){
+  $('#ingreso_picker').datetimepicker({
+    language: 'pt-BR'
+  });
+})
+</script>
 
 
 <form action='/emergencia/{{ idE }}/evaluar_paciente'

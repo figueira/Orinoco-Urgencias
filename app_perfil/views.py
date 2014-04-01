@@ -31,7 +31,12 @@ def paciente_perfil(request,idP):
     tam = len(es)
     ea = es[tam-1]
     # ea = ea[0]
-    info = {'p':p,'ea':ea}
+    t = Triage.objects.filter(emergencia = ea)
+    if len(t)!=0:
+        t=t[0]
+    else:
+        t=None	
+    info = {'p':p,'ea':ea, 't':t}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')

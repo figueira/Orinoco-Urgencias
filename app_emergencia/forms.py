@@ -158,7 +158,7 @@ class AgregarIndLabForm(forms.Form):
 class MyCheckboxSelectMultiple(CheckboxSelectMultiple):
     def render(self, name, value, attrs=None, choices=()):
         html = super(MyCheckboxSelectMultiple, self).render(name, value, attrs, choices)
-        return mark_safe(html.replace('<ul>', '<ul class="imagen">'))
+        return mark_safe(html.replace('<ul', '<ul class="imagen"'))
 
 
 # Indicaciones - Diagnosticas - Imagenologia

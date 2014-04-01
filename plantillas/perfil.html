@@ -23,14 +23,17 @@
   
     <div class="span3">
       <h4>Signos Vitales</h4>
-      (Ultima Actualizaci&oacute;n: {{ea.fecha_triage}})<br/>
-      <strong>Temperatura:</strong> {{p.signos_tmp}}<br/>
-      <strong>Frecuencia Card&iacute;aca:</strong> {{p.signos_fc}}<br/>
-      <strong>Frecuencia Respiratoria:</strong> {{p.signos_fr}}<br/>
-      <strong>Presi&oacute;n Sist&oacute;lica:</strong> {{p.signos_pa}}<br/>
-      <strong>Presi&oacute;n Diast&oacute;lica:</strong> {{p.signos_pb}}<br/>    
-      <strong>Saturaci&oacute;n de Ox&iacute;geno:
-        </strong> {{p.signos_saod}}<br/>    
+	  {% if t == None %}
+		  Todav&iacute;a no se han tomado los signos.
+	  {% else %}	  
+		  (Ultima Actualizaci&oacute;n: {{ea.fecha_triage}})<br/>
+		  <strong>Temperatura:</strong> {{t.signos_tmp}} °C<br/>
+		  <strong>Presi&oacute;n arterial:</strong> {{ t.signos_pb }}/{{ t.signos_pa }} mmHg<br/>
+		  <strong>Frecuencia Card&iacute;aca:</strong> {{t.signos_fc}} ppm<br/>
+		  <strong>Frecuencia Respiratoria:</strong> {{t.signos_fr}} ppm<br/>      
+		  <strong>Saturaci&oacute;n de Ox&iacute;geno:
+			</strong> {{t.signos_saod}} %<br/> 
+	  {% endif %}
     </div>
   
     {% if ea.hora_egreso == None %}

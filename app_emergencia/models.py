@@ -320,9 +320,9 @@ class Triage(models.Model):
   areaAtencion   = models.ForeignKey(AreaEmergencia,blank=True)
   ingreso    = models.CharField(max_length=1,blank=True,choices=ICAUSA)
   
-  atencion     = models.BooleanField(blank=True)
-  esperar    = models.BooleanField(blank=True)
-  recursos     = models.IntegerField(choices=RECURSOS,blank=True)
+  atencion     = models.BooleanField(default=False,blank=True)
+  esperar    = models.BooleanField(default=False,blank=True)
+  recursos     = models.IntegerField(default=0,choices=RECURSOS,blank=True)
   
   # Valores a tomar
   signos_tmp   = models.FloatField(default=0,blank=True)
@@ -337,7 +337,7 @@ class Triage(models.Model):
   signos_dolor   = models.IntegerField(default=0,blank=True)
 
   # Resultado de Triage
-  nivel      = models.IntegerField()
+  nivel      = models.IntegerField(default=0)
   def __unicode___(self):
     return "Triaje %s" % self.id
 

@@ -24,7 +24,7 @@
   </script>
   <div class="container row">
     <div class="span3">
-      <div class="well well-small">
+      <div class="well well-small" style="padding-left:15px">
         <h4>Paciente</h4>
   
         <dl>
@@ -67,55 +67,48 @@
           <dt>
             Temperatura:&nbsp&nbsp
             <span class= "fontWeightNormal">
-              {{triage.emergencia.paciente.signos_tmp }}
-            </span>
+              {{triage.signos_tmp }}
+            </span> 
+			°C
           </dt>
-          <dt>
-            Frecu. Cardiaca:&nbsp&nbsp
-            <span class= "fontWeightNormal";>
-              {{triage.emergencia.paciente.signos_fc }}
-            </span>
-          </dt>
-          <dt>
-            Tension Arterial:&nbsp&nbsp
+		  <dt>
+            TA:&nbsp&nbsp
             <span class= "fontWeightNormal" >
-              {{ triage.emergencia.paciente.signos_ta }}
+              {{ triage.signos_pb }}/{{ triage.signos_pa }}
             </span>
-          </dt>
+			mmHg
+          </dt>  
           <dt>
-            Fr:&nbsp&nbsp
-            <span class= "fontWeightNormal">
-              {{triage.emergencia.paciente.signos_fr }}
+            FC:&nbsp&nbsp
+            <span class= "fontWeightNormal";>
+              {{triage.signos_fc }}
             </span>
-          </dt>
+			ppm
+          </dt>          
           <dt>
-            Saod:&nbsp&nbsp
+            FR:&nbsp&nbsp
             <span class= "fontWeightNormal">
-              {{ triage.emergencia.paciente.signos_saod }}
-              </span>
+              {{triage.signos_fr }}
+            </span>
+			ppm
           </dt>
           <dt>
-            rmotora:&nbsp&nbsp
+            Sat. Oxi:&nbsp&nbsp
+            <span class= "fontWeightNormal">
+              {{ triage.signos_saod }}
+            </span>
+			%
+          </dt>
+          <dt>
+            AVPU:&nbsp&nbsp
               <span class= "fontWeightNormal">
-                {{ triage.signos_rmotora }}
+                {{ triage.signos_avpu }}
               </span>
-          </dt>
-          <dt>
-            rocular:&nbsp&nbsp
-            <span class= "fontWeightNormal">
-              {{ triage.signos_rocular }}
-            </span>
-          </dt>
-          <dt>
-            rverbal:&nbsp&nbsp
-            <span class= "fontWeightNormal">
-              {{ triage.signos_rverbal }}
-            </span>
           </dt>
           <dt>
             Dolor:&nbsp&nbsp
             <span class= "fontWeightNormal">
-              {{ triage.emergencia.paciente.signos_dolor }}
+              {{ triage.signos_dolor }}
             </span>
           </dt>
         </dl>
@@ -206,14 +199,7 @@
               F&iacute;sico
             </a>
           </li>
-          <li>
-            <a id='aInd' 
-               href="#Ind" 
-               data-toggle="tab">
-              Indicaciones
-            </a>
-          </li>
-          <li>
+		  <li>
             <a id='aDiag' 
                href="#Diag" 
                data-toggle="tab">
@@ -221,6 +207,13 @@
               Definitivo
             </a>
           </li>
+          <li>
+            <a id='aInd' 
+               href="#Ind" 
+               data-toggle="tab">
+              Indicaciones
+            </a>
+          </li>          
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="Enf">  
@@ -229,31 +222,29 @@
           </div>
           <div class="tab-pane" 
                id="Ant">
-            <div id='Ant2' 
-                 class='span2'>
+            <div id='Ant2'>
             </div>
-            <div id="Dant" 
-                 class='span5'>
+            <div id="Dant">
             </div>
           </div>
 
           <div class="tab-pane" 
                id="Efis">
           </div>
-  
+		  
+		  <div class="tab-pane" 
+               id="Diag">
+            <div id="dDiag">
+            </div>
+          </div>
+		  
           <div class="tab-pane" 
                id="Ind">
             <div id="d_But">
             </div>
             <div id="d_Ind">
             </div>
-          </div>
-  
-          <div class="tab-pane" 
-               id="Diag">
-            <div id="dDiag">
-            </div>
-          </div>
+          </div>		  
         </div>
         <!--cierra tab-content-->
       </div>
