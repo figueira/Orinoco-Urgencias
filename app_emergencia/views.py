@@ -1276,7 +1276,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
         info = {'emergencia':emer,'triage':triage,'indicaciones':indicaciones, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_ind_medica.html',info,context_instance=RequestContext(request))
 
-    elif tipo_ind == 'valora' or tipo_ind == 'otros' or tipo_ind == 'terapeutico':
+    elif tipo_ind == 'valora' or tipo_ind == 'otros' or tipo_ind == 'terapeutico' or tipo_ind == 'otras':
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind,status=0)
         info = {'emergencia':emer,'triage':triage,'indicaciones':indicaciones, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_ind_tera.html',info,context_instance=RequestContext(request))
@@ -1553,7 +1553,7 @@ def emergencia_indicaciones_agregar(request,id_emergencia,tipo_ind):
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
             return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
 
-        elif tipo_ind == 'valora' or tipo_ind == 'otros' or tipo_ind == 'terapeutico':
+        elif tipo_ind == 'valora' or tipo_ind == 'otros' or tipo_ind == 'terapeutico' or tipo_ind=='otras':
             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind)
             nombres         = request.POST.getlist('nuevaInd')
             ver = range(len(nombres)-1)

@@ -36,6 +36,12 @@
       </button>
     </div>
     <div class="btn-group">
+      <button id="otr" class="btn btn-info"
+              onClick="envia2('/emergencia/indicaciones/{{emergencia.id}}/otras')"> 
+        Otras
+      </button>
+    </div>    
+    <div class="btn-group">
       <button id="tod" class="btn btn-info"
               onClick="envia2('/emergencia/indicaciones/{{emergencia.id}}/listar')"> 
          Resumen
@@ -84,6 +90,7 @@
   $(document).ready(
       function(){
         $("#diag").click(function () {
+              $("#d_Ind").empty();
               $("#aparece2").toggle();
           });
   

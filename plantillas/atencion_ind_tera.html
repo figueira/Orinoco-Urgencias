@@ -41,35 +41,23 @@
   <center>
     <div id="tablaILIST" class = "height400 overflow" >
       <table id="tabILIST" class="table table-bordered">
-        {% if tipo_ind == 'terapeutico'%}
-          <center>
-            <caption>
-              <p class="lead">
+
+
+        <center>
+          <caption>
+            <p class="lead">
+              {% if tipo_ind == 'terapeutico'%}
                 Indicaciones Terap&eacute;uticas
-              </p>
-            </caption>
-          </center>
-        {% endif %} 
-        
-        {% if tipo_ind == 'valora'%}
-          <center>
-            <caption>
-              <p class="lead">
+              {% elif tipo_ind == 'valora'%}
                 Procedimientos de Valoraci&oacute;n Especializada
-              </p>
-            </caption>
-          </center>
-        {% endif %} 
-        
-        {% if tipo_ind == 'otros'%}
-          <center>
-            <caption>
-              <p class="lead">
+              {% elif tipo_ind == 'otros'%}
                 Procedimientos Diagnósticas Adicionales
-              </p>
-            </caption>
-          </center>
-        {% endif %}
+              {% elif tipo_ind == 'otras'%}
+                Otras Indicaciones
+              {% endif %}
+            </p>
+          </caption>
+        </center>
         <thread>
         <tr class="btn-info">
           <th>

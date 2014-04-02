@@ -100,33 +100,23 @@
               </td>
               <td>
                 <center>
-                  {% if i.indicacion.tipo == 'dieta'%}
                    <p class = "width60 height12" >
+                  {% if i.indicacion.tipo == 'dieta'%}
                      Dieta
-                   </p>
-                  
                   {% elif i.indicacion.tipo == 'hidrata'%}
-                    <p class = "width60 height12" >
                       Hidrataci&oacute;n
-                    </p>
-                  
                   {% elif i.indicacion.tipo == 'medicamento'%}
-                    <p class = "width60 height12" >
                       Medicamento
-                    </p>
-                  
                   {% elif i.indicacion.tipo == 'lab' or i.indicacion.tipo ==
                   'imagen' or i.indicacion.tipo == 'endoscopico' or
                   i.indicacion.tipo == 'valora' or i.indicacion.tipo == 'otros'%}
-                    <p class = "width60 height12" >
                       Diagn&oacute;stico
-                    </p>
-  
                   {% elif i.indicacion.tipo == 'terapeutico'%}
-                  <p class = "width60 height12" >
-                    Terap&eacute;utico
-                  </p>
+                      Terap&eacute;utico
+                  {% elif i.indicacion.tipo == 'otras'%}                    
+                      Otras
                   {% endif %}
+                   </p>
                 </center>
               </td>
               <td>

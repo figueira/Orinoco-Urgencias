@@ -79,6 +79,10 @@
   width: 480px;
 }
 
+.width550{
+  width: 550px;
+}
+
 .height12{
 	height: 12px;
 }
@@ -95,8 +99,16 @@
   height: 350px;
 }
 
+.height410{
+  height: 410px;
+}
+
 .height400{
   height: 400px;
+}
+
+.height450{
+  height: 450px;
 }
 
 .padding2{

@@ -136,9 +136,9 @@ class AgregarIndHidrataForm(forms.Form):
   hidrata     = forms.ModelChoiceField(label = "Tipo de Solución",required=True,queryset=Indicacion.objects.filter(tipo__iexact="hidrata"),widget=forms.RadioSelect())
   combina = forms.CharField(label = "¿Combinar con otro tipo de solución?:  ",widget=forms.RadioSelect(choices=ATENCION))
   combina_sol= forms.ModelChoiceField(label = "Tipo de Solución Adicional:  ",required=False,queryset=Indicacion.objects.filter(tipo__iexact="hidrata"),widget=forms.RadioSelect())
-  volumen = forms.FloatField(label = "Volumen:  ",required=False)
-  vel_inf = forms.CharField(label = "Velocidad de Infusión:  ",max_length=30)
-  complementos = forms.CharField(label = "Complementos: ",max_length=40)
+  volumen = forms.FloatField(label = "Volumen:  ",required=False,widget=forms.TextInput(attrs={'class':'span1'}))
+  vel_inf = forms.CharField(label = "Velocidad de Infusión:  ",max_length=30,widget=forms.TextInput(attrs={'class':'span1'}))
+  complementos = forms.CharField(label = "Complementos: ",max_length=40,widget=forms.widgets.Textarea(attrs={'rows':2, 'cols':20}))
   def __init__(self, *args, **kwargs):
     super(AgregarIndHidrataForm, self).__init__(*args, **kwargs)
     self.fields['hidrata'].empty_label = None
