@@ -882,7 +882,7 @@ def emergencia_tiene_cubiculo(request,id_emergencia):
 # A cada una le paso el id de emergencia para mantener la 
 # informacion constante en el sidebar izquierdo
 
-#----------------------------------------------------- Funciones para generar Pdfs
+#-------------------------------- Funciones para generar Pdfs
 def generar_pdf(html):
     result = StringIO.StringIO()
     pdf    = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)

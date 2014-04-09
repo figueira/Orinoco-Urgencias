@@ -5,27 +5,125 @@
   <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
   <!--     <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css"> -->
 
+<style type="text/css">
+    * {
+      padding:0px;
+      margin:0px;
+    }
+
+
+    body {
+      padding: 20px 0px 0px 0px;
+      min-height:525px;
+      font-family: Arial;
+      font-size: 12px;
+    }
+
+    h1 {
+      color: #003D99;
+    }
+
+    h2 {
+      font-size: 14pt;
+      text-align: center;
+      color: #003D99;
+    }
+
+    h3 {
+      text-align: left;
+    }
+
+    form {
+      margin: 0px;
+      padding: 0 0 10px;
+    }
+
+    p {
+      font-size: 10pt;
+    }
+    a:hover {
+      font-weight:bold;
+      color: #848484; 
+      text-decoration:none;
+    }
+
+    td ul,td ol {
+      list-style-type: none;
+      float: left;
+    }
+
+    /*PDF Reporte de Triage*/
+
+ .titulo {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #47464E;
+  text-decoration:underline;
+}
+
+.subtitulos {
+  font-size: 16px;
+  background-color: #A9D0F5;
+  padding-top: 5px;
+  border: 1px;
+  border-width: 2px;
+}
+
+.info {
+  font-size: 12px;
+  background-color: #FFFFFF;
+}
+
+.logoCMC {
+  src: url(../static/img/logoazul.png);
+  width: 500px;
+  height: 500px;
+}
+
+.cuerpo {
+  font-size: 16px;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+th {
+  background-color: #FFFFFF;
+}
+</style>
+
+
 </head>
   <body>
     <header>
-      <div class="left">
+      <div class="logoCMC">
       </div>
+
       <div class="right">
         <p>
-          <h4>Centro M&eacute;dico</h4>
-          Direcci&oacute;n<br> Tel&eacute;fonos
+          <p align="right">Caracas, {{ingreso}}</p>
+          <h1>Centro M&eacute;dico Caracas</h1>
+            Direcci&oacute;n: Av. Eraso, Plaza El Estanque, Urb. San Bernardino, Caracas, Venezuela <br>
+            Tel&eacute;fonos: 58+ 212-555-9111 / 555-9486 / 552-2222
         </p>
       </div>
     </header>
-    
-    <p class="titulo">REPORTE INDICACIONES</p>
+    <p>M&eacute;dico Responsable: {{ emergencia.responsable.last_name}}, {{ emergencia.responsable.first_name}} <br>
+    C&eacute;dula: {{emergencia.responsable.cedula}}
+    </p>
+
+    <p>Paciente: {{emergencia.paciente.apellidos}}, {{emergencia.paciente.nombres}} <br>
+    C&eacute;dula: {{emergencia.paciente.cedula}}
+    </p> 
+
+    <h2>REPORTE DE INDICACIONES</h2>
+
+
     <div class="cuerpo">
-      <table id="tLIST" class="table table-bordered table-hover">
+      <br>
+      <table >
         <thead>
-          <tr class="btn-info ">
-            <th>
-              <center>Hora</center>
-            </th>
+          <tr>
             <th>
               <center>Tipo</center>
             </th>
@@ -33,18 +131,13 @@
               <center>Nombre</center>
             </th>
             <th>
-              <center>Status</center>
+              <center>Estado</center>
             </th>
           </tr>
         </thead>
         <tbody>
           {% for i in indicaciones %}
             <tr>
-              <td>
-                <center>
-                  <p>{{i.horaA}}</p>
-                </center>
-              </td>
               <td>
                 <center>
                   {% if i.indicacion.tipo == 'dieta'%}
@@ -93,9 +186,5 @@
         </tbody>
       </table>
     </div>
-    <footer>
-      <p class="fecha">Caracas, {{ingreso}}</p>
-      <br />
-    </footer>
   </body>
 </html>
