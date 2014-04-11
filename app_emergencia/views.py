@@ -1014,7 +1014,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
             diags = EstablecerDiag.objects.filter(atencion = atList[0])
             enfA = EnfermedadActual.objects.filter(atencion = atList[0].id)
             dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-            indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
+            indic = Asignar.objects.filter(emergencia = id_emergencia)
 			 
             if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(dieta)>0:
               historia_medica = True
@@ -1022,7 +1022,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
             if len(medicamento)>0 and len(diags)>0 and len(dieta)>0:
               constancia = True
 			 
-            if len(indicaciones)>0:
+            if len(indic)>0:
               indicaciones = True
 			 
           ctx = {'emergencia':emer,'triage':triage,'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
