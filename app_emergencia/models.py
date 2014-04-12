@@ -367,19 +367,10 @@ class EnfermedadActual(models.Model):
 
 # Diagnostico Definitivo
 class Diagnostico(models.Model):
-  nombreD = models.CharField(max_length=512)
-  def __unicode__(self):
-    return "%s" % (self.nombreD)
-
-class EstablecerDiag(models.Model):
   atencion = models.ForeignKey(Atencion)
-  diagnostico = models.ForeignKey(Diagnostico)
-  fecha      = models.DateTimeField()
-  fechaReal    = models.DateTimeField(auto_now_add=True)
+  enfermedad = models.ForeignKey(Enfermedad)
   def __unicode__(self):
-    return "Atencion: %s-Diagnostico: %s" % (self.atencion.id,self.diagnostico.nombreD)
-  def horaD(self):
-    return self.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")
+    return "Atencion: %s-Diagnostico: %s" % (self.atencion.id,self.enfermedad.descripcion)
 
 #----------------------------------Indicacion
 class Indicacion(models.Model):

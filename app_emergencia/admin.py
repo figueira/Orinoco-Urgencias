@@ -28,4 +28,3 @@ admin.site.register(tieneSOS)
 
 #--Diagnostico
 admin.site.register(Diagnostico)
-admin.site.register(EstablecerDiag)
