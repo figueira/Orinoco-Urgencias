@@ -11,15 +11,17 @@
 .row {
   background-color:white;
 }
+
 body {
   background-color: #008ebc;
-}
-#cuerpo{
-	background-color:white;
-	padding: 10px 0px 0px 0px;
+	padding: 20px 0px 0px 0px;
 	min-height:525px;
+  font-family: Arial;
 }
 
+h1 {
+  text-align: center;
+}
 
 #pie {
   font-family: 'Raleway', sans-serif;
@@ -671,10 +673,11 @@ td ul,td ol {
   background: #5CCDC9;
 }
 
-/*---------------Estilo para pdfHistMedica........................*/
+/*PDF Reporte de Triage*/
 
-.titulosPdf{
-	background: gray;
+.headerPDF {
+  font-family: Arial;
+  background-image: url(../img/logo.png);
 	webkit-border-radius: 10px;
 	border-radius: 10px;
 	position: absolute;
@@ -686,14 +689,6 @@ td ul,td ol {
 	margin-left: -450px;
 }
 
-
-}
-
-/*---------------Estilo para pdfHistMedica........................*/
-.contenedorArea{
-
-
-}
 /* Html para Indicaciones */
 #tablaInd{
 	height: 200px;

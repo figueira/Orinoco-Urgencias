@@ -1005,7 +1005,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
 		  
       elif tipo == "historia":
 	      # Operaciones para determinar si se muestran los botones de descarga
-          historia_medica = False
+          historia_medica = True
           constancia = False
           indicaciones = False
 
