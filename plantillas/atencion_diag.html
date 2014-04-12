@@ -19,53 +19,93 @@
 {% endif %}
 
 <script>
-  function envia1(pag){
-    var formu = $('#formDIAG').serialize();
-    $.post(pag,formu,function(data){
-      $("#dDiag").html(data);
-    });
-  }
-  function CompruebaCampo(obj){
-    if ($(obj).parents("tr").hasClass("ultimoD")){
-      ultimoD = $(".ultimoD:last");
-      clon = ultimoD.clone();
-      ultimoD.removeClass("ultimoD");
-      clon.insertAfter($(ultimoD));
-      $("tr.ultimoD:last td center input[type='text']").prop("value","");
-      }
+	var clonLast = $(".ultimo:last").clone();
+	
+	function envia1(pag){
+		var formu = $('#formDIAG').serialize();
+		$.post(pag,formu,function(data){
+			$("#dDiag").html(data);
+		});
+	}
+  
+	function CompruebaCampo(obj)
+	{
+		if ($(obj).parents("tr").hasClass("ultimo"))
+		{
+			var ultimo = $(".ultimo:last");
+			ultimo.removeClass("ultimo");
+			var clonte = clonLast.clone();
+			clonte.insertAfter($(ultimo));
+		}
+	}	
+	
+	
+	function agregarEnf(obj)
+	{	
+		var posicion = $(obj).closest('.raizSugerencias');
+		var select= $(posicion).find(".CodigoEnfermedad");		
+		var codigo = $(select).find("option[id=\'"+obj.value+"\']").val();
+		if(codigo!=undefined)
+		{
+			posicion.find('.agregarCodigoEnfermedad').val(codigo);
+			// cambio el id de la lista de sugerencia ya q es unica para cada fila
+			$(obj).attr("list", "sugerencias_enfermedades_" +codigo);
+			$(posicion).find('.listaSugerencia').attr("id", "sugerencias_enfermedades_" +codigo);
+			CompruebaCampo(obj);
+		}
+		else
+		{
+			alert("Debe seleccionar una opcion de la lista");
+		}
+	}
+	
+	
+	// Carga las sugerencias de la base de datos 
+	function listSug(obj)
+	{
+		var raiz = $(obj).closest('.raizSugerencias');
+		var nombre_enfermedad= $(obj).val();
+		var id_de_la_emergencia= obj.list.id;
+		var lista_autocompletar = $('#'+id_de_la_emergencia);		
+		var lista_codigo=  $(raiz).find('.CodigoEnfermedad');
+		lista_autocompletar.empty();
+		lista_codigo.empty();
+		$.getJSON("/paciente/buscarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {			
+			var enfermedad = JSON.parse(sugerencias);
+			$.each(enfermedad,function(i){
+				var nombre = this.fields.descripcion;
+				var codigo = this.pk;
+				var option_autocompletar = "<option value = \'" + nombre + "\'></option>";
+				var option_codigo = "<option id = \'" + nombre + "\' value = \'" + codigo + "\'></option>";
+				lista_autocompletar.append(option_autocompletar);
+				lista_codigo.append(option_codigo);  
+			});
+		});
     }
-    $(document).ready(function(){
+	
+	
+$(document).ready(function()
+{
     $("[rel='tooltip']").tooltip();
-  });
+	$('.dropdown-toggle').dropdown();
+});
 </script>
 
 <form id="formDIAG" method="post" action="">
   {% csrf_token %}
   <center>
-    <div id="tablaDIAG" class = "width600 overflow" >
-      <table id="tabDIAG" 
-             class="table table-bordered">
-        <caption>
-          <p class="lead">
-            Diagn&oacute;sticos Establecidos
-          </p>
-        </caption>
+    <div id="div_de_tabla_hist_med" style="margin-top: 10px;">
+      <table id="tabla_hist_med" class="table table-bordered">
+        <legend>
+            Diagn&oacute;sticos
+        </legend>
         <thread>
           <tr class="btn-info">
-            <th>
-              <center>
-                <a rel="tooltip" 
-                   data-toggle="tooltip"
-                   data-original-title="Eliminar" 
-                   href="#"><i
-                   class="icon-trash icon-white"></i></a>
-              </center>
-            </th>
-            <th>
-              <center>
-                Hora
-              </center>
-            </th>
+            <th class = "width40" >
+                  <center>
+                    <i class="icon-trash icon-white"></i>
+                  </center>
+                </th> 
             <th>
               <center>
                 Nombre de Diagn&oacute;stico
@@ -83,35 +123,62 @@
                          value="{{d.id}}" />
                 </center>
               </td>
-              <td>
-                <center>
-                  <p>{{d.horaD}}</p>
-                </center>
-              </td>
-              <td>
-                <center>
-                  <input class="input-xxlarge" 
-                         type="text" 
-                         name="{{d.id}}nombre"
-                         value="{{d.diagnostico.nombreD}}">
-                </center>
-              </td>
+			  <td>
+				<center>
+					<fieldset class= "raizSugerencias">
+					  <input class="agregarEnfermedad form-control"
+							 type="text" 
+							 list="sugerencias_enfermedades_{{d.enfermedad.id}}" 
+							 name= "enfermedad_agregada" 
+							 value="{{d.enfermedad.descripcion}}" 
+							 placeholder= "Ingrese el nombre de la enfermedad" 
+							 autocomplete="off"
+							 onInput="listSug(this)"
+							 onChange="agregarEnf(this)">
+					  <datalist class="listaSugerencia" id="sugerencias_enfermedades_{{d.enfermedad.id}}" >
+					  </datalist>
+					  <input class="agregarCodigoEnfermedad" 
+                             type="text" 
+                             name="{{d.id}}nombre" 
+                             value="{{d.enfermedad.id}}"
+							 style="display:none" >
+					  <select class="CodigoEnfermedad" style="display:none">
+					  </select>
+					</fieldset>
+				</center>
+			</td>
             </tr>
           {% endfor %}
-          <tr class="ultimoD">
+          <tr class="ultimo">
             <td>
               <center>
                 <input type="checkbox" name="check" value="" />
               </center>
-            </td>
-            <td></td>
-            <td>
-              <center>
-                <input class="input-xxlarge"
-                  placeholder="Especifique diagn&oacute;stico" type="text"
-                  name="nuevoDiag" value="" onChange="CompruebaCampo(this)">
-              </center>
-            </td>
+            </td>				
+			<td>
+				<center>
+					<fieldset class= "raizSugerencias">
+					  <input class="agregarEnfermedad form-control"
+							 type="text" 
+							 list="sugerencias_enfermedades" 
+							 name= "enfermedad_agregada" 
+							 value="" 
+							 placeholder= "Ingrese el nombre de la enfermedad" 
+							 autocomplete="off"
+							 onInput="listSug(this)"
+							 onChange="agregarEnf(this)">
+					  <datalist class="listaSugerencia" id="sugerencias_enfermedades" >
+					  </datalist>
+					  <input class="agregarCodigoEnfermedad" 
+                             type="text" 
+                             name="nuevoDiag" 
+                             value=""
+							 style="display:none" >
+					  <select class="CodigoEnfermedad" style="display:none">
+					  </select>
+					</fieldset>
+				</center>
+			</td>		
           </tr>
         </tbody>
       </table>

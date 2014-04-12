@@ -73,7 +73,7 @@ def buscarPacienteJson(request,ced):
 @login_required(login_url='/')
 def buscarEnfermedad(request,nombre_enfermedad):
   string = nombre_enfermedad
-  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
+  Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:10])
   return HttpResponse(json.dumps(Sugerencias),
                         content_type='application/json')
 
