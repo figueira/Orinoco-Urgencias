@@ -955,7 +955,6 @@ def historia_med_pdf(request, id_emergencia,tipo_doc):
 
   #Diagnostico Definitivo 
   diags = Diagnostico.objects.filter(atencion=atList2)
-  print diags
 
   #Indicaciones
   dietaList = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
@@ -1042,6 +1041,76 @@ def historia_med_pdf(request, id_emergencia,tipo_doc):
   c.save()
   return response
 
+def constancia_pdf(request, id_emergencia):
+# Create the HttpResponse object with the appropriate PDF headers.
+  response = HttpResponse(content_type='application/pdf')
+  response['Content-Disposition'] = 'filename="constancia.pdf"'
+
+  # Create the PDF object, using the response object as its "file."
+  c = canvas.Canvas(response)
+
+  from reportlab.lib.units import inch
+  from reportlab.platypus.flowables import *
+  from reportlab.lib.colors import pink, black, red, lightblue, white
+
+  # move the origin up and to the left
+  c.translate(inch,inch)
+  # define a large font
+  c.drawInlineImage("static/img/logoazul.png", -50,700, width=40, height=60)
+  c.setFont("Helvetica", 8)
+  c.drawString(10, 740,"Centro Medico de Caracas")
+  c.drawString(10, 730, "Av. Eraso, Plaza El Estanque")
+  c.drawString(10, 720, "Urb. San Bernardino, Caracas, Venezuela")
+  c.drawString(10, 710, "Tel. 58+ 212-555-9111 / 555-9486 / 552-2222")
+
+  c.setFont("Helvetica", 22)
+  # choose some colors
+  c.setStrokeColor(lightblue)                  #borde del rectangulo
+  c.setFillColor(lightblue)                         #color de fondo
+  # draw a rectangle
+  c.rect(-inch,8.4*inch,3.7*inch,1.1*inch, fill=1)
+  c.setFillColor(black)
+  c.drawString(-0.6*inch, 9.1*inch, "Constancia de")
+  c.drawString(0.4*inch, 8.7*inch, "Atencion")
+
+  emer  = get_object_or_404(Emergencia,id=id_emergencia)
+  atList = Atencion.objects.filter(emergencia=id_emergencia)
+  atList2 = atList[0]
+  diags = Diagnostico.objects.filter(atencion=atList2)
+  medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
+  ingreso = datetime.now()
+  #Consultas de informacion para la Historia Medica 
+  triageList = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
+  triage = triageList[0]
+
+
+  c.setFont("Helvetica", 12)
+  c.drawString(0.4*inch,8*inch,"Se hace constar que el paciente "+ emer.paciente.nombres + " " + emer.paciente.apellidos + ", ")
+  c.drawString(0.4*inch, 7.8*inch, "de C.I.N. " + str(emer.paciente.cedula) + ", y " + str(emer.paciente.edad()) + " años de edad")
+  c.drawString(3.4*inch, 7.8*inch, "asistio a este centro el dia de hoy")
+  i = 7.6
+  if diags:
+    c.drawString(0.4*inch, i*inch,"por presentar: ")
+    for d in diags:
+      if d:
+        i = i-0.2
+        c.drawString(0.4*inch, i*inch,d.diagnostico.nombreD)
+
+  c.drawString(0.4*inch, (i-0.2)*inch,"Se le indico tratamiento medico ambulatorio")
+  if triage.fechaR == None:
+    c.drawString(0.4*inch, (i-0.6)*inch, "Fecha: " +str(datetime.now().strftime("%d/%m/%y a las %H:%M:%S")))
+  else:
+    c.drawString(0.4*inch, (i-0.6)*inch, "Fecha: " +str(triage.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")))
+
+  c.drawString(0.4*inch, (i-1.1)*inch, "Atentamente, ")
+  c.drawString(0.4*inch, (i-1.3)*inch, emer.responsable.last_name + ", " + emer.responsable.first_name)
+  c.drawString(0.4*inch, (i-1.5)*inch, "C.I.N. " + str(emer.responsable.cedula))
+
+
+
+  c.showPage()
+  c.save()
+  return response
 
 def emergencia_descarga(request,id_emergencia,tipo_doc):
     emer  = get_object_or_404(Emergencia,id=id_emergencia)
@@ -1055,18 +1124,18 @@ def emergencia_descarga(request,id_emergencia,tipo_doc):
         return historia_med_pdf(request, id_emergencia, tipo_doc)
 
     elif tipo_doc == 'constancia':
-        dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-        dieta2 = dieta[0]
-        print "Dietas en descarga:",dieta
-        print"Medicamcion en descarga",medicamento
-        info = {'ingreso':ingreso,'emergencia':emer,'diags':diags,'dieta':dieta2,'medicamento':medicamento}
-        html = render_to_string('const_asist.html',info, context_instance=RequestContext(request))
-    
+        # dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
+        # dieta2 = dieta[0]
+        # print "Dietas en descarga:",dieta
+        # print"Medicamcion en descarga",medicamento
+        # info = {'ingreso':ingreso,'emergencia':emer,'diags':diags,'dieta':dieta2,'medicamento':medicamento}
+        # html = render_to_string('const_asist.html',info, context_instance=RequestContext(request))
+        return constancia_pdf(request, id_emergencia)
     elif tipo_doc == 'reportInd':
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
         ctx  = {'emergencia':emer,'indicaciones':indicaciones,'ingreso':ingreso}
         html = render_to_string('reporte_ind.html',ctx, context_instance=RequestContext(request))
-    # return generar_pdf(html)
+    return generar_pdf(html)
 
 #----------------------------------Gestion de Enfermedad Actual
 @login_required(login_url='/')
@@ -1146,7 +1215,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
       elif tipo == "historia":
 	      # Operaciones para determinar si se muestran los botones de descarga
           historia_medica = True
-          constancia = False
+          constancia = True
           indicaciones = False
 
           if len(atList)>0:
