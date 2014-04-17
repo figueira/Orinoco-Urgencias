@@ -14,7 +14,7 @@ from datetime import datetime
 from app_emergencia.forms import *
 
 # PDF
-import xhtml2pdf.pisa as pisa
+#import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 import cgi
 from django.template import RequestContext
