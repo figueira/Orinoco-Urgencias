@@ -54,7 +54,8 @@ urlpatterns = patterns('',
     url('^emergencia/(?P<idE>\d+)/triage/calcular/(?P<triage_asignado>\d*)$',
         'app_emergencia.views.emergencia_calcular_triage'),
     url('^emergencia/(?P<idE>\d+)/daralta$','app_emergencia.views.emergencia_darAlta'),   
-    url('^emergencia/buscar$','app_emergencia.views.emergencia_buscar'),   
+    url('^emergencia/buscar$','app_emergencia.views.emergencia_buscar'),  
+    url('^emergencia/(?P<idE>\d+)/actualizarSig$','app_emergencia.views.actualizarSignos'),
 
     # Estadisticas
     url('^estadisticas/$','app_emergencia.views.estadisticas'),

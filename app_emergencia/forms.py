@@ -24,6 +24,10 @@ def validate_apellido(value):
 def validate_telefono(value):
 	if re.match('^[0-9]+[-]?[0-9]+$', value) == None:
 		raise ValidationError(u'\"%s\" no es un telefono valido' % value)
+	
+def validate_dolor(value):
+	if value > 10 :
+		raise ValidationError(u'\"%s\" intensidad maxima es de 10' % value)
 
 class AgregarEmergenciaForm(forms.Form):
     ingreso 	= forms.DateTimeField( label = "FECHA Y HORA DE INGRESO", widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss','class':'span2'}))
@@ -108,6 +112,50 @@ class FormularioEvaluacionPaciente(forms.Form):
         raise forms.ValidationError('Debe estar entre ' + str(limite_inferior) +
                                     ' y ' + str(limite_superior))
 
+                                    
+class ActualizarSignosForm(forms.Form):
+	
+	avpu = forms.CharField(label = "Escala AVPU",widget = forms.RadioSelect(choices = AVPU))
+	frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
+	frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria",min_value=0,max_value=30)
+	presion_sistolica = forms.IntegerField(label = "Presión sistólica",min_value=0,max_value=300)
+	presion_diastolica = forms.IntegerField(label = "Presión diastólica",min_value=0,max_value=200)
+	saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno",min_value=0,max_value=100)
+	temperatura = forms.FloatField(min_value=0, max_value=45)
+                                    
+	# Validaciones perzonalizadas sobre los campos del formulario
+	def clean_frecuencia_cardiaca(self):
+		self.__validar_intervalo(self.cleaned_data['frecuencia_cardiaca'], 0, 200)
+		return self.cleaned_data['frecuencia_cardiaca']
+
+	def clean_frecuencia_respiratoria(self):
+		self.__validar_intervalo(self.cleaned_data['frecuencia_respiratoria'],0,30)
+		return self.cleaned_data['frecuencia_respiratoria']
+
+	def clean_presion_diastolica(self):
+		self.__validar_intervalo(self.cleaned_data['presion_diastolica'], 0, 200)
+		return self.cleaned_data['presion_diastolica']
+
+	def clean_presion_sistolica(self):
+		self.__validar_intervalo(self.cleaned_data['presion_sistolica'], 0, 300)
+		return self.cleaned_data['presion_sistolica']
+
+	def clean_saturacion_oxigeno(self):
+		self.__validar_intervalo(self.cleaned_data['saturacion_oxigeno'], 0, 100)
+		return self.cleaned_data['saturacion_oxigeno']
+
+	def clean_temperatura(self):
+		self.__validar_intervalo(self.cleaned_data['temperatura'], 36, 42)
+		return self.cleaned_data['temperatura']
+
+    # Metodos privados
+
+	def __validar_intervalo(self, valor, limite_inferior, limite_superior):
+		if valor < limite_inferior or limite_superior < valor:
+			raise forms.ValidationError('Debe estar entre ' + str(limite_inferior) +
+                                    ' y ' + str(limite_superior))
+                                    
+                                    
 ##################################################### FORMS ATENCION
 
 # Enfermedad Actual:

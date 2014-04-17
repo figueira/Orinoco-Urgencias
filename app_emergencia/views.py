@@ -19,6 +19,7 @@ from datetime import datetime, date, timedelta
 from models import *
 from forms import *
 from app_usuario.forms import *
+from app_usuario.models import *
 
 # Estadisticas
 from django.db.models import Count
@@ -41,7 +42,7 @@ from reportlab.platypus import Table, TableStyle
 from reportlab.platypus.flowables import *
 from reportlab.lib.colors import pink, black, red, lightblue, white
 
-import xhtml2pdf.pisa as pisa
+#import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 import cgi
 import json
@@ -433,6 +434,48 @@ def emergencia_aplicarTriage(request, idE, vTriage):
 	triage.save()
 	return redirect('/emergencia/listar/todas')
 
+	
+@login_required(login_url='/')
+def actualizarSignos(request,idE):
+	emergencia = get_object_or_404(Emergencia, id = idE)
+	triage = get_object_or_404(Triage, emergencia = emergencia)
+	
+	if request.method == 'POST':
+		form = ActualizarSignosForm(request.POST)
+		if form.is_valid():
+			data  = form.cleaned_data
+
+			avpus = data['avpu']
+			fc    = data['frecuencia_cardiaca']
+			fr    = data['frecuencia_respiratoria']
+			ps	  = data['presion_sistolica']
+			pd    = data['presion_diastolica']
+			so	  = data['saturacion_oxigeno']
+			temp  = data['temperatura']
+			
+			triage.signos_avpu  = avpus
+			triage.signos_fc    = fc
+			triage.signos_fr    = fr
+			triage.signos_pa    = ps
+			triage.signos_pb	= pd
+			triage.signos_saod  = so
+			triage.signos_tmp   = temp
+			
+			triage.save()
+		else:
+			info = {'form':form,'emergencia':emergencia,'triage':triage}
+			return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
+	else:
+		form = ActualizarSignosForm()
+		info = {'form':form,'emergencia':emergencia,'triage':triage}
+		return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
+	
+	info = {'form':form,'emergencia':emergencia,'triage':triage}
+	return render_to_response('atencion.html',info,context_instance = RequestContext(request))		
+	
+	
+	
+		
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
   mensaje = ""
