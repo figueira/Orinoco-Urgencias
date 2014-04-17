@@ -41,8 +41,6 @@ from reportlab.platypus import Table, TableStyle
 from reportlab.platypus.flowables import *
 from reportlab.lib.colors import pink, black, red, lightblue, white
 
-import xhtml2pdf.pisa as pisa
-import cStringIO as StringIO
 import cgi
 import json
 from django.template.loader import render_to_string
