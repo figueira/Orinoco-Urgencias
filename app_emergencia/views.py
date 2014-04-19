@@ -197,24 +197,58 @@ def emergencia_listar_clasificados(request):
                             info,
                             context_instance = RequestContext(request))
 
-def emergencia_listar_atencion(request, mensaje):
-  emergencias = Emergencia.objects.filter(hora_egreso = None,
-                                          atencion__isnull = False) \
-                                  .distinct() \
-                                  .order_by('hora_ingreso')
-  form = IniciarSesionForm()
-  titulo = "Atendidos"
-  buscar_enfermedad = True
-  cubiculos = Cubiculo.objects.all()
-  info = {'emergencias': emergencias, 
-          'form': form, 
-          'titulo': titulo, 
-          'cubiculos': cubiculos,
-          'mensaje': mensaje,
-          'buscadorDeEnfermedad': buscar_enfermedad }
-  return render_to_response('lista.html', 
-                            info, 
-                            context_instance = RequestContext(request))
+def emergencia_buscar_historia_medica(request, mensaje):
+    mensaje = ""
+    titulo = "Búsqueda de Pacientes"
+    boton = "Buscar"
+    info = {}
+    form = IniciarSesionForm()
+    if request.method == 'POST':
+        busqueda = BuscarEmergenciaForm(request.POST)
+        resultados = []
+        if busqueda.is_valid():
+            pcd = busqueda.cleaned_data
+            p_cedula = pcd['cedula']
+            p_nombres = pcd['nombres']
+            p_apellidos = pcd['apellidos']
+
+            if len(p_cedula) > 0:
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula)
+                if len(pacientes) > 0:
+                    for p in pacientes:
+                        resultados.append(p)
+            else:
+                if len(p_nombres) > 0 and len(p_apellidos) > 0:
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos)
+                    if len(pacientes) > 0:
+                        for p in pacientes:
+                            resultados.append(p)
+                elif len(p_apellidos) == 0:
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres)
+                    if pacientes:
+                        for p in pacientes:
+                            resultados.append(p)
+                elif len(p_nombres) == 0:
+                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos)
+                    if pacientes:
+                        for p in pacientes:
+                            resultados.append(p)
+            lista = []
+            for p in resultados:
+                emergencias = Emergencia.objects.filter(paciente=p,
+                                                        triage__isnull = False) \
+                                                        .distinct() \
+                                                        .order_by('hora_ingreso')              
+                for e in emergencias:
+                    lista.append(e)
+                    
+        info = {'form':form,'lista':lista,'titulo':titulo}
+        return render_to_response('listaC.html',info,context_instance=RequestContext(request))
+    else:
+        busqueda = BuscarEmergenciaForm()
+    
+    info = {'form':form,'busqueda':busqueda,'titulo':titulo,'boton':boton}
+    return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
 def emergencia_listar_observacion(request, mensaje = ''):
   emergencias = Emergencia \
