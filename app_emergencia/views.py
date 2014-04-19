@@ -19,6 +19,7 @@ from datetime import datetime, date, timedelta
 from models import *
 from forms import *
 from app_usuario.forms import *
+from app_usuario.models import *
 
 # Estadisticas
 from django.db.models import Count
@@ -35,14 +36,19 @@ from django.db import transaction
 
 #####################################################
 #Imports Atencion
-import ho.pisa as pisa
-import cStringIO as StringIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.platypus import Table, TableStyle
+from reportlab.platypus.flowables import *
+from reportlab.lib.colors import pink, black, red, lightblue, white
+
 import cgi
 import json
 from django.template.loader import render_to_string
 from app_enfermedad.models import *
 from app_paciente.models import *
 from itertools import izip
+from app_emergencia.pdf import *
 ######################################################
 
     
@@ -426,6 +432,48 @@ def emergencia_aplicarTriage(request, idE, vTriage):
 	triage.save()
 	return redirect('/emergencia/listar/todas')
 
+	
+@login_required(login_url='/')
+def actualizarSignos(request,idE):
+	emergencia = get_object_or_404(Emergencia, id = idE)
+	triage = get_object_or_404(Triage, emergencia = emergencia)
+	
+	if request.method == 'POST':
+		form = ActualizarSignosForm(request.POST)
+		if form.is_valid():
+			data  = form.cleaned_data
+
+			avpus = data['avpu']
+			fc    = data['frecuencia_cardiaca']
+			fr    = data['frecuencia_respiratoria']
+			ps	  = data['presion_sistolica']
+			pd    = data['presion_diastolica']
+			so	  = data['saturacion_oxigeno']
+			temp  = data['temperatura']
+			
+			triage.signos_avpu  = avpus
+			triage.signos_fc    = fc
+			triage.signos_fr    = fr
+			triage.signos_pa    = ps
+			triage.signos_pb	= pd
+			triage.signos_saod  = so
+			triage.signos_tmp   = temp
+			
+			triage.save()
+		else:
+			info = {'form':form,'emergencia':emergencia,'triage':triage}
+			return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
+	else:
+		form = ActualizarSignosForm()
+		info = {'form':form,'emergencia':emergencia,'triage':triage}
+		return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
+	
+	info = {'form':form,'emergencia':emergencia,'triage':triage}
+	return render_to_response('atencion.html',info,context_instance = RequestContext(request))		
+	
+	
+	
+		
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
   mensaje = ""
@@ -882,53 +930,22 @@ def emergencia_tiene_cubiculo(request,id_emergencia):
 # A cada una le paso el id de emergencia para mantener la 
 # informacion constante en el sidebar izquierdo
 
-#----------------------------------------------------- Funciones para generar Pdfs
-def generar_pdf(html):
-    result = StringIO.StringIO()
-    pdf    = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), mimetype='application/pdf')
-    return HttpResponse('Error al generar el PDF: %s' % cgi.escape(html))
-
 def emergencia_descarga(request,id_emergencia,tipo_doc):
     emer  = get_object_or_404(Emergencia,id=id_emergencia)
     ingreso = datetime.now()
     atList = Atencion.objects.filter(emergencia=id_emergencia)
     atList2=atList[0]
-    diags = EstablecerDiag.objects.filter(atencion=atList2)
+    diags = Diagnostico.objects.filter(atencion=atList2)
     medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
     
-    # TERMINAR CONSULTAS PARA INGRESAR AL CONTEXTO
     if tipo_doc == 'historia':
-        # Faltan consultas:
-        triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
-        triage2=triage[0]
-
-
-        dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-        dieta2 = dieta[0]
-
-        # enfA = get_object_or_404(EnfermedadActual, atencion=atList[0].id)
-        enfA = EnfermedadActual.objects.get(atencion=atList[0].id)
-        print "Triage en descarga",triage2
-        ctx  = {'emergencia':emer,'ingreso':ingreso,'triage':triage2,'atencion':atList2,'enfA':enfA,'diags':diags,'dieta':dieta2,'medicamento':medicamento}
-        html = render_to_string('historia_med.html',ctx, context_instance=RequestContext(request))
-    
+        return historia_med_pdf(request, id_emergencia)
     elif tipo_doc == 'constancia':
-        dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-        dieta2 = dieta[0]
-        print "Dietas en descarga:",dieta
-        print"Medicamcion en descarga",medicamento
-        info = {'ingreso':ingreso,'emergencia':emer,'diags':diags,'dieta':dieta2,'medicamento':medicamento}
-        html = render_to_string('const_asist.html',info, context_instance=RequestContext(request))
-    
+        return constancia_pdf(request, id_emergencia)
     elif tipo_doc == 'reportInd':
-        indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
-        ctx  = {'emergencia':emer,'indicaciones':indicaciones,'ingreso':ingreso}
-        html = render_to_string('reporte_ind.html',ctx, context_instance=RequestContext(request))
-    return generar_pdf(html)
+        return indicaciones_pdf(request, id_emergencia)
 
-#----------------------------------Gestion de Enfermedad Actual
+
 @login_required(login_url='/')
 def emergencia_enfermedad_actual(request,id_emergencia):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
@@ -1005,16 +1022,16 @@ def emergencia_atencion(request,id_emergencia,tipo):
 		  
       elif tipo == "historia":
 	      # Operaciones para determinar si se muestran los botones de descarga
-          historia_medica = False
-          constancia = False
+          historia_medica = True
+          constancia = True
           indicaciones = False
 
           if len(atList)>0:
             medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
-            diags = EstablecerDiag.objects.filter(atencion = atList[0])
+            diags = Diagnostico.objects.filter(atencion = atList[0])
             enfA = EnfermedadActual.objects.filter(atencion = atList[0].id)
             dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-            indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
+            indic = Asignar.objects.filter(emergencia = id_emergencia)
 			 
             if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(dieta)>0:
               historia_medica = True
@@ -1022,7 +1039,7 @@ def emergencia_atencion(request,id_emergencia,tipo):
             if len(medicamento)>0 and len(diags)>0 and len(dieta)>0:
               constancia = True
 			 
-            if len(indicaciones)>0:
+            if len(indic)>0:
               indicaciones = True
 			 
           ctx = {'emergencia':emer,'triage':triage,'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
@@ -1530,25 +1547,24 @@ def emergencia_indicaciones_agregar(request,id_emergencia,tipo_ind):
     triage = triage[0]
     mensaje = ""
     atencion = Atencion.objects.filter(emergencia= emer)
-    diags = EstablecerDiag.objects.filter(atencion=atencion[0])
     
     if request.method == 'POST':
         if tipo_ind == 'diagnostico':
+            diags = Diagnostico.objects.filter(atencion=atencion[0])
             diagnostico  = request.POST.getlist('nuevoDiag')
             #Consulta diagnosticos:
             ver = range(len(diagnostico)-1)
             for i in ver:
                 # Condicional para saber si existen los diagnosticos:
-                diagnosticoQ = Diagnostico.objects.filter(establecerdiag__atencion = atencion[0],establecerdiag__diagnostico__nombreD = diagnostico[i])
+                enfermedad = Enfermedad.objects.get(id=diagnostico[i])
+                diagnosticoQ = Diagnostico.objects.filter(atencion = atencion[0],enfermedad = enfermedad)
                 if diagnosticoQ:
-                    mensaje = "Hay Diagnosticos con este nombre: "+diagnosticoQ[0].nombreD
+                    mensaje = "Hay Diagnosticos con este nombre: "+ diagnosticoQ[0].enfermedad.descripcion
                     info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
                     return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
                 else:
-                    diag = Diagnostico(nombreD=diagnostico[i])
+                    diag = Diagnostico(atencion = atencion[0],enfermedad = enfermedad)
                     diag.save()
-                    est_Diag = EstablecerDiag(atencion=atencion[0],diagnostico=diag,fecha=datetime.now(),fechaReal=datetime.now())
-                    est_Diag.save()
             mensaje = "Diagnosticos guardados Exitosamente"
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
             return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
@@ -1646,10 +1662,10 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
         if tipo_ind == "diagnostico":
             # obj tiene el id de la relacion
             for obj in checkes:
-                relDiag = EstablecerDiag.objects.get(id=obj)
+                relDiag = Diagnostico.objects.get(id=obj)
                 # Borro ese objeto:
                 relDiag.delete()
-                diags = EstablecerDiag.objects.filter(atencion=atencion[0])
+                diags = Diagnostico.objects.filter(atencion=atencion[0])
             mensaje = "Diagnosticos eliminado Exitosamente"
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
             return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
@@ -1679,18 +1695,14 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
 
     if tipo_ind =="diagnostico":
         at = Atencion.objects.filter(emergencia=id_emergencia)
-        diags = EstablecerDiag.objects.filter(atencion=at[0])
-        for da in diags:
-            # No verifica si nombre ya existe:
-            da.diagnostico.nombreD = request.POST[str(da.id)+"nombre"]
-            d= Diagnostico.objects.get(id = da.diagnostico.id)
-            d.nombreD = request.POST[str(da.id)+"nombre"]
-            d.save()
-            da.save()
+        diags = Diagnostico.objects.filter(atencion=at[0])
+        for d in diags:
+            enfermedad = Enfermedad.objects.get(id = request.POST[str(d.id)+"nombre"])			
+            d.enfermedad = enfermedad
+            d.save()			
             
-        diagsN = EstablecerDiag.objects.filter(atencion=at[0])
         mensaje = " Modificado Exitosamente "
-        info = {'mensaje':mensaje, 'emergencia':emer,'diags':diagsN, 'tipo_ind':tipo_ind}
+        info = {'mensaje':mensaje, 'emergencia':emer,'diags':diags, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
 
     elif tipo_ind == 'valora' or tipo_ind == 'otros' or tipo_ind == 'terapeutico':
@@ -1740,7 +1752,7 @@ def emergencia_diagnostico(request,id_emergencia):
     triage = triage[0]
     tipo_ind = 'diagnostico'
     at = Atencion.objects.filter(emergencia=id_emergencia)
-    diags = EstablecerDiag.objects.filter(atencion=at[0])
+    diags = Diagnostico.objects.filter(atencion=at[0])
     mensaje = ""
     info = {'mensaje':mensaje, 'emergencia':emer,'triage':triage,'diags':diags,'tipo_ind':tipo_ind}
     return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))

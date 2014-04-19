@@ -14,8 +14,8 @@ from datetime import datetime
 from app_emergencia.forms import *
 
 # PDF
-import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
+from app_emergencia.pdf import *
 import cgi
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -41,28 +41,4 @@ def paciente_perfil(request,idP):
 
 @login_required(login_url='/')
 def reporte_triage(request,idP):
-    p = get_object_or_404(Paciente,pk=idP)
-    ea = Emergencia.objects.filter(paciente=p)
-    ea = ea[len(ea)-1]  #obtengo la ultima posicion de la lista, es el triage mas reciente
-    es = Emergencia.objects.filter(paciente=p) #lista de emergencias del paciente
-    
-    print "\n\n\nREPORTE \n\n\n"
-    print str(es) + "\n"
-    print str(ea.triage) + "\n"
-
-    info = {'p':p,'ea':ea}
-    html = render_to_string('reporteTriage.html',info, context_instance=RequestContext(request))
-    response = HttpResponse(content_type='application/pdf')
-    return generar_pdf(html)
-
-def generar_pdf(html):
-    result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result, encoding='UTF-8')
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), mimetype='application/pdf')
-    return HttpResponse('Error al generar el PDF: %s' % cgi.escape(html))
-
-def get_full_path_x(request):
-    full_path = ('http', ('', 's')[request.is_secure()], '://',
-    request.META['HTTP_HOST'], request.path)
-    return ''.join(full_path) 
+    return reporte_triage_pdf(request, idP)

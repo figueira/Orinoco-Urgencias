@@ -46,25 +46,25 @@
 
 /* atencion_ant_medica */
 
-#div_de_tabla_atecedente{
+#div_de_tabla_hist_med{
 	height:auto;
 	width: 580px;
 	margin-top: 40px;
 	OVERFLOW: auto;
 }
 
-#tabla_antecedente td{
+#tabla_hist_med td{
 	text-align:center;
 	vertical-align:middle;
 	padding-top: 10px;
 	padding-bottom: 2px;
 }
 
-#tabla_antecedente td:first-child{
+#tabla_hist_med td:first-child{
 	padding-top: 0;
 }
 
-#tabla_antecedente input[type="text"] {
+#tabla_hist_med input[type="text"] {
     width: 90%;
 }
 

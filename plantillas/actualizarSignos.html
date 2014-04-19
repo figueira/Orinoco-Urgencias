@@ -1,0 +1,128 @@
+{% extends "base.html" %} 
+{% block cuerpo %}
+
+  <script>
+    $(document).ready(function () {
+      var emer = '{{emergencia.id}}';
+      loadAtencion(emer);
+      $("[rel='tooltip']").tooltip();
+    });
+  </script>
+  
+  
+  <div class="centrar">
+    <div class="cuadroGrande">
+      <center>
+        <h3>
+          Actualizar Signos 
+        </h3>
+        
+        <form class="tablaAgregar" 
+              method="post"
+              action="/emergencia/{{emergencia.id}}/actualizarSig">
+          {% csrf_token %}
+         
+          <table>         
+            <tr>
+              <td><font size=5><B> Paciente </B></font></td>
+              <td></td>
+				<td>
+					<font size=4 style="text-transform: uppercase;">
+						<strong>{{emergencia.paciente.nombres}}</strong></font>
+					<font size=4 style="text-transform: uppercase;">
+						<strong>{{emergencia.paciente.apellidos}}</strong></font>
+				</td>
+            </tr>
+            <tr> <br><br> <td> <br><br> </td> </tr>
+		
+			<tr>
+				<td>Avpu</td>
+				<td></td>
+				<td><input type="text" name="avpu" value="{{triage.signos_avpu}}"/></td>
+				<td>
+				
+					<span class="msj-error"> 
+						<font color="red">{{form.avpu.errors}}</font>
+					</span>
+				
+			</tr>
+      
+            <tr>
+				<td>Frecuencia Card&iacute;aca  (ppm)</td>
+				<td></td>
+				<td><input type="text" name="frecuencia_cardiaca" value="{{triage.signos_fc}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.frecuencia_cardiaca.errors}}</font>
+					</span>
+				</td>
+            </tr>
+            
+            <tr>
+				<td>Frecuencia Respiratoria  (ppm)</td>
+				<td></td>
+				<td><input type="text" name="frecuencia_respiratoria" value="{{triage.signos_fr}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.frecuencia_respiratoria.errors}}</font> 
+					</span>
+				</td>
+            </tr>                                                                             
+            
+			<tr>
+				<td>Presi&oacute;n Sist&oacute;lica (mmHg)</td>
+				<td></td>
+				<td><input type="text" name="presion_sistolica" value="{{triage.signos_pa}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.presion_sistolica.errors}}</font>
+					</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>Presi&oacute; Diast&oacute;lica  (mmHg)</td>
+				<td></td>
+				<td><input type="text" name="presion_diastolica" value="{{triage.signos_pb}}"/></td>
+				<td>
+					<span class="msj-error">
+						<font color="red">{{form.presion_diastolica.errors}}</font> 
+					</span>
+				</td>
+			</tr>  
+			
+			<tr>
+				<td>Saturaci&oacute;n de Ox&iacute;geno  (%)</td>
+				<td></td>
+				<td><input type="text" name="saturacion_oxigeno" value="{{triage.signos_saod}}"/></td>
+				<td>
+					<span class="msj-error">
+						<font color="red">{{form.saturacion_oxigeno.errors}}</font>
+					</span>
+				</td>
+			</tr>
+            
+            <tr>
+				<td>Temperatura (°C)</td>
+				<td></td>
+				<td><input type="text" name="temperatura" value="{{triage.signos_tmp}}"/></td> 
+				<td>
+					<span class="msj-error">
+						<font color="red">{{form.temperatura.errors}}</font>
+					</span>
+				</td>
+			</tr>
+            
+            
+            <tr>
+              <td></td>
+              <td>
+                <input class="btn btn-primary" type="submit" value="Guardar" />
+              </td>
+            </tr>
+          </table>
+        </form>
+    </div>
+  </div> 
+  
+{% endblock %}
