@@ -1085,6 +1085,8 @@ def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     paci    = Paciente.objects.get(emergencia__id=id_emergencia)
     triage  = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage  = triage[0]
+    vacio   = ""
+    
     if request.method == 'POST':
         nombres  = request.POST.getlist('nuevoNombre')
         fechas   = request.POST.getlist('nuevoFecha')
@@ -1109,8 +1111,14 @@ def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
                     lugar.save()
                     lugarperte = LugarPertenencia(lugar=lugar,pertenencia=pertenece)
                     lugarperte.save()
+                    
+    antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
+    
+    if antecedentes:
+		vacio = "no"
+                    
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
-    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant}
+    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
 
 
@@ -1119,6 +1127,7 @@ def emergencia_antecedentes_modificar(request,id_emergencia,tipo_ant):
     paci         = Paciente.objects.get(emergencia__id=id_emergencia)
     triage       = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage       = triage[0]
+    
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
     for ant in antecedentes:
         ant.nombre = request.POST[str(ant.id)+"nombre"]
@@ -1141,8 +1150,12 @@ def emergencia_antecedentes_modificar(request,id_emergencia,tipo_ant):
                     lugar[0].nombre = request.POST[str(ant.id)+"atributo3"]
                     lugar[0].save()
         ant.save()
+        
+    if antecedentes:
+		vacio ="no"
+    
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
-    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant}
+    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
 
 def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
@@ -1150,7 +1163,7 @@ def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
     paci   = Paciente.objects.get(emergencia__id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage = triage[0]
-    antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
+    
     if request.method == 'POST':
         checkes = request.POST.getlist(u'check')
         for id_ant in checkes:
@@ -1173,8 +1186,13 @@ def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
                     tratamientoPert.delete() 					
             pertenece.delete()
             ant.delete();
+    
+    antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
+    if antecedentes:
+		vacio = "no" 
+    
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
-    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant}
+    ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
 
 
@@ -1194,9 +1212,14 @@ def emergencia_antecedentes_tipo(request,id_emergencia,tipo_ant):
     paci         = Paciente.objects.get(emergencia__id=id_emergencia)
     triage       = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage       = triage[0]
+    vacio = ""
     pertenece    = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
-    ctx = {'emergencia':emer,'triage':triage,'antecedentes':antecedentes,'pertenece':pertenece,'tipo_ant':tipo_ant}
+    
+    if antecedentes:
+		vacio = "no"
+    
+    ctx = {'emergencia':emer,'triage':triage,'antecedentes':antecedentes,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
 
 
