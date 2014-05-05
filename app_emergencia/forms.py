@@ -59,7 +59,7 @@ class FormularioEvaluacionPaciente(forms.Form):
                                        {'placeholder':'dd/MM/aaaa hh:mm:ss',
                                         'data-format':'dd/MM/yyyy hh:mm:ss',
                                         'class':'span2'}))
-    frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
+    frecuencia_cardiaca = forms.IntegerField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
     frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria",min_value=0,max_value=30)
 
     ingreso = forms.CharField(label = "Tipo de ingreso",
@@ -75,7 +75,7 @@ class FormularioEvaluacionPaciente(forms.Form):
                                                  nombre__startswith = " "))
     presion_sistolica = forms.IntegerField(label = "Presión sistólica",min_value=0,max_value=300)
     presion_diastolica = forms.IntegerField(label = "Presión diastólica",min_value=0,max_value=200)
-    saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno",min_value=0,max_value=100)
+    saturacion_oxigeno = forms.IntegerField(label = "Saturación de oxígeno",min_value=0,max_value=100)
     temperatura = forms.FloatField(min_value=0)
 
     # Validaciones perzonalizadas sobre los campos del formulario
@@ -113,14 +113,14 @@ class FormularioEvaluacionPaciente(forms.Form):
                                     ' y ' + str(limite_superior))
 
                                     
-class ActualizarSignosForm(forms.Form):
-	
+class ActualizarSignosForm(forms.Form):	
 	avpu = forms.CharField(label = "Escala AVPU",widget = forms.RadioSelect(choices = AVPU))
-	frecuencia_cardiaca = forms.FloatField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
+	frecuencia_cardiaca = forms.IntegerField(label = "Frecuencia cardíaca",min_value=0,max_value=200)
 	frecuencia_respiratoria = forms.IntegerField(label = "Frecuencia respiratoria",min_value=0,max_value=30)
+	intensidad_dolor = forms.IntegerField(label = "Intensidad del dolor",widget = forms.Select(choices = EDOLOR))
 	presion_sistolica = forms.IntegerField(label = "Presión sistólica",min_value=0,max_value=300)
 	presion_diastolica = forms.IntegerField(label = "Presión diastólica",min_value=0,max_value=200)
-	saturacion_oxigeno = forms.FloatField(label = "Saturación de oxígeno",min_value=0,max_value=100)
+	saturacion_oxigeno = forms.IntegerField(label = "Saturación de oxígeno",min_value=0,max_value=100)
 	temperatura = forms.FloatField(min_value=0, max_value=45)
                                     
 	# Validaciones perzonalizadas sobre los campos del formulario

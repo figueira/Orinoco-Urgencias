@@ -61,10 +61,6 @@ def historia_med_pdf(request, id_emergencia):
   datos = "Paciente: " + emer.paciente.apellidos +", " +emer.paciente.nombres + ", C.I. "+ emer.paciente.cedula 
   c.drawString(200, 9.4*inch, datos)
   c.drawString(200, 9.2*inch, "Edad: " + str(emer.paciente.edad()))
-  c.drawString(200, 9*inch, "Direccion:" + emer.paciente.direccion)
-  c.drawString(200, 8.8*inch, "Tel.: " + str(emer.paciente.tlf_casa)) 
-  c.drawString(200, 8.6*inch, "Email: " + str(emer.paciente.email))
-  c.drawString(200, 8.4*inch, "Persona de Contacto: " + str(emer.paciente.contacto_nom))
   
   #Consultas necesarias para la historia medica
   ingreso = datetime.now()
@@ -165,7 +161,7 @@ def historia_med_pdf(request, id_emergencia):
 
   i = i - 0.4 
   for d in diags:
-    c.drawString(-0.01*inch,i*inch, d.diagnostico.nombreD)
+    c.drawString(-0.01*inch,i*inch, d.enfermedad.descripcion)
     i = i - 0.2
 
   # Close the PDF object cleanly, and we're done.
@@ -195,18 +191,17 @@ def constancia_pdf(request, id_emergencia):
 
 
   c.setFont("Helvetica", 12)
-  c.drawString(0.4*inch,8*inch,"Se hace constar que el paciente "+ emer.paciente.nombres + " " + emer.paciente.apellidos + ", ")
-  c.drawString(0.4*inch, 7.8*inch, "de C.I.N. " + str(emer.paciente.cedula) + ", y " + str(emer.paciente.edad()) + " años de edad")
-  c.drawString(3.4*inch, 7.8*inch, "asistio a este centro el dia de hoy")
-  i = 7.6
+  c.drawString(0.6*inch, 8*inch," Por medio de la presente se hace constar que el paciente "+ emer.paciente.nombres )
+  c.drawString(0.4*inch, 7.8*inch, emer.paciente.apellidos + ", titular de la cedula de identidad " + str(emer.paciente.cedula) + ", acudio al Centro Medico de")
+  c.drawString(0.4*inch, 7.6*inch, "Caracas el dia de hoy al presentar: ")
+  i = 7.4
   if diags:
-    c.drawString(0.4*inch, i*inch,"por presentar: ")
     for d in diags:
       if d:
         i = i-0.2
-        c.drawString(0.4*inch, i*inch,d.diagnostico.nombreD)
+        c.drawString(0.6*inch, i*inch,d.enfermedad.descripcion)
 
-  c.drawString(0.4*inch, (i-0.2)*inch,"Se le indico tratamiento medico ambulatorio")
+ # c.drawString(0.4*inch, (i-0.4)*inch,"Se le indico tratamiento medico ambulatorio")
   if triage.fechaR == None:
     c.drawString(0.4*inch, (i-0.6)*inch, "Fecha: " +str(datetime.now().strftime("%d/%m/%y a las %H:%M:%S")))
   else:
@@ -273,11 +268,11 @@ def indicaciones_pdf(request, id_emergencia):
   data.append(status)
   data = zip(*data)
   table=Table(data, colWidths=2.25*inch, rowHeights=20)
-  table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-1),lightblue), ('ALIGN',(0,0),(-1,-1),'CENTER'),
+  table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-len(tipos)),lightblue), ('ALIGN',(0,0),(-1,-1),'CENTER'),
     ('INNERGRID', (0,0), (-1,-1), 0.25, black), ('BOX', (0,0), (-1,-1), 0.25, black),
     ('FONTSIZE', (0,0), (-1,-len(tipos)), 14)]))
   table.wrapOn(c, 200, 400)
-  table.drawOn(c,-0.2*inch,4*inch)
+  table.drawOn(c,-0.2*inch,6*inch)
 
   c.showPage()
   c.save()
@@ -297,101 +292,45 @@ def reporte_triage_pdf(request, idP):
   emer = emer[len(emer)-1]  #obtengo la ultima posicion de la lista, es el triage mas reciente
   es = Emergencia.objects.filter(paciente=p) #lista de emergencias del paciente
   triage = emer.triages()
-  header_pdf(c, "Reporte de", "Triage")
-
-  c.setFont("Helvetica", 8)
-  datos = "Paciente: " + emer.paciente.apellidos +", " +emer.paciente.nombres + ", C.I. "+ emer.paciente.cedula 
-  c.drawString(200, 9.4*inch, datos)
-  c.drawString(200, 9.2*inch, "Edad: " + str(emer.paciente.edad()))
-  if not emer.paciente.direccion:
-    c.drawString(200, 9*inch, "Direccion: Sin especificar")  
-  else:
-    c.drawString(200, 9*inch, "Direccion:" + emer.paciente.direccion)
-  if not emer.paciente.tlf_casa:
-    c.drawString(200, 8.8*inch, "Tel.: Sin especificar")  
-  else:
-    c.drawString(200, 8.8*inch, "Tel.: " + str(emer.paciente.tlf_casa)) 
-  if not emer.paciente.email:
-    c.drawString(200, 8.6*inch, "Email: Sin especificar")  
-  else:
-    c.drawString(200, 8.6*inch, "Email: " + str(emer.paciente.email))
-  if not emer.paciente.contacto_nom:
-    c.drawString(200, 8.4*inch, "Persona de Contacto: Sin especificar")  
-  else:
-    c.drawString(200, 8.4*inch, "Persona de Contacto: " + str(emer.paciente.contacto_nom))
-
-
-# choose some colors
-  c.setStrokeColor(lightblue)                  #borde del rectangulo
-  c.setFillColor(lightblue)                         #color de fondo
-  # draw a rectangle
-  c.rect(-inch,7.5*inch,6*inch,0.3*inch, fill=1)
-  c.setFillColor(black)
-  c.setFont("Helvetica", 14 )
-  c.drawString(0.5*inch, 7.6*inch, "Modulo de Triage")
-
-  i = 7
+  header_pdf(c, "Evaluación de", "Triage")
   t = triage[len(triage)-1]
+  
+  i = 8  
   c.setFont("Helvetica", 14)
-
-
-  c.drawString(inch, (i+0.1)*inch, "NIVEL" )
-  if t.nivel == 1:
-    c.drawInlineImage("static/img/estados/nivel1.png", 1.8*inch,i*inch, width=20, height=30)
-  elif t.nivel == 2:
-    c.drawInlineImage("static/img/estados/nivel2.png", 1.8*inch,i*inch, width=20, height=30)
-  elif t.nivel == 3:
-    c.drawInlineImage("static/img/estados/nivel3.png", 1.8*inch,i*inch, width=20, height=30)
-  elif t.nivel == 4:
-    c.drawInlineImage("static/img/estados/nivel4.png", 1.8*inch,i*inch, width=20, height=30)
-  elif t.nivel == 5:
-    c.drawInlineImage("static/img/estados/nivel5.png", 1.8*inch,i*inch, width=20, height=30)
-
-  k = i
-  i = i -0.2    
+  c.drawString(-0.3*inch, i*inch, "Datos de Identificación" )
+  c.drawString(3.5*inch, i*inch, "Signos Vitales ")
+    
   c.setFont("Helvetica", 10)
-  c.drawString(-0.3*inch, i*inch, "El Paciente requiere atencion inmediata: ")
-  j = i
-  if t.atencion :
-    c.drawString(2.5*inch, i*inch, "Si")
-  else:
-    c.drawString(2.5*inch, i*inch, "No")
-  i = i - 0.2
-  c.drawString(-0.3*inch, i*inch, "El Paciente puede esperar: ")
-  if t.esperar:
-    c.drawString(2.5*inch, i*inch, "Si")
-  else:
-    c.drawString(2.5*inch, i*inch, "No")
+  i = i-0.3 
+  c.drawString(-0.3*inch, i*inch, "Nombre:  " + emer.paciente.apellidos +", " +emer.paciente.nombres )
+  i = i-0.2 
+  c.drawString(-0.3*inch, i*inch, "C.I.:  "+ emer.paciente.cedula )
+  i = i-0.2 
+  c.drawString(-0.3*inch, i*inch, "Sexo:  "+ emer.paciente.sexoR() )
+  i = i-0.2 
+  c.drawString(-0.3*inch, i*inch, "Edad:  " + str(emer.paciente.edad()))
+  i = i-0.5 
+  c.drawString(-0.3*inch, i*inch, "NIVEL DE TRIAGE:  " + str(t.nivel))
+  
+  i = 8 -0.3 
+  c.drawString(3.5*inch, i*inch, "Temperatura:  " + str(t.signos_tmp) + " °C")
   i = i -0.2
-  c.drawString(-0.3*inch, i*inch, "Recursos que necesita: " + str(t.recursos))
+  c.drawString(3.5*inch, i*inch, "Tensión Arterial:  " + str(t.signos_pb) + " / " + str(t.signos_pa) + " mmHg")
   i = i -0.2
-  c.drawString(-0.3*inch, i*inch, "Motivo de Ingreso: " + str(t.motivo))
-  c.setFont("Helvetica", 14)
-  c.drawString(3.7*inch, (k+0.1)*inch, "Signos Vitales ")
-  i = j
-  c.setFont("Helvetica", 10)
-
-  c.drawString(3.5*inch, i*inch, "Temperatura: " + str(t.signos_tmp) + "° centigrados")
+  c.drawString(3.5*inch, i*inch, "Frecuencia Cardíaca:  " + str(t.signos_fc) + " ppm") 
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Cardíaca: " + str(t.signos_fc) + " por minuto") 
+  c.drawString(3.5*inch, i*inch, "Frecuencia Respiración:  " + str(t.signos_fr) + " ppm") 
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Respiratoria: " + str(t.signos_fr) + " por minuto") 
+  c.drawString(3.5*inch, i*inch, "Saturación Oxígeno:  " + str(t.signos_saod) + " %")
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Presion Sistolica: " + str(t.signos_pa) + " mmHg")
+  c.drawString(3.5*inch, i*inch, "AVPU:  " + str(t.signos_avpu))
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Presion Diastolica: " + str(t.signos_pb) + " mmHg")
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Sturacion de Oxigeno: " + str(t.signos_saod) + "%")
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Escala AVPU: " + str(t.signos_avpu))
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Dolor: " + str(t.signos_dolor))
+  c.drawString(3.5*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
+  
   i = i -0.4
-
-  c.drawString(-0.3*inch, (i-0.2)*inch, "Atendido el " + str(t.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")))
-  c.drawString(-0.3*inch, (i-0.6)*inch, "Medico Responsable: ")
-  c.drawString(-0.1*inch, (i-0.8)*inch,  t.medico.last_name + ", " + t.medico.first_name)
-  c.drawString(-0.1*inch, (i-1)*inch,  "C.I.N. " + str(t.medico.cedula))
+  c.drawString(-0.3*inch, i*inch, "Atendido:  " + str(t.fechaReal.strftime("%d/%m/%y a las %H:%M")))
+  c.drawString(3.5*inch, i*inch, "Medico: " + t.medico.last_name + ", " + t.medico.first_name)
+  
   c.showPage()
   c.save()
   return response

@@ -326,11 +326,11 @@ class Triage(models.Model):
   
   # Valores a tomar
   signos_tmp   = models.FloatField(default=0,blank=True)
-  signos_fc    = models.FloatField(default=0,blank=True)
+  signos_fc    = models.IntegerField(default=0,blank=True)
   signos_fr    = models.IntegerField(default=0,blank=True)
   signos_pa    = models.IntegerField(default=0,blank=True)
   signos_pb    = models.IntegerField(default=0,blank=True)
-  signos_saod  = models.FloatField(default=0,blank=True)
+  signos_saod  = models.IntegerField(default=0,blank=True)
 
   # Otros Datos Importantes
   signos_avpu  = models.CharField(max_length=1,blank=True)

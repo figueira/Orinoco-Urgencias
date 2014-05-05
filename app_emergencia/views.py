@@ -181,7 +181,7 @@ def emergencia_listar_clasificados(request):
   emergencias = Emergencia.objects \
                           .filter(hora_egreso = None,
                                   triage__isnull = False,
-                                  atencion__isnull = True) \
+                                  asignarcub__isnull = True) \
                           .distinct() \
                           .order_by('hora_ingreso')
   form = IniciarSesionForm()
@@ -197,8 +197,29 @@ def emergencia_listar_clasificados(request):
                             info,
                             context_instance = RequestContext(request))
 
-def emergencia_buscar_historia_medica(request, mensaje):
-    mensaje = ""
+							
+def emergencia_listar_atencion(request):
+  emergencias = Emergencia.objects \
+                          .filter(hora_egreso = None,
+                                  triage__isnull = False,
+                                  asignarcub__isnull = False) \
+                          .distinct() \
+                          .order_by('hora_ingreso')
+  form = IniciarSesionForm()
+  titulo = "Clasificados"
+  buscar_enfermedad = False
+  cubiculos = Cubiculo.objects.all()
+  info = {'emergencias': emergencias,
+          'form': form, 
+          'titulo': titulo,
+          'cubiculos': cubiculos,
+          'buscadorDeEnfermedad': buscar_enfermedad }
+  return render_to_response('lista.html',
+                            info,
+                            context_instance = RequestContext(request))
+							
+
+def emergencia_buscar_historia_medica(request):
     titulo = "Búsqueda de Pacientes"
     boton = "Buscar"
     info = {}
@@ -254,8 +275,7 @@ def emergencia_listar_observacion(request, mensaje = ''):
   emergencias = Emergencia \
                 .objects \
                 .filter(hora_egreso = None,
-                        asignarcub__cubiculo__area__nombre__icontains =
-                          'observación') \
+                        triage__nivel__range = [1,3]) \
                 .order_by('hora_ingreso')
   form = IniciarSesionForm()
   titulo = "Observación"
@@ -275,8 +295,7 @@ def emergencia_listar_ambulatoria(request, mensaje = ''):
   emergencias = Emergencia \
                 .objects \
                 .filter(hora_egreso = None,
-                        asignarcub__cubiculo__area__nombre__icontains =
-                          'ambulatoria') \
+                        triage__nivel__range = [4,5]) \
                 .order_by('hora_ingreso')
   form = IniciarSesionForm()
   titulo = "Ambulatorio"
@@ -484,6 +503,7 @@ def actualizarSignos(request,idE):
 			pd    = data['presion_diastolica']
 			so	  = data['saturacion_oxigeno']
 			temp  = data['temperatura']
+			dolor = data['intensidad_dolor']
 			
 			triage.signos_avpu  = avpus
 			triage.signos_fc    = fc
@@ -492,6 +512,7 @@ def actualizarSignos(request,idE):
 			triage.signos_pb	= pd
 			triage.signos_saod  = so
 			triage.signos_tmp   = temp
+			triage.signos_dolor = dolor
 			
 			triage.save()
 		else:
@@ -1056,17 +1077,22 @@ def emergencia_atencion(request,id_emergencia,tipo):
 		  
       elif tipo == "historia":
 	      # Operaciones para determinar si se muestran los botones de descarga
-          historia_medica = True
-          constancia = True
+          historia_medica = False
+          constancia = False
           indicaciones = False
 
           if len(atList)>0:
             medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
-            diags = Diagnostico.objects.filter(atencion = atList[0])
-            enfA = EnfermedadActual.objects.filter(atencion = atList[0].id)
+            diags = Diagnostico.objects.filter(atencion = atList)
+            enfA = EnfermedadActual.objects.filter(atencion = atList)
             dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
             indic = Asignar.objects.filter(emergencia = id_emergencia)
-			 
+			
+            print len(medicamento)	
+            print len(diags)	
+            print len(enfA)	
+            print len(dieta)	
+			
             if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(dieta)>0:
               historia_medica = True
 			
