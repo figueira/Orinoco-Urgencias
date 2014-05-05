@@ -523,10 +523,7 @@ def actualizarSignos(request,idE):
 		info = {'form':form,'emergencia':emergencia,'triage':triage}
 		return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
 	
-	info = {'form':form,'emergencia':emergencia,'triage':triage}
-	return render_to_response('atencion.html',info,context_instance = RequestContext(request))		
-	
-	
+	return redirect('/emergencia/atencion/'+idE+'/historia')		
 	
 		
 @login_required(login_url='/')
