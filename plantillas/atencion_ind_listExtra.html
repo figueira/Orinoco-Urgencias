@@ -2,8 +2,12 @@
 {% if tipo_ind == 'dieta'%}
   <ul>
     <li>
-      <b>Observaciones: </b> 
-      {{extra.observacion}} 
+      <b>Observaciones: </b>
+      {% if extra.observacion != ''%}
+        {{extra.observacion}}
+      {% else %}
+        Ninguna
+      {% endif %}
     </li>
   </ul>
 {% elif tipo_ind == 'hidrata'%}
@@ -19,8 +23,12 @@
       gotas por segundo
     </li>
     <li>
-      <b>Complementos: </b> 
-      {{extra.complementos}}
+      <b>Complementos: </b>
+      {% if extra.complementos != '' %}
+        {{extra.complementos}}
+      {% else %}
+        Ninguno
+      {% endif %}
     </li>
     {% if extra2 %}
       <li>

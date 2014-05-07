@@ -171,7 +171,7 @@ class AgregarEnfActual(forms.Form):
 # Indicaciones - Dieta
 class AgregarIndDietaForm(forms.Form):
   dieta     = forms.ModelChoiceField(queryset=Indicacion.objects.filter(tipo__iexact="dieta"),widget=forms.RadioSelect())
-  observacion = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows':5, 'cols':500}))
+  observacion = forms.CharField(required=False, widget=forms.widgets.Textarea(attrs={'rows':5, 'cols':500}))
   # observacion = forms.CharField(widget=forms.widgets.Textarea())
   def __init__(self, *args, **kwargs):
     super(AgregarIndDietaForm, self).__init__(*args, **kwargs)
@@ -186,7 +186,7 @@ class AgregarIndHidrataForm(forms.Form):
   combina_sol= forms.ModelChoiceField(label = "Tipo de Solución Adicional:  ",required=False,queryset=Indicacion.objects.filter(tipo__iexact="hidrata"),widget=forms.RadioSelect())
   volumen = forms.FloatField(label = "Volumen:  ",required=False,widget=forms.TextInput(attrs={'class':'span1'}))
   vel_inf = forms.CharField(label = "Velocidad de Infusión:  ",max_length=30,widget=forms.TextInput(attrs={'class':'span1'}))
-  complementos = forms.CharField(label = "Complementos: ",max_length=40,widget=forms.widgets.Textarea(attrs={'rows':2, 'cols':20}))
+  complementos = forms.CharField(label = "Complementos: ", required=False, max_length=40,widget=forms.widgets.Textarea(attrs={'rows':2, 'cols':20}))
   def __init__(self, *args, **kwargs):
     super(AgregarIndHidrataForm, self).__init__(*args, **kwargs)
     self.fields['hidrata'].empty_label = None

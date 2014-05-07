@@ -82,16 +82,16 @@ def usuario_solicitar(request):
             u_email            = pcd['email']
             u_clave            = pcd['clave']
             u_clave0           = pcd['clave0']
-            u_administrador    = pcd['administrador']
+            #u_administrador    = pcd['administrador']
             prueba = Usuario.objects.filter(cedula=u_cedula)
             prueba2 = (u_clave==u_clave0)
             if not prueba:
                 if prueba2:
-		              u = Usuario(username=u_cedula,cedula=u_cedula,first_name=u_nombres,habilitado=False,last_name=u_apellidos,tipo=u_tipo,administrador=u_administrador,sexo=u_sexo,tlf_cel=u_cel,direccion=u_direccion,tlf_casa=u_tlf_casa,email=u_email,password=u_clave)
+		              u = Usuario(username=u_cedula,cedula=u_cedula,first_name=u_nombres,habilitado=False,last_name=u_apellidos,tipo=u_tipo,administrador=False,sexo=u_sexo,tlf_cel=u_cel,direccion=u_direccion,tlf_casa=u_tlf_casa,email=u_email,password=u_clave)
 		              u.is_active = True
 		              u.set_password(u_clave)
-		              if u_administrador == True:
-		                  u.is_staff = True
+		              #if u_administrador == True:
+		              #    u.is_staff = True
 		              u.save() 	
 		              return redirect('/')
                 else:
@@ -109,7 +109,7 @@ def usuario_solicitar(request):
 
 @login_required(login_url='/')
 def usario_listarPendientes(request):    
-    listaP = Usuario.objects.filter(habilitado=False)
+    listaP = Usuario.objects.filter(habilitado=False).order_by('cedula','sexo','tipo','first_name')
     info = {'listaP':listaP} 
     return render_to_response('usuariosPendientes.html',info,context_instance=RequestContext(request))
 
@@ -121,7 +121,7 @@ def usario_listarRechazados(request):
 
 @login_required(login_url='/')
 def usario_listar(request):    
-    listaU = Usuario.objects.filter(habilitado=True)
+    listaU = Usuario.objects.filter(habilitado=True).order_by('cedula','sexo','tipo','first_name')
     info = {'listaU':listaU}
     return render_to_response('listaUsuarios.html',info,context_instance=RequestContext(request))
 
@@ -140,6 +140,18 @@ def usuario_aprobar(request,cedulaU):
 	email = EmailMessage(b'[GenSE] Admin - Activaci\xc3\xb3n de Cuenta', b'Estimado/a {0} {1}, \n\n	La solicitud de cuenta que usted ha realizado para acceder al Sistema de Atenci\xc3\xb3n M\xc3\xa9dica del Centro M\xc3\xa9dico de Caracas ha sido aprobada. Podr\xc3\xa1 disfrutar de los servicios ingresando con su n\xc3\xbamero de c\xc3\xa9dula y su clave. \n\nAtentamente,\nAdministrador del Sistema'.format(usuario.first_name, usuario.last_name), to=[usuario.email]) 
 	email.send()
 	return redirect("/usuario/pendientes")
+
+@login_required(login_url='/')
+def usuario_aprobarAdmin(request,cedulaU):
+    usuario = get_object_or_404(Usuario,cedula=cedulaU)
+    usuario.habilitado = True
+    usuario.administrador = True
+    usuario.is_staff = True
+    usuario.is_active = True
+    usuario.save()
+    email = EmailMessage(b'[GenSE] Admin - Activaci\xc3\xb3n de Cuenta', b'Estimado/a {0} {1}, \n\n La solicitud de cuenta que usted ha realizado para acceder al Sistema de Atenci\xc3\xb3n M\xc3\xa9dica del Centro M\xc3\xa9dico de Caracas ha sido aprobada. Podr\xc3\xa1 disfrutar de los servicios ingresando con su n\xc3\xbamero de c\xc3\xa9dula y su clave. \n\nAtentamente,\nAdministrador del Sistema'.format(usuario.first_name, usuario.last_name), to=[usuario.email]) 
+    email.send()
+    return redirect("/usuario/pendientes")    
 
 @login_required(login_url='/')
 def pendiente_examinar(request,cedulaU):
