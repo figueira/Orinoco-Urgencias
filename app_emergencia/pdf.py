@@ -43,8 +43,8 @@ def header_pdf(c,h1,h2):
   # draw a rectangle
   c.rect(-inch,8.4*inch,3.7*inch,1.1*inch, fill=1)
   c.setFillColor(black)
-  c.drawString(-0.6*inch, 9.1*inch, h1)
-  c.drawString(0.4*inch, 8.7*inch, h2)
+  c.drawString(-0.5*inch, 9.1*inch, h1)
+  c.drawString(0.5*inch, 8.7*inch, h2)
 
 def historia_med_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
@@ -191,25 +191,23 @@ def constancia_pdf(request, id_emergencia):
 
 
   c.setFont("Helvetica", 12)
-  c.drawString(0.6*inch, 8*inch," Por medio de la presente se hace constar que el paciente "+ emer.paciente.nombres )
-  c.drawString(0.4*inch, 7.8*inch, emer.paciente.apellidos + ", titular de la cedula de identidad " + str(emer.paciente.cedula) + ", acudio al Centro Medico de")
-  c.drawString(0.4*inch, 7.6*inch, "Caracas el dia de hoy al presentar: ")
-  i = 7.4
+  c.drawString(0.0*inch, 7.8*inch," Por medio de la presente se hace constar que el paciente "+ emer.paciente.nombres )
+  c.drawString(-0.3*inch, 7.6*inch, emer.paciente.apellidos + ", titular de la cedula de identidad " + str(emer.paciente.cedula) + ", acudio al Centro Medico de")
+  c.drawString(-0.3*inch, 7.4*inch, "Caracas el dia de hoy por presentar: ")
+  i = 7.2
   if diags:
     for d in diags:
       if d:
         i = i-0.2
-        c.drawString(0.6*inch, i*inch,d.enfermedad.descripcion)
+        c.drawString(0.0*inch, i*inch,d.enfermedad.descripcion)
 
- # c.drawString(0.4*inch, (i-0.4)*inch,"Se le indico tratamiento medico ambulatorio")
   if triage.fechaR == None:
-    c.drawString(0.4*inch, (i-0.6)*inch, "Fecha: " +str(datetime.now().strftime("%d/%m/%y a las %H:%M:%S")))
+    c.drawString(-0.3*inch, (i-0.6)*inch, "Caracas, " +str(datetime.now().strftime("%d/%m/%y a las %H:%M")))
   else:
-    c.drawString(0.4*inch, (i-0.6)*inch, "Fecha: " +str(triage.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")))
+    c.drawString(-0.3*inch, (i-0.6)*inch, "Caracas, " +str(triage.fechaReal.strftime("%d/%m/%y a las %H:%M")))
 
-  c.drawString(0.4*inch, (i-1.1)*inch, "Atentamente, ")
-  c.drawString(0.4*inch, (i-1.3)*inch, emer.responsable.last_name + ", " + emer.responsable.first_name)
-  c.drawString(0.4*inch, (i-1.5)*inch, "C.I.N. " + str(emer.responsable.cedula))
+  c.drawString(-0.3*inch, (i-1.1)*inch, "Atentamente, ")
+  c.drawString(-0.3*inch, (i-1.3)*inch, "Dr. " + emer.responsable.first_name + " " + emer.responsable.last_name)
 
   c.showPage()
   c.save()
@@ -228,13 +226,16 @@ def indicaciones_pdf(request, id_emergencia):
   #Consultas necesarias para el reporte de indicaciones
   emer  = get_object_or_404(Emergencia,id=id_emergencia)
   ingreso = datetime.now()
-  indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
+  indicaciones = Asignar.objects.filter(emergencia = id_emergencia).order_by("fechaReal")
 
-  c.setFont("Helvetica", 12)
-  c.drawString(3*inch, 9.3*inch, "Medico Responsable: " + emer.responsable.last_name + ", " + emer.responsable.first_name)
-  c.drawString(3*inch, 9.1*inch, "C.I.N. " + str(emer.responsable.cedula))
-  c.drawString(0.4*inch, 8*inch, "Paciente: " + emer.paciente.apellidos + ", " + emer.paciente.nombres)
-  c.drawString(0.4*inch, 7.8*inch, "C.I.N. " + str(emer.paciente.cedula))
+  c.setFont("Helvetica", 10)
+  c.drawString(3*inch, 9.2*inch, "Paciente: " + emer.paciente.apellidos + ", " + emer.paciente.nombres)
+  c.drawString(3*inch, 9.0*inch, "C.I.: " + str(emer.paciente.cedula))
+  c.drawString(3*inch, 8.6*inch, "Medico: " + emer.responsable.first_name + " " + emer.responsable.last_name)
+  
+  c.setFont("Helvetica-Bold", 14)
+  c.drawString(2.4*inch, 7.8*inch, "INDICACIONES")
+  
 
   data = []
   tipos = ["Tipo"]
@@ -251,14 +252,16 @@ def indicaciones_pdf(request, id_emergencia):
       tipos.append("Diagnostico-Laboratorio")
     elif i.indicacion.tipo == "imagen":
       tipos.append("Diagnostico-Imagenologia")
-    elif i.indicacion.tipo == "endoscopia":
-      tipos.append("Diagnostico-Estudio Endoscopico")
+    elif i.indicacion.tipo == "endoscopico":
+      tipos.append("Diagnostico-Estudios Especiales")
     elif i.indicacion.tipo == "valora":
       tipos.append("Diagnostico-Valoracion Especializada")
     elif i.indicacion.tipo == "otros":
       tipos.append("Diagnostico-Otros")
     elif i.indicacion.tipo == "terapeutico":
       tipos.append("Terapeutico")
+    elif i.indicacion.tipo == "otras":
+      tipos.append("Otras")
 
     nombres.append(i.indicacion.nombre)
     status.append(i.statusA())
@@ -267,13 +270,23 @@ def indicaciones_pdf(request, id_emergencia):
   data.append(nombres)
   data.append(status)
   data = zip(*data)
-  table=Table(data, colWidths=2.25*inch, rowHeights=20)
-  table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-len(tipos)),lightblue), ('ALIGN',(0,0),(-1,-1),'CENTER'),
-    ('INNERGRID', (0,0), (-1,-1), 0.25, black), ('BOX', (0,0), (-1,-1), 0.25, black),
-    ('FONTSIZE', (0,0), (-1,-len(tipos)), 14)]))
+  table=Table(data, colWidths=2.25*inch, rowHeights=0.26*inch)
+  table._argW[0]=2.5*inch
+  table._argW[2]=2*inch
+  c.setFont("Helvetica", 10)
+  table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-len(tipos)),lightblue), 
+    ('FONT', (0,0), (-1,-len(tipos)), 'Helvetica-Bold'),
+    ('ALIGN',(0,0),(-1,-1),'CENTER'),  ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
+    ('INNERGRID', (0,0), (-1,-1), 0.25, black), ('BOX', (0,0), (-1,-1), 0.25, black)]))
   table.wrapOn(c, 200, 400)
-  table.drawOn(c,-0.2*inch,6*inch)
-
+  mitad = ((len(indicaciones)+1)*0.26)/2
+  dif = 7.5 - mitad
+  pos = dif-mitad
+  table.drawOn(c,-0.2*inch, pos*inch)
+  
+  ultIndicacion = indicaciones[len(indicaciones)-1]
+  c.drawString(-0.3*inch, (pos-0.8)*inch, "Ultima actualizacion: " + str(ultIndicacion.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")))
+  
   c.showPage()
   c.save()
   return response
@@ -296,7 +309,7 @@ def reporte_triage_pdf(request, idP):
   t = triage[len(triage)-1]
   
   i = 8  
-  c.setFont("Helvetica", 14)
+  c.setFont("Helvetica-Bold", 14)
   c.drawString(-0.3*inch, i*inch, "Datos de Identificación" )
   c.drawString(3.5*inch, i*inch, "Signos Vitales ")
     
@@ -327,7 +340,7 @@ def reporte_triage_pdf(request, idP):
   i = i -0.2
   c.drawString(3.5*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
   
-  i = i -0.4
+  i = i -0.6
   c.drawString(-0.3*inch, i*inch, "Atendido:  " + str(t.fechaReal.strftime("%d/%m/%y a las %H:%M")))
   c.drawString(3.5*inch, i*inch, "Medico: " + t.medico.last_name + ", " + t.medico.first_name)
   

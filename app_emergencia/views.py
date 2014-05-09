@@ -1082,18 +1082,12 @@ def emergencia_atencion(request,id_emergencia,tipo):
             medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
             diags = Diagnostico.objects.filter(atencion = atList)
             enfA = EnfermedadActual.objects.filter(atencion = atList)
-            dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
             indic = Asignar.objects.filter(emergencia = id_emergencia)
 			
-            print len(medicamento)	
-            print len(diags)	
-            print len(enfA)	
-            print len(dieta)	
-			
-            if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(dieta)>0:
+            if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(indic)>0:
               historia_medica = True
 			
-            if len(medicamento)>0 and len(diags)>0 and len(dieta)>0:
+            if len(diags)>0:
               constancia = True
 			 
             if len(indic)>0:
@@ -1754,6 +1748,8 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
             for obj in checkes:
                 asig = Asignar.objects.get(id=obj)
                 tipo = asig.indicacion.tipo
+                asig.fecha = datetime.now()
+                asig.fechaReal = datetime.now()
                 print "ASIG object: ",asig
 
                 asig.status=1
@@ -1792,6 +1788,8 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
             ia.indicacion.nombre = request.POST[str(ia.id)+"nombre"]
             i= Indicacion.objects.get(id = ia.indicacion.id)
             i.nombre = request.POST[str(ia.id)+"nombre"]
+            i.fecha = datetime.now()
+            i.fechaReal = datetime.now()
             i.save()
             ia.save()
         indsN = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind)
@@ -1805,6 +1803,8 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
             ind.indicacion.nombre = request.POST[str(ind.id)+"nombre"]
             ii= Indicacion.objects.get(id = ind.indicacion.id)
             ii.nombre = request.POST[str(ind.id)+"nombre"]
+            ii.fecha = datetime.now()
+            ii.fechaReal = datetime.now()
             ii.save()
             ind.save()
             extraO = EspMedics.objects.get(asignacion = ind)
