@@ -1079,12 +1079,13 @@ def emergencia_atencion(request,id_emergencia,tipo):
           indicaciones = False
 
           if len(atList)>0:
-            medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
             diags = Diagnostico.objects.filter(atencion = atList)
             enfA = EnfermedadActual.objects.filter(atencion = atList)
             indic = Asignar.objects.filter(emergencia = id_emergencia)
+			# indicaciones para curar
+            indCurar = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo__in = ["dieta", "hidrata", "medicamento", "terapeutico", "otras"] )
 			
-            if len(medicamento)>0 and len(diags)>0 and len(enfA)>0 and len(indic)>0:
+            if len(enfA)>0 and len(diags)>0 and len(indCurar)>0:
               historia_medica = True
 			
             if len(diags)>0:
