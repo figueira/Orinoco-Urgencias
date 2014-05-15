@@ -36,6 +36,13 @@ class AspectoAtencion(models.Model):
             return "%s" %(result[0].partecuerpo.nombre)
         else: 
             return "%s" % ("no hay parte del cuerpo")
+    def zonacuerpoR(self):
+        asp = ParteAspecto.objects.filter(aspecto=self.aspecto)[0]
+        result = ZonaParte.objects.filter(partecuerpo=asp.partecuerpo)
+        if result:
+            return "%s" %(result[0].zonacuerpo.nombre)
+        else: 
+            return "%s" % ("no hay parte del cuerpo")
     def estadoR(self):
         result = Anomalia.objects.filter(aspectoatencion=self)
         if result:
