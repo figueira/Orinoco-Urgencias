@@ -1,0 +1,66 @@
+{% extends "base.html" %} 
+{% block cuerpo %} 
+  {% if mensaje %}
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">
+       &times;
+      </button>
+      {{mensaje}}
+    </div>
+  {% endif %}
+  <script>
+    $(document).ready(function() {
+      $("[rel='tooltip']").tooltip();
+      $(".tit-list").html("{{titulo}}")
+    });
+  </script>
+  <div class="container row">
+    <div class="span12">
+      {% if lista %}
+        <table class="table table-bordered table-striped fontsize22" >
+          <tr>
+            <th>N&uacute;mero</th>
+            <th>Nombre</th>
+            <th>ISE</th>
+            <th>Tiempo de Espera Total</th>
+            <th>&Uacute;ltima Fecha de Ingreso</th>
+            <th>Acciones</th>
+          </tr>
+          {% for l in lista %}
+            <tr>
+              <td>{{l.id}}</td>
+              <td>
+                <span class="nombreLista"> 
+                  <a href='/emergencia/{{ l.id }}/perfil'> {{l.paciente}} </a>
+                </span>
+              </td>
+              <td>
+                {% if l.triage != 0 %} 
+                  <img src="/static/img/estados/nivel{{ l.triage }}.png"
+                       title="Nivel {{ l.triage }}" /> 
+                {% endif %}
+              </td>
+              <td>{{l.tiempo_emergenciaT}}</td>
+              <td>{{l.horaR}}</td>
+              <td>
+                <center>
+                  <a href="/emergencia/agrega_emer/{{l.id}}" 
+                     rel="tooltip"
+                     data-toggle="tooltip"
+                     data-original-title="Ingresar a Emergencias"> 
+                    <img src="/static/img/acceso.png"
+                         class = " marginleft5 width40 height40" />
+                  </a>
+                </center>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %} 
+        <h4>
+          <center>No hay pacientes en esta área </center>
+        </h4>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
