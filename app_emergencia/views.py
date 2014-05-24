@@ -108,9 +108,13 @@ def emergencia_buscar(request):
             for p in resultados:
                 emergencias = Emergencia.objects.filter(paciente=p)
                 for e in emergencias:
-                    lista.append(e)
-                    
-        info = {'form':form,'lista':lista,'titulo':titulo}
+                    if e not in lista:
+                      lista.append(e)
+
+        # print "LA NUEVA ES: \n"
+        # print list(set(lista))
+
+        info = {'form':form,'lista':lista,'titulo':titulo, 'resultados':resultados}
         return render_to_response('listaB.html',info,context_instance=RequestContext(request))
     else:
         busqueda = BuscarEmergenciaForm()
@@ -1913,10 +1917,7 @@ def agregarEnfermedad(request,nombre_enfermedad):
 def paciente_perfil_emergencia(request, idE):
     ea = get_object_or_404(Emergencia, pk=idE)
     p = get_object_or_404(Paciente,pk=ea.paciente.id)
-    print ea 
-    print p
     t = Triage.objects.filter(emergencia = ea)
-    print t
     if len(t)!=0:
         t=t[0]
     else:

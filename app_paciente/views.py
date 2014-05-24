@@ -132,3 +132,9 @@ def eliminarEnfermedad(request,codigo_enfermedad,codigo_paciente):
     success = { 'result' : 1 }
     return HttpResponse(json.dumps(success), mimetype="application/json")
  
+@login_required(login_url='/')
+def ver_emergencias(request, idP):
+    e = Emergencia.objects.filter(paciente=idP)
+    print e
+    info = {'lista':e}
+    return render_to_response('emergencias.html', info,context_instance = RequestContext(request))

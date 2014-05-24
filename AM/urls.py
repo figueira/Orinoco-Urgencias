@@ -61,7 +61,7 @@ urlpatterns = patterns('',
     url('^emergencia/buscar$','app_emergencia.views.emergencia_buscar'),  
     url('^emergencia/(?P<idE>\d+)/actualizarSig$','app_emergencia.views.actualizarSignos'),
 
-    url('^emergencia/(?P<idE>\w+)$','app_emergencia.views.paciente_perfil_emergencia'),
+    url('^emergencia/(?P<idE>\w+)/perfil$','app_emergencia.views.paciente_perfil_emergencia'),
 
     # Estadisticas
     url('^estadisticas/$','app_emergencia.views.estadisticas'),
@@ -85,8 +85,9 @@ urlpatterns = patterns('',
         'app_perfil.views.paciente_perfil'),
     url('^paciente/(?P<idP>\w+)/triage$','app_perfil.views.reporte_triage'),
     url('^paciente/(?P<idP>\w+)/editar$','app_paciente.views.editarPaciente'),
+    url('^paciente/(?P<idP>\d+)/emergencias$','app_paciente.views.ver_emergencias'),
 
-		
+        
     ## COSAS DJANGISTICAS
     # Admin
     url(r'^admin/', include(admin.site.urls)),

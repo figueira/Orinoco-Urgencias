@@ -119,6 +119,9 @@ class Emergencia(models.Model):
   def __unicode__(self):
     return "%s - %s " % (self.id, self.paciente)
 
+  def __eq__(self, other):
+    return other and self.paciente == other.paciente and self.paciente == other.paciente
+
   # Dado un objeto de emergencia, devuelve la lista de causas de eséra que han
   # sido asignadas a ella
   #
