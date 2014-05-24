@@ -1907,3 +1907,19 @@ def agregarEnfermedad(request,nombre_enfermedad):
   Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
   return HttpResponse(json.dumps(Sugerencias),
                         content_type='application/json')
+
+
+@login_required(login_url='/')
+def paciente_perfil_emergencia(request, idE):
+    ea = get_object_or_404(Emergencia, pk=idE)
+    p = get_object_or_404(Paciente,pk=ea.paciente.id)
+    print ea 
+    print p
+    t = Triage.objects.filter(emergencia = ea)
+    print t
+    if len(t)!=0:
+        t=t[0]
+    else:
+        t=None  
+    info = {'p':p,'ea':ea, 't':t}
+    return render_to_response('perfil.html',info,context_instance=RequestContext(request))
