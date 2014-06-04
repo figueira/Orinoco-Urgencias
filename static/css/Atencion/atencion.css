@@ -38,7 +38,7 @@
 /* atencion_Plan_partecuerpo */
 
 #div_de_tabla_cuerpo{
-	height:380px;/*400*/
+	height:380	px;/*400*/
 	/*width:500px;*/
 	padding:3px 0px 0px 5px;
 	OVERFLOW: auto;
@@ -70,4 +70,21 @@
 
 input.errorCampoAnte{
 	box-shadow: 0 0 5px darkred;
+}
+
+#div_de_tabla_medicamento{
+	height:auto;
+	width: 800px;
+	OVERFLOW: auto;
+}
+
+#tabla_medicamento td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top: 10px;
+	padding-bottom: 2px;
+}
+
+#tabla_medicamento input[type="text"] {
+    width: 90%;
 }

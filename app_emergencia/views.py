@@ -1404,15 +1404,13 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 # Condicional para validar/agregar indicaciones de tipo lab/endoscopicos:
                 if tipo_ind == 'lab' or tipo_ind == 'endoscopico':
                     agregado = False
+                    modificado = False
 					# Es multichoice entonces hago un for por todas las opciones elegidas
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
                         
                         if indicacionesQ:
-                            mensaje = "Hay indicaciones con este nombre: "+ indicacionesQ[0].nombre
-                            info = {'form':form,'mensaje':mensaje,'emergencia':emer,'tipo_ind':tipo_ind}
-                            return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-                        
+                            modificado = True				
                         else:
                             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
@@ -1439,19 +1437,23 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
 					
+                    if modificado:							
+                        ya="si"
+                        mensaje = "Laboratorios Modificados Exitosamente"
+                        info = {'form':form,'mensaje':mensaje,'emergencia':emer,'tipo_ind':tipo_ind, 'ya':ya}
+                        return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
+							
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
 
                 if tipo_ind == 'imagen':
                     agregado = False
+                    modificado = False
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
                         if indicacionesQ:
-                            mensaje = "Hay indicaciones con este nombre: "+indicacionesQ[0].nombre
-                            info = {'form':form,'mensaje':mensaje, 'tipo_ind':tipo_ind,'emergencia':emer}
-                            return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-                        
+                            modificado = True                        
                         else:
                             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
@@ -1471,20 +1473,65 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                         if len(espera_img) == 0:
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
+							
+                    if modificado:							
+                        ya="si"
+                        mensaje = "Imagenologia Modificada Exitosamente"
+                        info = {'form':form,'mensaje':mensaje,'emergencia':emer,'tipo_ind':tipo_ind, 'ya':ya}
+                        return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
 
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
 
                 # Condicional para validar/agregar indicaciones de tipo dieta e hidratacion
-                else:
+                else:                    
                     # indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre)
                     indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__tipo = tipo_ind)
-                    if indicacionesQ:
-                        mensaje = "Hay indicaciones con este nombre: "+indicacionesQ[0].nombre
-                        info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind,'emergencia':emer}
+                    if indicacionesQ:		# MODIFICAR DIETA E HIDTRACION
+                        if tipo_ind == 'dieta':
+                            a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
+                            a = a[0]
+                            d = EspDieta.objects.filter(asignacion = a)
+                            d = d[0]
+                            d.observacion = pcd['observacion']
+                            d.save()
+                            a.indicacion = Indicacion.objects.get(nombre = nombre)
+                            a.status = 0
+                            a.save()
+                        elif tipo_ind == 'hidrata':
+                            a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
+                            a = a[0]
+                            h = EspHidrata.objects.filter(asignacion = a)
+                            h = h[0]
+                            h.volumen = pcd['volumen']
+                            h.vel_infusion = pcd['vel_inf']
+                            h.vel_inf_unidad = pcd['vel_inf_unidad']
+                            h.complementos = pcd['complementos']
+                            h.save()
+                            a.indicacion = Indicacion.objects.get(nombre = nombre)
+                            a.status = 0
+                            a.save()	
+                            comb = CombinarHidrata.objects.filter(hidratacion1__asignacion__indicacion = indicacionesQ)
+                            if pcd['combina'] == "True":
+                                ex_sol = pcd ['combina_sol']
+                                i2 = Indicacion.objects.get(nombre = ex_sol)
+                                if len(comb)>0:
+                                    comb = comb[0]         
+                                    comb.hidratacion2 = i2
+                                    comb.save()	
+                                else:
+                                    combi = CombinarHidrata(hidratacion1= h,hidratacion2=i2)
+                                    combi.save()								
+                            else:
+                                if len(comb)>0:
+                                    comb.delete()	
+                        ya= "si"
+                        mensaje = "Indicacion Modificada Exitosamente"
+                        info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
                         return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-                    else:
+						
+                    else:		# AGREGAR DIETA E HIDTRACION
                         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                         # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
                         i= Indicacion.objects.get(nombre = nombre)
@@ -1498,8 +1545,9 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             sn = pcd['combina']
                             vol    = pcd['volumen']
                             vel    = pcd['vel_inf']
+                            vel_uni= pcd['vel_inf_unidad']
                             comp   = pcd['complementos']
-                            ex = EspHidrata(asignacion=a,volumen=vol,vel_infusion=vel,complementos=comp)
+                            ex = EspHidrata(asignacion=a,volumen=vol,vel_infusion=vel,vel_inf_unidad=vel_uni,complementos=comp)
                             ex.save()
                             if pcd['combina'] == "True":
                                 ex_sol = pcd ['combina_sol']
@@ -1509,7 +1557,6 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                         mensaje = "Procedimientos Guardado Exitosamente"
                         info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                         return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
-
             else:
                 form_errors = form.errors
                 info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind,'form_errors': form_errors,'emergencia':emer}
@@ -1517,7 +1564,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
 
         #---------Renderizado de formularios al ingresar por primera vez-----#
         if tipo_ind == 'dieta':
-            d = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta",status=0)
+            d = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
             
             if d:
                 e = EspDieta.objects.filter(asignacion=d[0])
@@ -1532,16 +1579,16 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 form = AgregarIndDietaForm()
 
         elif tipo_ind == 'hidrata':
-            h = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "hidrata",status=0)
+            h = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "hidrata")
             if h:
                 e = EspHidrata.objects.filter(asignacion=h[0])
                 c = CombinarHidrata.objects.filter(hidratacion1 = e[0])
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
                 ya= "si"
                 if c:
-                    form = AgregarIndHidrataForm(initial={'hidrata':h[0].indicacion.pk,'combina':True,'combina_sol':c[0].hidratacion2.pk,'volumen':e[0].volumen,'vel_inf':e[0].vel_infusion,'complementos':e[0].complementos})
+                    form = AgregarIndHidrataForm(initial={'hidrata':h[0].indicacion.pk,'combina':True,'combina_sol':c[0].hidratacion2.pk,'volumen':e[0].volumen,'vel_inf':e[0].vel_infusion, 'vel_inf_unidad':e[0].vel_inf_unidad, 'complementos':e[0].complementos})
                 else:
-                    form = AgregarIndHidrataForm(initial={'hidrata':h[0].indicacion.pk,'combina':False,'volumen':e[0].volumen,'vel_inf':e[0].vel_infusion,'complementos':e[0].complementos})
+                    form = AgregarIndHidrataForm(initial={'hidrata':h[0].indicacion.pk,'combina':False,'volumen':e[0].volumen,'vel_inf':e[0].vel_infusion, 'vel_inf_unidad':e[0].vel_inf_unidad, 'complementos':e[0].complementos})
             else:
                 form = AgregarIndHidrataForm()
 
@@ -1581,6 +1628,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 
                 form = AgregarIndEndosForm(initial={'endoscopico':end_list})
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
+                ya= "si"
             else:
                 form = AgregarIndEndosForm()
         
@@ -1732,7 +1780,7 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
     triage = triage[0]
     mensaje = ""
     atencion = Atencion.objects.filter(emergencia= emer)
-    
+	
     if request.method == 'POST':
         checkes = request.POST.getlist(u'check')
         
@@ -1747,6 +1795,33 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
             return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
         
+        elif tipo_ind == "dieta":
+            indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia, asignar__indicacion__tipo = tipo_ind)
+            a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
+            d = EspDieta.objects.filter(asignacion = a)
+            d.delete()  
+            a.delete()				
+            ya= ""
+            mensaje = "Indicacion Eliminada Exitosamente"
+            form = AgregarIndDietaForm()
+            info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
+            return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
+
+        elif tipo_ind == "hidrata":
+            indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia, asignar__indicacion__tipo = tipo_ind)
+            a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
+            h = EspHidrata.objects.filter(asignacion = a)
+            h.delete()
+            a.delete()	
+            comb = CombinarHidrata.objects.filter(hidratacion1__asignacion__indicacion = indicacionesQ)
+            if len(comb)>0:
+                comb.delete()				
+            ya= ""
+            mensaje = "Indicacion Eliminada Exitosamente"
+            form = AgregarIndHidrataForm()
+            info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
+            return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
+		
         elif tipo_ind == "normal":
             for obj in checkes:
                 asig = Asignar.objects.get(id=obj)

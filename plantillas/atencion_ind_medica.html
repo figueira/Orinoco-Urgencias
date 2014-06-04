@@ -70,8 +70,8 @@
 <form id="formMED" method="post" action="">
   {% csrf_token %}
   <center>
-    <div id="tablaMed" class = "height400 overflow" >
-      <table id="tabMed" class="table table-bordered">
+    <div id="div_de_tabla_medicamento">
+      <table id="tabla_medicamento" class="table table-bordered">
         <caption>
           <p class="lead">
             Indicaciones de Medicamentos
@@ -82,21 +82,21 @@
           <th>
             <center>Hora</center>
           </th>
-          <th>
+          <th class = "width150">
             <center>Medicamento</center>
           </th>
           <th colspan="2">
             <center>Dosis</center>
           </th>
-          <th>
-            <center>Frecuencia</center>
-          </th>
-          <th>
-            <center>Tipo de Frecuencia</center>
-          </th>
-          <th>
+		  <th class="width120">
             <center>V&iacute;a Administraci&oacute;n</center>
           </th>
+          <th class = "width140">
+            <center>Frecuencia</center>
+          </th>
+          <th class = "width80">
+            <center>Tipo de Frecuencia</center>
+          </th>          
         </tr>
         </thread>
         <tbody>
@@ -111,26 +111,25 @@
                 <center>
                   <input type="text" 
                          name="{{i.id}}nombre"
-                         value="{{i.indicacion.nombre}}" 
-                         class = "width100" >
+                         value="{{i.indicacion.nombre}}">
                 </center>
               </td>
-              <td>
+              <td class="width40">
                 <center>
                   <input type="text" 
                          name="{{i.id}}dosis" 
                          value="{{i.med_Dosis}}"
-                         class = "width50" >
+                         style="width:40px" >
                 </center>
               </td>
-              <td>
+              <td class="width60">
                 {% if i.med_Conc != '' %} 
                   <script>
                   var valor = "{{i.med_Conc}}";
                   $("select#{{i.id}}conc").val(valor);
                   </script> 
                 {% endif %} 
-                  <select id="{{i.id}}conc" name="{{i.id}}conc" class="s1">
+                  <select id="{{i.id}}conc" name="{{i.id}}conc" class="width60">
                     <option value="cc">
                       cc
                     </option>  
@@ -145,35 +144,7 @@
                     </option>  
                   </select>
               </td>
-              <td>
-                <center>
-                  <input type="text" 
-                         name="{{i.id}}frec" 
-                         value="{{i.med_Frec}}"
-                         class = "width100" >
-                </center>
-              </td>
-              <td>
-                <center>
-                  {% if i.med_TFrec != '' %}
-                    <script>
-                      var valor = "{{i.med_TFrec}}";
-                      $("select#{{i.id}}tfrec").val(valor);
-                    </script>
-                  {% endif %} 
-                  <select id="{{i.id}}tfrec" 
-                          class="s2"
-                          name="{{i.id}}t_frec">
-                    <option value="fijo">
-                      Fijo
-                    </option>
-                    <option value="sos">
-                      SOS
-                    </option>
-                  </select>
-                </center>
-              </td>
-              <td>
+	          <td>
                 <center>
                   {% if i.med_Viad != '' %}
                     <script>
@@ -182,7 +153,7 @@
                    </script>
                   {% endif %} 
                   <select id="{{i.id}}via" 
-                          class="s3"
+                          class="width120"
                           name="{{i.id}}via_adm">
                     <option value="endov">
                       Endovenosa
@@ -205,6 +176,49 @@
                   </select>
                 </center>
               </td>
+              <td>
+                cada 
+				&nbsp;
+				{% if i.med_Frec != '' %}
+                    <script>
+                      var valor = "{{i.med_Frec}}";
+                      $("select#{{i.id}}_frec").val(valor);
+                    </script>
+                  {% endif %} 
+				<select id="{{i.id}}_frec" 
+						name="{{i.id}}frec" 
+					    class="width60">
+                  <option value="1"> 1 </option>
+                  <option value="2"> 2 </option>
+                  <option value="4"> 4 </option>
+                  <option value="6"> 6 </option>
+                  <option value="8"> 8 </option>
+                  <option value="12"> 12 </option>
+                  <option value="24"> 24 </option>
+                </select>
+				&nbsp;
+				horas
+              </td>
+              <td>
+                <center>
+                  {% if i.med_TFrec != '' %}
+                    <script>
+                      var valor = "{{i.med_TFrec}}";
+                      $("select#{{i.id}}tfrec").val(valor);
+                    </script>
+                  {% endif %} 
+                  <select id="{{i.id}}tfrec" 
+                          class="width80" 
+                          name="{{i.id}}t_frec">
+                    <option value="fijo">
+                      Fijo
+                    </option>
+                    <option value="sos">
+                      SOS
+                    </option>
+                  </select>
+                </center>
+              </td>
             </tr>
           {% endfor %}
           <tr class="ultimo">
@@ -215,20 +229,17 @@
                 <input type="text" 
                        name="nuevaMed" 
                        value=""
-                       onChange="CompruebaCampo(this)" 
-                       class = "width100" >
+                       onChange="CompruebaCampo(this)">
               </center>
             </td>
-            <td id="rem2">
-              <center>
+            <td id="rem2" class="width40">
                 <input type="text" 
                        name="nuevaDosis" 
                        value=""
-                       class = "width50" >
-              </center>
+					   style="width:40px">
             </td>
-            <td id="rem">
-              <select class="s1" id="s1" name="nuevoTC">
+            <td id="rem" class="width60">
+              <select class="width60" id="s1" name="nuevoTC">
                 <option value="cc">
                   cc
                 </option>
@@ -243,32 +254,9 @@
                 </option>
               </select>
             </td>
-            <td>
+			<td>
               <center>
-                <input type="text" 
-                       name="nuevaFrec" 
-                       value=""
-                       class = "width100" >
-              </center>
-            </td>
-            <td>
-              <center>
-                <select class="s2" 
-                        id="s2" 
-                        name="nuevoTF"
-                        onChange="agregaExtra(this)">
-                  <option value="fijo">
-                    Fijo
-                  </option>
-                  <option value="sos">
-                    SOS
-                  </option>
-                </select>
-              </center>
-            </td>
-            <td>
-              <center>
-                <select class="s3" id="s3" name="nuevaVAD">
+                <select class="width120" id="s3" name="nuevaVAD">
                   <option value="endov">
                     Endovenosa
                   </option>
@@ -289,6 +277,35 @@
                   </option>  
                 </select>
               </center>
+            </td>
+            <td>
+				cada 
+				&nbsp;
+                <select class="width60" 
+                       name="nuevaFrec">
+                  <option value="1"> 1 </option>
+                  <option value="2"> 2 </option>
+                  <option value="4"> 4 </option>
+                  <option value="6"> 6 </option>
+                  <option value="8"> 8 </option>
+                  <option value="12"> 12 </option>
+                  <option value="24"> 24 </option>
+                </select>
+				&nbsp;
+				horas
+            </td>
+            <td>
+                <select class="width80" 
+                        id="s2" 
+                        name="nuevoTF"
+                        onChange="agregaExtra(this)">
+                  <option value="fijo">
+                    Fijo
+                  </option>
+                  <option value="sos">
+                    SOS
+                  </option>
+                </select>
             </td>
           </tr>
           <tr id="extra" class="ultimo2 displayNone" >

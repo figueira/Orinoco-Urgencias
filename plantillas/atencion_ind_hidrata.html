@@ -89,6 +89,21 @@
         <div id="tablaHID"
           class = "height410 width550 overflow" >
           <table>
+		    <tr>
+              <td>
+                <b>{{form.volumen.label}}</b>
+              </td>
+              <td>
+                <div class="input-append">
+                  {{form.volumen}} 
+                  <span class="add-on">
+                    cc/d&iacute;a
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
             <tr>
               <td>
                 <strong>{{form.hidrata.label}}</strong>
@@ -121,30 +136,14 @@
             <tr></tr>
             <tr>
               <td>
-                <b>{{form.volumen.label}}</b>
-              </td>
-              <td>
-                <div class="input-append">
-                  {{form.volumen}} 
-                  <span class="add-on">
-                    cc
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr></tr>
-            <tr></tr>
-            <tr>
-              <td>
                 <b>{{form.vel_inf.label}}</b>
               </td>
               <td>
-                <div class="input-append">
-                  {{form.vel_inf}} 
-                  <span class="add-on">
-                    gotas/min
-                  </span>
-                </div>
+                <div>
+                  {{form.vel_inf}} 				
+				  &nbsp;
+                  {{form.vel_inf_unidad}}
+                </div>  
               </td>
             </tr>
             <tr>
@@ -198,14 +197,27 @@
   </fieldset>
 </form>
 
-{% if ya == 'si' %}
+{% if ya == 'si' %}  
   <center>
-    <button class="btn btn-mini btn-primary"
-            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}')">
-      <i class="icon-edit icon-white"></i>
-      Modificar
-    </button>
+	  <div class="btn-group">
+		<button class="btn btn-mini btn-primary"
+				onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}')">
+		  <i class="icon-edit icon-white"></i>
+		  Modificar
+		</button>
+	  </div>    
+	  {% if tipo_ind == 'dieta' or tipo_ind == 'hidrata' %}  
+		  <div class="btn-group">
+			<button class="btn btn-mini btn-primary"
+					onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}/eliminar')">
+			  <i class="icon-remove-sign icon-white"></i>
+			  &nbsp;
+			  Eliminar
+			</button>
+		  </div>
+	  {% endif %} 
   </center>
+  
 {% else %}
   <center>
     <button class="btn btn-mini btn-primary"

@@ -13,6 +13,11 @@ ATENCION = (
   (False,'No'),
 )
 
+UNDIDAD = (
+    ('gotas/min','gotas/min'),
+    ('cc/hora','cc/hora'),
+)
+
 def validate_nombre(value):
 	if re.match('^[a-zA-Z \']+$',value)==None:
 		raise ValidationError(u'\"%s\" no es un nombre valido, debe estar compuesto solo por letras.' % value)
@@ -185,7 +190,8 @@ class AgregarIndHidrataForm(forms.Form):
   combina = forms.CharField(label = "¿Combinar con otro tipo de solución?:  ",widget=forms.RadioSelect(choices=ATENCION))
   combina_sol= forms.ModelChoiceField(label = "Tipo de Solución Adicional:  ",required=False,queryset=Indicacion.objects.filter(tipo__iexact="hidrata"),widget=forms.RadioSelect())
   volumen = forms.FloatField(label = "Volumen:  ",required=False,widget=forms.TextInput(attrs={'class':'span1'}))
-  vel_inf = forms.CharField(label = "Velocidad de Infusión:  ",max_length=30,widget=forms.TextInput(attrs={'class':'span1'}))
+  vel_inf = forms.CharField(label = "Velocidad de Infusión:  ",max_length=30,widget=forms.TextInput(attrs={'class':'width40'}))
+  vel_inf_unidad = forms.ChoiceField(choices = UNDIDAD, widget=forms.Select(attrs={'class':'width100'}))  
   complementos = forms.CharField(label = "Complementos: ", required=False, max_length=40,widget=forms.widgets.Textarea(attrs={'rows':2, 'cols':20}))
   def __init__(self, *args, **kwargs):
     super(AgregarIndHidrataForm, self).__init__(*args, **kwargs)

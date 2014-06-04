@@ -62,6 +62,11 @@ EDOLOR = (
   (10,"10"),
 )
 
+UNDIDAD = (
+    ('gotas/min','gotas/min'),
+    ('cc/hora','cc/hora'),
+)
+
 # STATUS = (
 #   (1,'No Completado'),
 #   (2,'Completado'),
@@ -496,6 +501,7 @@ class EspHidrata(models.Model):
   asignacion   = models.ForeignKey(Asignar)
   volumen    = models.IntegerField(blank=True,null=True)
   vel_infusion = models.CharField(max_length=512,blank=True)
+  vel_inf_unidad = models.CharField(max_length=20, choices = UNDIDAD)
   complementos = models.CharField(max_length=512,blank=True)
   def __unicode__(self):
     return "Paciente:%s- DVolumen:%s" % (self.asignacion.emergencia.paciente.apellidos,self.volumen)
