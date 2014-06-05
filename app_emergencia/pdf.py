@@ -437,27 +437,21 @@ def indicaciones_pdf(request, id_emergencia):
   c.save()
   return response
 
+  
 
-def reporte_triage_pdf(request, idP):
+def reporte_triage_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
   response = HttpResponse(content_type='application/pdf')
   response['Content-Disposition'] = 'filename="triage.pdf"'
 
   # Create the PDF object, using the response object as its "file."
   c = canvas.Canvas(response)
-  p = get_object_or_404(Paciente,pk=idP)
-  emer = Emergencia.objects.filter(paciente=p) \
-                                .order_by('hora_egreso')
-  tam = len(emer)
-  emer = emer[tam-1]
-  # ea = ea[0]
+  emer = get_object_or_404(Emergencia,id=id_emergencia)
   t = Triage.objects.filter(emergencia = emer)
-  if len(t)!=0:
-      t=t[0]
-  else:
-      t=None  
+  t=t[0]
+
   header_pdf(c, "Evaluación de", "Triage")
-  print t.signos_tmp
+  
   i = 8  
   c.setFont("Helvetica-Bold", 14)
   c.drawString(-0.3*inch, i*inch, "Datos de Identificación" )

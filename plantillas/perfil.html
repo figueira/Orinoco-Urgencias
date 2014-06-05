@@ -36,34 +36,55 @@
 	  {% endif %}
     </div>
   
-    {% if ea.hora_egreso == None %}
-      <div class="span12">  
+  
+	<div class="span12">  
         <h3>Acciones</h3>
-        {% if ea.triage == 0 %}
-          <a href="/emergencia/{{ ea.id }}/triage/calcular" 
-             class="btn btn-primary">
-            Aplicar Triage
-          </a>
-        {% endif %}        
-
-        {% if ea.triage != 0 %}
-          <a href='/emergencia/atencion/{{ ea.id }}/historia' 
-             class="btn btn-primary">
-            Realizar Historia M&eacute;dica 
-          </a>
-        {% endif %}
+		{% if ea.hora_egreso == None %}		  
+			{% if ea.triage == 0 %}
+				<a href="/emergencia/{{ ea.id }}/triage/calcular" 
+				   class="btn btn-primary">
+					Aplicar Triage
+				</a>
+			{% else %}
+			    <a href='/emergencia/atencion/{{ ea.id }}/historia' 
+				   class="btn btn-primary">
+				   Realizar Historia M&eacute;dica 
+			    </a>
+			    <a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
+			       Informe de Triage
+			    </a>  
+			{% endif %}
+			<a href="/emergencia/{{ ea.id }}/daralta" class="btn btn-primary">
+			  Egreso
+			</a> 	
+		    
+		{% else %}
 		
-        <a href="/paciente/{{ p.id }}/triage" class="btn btn-primary">
-          Ver Informe Triage
-        </a> 
-        <a href="/emergencia/{{ ea.id }}/daralta" class="btn btn-primary">
-          Egreso
-        </a> 
+			{% if  hm_habilitado %}
+				<a href="/emergencia/descarga/{{ea.id}}/historia" class="btn btn-primary">
+				   Informe de Historia Medica
+			    </a> 
+			{% endif %}					
+			{% if  const_habilitado %}
+				<a href="/emergencia/descarga/{{ea.id}}/constancia" class="btn btn-primary">
+				   Constancia de Atencion
+			    </a> 
+			{% endif %}			
+			{% if  ind_habilitado %}
+				<a href="/emergencia/descarga/{{ea.id}}/reportInd" class="btn btn-primary">
+				   Reporte de Indicaciones
+			    </a> 
+			{% endif %}	
+			{% if ea.triage != 0 %}
+				<a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
+			       Informe de Triage
+			    </a> 
+			{% endif %}
+			
+		{% endif %}
+		
 		<a href="/paciente/{{ p.id }}/editar" class="btn btn-primary">
-          Editar Perfil
-        </a>
-      
-	{% endif %}
-  </div>
-
+		   Editar Perfil
+		</a>  
+    </div>
 {% endblock %}

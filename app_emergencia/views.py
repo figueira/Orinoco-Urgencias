@@ -79,7 +79,7 @@ def emergencia_buscar(request):
             if len(p_cedula) > 0:
                 print "Se busco por cedula"
                 print p_cedula
-                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula)
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos') 
                 if len(pacientes) > 0:
                     for p in pacientes:
                         resultados.append(p)
@@ -88,25 +88,25 @@ def emergencia_buscar(request):
                 print "nombres:"+p_nombres+"y apellidos "+p_apellidos
                 if len(p_nombres) > 0 and len(p_apellidos) > 0:
                     print "Se busco por Nombre y Apellido"
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos)
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos).order_by('apellidos')
                     if len(pacientes) > 0:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_apellidos) == 0:
                     print "Se busco por Nombre"
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres)
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres).order_by('apellidos')
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_nombres) == 0:
                     print "Se busco por Apellido"
-                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos)
+                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos).order_by('apellidos')
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
             lista = []
             for p in resultados:
-                emergencias = Emergencia.objects.filter(paciente=p)
+                emergencias = Emergencia.objects.filter(paciente=p).order_by('-hora_ingreso')  
                 for e in emergencias:
                     if e not in lista:
                       lista.append(e)
@@ -238,23 +238,23 @@ def emergencia_buscar_historia_medica(request):
             p_apellidos = pcd['apellidos']
 
             if len(p_cedula) > 0:
-                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula)
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos') 
                 if len(pacientes) > 0:
                     for p in pacientes:
                         resultados.append(p)
             else:
                 if len(p_nombres) > 0 and len(p_apellidos) > 0:
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos)
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos).order_by('apellidos') 
                     if len(pacientes) > 0:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_apellidos) == 0:
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres)
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres).order_by('apellidos') 
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_nombres) == 0:
-                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos)
+                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos).order_by('apellidos') 
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
@@ -263,9 +263,10 @@ def emergencia_buscar_historia_medica(request):
                 emergencias = Emergencia.objects.filter(paciente=p,
                                                         triage__isnull = False) \
                                                         .distinct() \
-                                                        .order_by('hora_ingreso')              
+                                                        .order_by('-hora_ingreso')              
                 for e in emergencias:
-                    lista.append(e)
+                    if e not in lista:
+                        lista.append(e)
                     
         info = {'form':form,'lista':lista,'titulo':titulo}
         return render_to_response('listaC.html',info,context_instance=RequestContext(request))
@@ -1000,6 +1001,8 @@ def emergencia_descarga(request,id_emergencia,tipo_doc):
         return constancia_pdf(request, id_emergencia)
     elif tipo_doc == 'reportInd':
         return indicaciones_pdf(request, id_emergencia)
+    elif tipo_doc == 'triage':
+        return reporte_triage_pdf(request, id_emergencia)
 
 
 @login_required(login_url='/')
@@ -1993,9 +1996,25 @@ def paciente_perfil_emergencia(request, idE):
     ea = get_object_or_404(Emergencia, pk=idE)
     p = get_object_or_404(Paciente,pk=ea.paciente.id)
     t = Triage.objects.filter(emergencia = ea)
+    historia_medica = False
+    constancia = False
+    indicaciones = False
     if len(t)!=0:
         t=t[0]
+        atList = Atencion.objects.filter(emergencia = idE)
+		# Operaciones para determinar si se muestran los botones de descarga
+        if len(atList)>0:
+            diags = Diagnostico.objects.filter(atencion = atList)
+            enfA = EnfermedadActual.objects.filter(atencion = atList)
+            indic = Asignar.objects.filter(emergencia = idE)			
+            if len(enfA)>0 and len(diags)>0:
+              historia_medica = True			
+            if len(diags)>0:
+              constancia = True			 
+            if len(indic)>0:
+              indicaciones = True	
     else:
         t=None  
-    info = {'p':p,'ea':ea, 't':t}
+		
+    info = {'p':p,'ea':ea, 't':t, 'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))

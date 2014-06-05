@@ -7,7 +7,11 @@
       </button>
       {{mensaje}}
     </div>
-  {% endif %}
+  {% endif %}  
+    <link rel="stylesheet" 
+        type="text/css" 
+        href="/static/css/Atencion/estiloIcon.css"
+	/>
   <script>
     $(document).ready(function() {
       $("[rel='tooltip']").tooltip();
@@ -23,7 +27,7 @@
             <th>Nombre</th>
             <th>ISE</th>
             <th>Tiempo de Espera Total</th>
-            <th>&Uacute;ltima Fecha de Ingreso</th>
+            <th>Fecha de Ingreso</th>
             <th>Acciones</th>
           </tr>
           {% for l in lista %}
@@ -44,13 +48,24 @@
               <td>{{l.horaR}}</td>
               <td>
                 <center>
-                  <a href="/emergencia/agrega_emer/{{l.id}}" 
-                     rel="tooltip"
-                     data-toggle="tooltip"
-                     data-original-title="Ingresar a Emergencias"> 
-                    <img src="/static/img/acceso.png"
-                         class = " marginleft5 width40 height40" />
-                  </a>
+					{% if l.hora_egreso == None %}	
+						<a href="/emergencia/atencion/{{l.id}}/historia" 
+						   rel="tooltip"
+						   data-toggle="tooltip"
+					   	   data-original-title="Realizar historia médica"> 
+						   <img src="/static/img/menus/atencion.png"
+							    class = " marginleft5 width40 height40" />
+						</a>						
+					{% else %}
+						<button class="btn button width40 height40"
+								onclick="location='/emergencia/{{ l.id }}/perfil'"
+								rel="tooltip" 
+								data-toggle="tooltip"
+								data-original-title="Ver Informes">
+								<a href="#" data-icon="&#xe008;">
+								</a>
+						</button>	
+					{% endif %}
                 </center>
               </td>
             </tr>

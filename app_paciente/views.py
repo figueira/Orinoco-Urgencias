@@ -134,7 +134,7 @@ def eliminarEnfermedad(request,codigo_enfermedad,codigo_paciente):
  
 @login_required(login_url='/')
 def ver_emergencias(request, idP):
-    e = Emergencia.objects.filter(paciente=idP)
+    e = Emergencia.objects.filter(paciente=idP).order_by('-hora_ingreso') 
     print e
     info = {'lista':e}
     return render_to_response('emergencias.html', info,context_instance = RequestContext(request))
