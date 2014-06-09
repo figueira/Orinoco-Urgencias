@@ -1,3 +1,0 @@
-Explota cuando agregas un paciente
-Explota cuando seleccionas al paciente > realizar atención
-Explota cuando seleccionas al paciente > egreso
