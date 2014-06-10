@@ -106,18 +106,24 @@
       {{extra.parte_cuerpo}}
     </li>
   </ul>
+{% elif tipo_ind == 'endoscopico'%}
+    <li>
+      <b>Subcategor&iacute;a: </b> 
+      Estudio Endosc&oacute;pico
+    </li>
+    {% if extra2 == 'Aterografia' or extra2 == 'Otros'%}
+    <li>
+      <b>Partes del Cuerpo: </b> 
+      {{extra.parte_cuerpo}}
+    </li>
+    {% endif %}
 {% else%}
   <ul>
     {% if tipo_ind == 'lab'%}
       <li>
         <b>Subcategor&iacute;a: </b> 
         Ex&aacute;menes de Laboratorio
-      </li>
-    {% elif tipo_ind == 'endoscopico'%}
-      <li>
-        <b>Subcategor&iacute;a: </b> 
-        Estudio Endosc&oacute;pico
-      </li>
+      </li> 
     {% elif tipo_ind == 'valora'%}
       <li>
         <b>Subcategor&iacute;a: </b> 
@@ -134,3 +140,6 @@
       </li>
   </ul>
 {% endif %}
+
+
+

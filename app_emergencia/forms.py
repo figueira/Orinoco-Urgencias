@@ -6,6 +6,7 @@ from models import *
 from django.contrib.admin.widgets import AdminDateWidget, AdminSplitDateTime
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.utils.safestring import mark_safe, SafeData
+from django.db.models import Q
 import re
 
 ATENCION = (
@@ -214,6 +215,12 @@ class MyCheckboxSelectMultiple(CheckboxSelectMultiple):
         html = super(MyCheckboxSelectMultiple, self).render(name, value, attrs, choices)
         return mark_safe(html.replace('<ul', '<ul class="imagen"'))
 
+# Clase extra para agregar atributos a los elementos checkbox renderizados:
+class MyCheckboxSelectMultipleEndos(CheckboxSelectMultiple):
+    def render(self, name, value, attrs=None, choices=()):
+        html = super(MyCheckboxSelectMultipleEndos, self).render(name, value, attrs, choices)
+        return mark_safe(html.replace('<ul', '<ul class="endoscopico"'))        
+
 
 # Indicaciones - Diagnosticas - Imagenologia
 class AgregarIndImgForm(forms.Form):
@@ -226,9 +233,10 @@ class AgregarIndImgForm(forms.Form):
 
 # Indicaciones - Diagnosticas - Est endoscopicos
 class AgregarIndEndosForm(forms.Form):
-  endoscopico     = forms.ModelMultipleChoiceField(queryset=Indicacion.objects.filter(tipo__iexact="endoscopico"),widget=CheckboxSelectMultiple)
+  endoscopico     = forms.ModelMultipleChoiceField(required=False, queryset=Indicacion.objects.filter(Q(tipo="endoscopico"),~Q(nombre="Arterografia"), ~Q(nombre="Otros")), widget=CheckboxSelectMultiple)
+  otros           = forms.ModelMultipleChoiceField(required=False, queryset=Indicacion.objects.filter(Q(tipo="endoscopico"),Q(nombre="Arterografia") | Q(nombre="Otros")), widget=MyCheckboxSelectMultipleEndos())
   def __init__(self, *args, **kwargs):
     super(AgregarIndEndosForm, self).__init__(*args, **kwargs)
     # Para quitar la linea inicial (-----) del widget:
     self.fields['endoscopico'].empty_label = None
-    self.fields['endoscopico'].label = "Exámenes Endoscópicos:"
+    self.fields['endoscopico'].label = "Exámenes Especiales:"

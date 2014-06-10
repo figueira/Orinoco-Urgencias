@@ -71,7 +71,20 @@
               else{
                   $('#nuevo_'+id).remove();
               }
-        });
+          });
+
+          $('ul.endoscopico :checkbox').change(function(){
+              var id = $(this).attr('id');
+              var val = $(this).attr('value');
+              var ch = $('#'+id).is(':checked');
+              if (ch == true) {
+                  $(this).parents("label").after("<label id='nuevo_"+id+"'"+"'for='id_Otros' class = fontWeightBold>Parte Cuerpo: <input id='id_Otros' maxlength='200' name='c_"+val+"'"+"' type='text'></label>");
+              }
+              else{
+                  $('#nuevo_'+id).remove();
+              }
+          });
+
   });
 </script>
 
@@ -189,7 +202,7 @@
     {% endif %} 
     {% if tipo_ind == 'endoscopico'%}
       <center>
-        <legend>Indicaciones de Estudios Endosc&oacute;picos</legend>
+        <legend>Indicaciones de Estudios Especiales</legend>
       </center>
       {{ form.as_p }} 
     {% endif %} 

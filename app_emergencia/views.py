@@ -1403,6 +1403,8 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 pcd = form.cleaned_data
                 nombre = pcd[tipo_ind]
                 print "IMprime lo que me retorna el form %s: "% (tipo_ind),nombre
+                print "nombreeee %s"%tipo_ind
+                print request.POST
                 
                 # Condicional para validar/agregar indicaciones de tipo lab/endoscopicos:
                 if tipo_ind == 'lab' or tipo_ind == 'endoscopico':
@@ -1419,8 +1421,24 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
                             i= Indicacion.objects.get(nombre = nombre[i])
                             a = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
-                            a.save()	
-                            agregado = True
+                            a.save()
+                    if tipo_ind == 'endoscopico':
+                      if request.POST.get('c_214',False):
+                        i= Indicacion.objects.get(nombre = "Arterografia")
+                        asig = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
+                        asig.save()
+                        p_cuerpo = request.POST['c_214']
+                        ex = EspImg(asignacion=asig,parte_cuerpo=p_cuerpo)
+                        ex.save()
+                        agregado = True
+                      if request.POST.get('c_215',False):
+                        i= Indicacion.objects.get(nombre = "Otros")
+                        asig = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
+                        asig.save()                            
+                        p_cuerpo = request.POST['c_215']
+                        ex = EspImg(asignacion=asig,parte_cuerpo=p_cuerpo)
+                        ex.save()
+                        agregado = True
 							
                     if tipo_ind == 'lab' and agregado:
                         espe = get_object_or_404(Espera,nombre = 'Laboratorio')
@@ -1625,7 +1643,6 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
             end = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "endoscopico",status=0)
             if end:
                 end_list=[]
-                
                 for e in end:
                     end_list.append(e.indicacion.pk)
                 
@@ -1659,7 +1676,15 @@ def emergencia_indicacion_info(request,id_asignacion,tipo_ind):
             extra2=ver[0]
 
     elif tipo_ind=="imagen":
+      extra = EspImg.objects.get(asignacion=id_asignacion)
+
+    elif tipo_ind == "endoscopico":
         extra = EspImg.objects.get(asignacion=id_asignacion)
+        print "asignacion iddddd %s"%extra.asignacion_id
+        asig = Asignar.objects.get(id=extra.asignacion_id)
+        final = Indicacion.objects.get(id=asig.indicacion_id)
+        print "finaaaaal %s"%final.nombre
+        extra2 = final.nombre
         
     info = {'tipo_ind':tipo_ind, 'extra':extra, 'extra2':extra2}
     return render_to_response('atencion_ind_listExtra.html',info,context_instance=RequestContext(request))
