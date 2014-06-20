@@ -1422,6 +1422,8 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             i= Indicacion.objects.get(nombre = nombre[i])
                             a = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
                             a.save()
+                            agregado = True
+							
                     if tipo_ind == 'endoscopico':
                       if request.POST.get('c_214',False):
                         i= Indicacion.objects.get(nombre = "Arterografia")
@@ -1440,6 +1442,8 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                         ex.save()
                         agregado = True
 							
+                    print tipo_ind
+                    print agregado					
                     if tipo_ind == 'lab' and agregado:
                         espe = get_object_or_404(Espera,nombre = 'Laboratorio')
                         espera_lab = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)

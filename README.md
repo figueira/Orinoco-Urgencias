@@ -18,7 +18,10 @@ Documentación
 La documentación del sistema (tales como manuales de intalación y comandos 
 útiles)se encuentra disponible en el reporsitorio, especificamente en la ruta 
 /recursos para los comandos útiles y recursos/manuales para los manuales de 
-instalación de Windows y Linux. 
+instalación de Windows y Linux. Igualmente en la direccion de recursos puede encontrar
+el archivo de los cambios y las nuevas funcionalidades que realizo el grupo 
+anterior, ademas de toda la explicacion de la migracion de la base de datos,
+en el archivo llamado entregaFinalTDS.pdf
 
 Estructura del Repositorio
 --------------------------

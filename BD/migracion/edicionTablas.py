@@ -110,6 +110,15 @@ for cip in ciPacientes:
 				cursor.execute("DELETE FROM app_paciente_paciente_enfermedades WHERE paciente_id='"+str(idp['id'])+"'") 
 				cursor.execute("UPDATE app_emergencia_emergencia SET paciente_id='"+str(idPa)+"' WHERE paciente_id='"+str(idp['id'])+"'") 
 				conn.commit()
+
 				
+# Se obtienen los usuarios del sistema y se habilitan para que puedan funcionar
+cursor.execute("SELECT * FROM app_usuario_usuario") 
+usuarios = cursor.fetchall()
+
+for usuario in usuarios:	
+	cursor.execute("UPDATE app_usuario_usuario SET habilitado=true WHERE cedula="+str(usuario[1])) 
+	conn.commit()
+	
 cursor.close()
 conn.close() 
