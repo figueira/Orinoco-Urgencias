@@ -1,0 +1,85 @@
+{% extends "base.html" %} 
+{% block cuerpo %}
+  <div class="centrar">
+    <div class="cuadroGrande">
+      <center>
+        <h3>
+          Editar Perfil
+        </h3>
+        
+        <form class="tablaAgregar" 
+              method="post"
+              action="/paciente/{{paciente.pk}}/editar">
+          {% csrf_token %}
+         
+          <table>         
+            <tr>
+              <td><font size=5><B> Paciente </B></font></td>
+              <td></td>
+				<td>
+					<font size=4 style="text-transform: uppercase;">
+						<strong>{{paciente.nombres}}</strong></font>
+					<font size=4 style="text-transform: uppercase;">
+						<strong>{{paciente.apellidos}}</strong></font>
+				</td>
+            </tr>
+            <tr> <br><br> <td> <br><br> </td> </tr>
+		
+			<tr>
+				<td>C&eacute;dula</td>
+				<td></td>
+				<td><input type="text" name="cedula" value="{{paciente.cedula}}"/></td>
+				
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.cedula.errors}}</font>
+					</span>
+				</td>
+			</tr>
+      
+            <tr>
+				<td>Nombres</td>
+				<td></td>
+				<td><input type="text" name="nombres" value="{{paciente.nombres}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.nombres.errors}}</font>
+					</span>
+				</td>
+            </tr>
+            
+            <tr>
+				<td>Apellidos</td>
+				<td></td>
+				<td><input type="text" name="apellidos" value="{{paciente.apellidos}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.apellidos.errors}}</font> 
+					</span>
+				</td>
+            </tr>                                                                 
+            
+            <tr>
+				<td>Correo</td>
+				<td></td>
+				<td><input type="text" name="email" size="35" value="{{paciente.email}}"/></td>
+				<td>
+					<span class="msj-error"> 
+						<font color="red">{{form.email.errors}}</font> 
+					</span>
+				</td>
+            </tr>
+             
+            
+            <tr>
+              <td></td>
+              <td>
+                <input class="btn btn-primary" type="submit" value="Guardar" />
+              </td>
+            </tr>
+          </table>
+        </form>
+    </div>
+  </div> 
+  
+{% endblock %}

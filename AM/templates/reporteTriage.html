@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Reporte Triage </title>
+
+  <!-- jQuery -->
+  <!-- <script type="text/javascript" src="/static/libs/js/jquery.min.js"></script> -->
+
+  <!-- Propios -->
+  <!-- <link rel="stylesheet" href="../static/css/estilosPDF.css"> -->
+  <link type="image/x-icon" href="../static/img/icono.ico" rel="icon" />
+
+  <style type="text/css">
+    * {
+      padding:0px;
+      margin:0px;
+    }
+
+
+    body {
+      padding: 20px 0px 0px 0px;
+      min-height:525px;
+      font-family: Arial;
+      font-size: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #004f69;
+    }
+
+    h2 {
+      font-size: 12pt;
+      text-align: right !important;
+    }
+
+    h3 {
+      text-align: left;
+    }
+
+    p {
+      background-color: #e2f2f7;
+      color: #004f69;
+      font-weight: bold;
+    }
+
+    form {
+      margin: 0px;
+      padding: 0 0 10px;
+    }
+
+
+    a:hover {
+      font-weight:bold;
+      color: #848484; 
+      text-decoration:none;
+    }
+
+    td ul,td ol {
+      list-style-type: none;
+      float: left;
+    }
+
+    /*PDF Reporte de Triage*/
+
+ .titulo {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #47464E;
+  text-decoration:underline;
+}
+
+.subtitulos {
+  font-size: 16px;
+  background-color: #A9D0F5;
+  padding-top: 5px;
+  border: 1px;
+  border-width: 2px;
+}
+
+.info {
+  font-size: 12px;
+  background-color: #FFFFFF;
+}
+</style>
+
+</head>  
+<body> 
+  {% spaceless %} 
+  <div class="titulo">
+    <h1>Reporte de Triage</h1> </div>
+    <h2>Fecha y hora de la evaluaci&oacute;n: {{ea.hora_ingresoReal}}</h2>
+
+
+    <p class = "subtitulos">Paciente</p>
+    <div class="info">
+      <strong> Nombres:</strong> {{p.nombres}} <br>
+      <strong> Apellidos:</strong>  {{p.apellidos}} <br>
+      <strong> Sexo:</strong>  {{p.sexoR}} <br>
+      <strong> Edad:</strong>  {{p.edad}} <br>
+    </div>
+
+    <p class = "subtitulos"> M&eacute;dico</p>
+    
+     <!-- para cada -->
+    {% for t in ea.triages %}
+    
+    <div class="info">
+      <strong> Nombres: </strong> {{t.medico.first_name}} <br>
+      <strong> Apellidos: </strong> {{t.medico.last_name}}<br>
+    </div>
+
+    <p class = "subtitulos"> Resultado del Triage </p>
+    <h3 align="left">NIVEL {{t.nivel}}</h3>     
+
+    <p class = "subtitulos">Respuestas</p>
+    
+    <div class="info">
+    <strong>
+      El paciente requiere Atenci&oacute;n Inmediata: 
+    </strong>
+    {% if t.atencion %}
+    Si
+    {% else %}
+    No
+    {% endif %}
+    <br>
+    <strong>El paciente puede esperar: </strong>
+    {% if t.esperar %}
+    Si
+    {% else %}
+    No
+    {% endif %}
+    <br>
+    <strong>Recursos que necesita: </strong> {{t.recursos}}<br>
+    <strong>Motivo de Ingreso: </strong> {{t.motivo}}<br>
+    <strong>Temperatura: </strong> {{t.signos_tmp}} &deg; Centigrados<br>
+    <strong>Frecuencia Card&iacute;aca: </strong> {{t.signos_fc}} por minuto<br>
+    <strong>Frecuencia Respiratoria: </strong> {{t.signos_fr}} por  minuto<br>
+    <strong>Presi&oacute;n Sist&oacute;lica: </strong> {{t.signos_pa}} mmHg <br>
+    <strong>Presi&oacute;n Diast&oacute;lica: </strong> {{t.signos_pb}} mmHg<br>
+    <strong>Saturaci&oacute;n de Ox&iacute;geno: </strong> {{t.signos_saod}} %<br>
+    <strong>Escala AVPU: </strong>{{t.signos_avpu}}<br>
+    <strong>Dolor: </strong>{{t.signos_dolor}}<br>
+    {% endfor %}
+</div>
+</div>
+{% endspaceless %}
+</body>
+</html>
+

@@ -1,0 +1,96 @@
+<script src="/static/scripts/efectos_info_cuerpo.js"> </script>
+<script src="/static/scripts/atencion_Plan_partecuerpo.js"> </script>
+<link rel="stylesheet" type="text/css"
+  href="/static/css/Atencion/atencion.css" />
+<script>
+  $(document).ready(function () {
+    botones_sintomas();
+  });
+</script>
+<form id='formularioCuerpo' 
+      name="cuerpo" 
+      method="post"
+      action="/emergencia/enviarcuerpo/{{emergencia.id}}/{{parte_cuerpo}}">
+  {% csrf_token %}
+  <div id='div_de_tabla_cuerpo'>
+    <table class='table table-bordered' 
+           class= "width350">
+      <thead>
+        <tr class='btn-info'>
+          <th class = "width200">
+            {% if parte_cuerpo == 'CABEZA_Y_ROSTRO' %}
+              CABEZA&nbsp;Y&nbsp;ROSTRO
+            {% elif parte_cuerpo == 'EXTREMIDADES_SUPERIORES' %}
+              EXTREMIDADES&nbsp;SUPERIORES
+            {% elif parte_cuerpo == 'EXTREMIDADES_INFERIORES' %}
+              EXTREMIDADES&nbsp;INFERIORES
+            {% elif parte_cuerpo == 'GENITALES_MASCULINOS' %}
+              GENITALES&nbsp;MASCULINOS&nbsp;
+            {% elif parte_cuerpo == 'GENITALES_FEMENINOS' %}
+              GENITALES&nbsp;FEMENINOS
+            {% elif parte_cuerpo == 'EXAMEN_DE_MAMA'%}
+              EXAMEN&nbsp;DE&nbsp;MAMA
+            {% elif parte_cuerpo == 'EXAMEN_RECTAL' %}
+              EXAMEN&nbsp;RECTAL
+            {% else %}
+              {{parte_cuerpo}}
+            {% endif %}
+          </th>
+          <th class = "width80">
+            <center>
+              <button id="b{{parte.id}}1" class='BNAD width40' >NOR</button>
+              <button id="b{{parte.id}}2" class='BABN width40' >ALT</button>
+            </center>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for asp_ante in aspectoAtencion %}
+          <tr class='well width140'> 
+            <td>
+              {{asp_ante.aspecto.nombre}}
+            </td>
+            <td>
+              <input type="hidden" 
+                     id="{{asp_ante.aspecto.id}}"
+                     name="{{asp_ante.aspecto.id}}" 
+                     value='{{asp_ante.estadoR}}N'>
+              <center>
+                <button id='p{{asp_ante.aspecto.id}}1' 
+                        class='NAD width40'
+                        input='{{asp_ante.aspecto.id}}'>
+                  NOR
+                </button>
+                <button id='p{{asp_ante.aspecto.id}}2' 
+                        class='ABN width40'
+                        input='{{asp_ante.aspecto.id}}'>
+                  ALT
+                </button>
+              </center>
+            </td>
+          </tr>
+          <tr id="A{{asp_ante.aspecto.id}}" 
+              class='hide'>
+            <td>
+              <input type="text"
+                     name='A{{asp_ante.aspecto.id}}'
+                     value="{{asp_ante.anomaliaR}}" 
+                     class = "width120 height12">
+            </td>
+            <td>
+            </td>
+          <tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</form>
+<center>
+  <div>
+    <button class="btn btn-info btn-mini"
+      onClick="cargar('{{emergencia.id}}','{{parte_cuerpo}}');">
+      Guardar
+    </button>
+  </div>
+</center>

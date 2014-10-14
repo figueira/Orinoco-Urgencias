@@ -1,0 +1,84 @@
+{% extends "base.html" %} 
+{% block cuerpo %}
+  <div class="centrar">
+    <div class="cuadroGrande">
+      <center>
+        <h3>
+          Egreso
+        </h3>
+        
+        <form class="tablaAgregar" 
+              method="post"
+              action="/emergencia/{{emergencia.pk}}/daralta">
+          {% csrf_token %}
+          <table>
+            <tr>
+              <td>Paciente</td>
+              <td><strong>{{emergencia.paciente}}</strong></td>
+            </tr>
+            
+            <tr>
+              <td>Destino</td>
+              <td>{{form.destino}}</td>
+            </tr>
+            
+            <tr id="oculto">
+              <td>Area</td>
+              <td>{{form.area}}</td>
+            </tr>
+            
+            <tr>
+              <td>Fecha de Alta</td>
+              <td>
+                <div class="input-append">
+                  {{form.darAlta}} 
+                  <span id="ahora" class="btn"> 
+                    Ahora 
+                  </span>
+                </div>
+              </td>
+            </tr>
+            
+            <tr>
+              <td></td>
+              <td>
+                <input class="btn btn-primary" type="submit" value="Confirmar" />
+              </td>
+            </tr>
+          </table>
+        </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts2 %}
+  <script>
+    $(document).ready(
+        function() {
+          $("#oculto").hide()
+  
+          $("#id_destino").change(function() {
+            var opcion = parseInt(($(this).val()))
+            if (opcion == 1) {
+              $("#oculto").slideDown("slow");
+            } else {
+              $("#oculto").slideUp("slow")
+            }
+          });
+  
+          $("#ahora").click(
+              function() {
+                var currentTime = new Date()
+                var mes = currentTime.getMonth() + 1;
+                var dia = currentTime.getDate();
+                var ano = currentTime.getFullYear();
+  
+                var horas = currentTime.getHours()
+                var minutos = currentTime.getMinutes()
+                var segundos = currentTime.getSeconds()
+                $("#id_darAlta").val(dia + "/" + mes + "/" + ano + " " +
+                                     horas + ":" + minutos + ":" + segundos)
+              });
+        });
+  </script>
+{% endblock %}

@@ -1,0 +1,242 @@
+{% if "Exitosamente" in mensaje %}
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;
+    </button>
+    {{mensaje}}
+  </div>
+
+{% elif "nombre" in mensaje %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;
+    </button>
+    {{mensaje}}
+  </div>
+
+{% elif "siguientes" in mensaje %}
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;
+    </button>
+    {{mensaje}}
+  </div>
+{% endif %}
+
+<script>
+  function envia1(pag){
+      var formu = $('#formIND').serialize();
+      $.post(pag,formu,function(data){
+          $("#d_Ind").html(data);
+      });
+  }
+  $(document).ready(
+      function(){
+          // GENERAL---------------------------------
+          // Cambiar el estilo de los labels:
+          $("p label").css("font-weight","bold");
+  
+          // DIETAS-----------------------------------
+          $('#id_observacion').addClass("field span4");
+  
+          // HIDRATACION-----------------------------
+          // Para hacerlo con la tabla
+          $("#oculta").hide();
+  
+          if ($('#id_combina_0').is(':checked')){
+              $("#oculta").show();
+          };
+          // Para esconder y hacer aparecer el nuevo listado:
+          $("#id_combina_0").change(function(){
+              var ver = $('#id_combina_0').is(':checked');
+              if (ver == true) {
+                  $("#oculta").show();
+              }
+              else{
+                  $("#oculta").hide();
+              }
+          });
+          $("#id_combina_1").change(function(){
+              var ver = $('#id_combina_1').is(':checked');
+              if (ver == true) {
+                  $("#oculta").hide();
+              }
+          });
+  
+          // IMAGENOLOGIA:
+          $('ul.imagen :checkbox').change(function(){
+              var id = $(this).attr('id');
+              var val = $(this).attr('value');
+              var ch = $('#'+id).is(':checked');
+              if (ch == true) {
+                  $(this).parents("label").after("<label id='nuevo_"+id+"'"+"'for='id_Otros' class = fontWeightBold>Parte Cuerpo: <input id='id_Otros' maxlength='200' name='c_"+val+"'"+"' type='text'></label>");
+              }
+              else{
+                  $('#nuevo_'+id).remove();
+              }
+          });
+
+          $('ul.endoscopico :checkbox').change(function(){
+              var id = $(this).attr('id');
+              var val = $(this).attr('value');
+              var ch = $('#'+id).is(':checked');
+              if (ch == true) {
+                  $(this).parents("label").after("<label id='nuevo_"+id+"'"+"'for='id_Otros' class = fontWeightBold>Parte Cuerpo: <input id='id_Otros' maxlength='200' name='c_"+val+"'"+"' type='text'></label>");
+              }
+              else{
+                  $('#nuevo_'+id).remove();
+              }
+          });
+
+  });
+</script>
+
+<form id="formIND" method="post" action="">
+  {% csrf_token %}
+  <fieldset>
+    
+    {% if tipo_ind == 'hidrata'%}
+      <center>
+        <legend>Indicaciones de Hidrataci&oacute;n
+        </legend>
+      </center>
+      <!-- Horizontal -->
+      <center>
+        <div id="tablaHID"
+          class = "height410 width550 overflow" >
+          <table>
+		    <tr>
+              <td>
+                <b>{{form.volumen.label}}</b>
+              </td>
+              <td>
+                <div class="input-append">
+                  {{form.volumen}} 
+                  <span class="add-on">
+                    cc/d&iacute;a
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+              <td>
+                <strong>{{form.hidrata.label}}</strong>
+              </td>
+              <td>
+                {{form.hidrata}}
+              </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+              <td>
+                <b>{{form.combina.label}}</b>
+              </td>
+              <td>
+                {{form.combina}}
+              </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr id="oculta">
+              <td>
+                <b>{{form.combina_sol.label}}</b>
+              </td>
+              <td>
+                {{form.combina_sol}}
+              </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+              <td>
+                <b>{{form.vel_inf.label}}</b>
+              </td>
+              <td>
+                <div>
+                  {{form.vel_inf}} 				
+				  &nbsp;
+                  {{form.vel_inf_unidad}}
+                </div>  
+              </td>
+            </tr>
+            <tr>
+              <br>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td>
+                <b>{{form.complementos.label}}</b>
+              </td>
+              <td>
+                {{form.complementos}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+
+    {% endif %}
+    
+    {% if tipo_ind == 'dieta'%}
+      <center>
+        <legend>Indicaciones de Dieta</legend>
+      </center>
+      {{ form.as_p }} 
+    {% endif %} 
+    
+    {% if tipo_ind == 'lab'%}
+    <center>
+      <legend>Indicaciones de Laboratorio</legend>
+    </center>
+    <div id="listaLAB"
+         class = "height350 width440 overflow" >
+      {{form.as_p }}
+    </div>
+    {% endif %} 
+    
+    {% if tipo_ind == 'imagen'%}
+      <center>
+        <legend>Indicaciones de Imagenolog&iacute;a</legend>
+      </center>
+      {{ form.as_p }} 
+    {% endif %} 
+    {% if tipo_ind == 'endoscopico'%}
+      <center>
+        <legend>Indicaciones de Estudios Especiales</legend>
+      </center>
+      {{ form.as_p }} 
+    {% endif %} 
+    <br>
+  </fieldset>
+</form>
+
+{% if ya == 'si' %}  
+  <center>
+	  <div class="btn-group">
+		<button class="btn btn-mini btn-primary"
+				onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}')">
+		  <i class="icon-edit icon-white"></i>
+		  Modificar
+		</button>
+	  </div>    
+	  {% if tipo_ind == 'dieta' or tipo_ind == 'hidrata' %}  
+		  <div class="btn-group">
+			<button class="btn btn-mini btn-primary"
+					onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}/eliminar')">
+			  <i class="icon-remove-sign icon-white"></i>
+			  &nbsp;
+			  Eliminar
+			</button>
+		  </div>
+	  {% endif %} 
+  </center>
+  
+{% else %}
+  <center>
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}')">
+      <i class="icon-plus icon-white"></i>
+      Agregar
+    </button>
+  </center>
+{% endif %}

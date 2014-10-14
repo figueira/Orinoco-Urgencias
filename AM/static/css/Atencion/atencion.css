@@ -1,0 +1,90 @@
+/* atencion_Plan */
+#spinCuerpo{
+	position:fixed;
+	margin-top:15px;
+	margin-left:200px;
+}
+
+#div_general{
+	margin-top:5px;
+	margin-left:5px;
+}
+
+
+/* atencion_Plan_partecuerpo */
+#div_boton1{
+	margin: 5px 35px 5px auto;
+	width: 0px; /*99*/
+}
+
+#botones{
+	margin-left: 10px;
+}
+
+#Parte_Cuerpo_Guardar{
+	margin-top:4px;
+	width: 500px; /*BORRAR*/
+	height:425px;
+}
+
+#div_Parte_Cuerpo{
+	display:inline-table;
+	width:380px;/*380*/
+	height:64%;
+	padding:3px 0px 0px 5px;
+	OVERFLOW: auto;
+}
+
+/* atencion_Plan_partecuerpo */
+
+#div_de_tabla_cuerpo{
+	height:380	px;/*400*/
+	/*width:500px;*/
+	padding:3px 0px 0px 5px;
+	OVERFLOW: auto;
+}
+
+/* atencion_ant_medica */
+
+#div_de_tabla_hist_med{
+	height:auto;
+	width: 580px;
+	margin-top: 40px;
+	OVERFLOW: auto;
+}
+
+#tabla_hist_med td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top: 10px;
+	padding-bottom: 2px;
+}
+
+#tabla_hist_med td:first-child{
+	padding-top: 0;
+}
+
+#tabla_hist_med input[type="text"] {
+    width: 90%;
+}
+
+input.errorCampoAnte{
+	box-shadow: 0 0 5px darkred;
+}
+
+#div_de_tabla_medicamento{
+	height:auto;
+	width: 800px;
+	OVERFLOW: auto;
+}
+
+#tabla_medicamento td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top: 10px;
+	padding-bottom: 2px;
+}
+
+#tabla_medicamento input[type="text"] {
+    width: 90%;
+}

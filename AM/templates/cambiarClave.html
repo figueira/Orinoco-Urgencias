@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+  {% if mensaje %}
+    {{ mensaje }}
+  {% endif %}
+  <div class="centrar">
+    <div class="cuadroGrande">
+      <div class="titulo">
+        Solicitar Cuenta
+      </div>
+      <form class= "tablaAgregar" method="post" action="/usuario/clave">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td>Angtigua Clave</td>
+            <td>{{form.claveV}}</td>
+          </tr>
+          
+          <tr>
+            <td>Nueva Clave</td>
+            <td>{{form.clave}}</td>
+          </tr>
+          
+          <tr>
+            <td>Verificaci&oacute;n de Clave</td>
+            <td>{{form.claveO}}</td>
+          </tr>
+          
+          <tr>
+            <td></td>
+            <td>
+              <input class="button-blue" 
+                     type="submit" 
+                     value="Enviar Solicitud" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+  {% if mensaje %}
+    {{mensaje}}
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <div class="titulo">
+        Lista de usuarios
+      </div>
+      <table class="table table-bordered table-striped">
+        <tr>
+        <th>C&eacute;dula</th>
+        <th>Nombre</th>
+        <th>Sexo</th>
+        <th>Tipo</th>
+        <th>Administrador</th>
+        <th>Habilitado</th>
+        <th>Acciones</th>
+      </tr>
+        {% for l in listaU %}
+          <tr>
+            <td>
+              <span class="nombreLista">
+                {{l.cedula}}
+              </span>
+            </td>
+            <td>
+              <span class="nombreLista">
+                {{l.first_name}} {{l.last_name}}
+              </span>
+            </td>
+            <td>
+              <span class="nombreLista">
+                {{l.sexoR}}
+              </span>
+            </td>
+            <td>
+              <span class="nombreLista">
+                {{l.tipoR}}
+              </span>
+            </td>
+            {% if l.is_staff != True %}
+              <td>
+                <span class="nombreLista">
+                  No
+                </span>
+              </td>
+            {% else %}
+              <td>
+                <span class="nombreLista">
+                  Si
+                </span>
+              </td>
+            {% endif %}
+            {% if l.is_active != True %}
+              <td>
+                <span class="nombreLista">
+                  No
+                </span>
+              </td>
+            {% else %}
+              <td>
+                <span class="nombreLista">
+                  Si
+                </span>
+              </td>
+            {% endif %}
+            <td>
+            {% if l.is_active != True %}
+              <a href="/usuario/listar/{{l.usuario.cedula}}/habilitar">
+                <img src="/static/img/usuarios/aprobar.png" title="Habilitar"/>
+              </a>
+            {% else %}
+              <a href="/usuario/listar/{{l.usuario.cedula}}/deshabilitar">
+                <img src="/static/img/usuarios/negar.png" title="Deshabilitar"/>
+              </a>
+            {% endif %}
+              <a href="/usuario/listar/{{l.usuario.cedula}}/examinar">
+                <img src="/static/img/usuarios/lupa.png" title="Examinar"/>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}

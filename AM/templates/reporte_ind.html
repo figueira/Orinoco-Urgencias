@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Historia Medica</title>
+  <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
+  <!--     <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css"> -->
+
+<style type="text/css">
+    * {
+      padding:0px;
+      margin:0px;
+    }
+
+
+    body {
+      padding: 20px 0px 0px 0px;
+      min-height:525px;
+      font-family: Arial;
+      font-size: 12px;
+    }
+
+    h1 {
+      color: #003D99;
+    }
+
+    h2 {
+      font-size: 14pt;
+      text-align: center;
+      color: #003D99;
+    }
+
+    h3 {
+      text-align: left;
+    }
+
+    form {
+      margin: 0px;
+      padding: 0 0 10px;
+    }
+
+    p {
+      font-size: 10pt;
+    }
+    a:hover {
+      font-weight:bold;
+      color: #848484; 
+      text-decoration:none;
+    }
+
+    td ul,td ol {
+      list-style-type: none;
+      float: left;
+    }
+
+    /*PDF Reporte de Triage*/
+
+     .titulo {
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #47464E;
+      text-decoration:underline;
+    }
+
+    .subtitulos {
+      font-size: 16px;
+      background-color: #A9D0F5;
+      padding-top: 5px;
+      border: 1px;
+      border-width: 2px;
+    }
+
+    .info {
+      font-size: 12px;
+      background-color: #FFFFFF;
+    }
+
+    .logoCMC {
+      src: url(../static/img/logoazul.png);
+      width: 500px;
+      height: 500px;
+    }
+
+    .cuerpo {
+      font-size: 16px;
+      background-color: #FFFFFF;
+      color: #000000;
+    }
+
+    th {
+      background-color: #FFFFFF;
+    }
+</style>
+
+
+</head>
+  <body>
+    <header>
+      <div class="logoCMC">
+      </div>
+
+      <div class="right">
+        <p>
+          <p align="right">Caracas, {{ingreso}}</p>
+          <h1>Centro M&eacute;dico Caracas</h1>
+            Direcci&oacute;n: Av. Eraso, Plaza El Estanque, Urb. San Bernardino, Caracas, Venezuela <br>
+            Tel&eacute;fonos: 58+ 212-555-9111 / 555-9486 / 552-2222
+        </p>
+      </div>
+    </header>
+    <p>M&eacute;dico Responsable: {{ emergencia.responsable.last_name}}, {{ emergencia.responsable.first_name}} <br>
+    C&eacute;dula: {{emergencia.responsable.cedula}}
+    </p>
+
+    <p>Paciente: {{emergencia.paciente.apellidos}}, {{emergencia.paciente.nombres}} <br>
+    C&eacute;dula: {{emergencia.paciente.cedula}}
+    </p> 
+
+    <h2>REPORTE DE INDICACIONES</h2>
+
+
+    <div class="cuerpo">
+      <br>
+      <table >
+        <thead>
+          <tr>
+            <th>
+              <center>Tipo</center>
+            </th>
+            <th>
+              <center>Nombre</center>
+            </th>
+            <th>
+              <center>Estado</center>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in indicaciones %}
+            <tr>
+              <td>
+                <center>
+                  {% if i.indicacion.tipo == 'dieta'%}
+                    <p style="width: 70px; height: 12px">Dieta</p>
+                  {% elif i.indicacion.tipo == 'hidrata'%}
+                    <p style="width: 70px; height: 12px">Hidrataci&oacute;n</p>
+                  {% elif i.indicacion.tipo == 'medicamento'%}
+                    <p style="width: 70px; height: 12px">Medicamento</p>
+                  {% elif i.indicacion.tipo == 'lab'%}
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Laboratorio
+                    </p>
+                  {% elif i.indicacion.tipo == 'imagen'%}
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Imagenolog&iacute;a
+                    </p>
+                  {% elif i.indicacion.tipo == 'endoscopico'%}
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Estudio Endosc&oacute;pico
+                    </p>
+                  {% elif i.indicacion.tipo == 'valora'%}
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Valoraci&oacute;n Especializada
+                    </p>
+                  {% elif i.indicacion.tipo == 'otros'%}
+                    <p style="width: 70px; height: 12px">
+                      Diagn&oacute;stico - Otros
+                    </p>
+                  {% elif i.indicacion.tipo == 'terapeutico'%}
+                    <p style="width: 70px; height: 12px">Terap&eacute;utico</p>
+                  {% endif %}
+                </center>
+              </td>
+              <td>
+                <center>
+                  <p style="width: 250px; height: 12px;">{{i.indicacion}}</p>
+                </center>
+              </td>
+              <td>
+                <center>
+                  <p style="width: 250px; height: 12px;">{{i.statusA}}</p>
+                </center>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

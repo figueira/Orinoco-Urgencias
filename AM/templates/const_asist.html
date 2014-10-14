@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Constancia Asistencia</title>
+    <!-- <link rel="stylesheet" href="/static/css/estilo.css"> -->
+
+  </head>  
+  <body> 
+    <header>
+      <div class="left">
+        <div class="logo"></div>
+      </div>
+      <div class="right">
+        <p>
+          <h4>
+            Centro M&eacute;dico
+          </h4>
+          Direcci&oacute;n<br>
+          Tel&eacute;fonos
+        </p>
+      </div>
+    </header>
+    <p class= "titulo">
+      Informe M&eacute;dico
+    </p>
+    <div class="cuerpo">
+      <div class="izquierda">
+          <p class="main">
+            &nbsp;&nbsp;&nbsp;Se hace constar que el paciente 
+            <b>{{emergencia.paciente.nombre}} {{emergencia.paciente.apellidos}}
+            </b>, de CI. <b>{{emergencia.paciente.cedula}}</b>, fue atendido en
+            el Departamento de Emergencia el d&iacute;a de hoy por presentar <b>
+            {% for d in diags %} {{d.diagnostico.nombreD}},{%endfor%}</b> Se 
+            indican las siguientes recomendaciones: dieta {%if dieta%}
+            {{dieta.indicacion}}({{dieta.dieta_OB}}){% endif%}, medicamentos 
+            {% for m in medicamento %} {{m.indicacion}}({{m.med_Dosis}} 
+            {{m.med_Conc}}), {%endfor%} 
+          </p>
+          <br><br>
+          <p>__________________________</p>
+          <p class = "textdecorationoverline" 
+            <b>DR: {{emergencia.responsable}}</b> <br>
+            CI: {{ emergencia.responsable.cedula }}
+          </p>
+        </div>
+      </div>
+      <footer>
+        <p class = "fecha"> 
+          Caracas, {{ingreso}}
+        </p>
+        <br/>
+      </footer>
+  </body>
+</html>

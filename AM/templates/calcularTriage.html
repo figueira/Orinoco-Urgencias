@@ -1,0 +1,100 @@
+{% extends "base.html" %} 
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
+  </script>
+
+  <script type="text/javascript"
+    src="/static/libs/bootstrap/js/bootstrap-tab.js">
+  </script>
+
+  <script type="text/javascript"
+          src="/static/js/scriptDatePicker.js">
+  </script>
+{% endblock %} 
+{% block estilos %}
+  <link rel="stylesheet"
+        href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+  <link rel='stylesheet' href='/static/css/triage.css'>
+{% endblock %}
+{% block cuerpo %}
+  {% if mensaje %} 
+    {{ mensaje }} 
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span7 centrar">
+      <h4>Calcular Triage</h4>
+  
+      <div class="tabbable">
+        <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs" id="myTab">
+          <li id="litab4" class="active">
+            <a  href="#tab4"
+                data-toggle="tab">
+              Evaluaci&oacute;n
+            </a>
+          </li>
+          <li id="litab1" class="tab-triage">
+            <a href="#tab1" data-toggle="tab">Pregunta 1</a>
+          </li>
+          <li id="litab2" class="tab-triage">
+            <a href="#tab2" data-toggle="tab">Pregunta 2</a>
+          </li>
+          <li id="litab3" class="tab-triage">
+            <a href="#tab3" data-toggle="tab">Pregunta 3</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane text-center" id="tab1">
+            <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
+            <a class="btn btn-danger" 
+               href='/emergencia/{{ idE }}/aplicar_triage/1'>
+              Si
+            </a> 
+            <a id="no_inmediata" class="btn" href="#">
+              No
+            </a>
+          </div>
+  
+          <div class="tab-pane text-center" id="tab2">
+            <h4>¿Este Paciente Puede Esperar?</h4>
+            <a id="si_espera" class="btn btn-primaryt" href="#">
+              Si
+            </a>
+            <a class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage/2'>
+              No
+            </a>
+          </div>
+  
+          <div class="tab-pane text-center" id="tab3">
+            <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
+            <a class="btn btn-primary" 
+               href='/emergencia/{{ idE }}/aplicar_triage/5'>
+              Ninguno
+            </a>
+            <a class="btn btn-success" 
+               href='/emergencia/{{ idE }}/aplicar_triage/4'>
+              Uno
+            </a>
+            <a id="recursos" 
+               class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage'>
+              Varios
+            </a>
+          </div>
+          <div class="tab-pane active tab-evaluacion" id="tab4">
+            <p class='triage-asignado'>{{ triage_asignado }}</p>
+            {% include 'formularios/evaluacionPaciente.html' %}
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    <div class="cuadroGrande span4 centrar">
+      <h4>Imagen Gu&iacute;a</h4>
+      <img src="/static/img/triage.jpg" />
+    </div>
+  </div>
+{% endblock %} 

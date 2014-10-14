@@ -1,0 +1,73 @@
+{% extends "base.html" %} 
+{% block cuerpo %}
+ 
+
+<link rel="stylesheet" href="/static/css/default.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/static/css/nivo-slider.css" type="text/css" media="screen" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+<script src="/static/scripts/jquery.nivo.slider.js" type="text/javascript"></script>
+
+
+
+  <h1>
+    Atenci&oacute;n M&eacute;dica
+  </h1>
+  <p>
+    Mejorando la gesti&oacute;n de los Sistemas de Emergencia de manera 
+    sencilla.
+  </p> 
+  
+    
+    <!-- Slider de Fotos -->
+    <div class="slider-wrapper theme-default">
+      <div id="slider" class="nivoSlider">
+        <img src="/static/img/slider1.png"/>
+        <img src="/static/img/slider2.png"/>
+      </div>
+    </div>
+        
+  <script type="text/javascript">
+  $(window).load(function() {
+    $('#slider').nivoSlider();
+  });
+  </script> 
+
+  
+  <div class="row text-center">
+    <div class="span3">
+      <h3>
+        <img src="/static/img/index/agregar.png" />Agregar
+      </h3>
+      <p>
+        Permite registrar de manera r&aacute;pida nuevos ingresos en el
+        &Aacute;rea de Emergencia.
+      </p>
+    </div>
+    <div class="span3">
+      <h3>
+        <img src="/static/img/index/triaje.png" />Triage
+      </h3>
+      <p>
+        Facilita el registro y la modificaci&oacute;n digital de los datos 
+        m&eacute;dicos de un paciente.
+      </p>
+    </div>
+    <div class="span3">
+      <h3>
+        <img src="/static/img/index/barras.png" />Prioridad
+      </h3>
+      <p>
+        Muestra el estado de salud de los pacientes en el &Aacute;rea de 
+        Emergencia con 5 colores, dependiendo del estado de salud.
+      </p>
+    </div>
+    <div class="span3">
+      <h3>
+        <img src="/static/img/index/reloj.png" />Alarmas
+      </h3>
+      <p>
+        Posee alarmas que evitan que se sobrepase el tiempo de espera máximo.
+      </p>
+    </div>
+  </div>
+{% endblock %}

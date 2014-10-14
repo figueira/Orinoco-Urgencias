@@ -1,0 +1,131 @@
+{% if "Exitosamente" in mensaje %}
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">
+      &times;
+    </button>
+    {{mensaje}}
+  </div>
+{% elif "nombre" in mensaje %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">
+      &times;
+    </button>
+    {{mensaje}}
+  </div>
+{% endif %}
+
+<script>
+  function envia1(pag){
+      var formu = $('#formILIST').serialize();
+      $.post(pag,formu,function(data){
+          $("#d_Ind").html(data);
+      });
+  }
+  
+  function CompruebaCampo(obj){
+    if ($(obj).parents("tr").hasClass("ultimo")){
+      ultimo = $(".ultimo:last");
+      clon = ultimo.clone();
+      ultimo.removeClass("ultimo");
+      clon.insertAfter($(ultimo));
+      $("tr.ultimo:last td center input[type='text']").prop("value","");
+      }
+    }
+    $(document).ready(function(){
+    $("[rel='tooltip']").tooltip();
+  });
+</script>
+
+<form id="formILIST" method="post" action="">
+  {% csrf_token %}
+  <center>
+    <div id="tablaILIST" class = "height400 overflow" >
+      <table id="tabILIST" class="table table-bordered">
+
+
+        <center>
+          <caption>
+            <p class="lead">
+              {% if tipo_ind == 'terapeutico'%}
+                Indicaciones Terap&eacute;uticas
+              {% elif tipo_ind == 'valora'%}
+                Procedimientos de Valoraci&oacute;n Especializada
+              {% elif tipo_ind == 'otros'%}
+                Procedimientos Diagnósticas Adicionales
+              {% elif tipo_ind == 'otras'%}
+                Otras Indicaciones
+              {% endif %}
+            </p>
+          </caption>
+        </center>
+        <thread>
+        <tr class="btn-info">
+          <th>
+            <center>Hora</center>
+          </th>
+          <th>
+            <center>Nombre de Indicaci&oacute;n</center>
+          </th>
+        </tr>
+        </thread>
+        <tbody>
+          {% for i in indicaciones %}
+            <tr class="well">
+              <td>
+                <center>
+                  <p>{{i.horaA}}</p>
+                </center>
+              </td>
+              <td>
+                <center>
+                  <input class="input-xxlarge"
+                         placeholder="Especifique indicaci&oacute;n" 
+                         type="text"
+                         name="{{i.id}}nombre" 
+                         value="{{i.indicacion.nombre}}">
+                </center>
+              </td>
+            </tr>
+          {% endfor %}
+          <tr class="ultimo">
+            <td></td>
+            <td>
+              <center>
+                <input class="input-xxlarge"
+                       placeholder="Especifique indicaci&oacute;n" 
+                       type="text"
+                       name="nuevaInd" 
+                       value="" 
+                       onChange="CompruebaCampo(this)">
+              </center>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </center>
+  <br>
+</form>
+<center>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}/modificar')">
+      <i class="icon-edit icon-white"></i>
+      Modificar
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}/agregar')">
+      <i class="icon-plus icon-white"></i>
+      Agregar
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-mini btn-primary"
+            onClick="envia1('/emergencia/indicaciones/{{emergencia.id}}/{{tipo_ind}}')">
+      <i class="icon-arrow-left icon-white"></i>
+      Deshacer
+    </button>
+  </div>
+</center>
