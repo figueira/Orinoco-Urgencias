@@ -4,26 +4,28 @@ from django.db import models
 from django.contrib.auth.models import User
 
 SEXO = (
-    ('1','Masculino'),
-    ('2','Femenino'),
+    ('1', 'Masculino'),
+    ('2', 'Femenino'),
 )
 
 USUARIO = (
-    ('1','Médico'),
-    ('2','Enfermero/a'),
-    ('3','Secretario/a'),
+    ('1', 'Médico'),
+    ('2', 'Enfermero/a'),
+    ('3', 'Secretario/a'),
 )
 
 # Create your models here.
+
+
 class Usuario(User):
-    cedula        = models.IntegerField(default=0, unique=True)
-    tipo          = models.CharField(max_length=1,choices=USUARIO)
+    cedula = models.IntegerField(default=0, unique=True)
+    tipo = models.CharField(max_length=1, choices=USUARIO)
     administrador = models.BooleanField(default=False)
-    sexo          = models.CharField(max_length=1,choices=SEXO)
-    tlf_cel       = models.CharField(max_length=11) 	
-    direccion     = models.CharField(max_length=128)
-    tlf_casa      = models.CharField(max_length=11)
-    habilitado    = models.BooleanField(default=False)
+    sexo = models.CharField(max_length=1, choices=SEXO)
+    tlf_cel = models.CharField(max_length=11)
+    direccion = models.CharField(max_length=128)
+    tlf_casa = models.CharField(max_length=11)
+    habilitado = models.BooleanField(default=False)
 
     def sexoR(self):
         resp = "Hombre"
