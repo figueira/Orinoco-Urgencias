@@ -442,57 +442,84 @@ def indicaciones_pdf(request, id_emergencia):
   c.save()
   return response
 
-  
 
 def reporte_triage_pdf(request, id_emergencia):
-  # Create the HttpResponse object with the appropriate PDF headers.
-  response = HttpResponse(content_type='application/pdf')
-  response['Content-Disposition'] = 'filename="triage.pdf"'
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="triage.pdf"'
 
-  # Create the PDF object, using the response object as its "file."
-  c = canvas.Canvas(response)
-  emer = get_object_or_404(Emergencia,id=id_emergencia)
-  t = Triage.objects.filter(emergencia = emer)
-  t=t[0]
+    # Create the PDF object, using the response object as its "file."
+    c = canvas.Canvas(response)
+    emer = get_object_or_404(Emergencia, id=id_emergencia)
+    t = Triage.objects.filter(emergencia=emer)
+    t = t[0]
 
-  header_pdf(c, "Evaluación de", "Triage")
-  
-  i = 8  
-  c.setFont("Helvetica-Bold", 14)
-  c.drawString(-0.3*inch, i*inch, "Datos de Identificación" )
-  c.drawString(3.5*inch, i*inch, "Signos Vitales ")
-    
-  c.setFont("Helvetica", 10)
-  i = i-0.3 
-  c.drawString(-0.3*inch, i*inch, "Nombre:  " + emer.paciente.apellidos +", " +emer.paciente.nombres )
-  i = i-0.2 
-  c.drawString(-0.3*inch, i*inch, "C.I.:  "+ emer.paciente.cedula )
-  i = i-0.2 
-  c.drawString(-0.3*inch, i*inch, "Sexo:  "+ emer.paciente.sexoR() )
-  i = i-0.2 
-  c.drawString(-0.3*inch, i*inch, "Edad:  " + str(emer.paciente.edad()))
-  i = i-0.5 
-  c.drawString(-0.3*inch, i*inch, "NIVEL DE TRIAGE:  " + str(t.nivel))
-  
-  i = 8 -0.3 
-  c.drawString(3.5*inch, i*inch, "Temperatura:  " + str(t.signos_tmp) + " °C")
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Tensión Arterial:  " + str(t.signos_pb) + " / " + str(t.signos_pa) + " mmHg")
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Cardíaca:  " + str(t.signos_fc) + " ppm") 
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Respiración:  " + str(t.signos_fr) + " ppm") 
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Saturación Oxígeno:  " + str(t.signos_saod) + " %")
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "AVPU:  " + str(t.signos_avpu))
-  i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
-  
-  i = i -0.6
-  c.drawString(-0.3*inch, i*inch, "Atendido:  " + str(t.fechaReal.strftime("%d/%m/%y a las %H:%M")))
-  c.drawString(3.5*inch, i*inch, "Médico: " + t.medico.last_name + ", " + t.medico.first_name)
-  
-  c.showPage()
-  c.save()
-  return response
+    header_pdf(c, "Evaluación de", "Triage")
+
+    i = 8
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(-0.3*inch, i*inch, "Datos de Identificación")
+    c.drawString(3.5*inch, i*inch, "Signos Vitales ")
+
+    c.setFont("Helvetica", 10)
+    i = i-0.3
+    c.drawString(
+        -0.3*inch, i*inch, "Nombre:  " +
+        emer.paciente.apellidos + ", " +
+        emer.paciente.nombres
+    )
+    i = i-0.2
+    c.drawString(
+        -0.3*inch, i*inch, "C.I.:  " +
+        emer.paciente.cedula
+        )
+    i = i-0.2
+    c.drawString(
+        -0.3*inch, i*inch, "Sexo:  " +
+        emer.paciente.sexoR()
+    )
+    i = i-0.2
+    c.drawString(-0.3*inch, i*inch, "Edad:  " + str(emer.paciente.edad()))
+    i = i-0.5
+    c.drawString(-0.3*inch, i*inch, "NIVEL DE TRIAGE:  " + str(t.nivel))
+
+    i = 8 - 0.3
+    c.drawString(
+        3.5*inch, i*inch, "Temperatura:  " + str(t.signos_tmp) + " °C")
+    i = i - 0.2
+    c.drawString(
+        3.5*inch, i*inch, "Tensión Arterial:  " +
+        str(t.signos_pb) + " / " + str(t.signos_pa) + " mmHg"
+    )
+    i = i - 0.2
+    c.drawString(
+        3.5*inch, i*inch, "Frecuencia Cardíaca:  " +
+        str(t.signos_fc) + " ppm"
+        )
+    i = i - 0.2
+    c.drawString(
+        3.5*inch, i*inch, "Frecuencia Respiración:  " +
+        str(t.signos_fr) + " ppm")
+    i = i - 0.2
+    c.drawString(
+        3.5*inch, i*inch, "Saturación Oxígeno:  " +
+        str(t.signos_saod) + " %"
+    )
+    i = i - 0.2
+    c.drawString(3.5*inch, i*inch, "AVPU:  " + str(t.signos_avpu))
+    i = i - 0.2
+    c.drawString(3.5*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
+
+    i = i - 0.6
+    c.drawString(
+        -0.3*inch, i*inch, "Atendido:  " +
+        str(t.fechaReal.strftime("%d/%m/%y a las %H:%M"))
+    )
+    c.drawString(
+        3.5*inch, i*inch, "Médico: " +
+        t.medico.last_name + ", " + t.medico.first_name
+    )
+
+    c.showPage()
+    c.save()
+    return response

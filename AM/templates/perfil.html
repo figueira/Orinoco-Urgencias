@@ -51,7 +51,7 @@
 				   Realizar Historia M&eacute;dica 
 			    </a>
 			    <a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
-			       Informe de Triage
+			       Informe de Triage {{ ea.triage|length }}
 			    </a>  
 			{% endif %}
 			<a href="/emergencia/{{ ea.id }}/daralta" class="btn btn-primary">
@@ -75,11 +75,12 @@
 				   Reporte de Indicaciones
 			    </a> 
 			{% endif %}	
-			{% if ea.triage != 0 %}
+			{% if ea.triage %}
 				<a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
-			       Informe de Triage
+			       Informe de Triage 
 			    </a> 
 			{% endif %}
+			
 			
 		{% endif %}
 		
