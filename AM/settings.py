@@ -132,6 +132,7 @@ INSTALLED_APPS = INSTALLED_APPS + [
     'app_paciente',
     'app_registro',
     'app_usuario',
+    'app_historiaMedica',
 ]
 
 # Utilidades third party
