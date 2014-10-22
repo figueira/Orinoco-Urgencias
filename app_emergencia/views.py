@@ -46,6 +46,7 @@ from reportlab.lib.colors import pink, black, red, lightblue, white
 import cgi
 import json
 from django.template.loader import render_to_string
+
 from app_enfermedad.models import *
 from app_paciente.models import *
 from itertools import izip
@@ -123,16 +124,16 @@ def emergencia_buscar(request):
         # print "LA NUEVA ES: \n"
         # print list(set(lista))
 
-        info = {
-            'form': form,
-            'lista': lista,
-            'titulo': titulo,
-            'resultados': resultados
-        }
-        return render_to_response(
-            'listaB.html',
-            info,
-            context_instance=RequestContext(request))
+            info = {
+                'form': form,
+                'lista': lista,
+                'titulo': titulo,
+                'resultados': resultados
+            }
+            return render_to_response(
+                'listaB.html',
+                info,
+                context_instance=RequestContext(request))
     else:
         busqueda = BuscarEmergenciaForm()
 
@@ -517,7 +518,10 @@ def emergencia_agrega_emer(request, id_emergencia):
 @login_required(login_url='/')
 def emergencia_darAlta(request, idE):
     emergencia = get_object_or_404(Emergencia, id=idE)
-    medico = Usuario.objects.get(username=request.user)
+    try:
+        medico = Usuario.objects.get(username=request.user)
+    except:
+        return HttpResponseRedirect('/paciente/'+str(emergencia.paciente.id))
     if (medico.tipo == "1"):
         if request.method == 'POST':
             form = darAlta(request.POST)
@@ -890,7 +894,7 @@ def estadisticas_per(request, dia, mes, anho, dia2, mes2, anho2):
 
         horas[grupo] += 1
         emergencias_por_horas[grupo].append(egreso)
-        total_egresos = sum(horas)
+    total_egresos = sum(horas)
 
     # Causas de espera por grupo
     (causas_pacientes_en_negro, causas_transicion_negro) = \
@@ -1150,57 +1154,60 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
     else:
         tiene_cubiculo = AsignarCub.objects.filter(
             emergencia=emergencia).count() > 0
-    if (cubiculo is not None) and (not tiene_cubiculo):
-        emergencia.fecha_Esp_act = datetime.now()
-        emergencia.save()
+        if (cubiculo is not None) and (not tiene_cubiculo):
+            emergencia.fecha_Esp_act = datetime.now()
+            emergencia.save()
 
-        # Actualizar la causa de espera por ubicacion
-        espera = get_object_or_404(Espera, nombre='Ubicacion')
-        espera_emergencia = EsperaEmergencia.objects.filter(
-            espera=espera, emergencia=emergencia).update(
-            hora_fin=datetime.now())
+            # Actualizar la causa de espera por ubicacion
+            espera = get_object_or_404(Espera, nombre='Ubicacion')
+            espera_emergencia = EsperaEmergencia.objects.filter(
+                espera=espera, emergencia=emergencia).update(
+                hora_fin=datetime.now())
 
-        triage = Triage.objects.filter(
-            emergencia=id_emergencia).order_by("-fechaReal")
+            triage = Triage.objects.filter(
+                emergencia=id_emergencia).order_by("-fechaReal")
 
-        triage = triage[0]
-        atencion = Atencion.objects.create(
-            emergencia=emergencia,
-            medico=emergencia.responsable,
-            fecha=datetime.now(),
-            fechaReal=datetime.now(),
-            area_atencion=triage.areaAtencion.id
-        )
+            triage = triage[0]
+            atencion = Atencion.objects.create(
+                emergencia=emergencia,
+                medico=emergencia.responsable,
+                fecha=datetime.now(),
+                fechaReal=datetime.now(),
+                area_atencion=triage.areaAtencion.id
+            )
 
-        # Aqui se garantiza que el 'cubiculo' no va a ser None,
-        # puesto que se tuvo
-        # que haber seleccionado un cubiculo para llegar aqui
-        asignacion_cubiculo = AsignarCub.objects.create(
-            emergencia=emergencia, cubiculo=cubiculo)
-        mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
-    else:
-        # Aqui necesariamente hay un cubiculo asignado
-        asignacion_cubiculo = AsignarCub.objects \
-            .filter(emergencia=emergencia)[0]
-        if cubiculo is None:
-            # Aqui se pidio no asignar ningun cubiculo
-            asignacion_cubiculo.delete()
-            mensaje = 'Logrado: Eliminación de asignación de cubículo'
+            # Aqui se garantiza que el 'cubiculo' no va a ser None,
+            # puesto que se tuvo
+            # que haber seleccionado un cubiculo para llegar aqui
+            asignacion_cubiculo = AsignarCub.objects.create(
+                emergencia=emergencia,
+                cubiculo=cubiculo
+            )
+            mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
         else:
-            asignacion_cubiculo.cubiculo = cubiculo
-            asignacion_cubiculo.save()
-            mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " actualizado"
+            # Aqui necesariamente hay un cubiculo asignado
+            asignacion_cubiculo = AsignarCub.objects \
+                .filter(emergencia=emergencia)[0]
+            if cubiculo is None:
+                # Aqui se pidio no asignar ningun cubiculo
+                asignacion_cubiculo.delete()
+                mensaje = 'Logrado: Eliminación de asignación de cubículo'
+            else:
+                asignacion_cubiculo.cubiculo = cubiculo
+                asignacion_cubiculo.save()
+                mensaje = "Logrado: Cubiculo " + \
+                    cubiculo.nombre + " actualizado"
 
-    if cubiculo is None:
-        return emergencia_listar_todas(request, mensaje=mensaje)
-    else:
-        mensaje = ""
-    # if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
-    #    print 'Enviando a ambulatoria'
-    #    return emergencia_listar_ambulatoria(request, mensaje = mensaje)
-    #  else:
-    #    print 'Enviando a observación'
-    #    return emergencia_listar_observacion(request, mensaje)
+        if cubiculo is None:
+            return emergencia_listar_todas(request, mensaje=mensaje)
+        # else:
+        #     mensaje = mensaje
+        # if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
+        #    print 'Enviando a ambulatoria'
+        #    return emergencia_listar_ambulatoria(request, mensaje = mensaje)
+        #  else:
+        #    print 'Enviando a observación'
+        #    return emergencia_listar_observacion(request, mensaje)
 
     return emergencia_listar_todas(
         request, mensaje=mensaje

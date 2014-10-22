@@ -27,8 +27,8 @@ from django.http import HttpResponse
 def paciente_perfil(request, idP):
     paciente = get_object_or_404(Paciente, pk=idP)
     es = Emergencia.objects.filter(paciente=paciente).order_by('hora_egreso')
-    tam = len(es)
-    ea = es[tam-1]
+    # tam = len(es)
+    ea = es.last()
     # ea = ea[0]
     t = Triage.objects.filter(emergencia=ea)
     if len(t) != 0:

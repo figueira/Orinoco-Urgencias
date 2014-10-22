@@ -101,12 +101,14 @@ class BuscarEmergenciaForm(forms.Form):
     )
     nombres = forms.CharField(
         label="Nombres",
+        min_length=3,
         max_length=32,
         required=False,
         validators=[validate_nombre]
     )
     apellidos = forms.CharField(
         label="Apellidos",
+        min_length=3,
         max_length=32,
         required=False,
         validators=[validate_apellido]

@@ -1780,6 +1780,6 @@ def paciente_perfil_emergencia(request, idE):
         'const_habilitado': constancia, 'ind_habilitado': indicaciones
         }
     return render_to_response(
-        'perfil.html', info,
+        'app_perfil/perfil.html', info,
         context_instance=RequestContext(request)
         )
