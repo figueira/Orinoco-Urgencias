@@ -155,7 +155,7 @@ class FormularioEvaluacionPaciente(forms.Form):
     motivo = forms.ModelChoiceField(
         label="Motivo de ingreso",
         queryset=Motivo.objects.exclude(
-            nombre__startswith=" ")
+            nombre__startswith=" ").order_by('pk')
         )
     presion_sistolica = forms.IntegerField(
         label="Presión sistólica",
@@ -173,7 +173,8 @@ class FormularioEvaluacionPaciente(forms.Form):
         max_value=100
     )
     temperatura = forms.FloatField(
-        min_value=0
+        min_value=36,
+        max_value=42
     )
 
     # Validaciones perzonalizadas sobre los campos del formulario

@@ -21,12 +21,12 @@ REALIZADO = (
 
 ICAUSA = (
     ('0', 'No Violento'),
-    ('1', 'Colision de Vehiculos'),
+    ('1', 'Colisión de Vehiculos'),
     ('2', 'Arrollamiento'),
     ('3', 'Herido por Arma Blanca'),
     ('4', 'Herido por Arma de Fuego'),
-    ('5', 'Caida de Altura'),
-    ('6', 'Intoxicacion'),
+    ('5', 'Caída de Altura'),
+    ('6', 'Intoxicación'),
     ('7', 'Efecto Adverso a Medicamento'),
 )
 
@@ -44,7 +44,7 @@ RECURSOS = (
 AVPU = (
     ("A", "A - Alerta y ubicado en espacio y tiempo"),
     ("V", "V - Responde ante ordenes verbales"),
-    ("P", "P - Responde a estimulos doloros"),
+    ("P", "P - Responde a estímulos doloros"),
     ("U", "U - Inconciente"),
 )
 
