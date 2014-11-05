@@ -696,3 +696,7 @@ td ul,td ol {
 }
 
 
+/**/
+.progress-bar-inverse {
+  background-color: black;
+}

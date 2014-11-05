@@ -163,7 +163,12 @@ def editarPaciente(request, idP):
                 info,
                 context_instance=RequestContext(request))
     else:
-        form = EditarPacienteForm()
+        form = EditarPacienteForm(initial={
+            'cedula': paciente.cedula,
+            'nombres': paciente.nombres,
+            'apellidos': paciente.apellidos,
+            'email': paciente.email,
+            })
         info = {
             'form': form,
             'paciente': paciente

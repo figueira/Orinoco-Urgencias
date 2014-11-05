@@ -39,13 +39,14 @@ class IniciarSesionForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Cedula de identidad:',
-                'class': 'span2'}))
+            }
+        )
+    )
     uclave = forms.CharField(
         max_length=32,
         widget=forms.PasswordInput(
             attrs={
                 'placeholder': 'Clave:',
-                'class': 'span2'
             }
         )
     )
@@ -83,8 +84,11 @@ class SolicitarCuenta(forms.Form):
         max_length=50,
         error_messages={
             'invalid': ('La direccion de correo es invalida')})
-    clave = forms.CharField(widget=forms.PasswordInput())
-    clave0 = forms.CharField(widget=forms.PasswordInput())
+    clave = forms.CharField(widget=forms.PasswordInput(), label='Clave')
+    clave0 = forms.CharField(
+        widget=forms.PasswordInput(),
+        label='Confirmar clave'
+    )
     administrador = forms.BooleanField(required=False)
 
 

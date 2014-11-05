@@ -11,6 +11,12 @@ from models import *
 
 import re
 
+DocumentoIdentidad = (
+    ('V-', 'Cedula'),
+    ('E-', 'Extranjero'),
+    ('P-', 'Pasaporte'),
+)
+
 ATENCION = (
     (True, 'Si'),
     (False, 'No'),
@@ -47,23 +53,28 @@ def validate_dolor(value):
 
 class AgregarEmergenciaForm(forms.Form):
     ingreso = forms.DateTimeField(
+        required=True,
         label="FECHA Y HORA DE INGRESO",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'dd/MM/aaaa hh:mm:ss',
-                'data-format': 'dd/MM/yyyy hh:mm:ss',
-                'class': 'span2'}
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
             )
     )
+    documento = forms.ChoiceField(choices=DocumentoIdentidad)
     cedula = forms.CharField(
+        required=True,
         label="DOCUMENTO DE IDENTIDAD")
     nombres = forms.CharField(
         label="NOMBRE",
+        required=True,
         max_length=64,
         validators=[validate_nombre]
     )
     apellidos = forms.CharField(
         label="APELLIDO",
+        required=True,
         max_length=64,
         validators=[validate_apellido]
     )
@@ -73,7 +84,12 @@ class AgregarEmergenciaForm(forms.Form):
         required=False
     )
     fecha_nacimiento = forms.DateField(
-        label="FECHA DE NACIMIENTO"
+        label="FECHA DE NACIMIENTO",
+        widget=forms.TextInput(
+            attrs={
+                'data-date-format': 'DD/MM/YYYY',
+                }
+            )
     )
 
 
@@ -83,12 +99,18 @@ class darAlta(forms.Form):
         queryset=Destino.objects.all()
     )
     area = forms.ModelChoiceField(
-        label="Área de la Clínica a la que va",
+        label="Area",
         required=False,
         queryset=AreaAdmision.objects.all()
     )
     darAlta = forms.DateTimeField(
-        label="Fecha y Hora en que se da De Alta"
+        label="Fecha y Hora",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
+        )
     )
     traslado = forms.DateTimeField(required=False)
 
@@ -457,3 +479,38 @@ class AgregarIndEndosForm(forms.Form):
         # Para quitar la linea inicial (-----) del widget:
         self.fields['endoscopico'].empty_label = None
         self.fields['endoscopico'].label = "Exámenes Especiales:"
+
+
+class buscar_por_cedulaForm(forms.Form):
+    documento = forms.ChoiceField(choices=DocumentoIdentidad)
+    cedula = forms.IntegerField(required=True, min_value=999)
+
+
+class buscar_por_nombreForm(forms.Form):
+    nombre = forms.CharField(
+        min_length=4,
+        max_length=20,
+        required=False
+    )
+    apellido = forms.CharField(
+        min_length=4,
+        max_length=20,
+        required=False
+    )
+
+    def clean(self):
+        # run the standard clean method first
+        super(buscar_por_nombreForm, self).clean()
+
+        nombre = self.cleaned_data.get('nombre')
+        apellido = self.cleaned_data.get('apellido')
+
+        if not nombre:
+            if not apellido:
+                raise forms.ValidationError('Debe rellenar alguno de los dos')
+        if not apellido:
+            if not nombre:
+                raise forms.ValidationError('Debe rellenar alguno de los dos')
+
+        # always return the cleaned data
+        return self.cleaned_data

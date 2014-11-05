@@ -1,0 +1,333 @@
+.fontWeightNormal{
+  font-weight: normal;  
+}
+
+.fontWeightBold{
+  font-weight: bold;  
+}
+
+.width40{
+  width: 40px;
+}
+
+.width60{
+  width: 60px;
+}
+
+.width80{
+  width: 80px;
+}
+
+.width5p{
+  width: 5% !important;
+}
+
+.tablaEnfermedadesPaciente{
+  width: 95%;
+  border-left-color:transparent !important;
+}
+
+.width100{
+  width: 100px;
+}
+
+.width110{
+  width: 110px;
+}
+
+.width120{
+  width: 120px;
+}
+
+.width140{
+  width: 140px;
+}
+
+.width150{
+  width: 150px;
+}
+
+.width170{
+  width: 170px;
+}
+
+.width120{
+  width: 120px;
+}
+
+.width200{
+  width: 200px;
+}
+
+.width250{
+  width: 250px;
+}
+
+.width280{
+  width: 280px;
+}
+
+.width350{
+  width: 350px;
+}
+
+.width400{
+  width: 400px;
+}
+
+.width440{
+  width: 440px;
+}
+
+.width480{
+  width: 480px;
+}
+
+.width550{
+  width: 550px;
+}
+
+.width750{
+  width: 750px;
+}
+
+.height12{
+	height: 12px;
+}
+
+.height40{
+  height: 40px;
+}
+
+.height300{
+  height: 300px;
+}
+
+.height350{
+  height: 350px;
+}
+
+.height410{
+  height: 410px;
+}
+
+.height400{
+  height: 400px;
+}
+
+.height450{
+  height: 450px;
+}
+
+.padding2{
+  padding: 2px;
+}
+
+.red{
+  color: red;
+	
+}
+
+.azul{
+  color: #006699;
+}
+
+.fondoRojo{
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.overflow{
+  OVERFLOW:auto;	
+}
+
+.displayNone{
+  display: none;
+}
+
+.displayInline{
+  display: inline;
+}
+
+.marginleft5{
+  margin-left: 5px;	
+}
+
+.textdecorationoverline{
+  text-decoration:overline;
+}
+
+.estadisticas{
+    min-width: 1170px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.fontsize16{
+  font-size: 16px;
+}
+
+.fontsize22{
+  font-size: 22px;
+}
+
+
+/*     atencion_ind_hidrata    */
+
+form#formIND ul {
+  list-style: none
+}
+  
+#formIND {
+  margin-left: 26%;
+  width: 51%;
+}
+
+
+/* atencion_ind_listar*/
+#report div.arrow {
+  background: transparent url(/static/img/Atencion/arrows.png) no-repeat
+    scroll 0px -16px;
+  width: 16px;
+  height: 16px;
+  display: block;
+  cursor: pointer;
+}
+
+#report div.up {
+  background-position: 0px 0px;
+}
+
+/*  atencion_ind_medica*/
+
+.s2 {
+  width: 70px;
+}
+
+.s3 {
+  width: 120px;
+}
+
+/* const_asist */
+
+
+.titulo {
+  font-size: 27px;
+  text-align: center;
+  font-weight: bold;
+  color: #47464E;
+  text-decoration:underline;
+}
+
+
+.fecha {
+  text-align: right;
+}
+
+.izquierda{
+  padding: 5px;
+  text-align: center;
+  /*border-style:groove;
+  border-width:2px;*/
+  
+
+}
+p.main {
+  text-align:justify;
+}
+
+
+.left{
+  text-align: left;
+}
+.right{
+  text-align: right;
+}
+
+
+/*historia_med*/
+
+
+.fecha {
+  text-align: right;
+}
+
+.izquierda {
+  padding: 5px;
+  text-align: center;
+  /*border-style:groove;
+                border-width:2px;*/
+}
+
+p.main {
+  text-align: justify;
+}
+
+.left {
+  float: left;
+  /*text-align: left;*/
+  /*border-width:2px;*/
+}
+
+.right {
+  text-align: right;
+  /*float: right;*/
+}
+
+.bloque {
+  border-style: solid;
+  border-width: 1px;
+  background-color: #CBC5B8;
+}
+/*listaB*/
+a.espera:link,a.espera:visited,a.espera:active {
+  text-decoration: none
+}
+/*lista*/
+
+/*reporte_ind*/
+
+
+.subtitulos {
+  font-size: 16px;
+  background-color: #A9D0F5;
+  padding: 2px;
+  border: 1px;
+  border-width: 1px;
+}
+
+.fecha {
+  text-align: right;
+}
+
+.izquierda {
+  padding: 5px;
+  text-align: center;
+  /*border-style:groove;
+                border-width:2px;*/
+}
+
+p.main {
+  text-align: justify;
+}
+
+.left {
+  float: left;
+  /*text-align: left;*/
+  /*border-width:2px;*/
+}
+
+.right {
+  text-align: right;
+  /*float: right;*/
+}
+/*reporteTriage*/
+
+.fecha {
+  text-align: right;
+}
+
+/**/
+
+.top5{
+  margin-top: 5px;
+}

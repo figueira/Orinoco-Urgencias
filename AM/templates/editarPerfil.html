@@ -1,17 +1,18 @@
 {% extends "base.html" %} 
+{% load bootstrap %}
 {% block cuerpo %}
-  <div class="centrar">
-    <div class="cuadroGrande">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
       <center>
         <h3>
           Editar Perfil
         </h3>
         
-        <form class="tablaAgregar" 
+        <form class="" 
               method="post"
               action="/paciente/{{paciente.pk}}/editar">
           {% csrf_token %}
-         
+         {% comment %}
           <table>         
             <tr>
               <td><font size=5><B> Paciente </B></font></td>
@@ -78,6 +79,12 @@
               </td>
             </tr>
           </table>
+         {% endcomment %}
+         <div class="col-md-12 top20">{{ form.cedula|bootstrap_horizontal }}</div>
+         <div class="col-md-12 top20">{{ form.nombres|bootstrap_horizontal }}</div>
+         <div class="col-md-12 top20">{{ form.apellidos|bootstrap_horizontal }}</div>
+         <div class="col-md-12 top20">{{ form.email|bootstrap_horizontal }}</div>
+			<input class="btn btn-primary top20" type="submit" value="Guardar" />
         </form>
     </div>
   </div> 

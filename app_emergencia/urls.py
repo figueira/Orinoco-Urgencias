@@ -83,4 +83,19 @@ urlpatterns = patterns(
         'emergencia_buscar'),
     url('^emergencia/(?P<idE>\w+)/perfil$',
         'paciente_perfil_emergencia'),
+
+)
+
+urlpatterns = urlpatterns + patterns(
+    '',
+    url(
+        r'^emergencia/buscar/cedula/$',
+        views.formulario_busqueda_cedula.as_view(),
+        name='buscar_por_cedula'
+    ),
+    url(
+        r'^emergencia/buscar/nombre/$',
+        views.formulario_busqueda_nombre.as_view(),
+        name='buscar_por_nombre'
+    ),
 )

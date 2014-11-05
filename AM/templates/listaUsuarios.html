@@ -53,7 +53,7 @@
                 </span>
               </td>
             {% endif %}
-            {% if l.is_active != True %}
+            {% if l.habilitado != True %}
               <td>
                 <span class="nombreLista">
                   No
@@ -67,7 +67,7 @@
               </td>
             {% endif %}
             <td>
-            {% if l.is_active != True %}
+            {% if l.habilitado != True %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/habilitar">
                 <img src="/static/img/usuarios/aprobar.png" title="Habilitar"/>
               </a>

@@ -38,6 +38,14 @@ urlpatterns = patterns(
         'app_usuario.views.usuario_deshabilitar'),
     url('^usuario/listar/(?P<cedulaU>\d+)/examinar$',
         'app_usuario.views.usuario_examinar'),
+    url('^usuario/activar/(?P<cedulaU>\d+)/',
+        'app_usuario.views.usuario_activar'),
+    url('^usuario/desactivar/(?P<cedulaU>\d+)/',
+        'app_usuario.views.usuario_desactivar'),
+    url('^usuario/promover/(?P<cedulaU>\d+)/',
+        'app_usuario.views.usuario_promover'),
+    url('^usuario/despromover/(?P<cedulaU>\d+)/',
+        'app_usuario.views.usuario_despromover'),
 
     # Estadisticas
     url('^estadisticas/$', 'app_emergencia.views.estadisticas'),

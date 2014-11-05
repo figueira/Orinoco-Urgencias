@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 # Formularios
 from django.core.context_processors import csrf
 from django.template import RequestContext
+from django.contrib import messages
 
 # General HTML
 from django.shortcuts import render_to_response, redirect,\
@@ -54,6 +55,7 @@ from app_emergencia.pdf import *
 from app_historiaMedica.views import paciente_perfil_emergencia
 ######################################################
 
+from django.views import generic
 
 # Cantidad de segundos en 1,2,..,6 horas
 # hora_en_segundos[0] -> Segundos en 0 horas
@@ -156,7 +158,7 @@ def emergencia_buscar(request):
 
 def emergencia_listar_todas(request, mensaje=''):
     emergencias = Emergencia.objects.filter(hora_egreso=None) \
-        .order_by('hora_ingreso')
+        .order_by('paciente__apellidos')
     cubiculos = Cubiculo.objects.all()
 
     form = IniciarSesionForm()
@@ -402,15 +404,37 @@ def emergencia_agregar(request):
         if form.is_valid():
             pcd = form.cleaned_data
             p_cedula = pcd['cedula']
+            p_documento = pcd['documento']
             p_nombres = pcd['nombres']
             p_apellidos = pcd['apellidos']
             p_sexo = pcd['sexo']
             p_fecha_nacimiento = pcd['fecha_nacimiento']
+            #
+            # NOTA:
+            # Codigo viejo, cambiado por uno mas efeciente.
+            # Todavia se puede optimizar con un modelFORM
+            #
             # print p_fecha_nacimiento
-            prueba = Paciente.objects.filter(cedula=p_cedula)
-            if len(prueba) == 0:
-                p = Paciente(
-                    cedula=p_cedula,
+            # prueba = Paciente.objects.filter(cedula=p_cedula)
+            # if len(prueba) == 0:
+            #     p = Paciente(
+            #         cedula=p_documento + str(p_cedula),
+            #         nombres=p_nombres,
+            #         apellidos=p_apellidos,
+            #         sexo=p_sexo,
+            #         fecha_nacimiento=p_fecha_nacimiento,
+            #         tlf_cel="",
+            #         email="",
+            #         direccion="",
+            #         tlf_casa="",
+            #         contacto_rel=11,
+            #         contacto_nom="",
+            #         contacto_tlf="")
+            #     p.save()
+            try:
+
+                p, creado = Paciente.objects.get_or_create(
+                    cedula=p_documento + str(p_cedula),
                     nombres=p_nombres,
                     apellidos=p_apellidos,
                     sexo=p_sexo,
@@ -421,41 +445,81 @@ def emergencia_agregar(request):
                     tlf_casa="",
                     contacto_rel=11,
                     contacto_nom="",
-                    contacto_tlf="")
-                p.save()
+                    contacto_tlf=""
+                )
+            except:
+                creado = False
+                paciente = Paciente.objects.get(
+                    cedula=p_documento + str(p_cedula)
+                )
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Ya existe un paciente con esta cedula. &nbsp;&nbsp;'
+                    +
+                    '<a target="_blank" href="/paciente/'
+                    + str(paciente.id) +
+                    '" class="btn btn-xs '
+                    +
+                    'btn-warning" > Ir al paciente </a>',
+                    extra_tags='danger'
+                )
+                info = {
+                    'form': form
+                }
+                return render_to_response(
+                    'agregarPaciente.html',
+                    info,
+                    context_instance=RequestContext(request))
+            # else:
+            #     p = prueba[0]
+            e_activa = len(Emergencia.objects.filter(
+                paciente=p).filter(hora_egreso__isnull=True))
+            if e_activa == 0:
+                e_ingreso = Usuario.objects.get(
+                    username=request.user)
+                e_responsable = e_ingreso
+                e_horaIngreso = pcd['ingreso']
+                e_horaIngresoReal = datetime.now()
+                e = Emergencia(
+                    paciente=p,
+                    responsable=e_responsable,
+                    ingreso=e_ingreso,
+                    hora_ingreso=e_horaIngreso,
+                    hora_ingresoReal=e_horaIngresoReal,
+                    hora_egreso=None
+                )
+                e.save()
+                espe = get_object_or_404(Espera, nombre='Ubicacion')
+                espera1 = EsperaEmergencia(
+                    espera=espe,
+                    emergencia=e,
+                    estado='0'
+                )
+                espera1.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Paciente agregado con éxito'
+                )
+                return HttpResponseRedirect('/emergencia/listar/todas')
             else:
-                p = prueba[0]
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Este usuario ya tiene una \
+                    emergencia actual sin atender',
+                    extra_tags='danger'
+                )
+                msj_tipo = "error"
+                msj_info = "Ya este usuario esta en una emergencia.\
+                    No puede ingresar a un usuario 2 veces a la emergencia"
 
-        e_activa = len(Emergencia.objects.filter(
-            paciente=p).filter(hora_egreso__isnull=True))
-        if e_activa == 0:
-            e_ingreso = Usuario.objects.get(
-                username=request.user)
-            e_responsable = e_ingreso
-            e_horaIngreso = pcd['ingreso']
-            e_horaIngresoReal = datetime.now()
-            e = Emergencia(
-                paciente=p,
-                responsable=e_responsable,
-                ingreso=e_ingreso,
-                hora_ingreso=e_horaIngreso,
-                hora_ingresoReal=e_horaIngresoReal,
-                hora_egreso=None
-            )
-            e.save()
-            espe = get_object_or_404(Espera, nombre='Ubicacion')
-            espera1 = EsperaEmergencia(espera=espe, emergencia=e, estado='0')
-            espera1.save()
-            return redirect('/emergencia/listar/todas')
-        else:
-            msj_tipo = "error"
-            msj_info = "Ya este usuario esta en una emergencia.\
-                No puede ingresar a un usuario 2 veces a la emergencia"
         info = {
             'form': form,
             'msj_tipo': msj_tipo,
             'msj_info': msj_info
-        }
+            }
         return render_to_response(
             'agregarPaciente.html',
             info,
@@ -576,7 +640,7 @@ def emergencia_darAlta(request, idE):
                 'darAlta.html',
                 info,
                 context_instance=RequestContext(request))
-    return redirect("/emergencia/listar/todas")
+    return HttpResponseRedirect("/emergencia/listar/todas")
 
 
 @login_required(login_url='/')
@@ -1020,7 +1084,7 @@ def estadisticas_per(request, dia, mes, anho, dia2, mes2, anho2):
 def estadisticas_sem(request, dia, mes, anho):
     fecha_fin = datetime(int(anho), int(mes), int(dia))
     fecha_inicio = fecha_fin - timedelta(weeks=1)
-    return redirect(
+    return HttpResponseRedirect(
         '/estadisticas/' + str(fecha_inicio.day) + '-' +
         str(fecha_inicio.month) + '-' + str(fecha_inicio.year) +
         '/' + dia + '-' + mes + '-' + anho)
@@ -1028,8 +1092,19 @@ def estadisticas_sem(request, dia, mes, anho):
 
 def estadisticas(request):
     hoy = datetime.today()
-    return redirect('/estadisticas/' + str(hoy.day) + '-' + str(hoy.month) +
-                    '-' + str(hoy.year))
+    return HttpResponseRedirect(
+        '/estadisticas/'
+        +
+        str(hoy.day)
+        +
+        '-'
+        +
+        str(hoy.month)
+        +
+        '-'
+        +
+        str(hoy.year)
+    )
 
 
 #########################################################
@@ -1226,3 +1301,115 @@ def emergencia_tiene_cubiculo(request, id_emergencia):
     else:
         mensaje = "no"
         return HttpResponse(mensaje)
+
+
+class formulario_busqueda_cedula(generic.ListView):
+
+    def get_data(self, cedula=None):
+        if not cedula:
+            cedula = None
+            return None
+        data = []
+        resultados = []
+        pacientes = Paciente.objects.filter(
+            cedula=cedula).order_by('apellidos')
+
+        if len(pacientes) > 0:
+            for paciente in pacientes:
+                resultados.append(paciente)
+
+        for resultado in resultados:
+            emergencias = Emergencia.objects.filter(
+                paciente=resultado).order_by('paciente__apellidos')
+            for emergencia in emergencias:
+                    if emergencia not in data:
+                        data.append(emergencia)
+        return data
+
+    def get(self, request, *args, **kwargs):
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'get': True,
+                'formulario': buscar_por_cedulaForm()
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+        formulario = buscar_por_cedulaForm(request.POST)
+
+        if formulario.is_valid():
+            cedula = formulario.cleaned_data['cedula']
+            documento = formulario.cleaned_data['documento']
+            cedula = documento+str(cedula)
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'lista': self.get_data(cedula=cedula),
+                'formulario': formulario,
+            },
+            context_instance=RequestContext(request)
+        )
+
+
+class formulario_busqueda_nombre(generic.ListView):
+
+    def get_data(self, nombre=None, apellido=None):
+        resultados = []
+        pacientes = ''
+        data = []
+        if nombre and apellido:
+            print 'Nombre y Apellido'
+            pacientes = Paciente.objects.filter(
+                nombres__icontains=nombre,
+                apellidos__icontains=apellido).order_by('apellidos')
+
+        elif nombre:
+            print'Nombre'
+            pacientes = Paciente.objects.filter(
+                nombres__icontains=nombre).order_by('apellidos')
+        elif apellido:
+            print 'Apellido'
+            pacientes = Paciente.objects.filter(
+                apellidos__icontains=apellido).order_by('apellidos')
+
+        # print pacientes
+        if len(pacientes) > 0:
+            for paciente in pacientes:
+                resultados.append(paciente)
+        # print resultados
+        for paciente in resultados:
+            emergencias = Emergencia.objects.filter(
+                paciente=paciente).order_by('paciente__apellidos')
+            for emergencia in emergencias:
+                    if emergencia not in data:
+                        data.append(emergencia)
+        return data
+
+    def get(self, request, *args, **kwargs):
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'get': True,
+                'formulario': buscar_por_nombreForm()
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+        formulario = buscar_por_nombreForm(request.POST)
+        nombre = None
+        apellido = None
+        if formulario.is_valid():
+            nombre = formulario.cleaned_data['nombre']
+            apellido = formulario.cleaned_data['apellido']
+
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'lista': self.get_data(nombre=nombre, apellido=apellido),
+                'formulario': formulario,
+            },
+            context_instance=RequestContext(request)
+        )

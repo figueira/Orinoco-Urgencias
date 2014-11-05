@@ -327,3 +327,6 @@ p.main {
 }
 
 /**/
+.progress-bar-inverse {
+  background-color: black;
+}

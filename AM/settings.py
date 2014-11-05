@@ -138,7 +138,8 @@ INSTALLED_APPS = INSTALLED_APPS + [
 # Utilidades third party
 INSTALLED_APPS = INSTALLED_APPS+[
     'django_extensions',
-    'south'
+    'south',
+    'bootstrapform'
 
 ]
 

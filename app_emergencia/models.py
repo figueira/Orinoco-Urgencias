@@ -524,7 +524,7 @@ class Asignar(models.Model):
         # Solo hora
         # return self.fechaReal.strftime("%H:%M:%S")
 
-    #-- Para mostrar la informacion adicional cuando el tipo_Frec es SOS:
+    # -- Para mostrar la informacion adicional cuando el tipo_Frec es SOS:
     # Situacion SOS:
     def med_SOS_sit(self):
         result = EspMedics.objects.filter(asignacion=self)
