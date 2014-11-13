@@ -144,24 +144,33 @@ class FormularioEvaluacionPaciente(forms.Form):
             choices=AVPU)
     )
     fecha = forms.DateTimeField(
-        label="Fecha y hora a la que se realiza la Evaluación",
+        label="Fecha y Hora",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'dd/MM/aaaa hh:mm:ss',
-                'data-format': 'dd/MM/yyyy hh:mm:ss',
-                'class': 'span2'
-            }
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
         )
     )
     frecuencia_cardiaca = forms.IntegerField(
         label="Frecuencia cardíaca",
         min_value=0,
-        max_value=200
+        max_value=200,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     frecuencia_respiratoria = forms.IntegerField(
         label="Frecuencia respiratoria",
         min_value=0,
-        max_value=30
+        max_value=30,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     ingreso = forms.CharField(
         label="Tipo de ingreso",
@@ -182,21 +191,41 @@ class FormularioEvaluacionPaciente(forms.Form):
     presion_sistolica = forms.IntegerField(
         label="Presión sistólica",
         min_value=0,
-        max_value=300
+        max_value=300,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     presion_diastolica = forms.IntegerField(
         label="Presión diastólica",
         min_value=0,
-        max_value=200
+        max_value=200,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     saturacion_oxigeno = forms.IntegerField(
         label="Saturación de oxígeno",
         min_value=0,
-        max_value=100
+        max_value=100,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     temperatura = forms.FloatField(
         min_value=36,
-        max_value=42
+        max_value=42,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
 
     # Validaciones perzonalizadas sobre los campos del formulario

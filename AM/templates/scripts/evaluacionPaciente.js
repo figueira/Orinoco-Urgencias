@@ -13,14 +13,12 @@ $('.formulario-evaluacion').replaceWith("{{ plantilla_formulario | escapejs }}")
   triage_asignado = $('.triage-asignado').text();
   if(triage_asignado == ''){
     // Si no se asigno previamente ningun triage, mostrar la primera pregunta
-    $('.tab-triage').fadeOut();
-    $('#litab1').fadeIn();
-    $('a[href = #tab1]').click();
+   // $('.tab-triage').fadeOut();
+    //$('#litab1').fadeIn();
+    $('a[href = #pregunta1]').click();
 
     // Se debe inicializar el datepicker
-    $('#ingreso_picker').datetimepicker({
-      language: 'pt-BR'
-    });
+    $('#id_fecha').datetimepicker(dp_options);
   } else {
     // De lo contrario, se asigna inmediatamente el triage
     url_triage = '/emergencia/{{ id_emergencia }}/aplicar_triage/' +
@@ -28,5 +26,5 @@ $('.formulario-evaluacion').replaceWith("{{ plantilla_formulario | escapejs }}")
     window.location.replace(url_triage)
   }
 {% else %}
-  $('.tab-triage').fadeOut();
+  // $('.tab-triage').fadeOut();
 {% endif %}

@@ -739,10 +739,14 @@ def actualizarSignos(request, idE):
 
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
+    if triage_asignado:
+        triage_inicial = None
+    else:
+        triage_inicial = None
     mensaje = ""
     form = FormularioEvaluacionPaciente()
     info = {
-        'form': FormularioEvaluacionPaciente(),
+        'form': FormularioEvaluacionPaciente(initial=triage_inicial),
         'idE': idE,
         'triage_asignado': triage_asignado
     }
