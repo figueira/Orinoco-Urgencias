@@ -69,11 +69,11 @@
             <td>
             {% if l.habilitado != True %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/habilitar">
-                <img src="/static/img/usuarios/aprobar.png" title="Habilitar"/>
+                <img src="/static/img/usuarios/negar.png" title="Habilitar"/>
               </a>
             {% else %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/deshabilitar">
-                <img src="/static/img/usuarios/negar.png" title="Deshabilitar"/>
+                <img src="/static/img/usuarios/aprobar.png" title="Deshabilitar"/>
               </a>
             {% endif %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/examinar">

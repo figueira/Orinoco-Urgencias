@@ -1,7 +1,6 @@
 {% extends "base.html" %} 
 {% load bootstrap %} 
 
-
 {% block cuerpo %} 
   {% if mensaje %}
     <div class="alert alert-success">
@@ -16,6 +15,11 @@
       $("[rel='tooltip']").tooltip();
       $(".tit-list").html("{{titulo}}")
     });
+  </script>
+  <script>
+    function confirmFun() {
+      confirm("Press a button!");
+    }
   </script>
   <div class="container">
     <div class="col-md-12">
@@ -72,7 +76,8 @@
                   <a href="/emergencia/agrega_emer/{{l.id}}" 
                      rel="tooltip"
                      data-toggle="tooltip"
-                     data-original-title="Ingresar a Emergencias"> 
+                     data-original-title="Ingresar a Emergencias"
+                     onclick="return window.confirm('Esta de acuerdo en ingresar al paciente?')"> 
                     <img src="/static/img/acceso.png"
                          class = "marginleft5 width40 height40" />
                   </a>
