@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from django.contrib import messages
+from django.views import generic
 
 # General HTML
 from django.shortcuts import render_to_response, redirect,\
@@ -1416,4 +1417,143 @@ class formulario_busqueda_nombre(generic.ListView):
                 'formulario': formulario,
             },
             context_instance=RequestContext(request)
+        )
+
+
+class TriageView(generic.FormView):
+
+    form_class = FormularioEvaluacionPaciente
+    template_name = 'triage.html'
+
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        initial = {
+        }
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        triage = Triage.objects.filter(emergencia=emergencia).last()
+        if triage is None:
+            return initial
+        else:
+            initial['motivo'] = triage.motivo
+            initial['temperatura'] = triage.signos_tmp
+            initial['frecuencia_cardiaca'] = triage.signos_fc
+            initial['frecuencia_respiratoria'] = triage.signos_fr
+            initial['presion_diastolica'] = triage.signos_pa
+            initial['presion_sistolica'] = triage.signos_pb
+            initial['saturacion_oxigeno'] = triage.signos_saod
+            initial['avpu'] = triage.signos_avpu
+            initial['intensidad_dolor'] = triage.signos_dolor
+        print initial
+        return initial
+
+    def get(self, request, *args, **kwargs):
+        """
+        Handles GET requests and instantiates a blank version of the form.
+        """
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        try:
+            medico = Usuario.objects.get(username=request.user)
+        except:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'No tiene permisos para \
+                ver esta pagina',
+                extra_tags='danger'
+            )
+            return HttpResponseRedirect('/')
+        if not ((medico.tipo == "1") or (medico.tipo == "2")):
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'No tiene permisos para \
+                ver esta pagina',
+                extra_tags='danger'
+            )
+            return HttpResponseRedirect('/')
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                get=True,
+                idE=emergencia.id,
+            )
+        )
+
+    def form_valid(self, form):
+        medico = Usuario.objects.get(username=self.request.user)
+        if 'id_emergencia' in self.kwargs:
+            emergencia = get_object_or_404(
+                Emergencia,
+                id=self.kwargs['id_emergencia']
+            )
+            triage = Triage.objects.filter(emergencia=emergencia).last()
+            if triage is None:
+                Triage.objects.create(
+                    emergencia=emergencia,
+                    medico=medico,
+                    fecha=form.cleaned_data['fecha'],
+                    motivo=form.cleaned_data['motivo'],
+                    areaAtencion=AreaEmergencia.objects.get(
+                        nombre__startswith=" Ingreso"
+                    ),
+                    signos_tmp=form.cleaned_data['temperatura'],
+                    signos_fc=form.cleaned_data['frecuencia_cardiaca'],
+                    signos_fr=form.cleaned_data['frecuencia_respiratoria'],
+                    signos_pa=form.cleaned_data['presion_diastolica'],
+                    signos_pb=form.cleaned_data['presion_sistolica'],
+                    signos_saod=form.cleaned_data['saturacion_oxigeno'],
+                    signos_avpu=form.cleaned_data['avpu'],
+                    signos_dolor=form.cleaned_data['intensidad_dolor']
+                )
+            else:
+                triage.medico = medico
+                triage.fecha = form.cleaned_data['fecha']
+                triage.motivo = form.cleaned_data['motivo']
+                triage.areaAtencion = AreaEmergencia.objects.get(
+                    nombre__startswith=" Ingreso")
+                triage.signos_tmp = form.cleaned_data['temperatura']
+                triage.signos_fc = form.cleaned_data['frecuencia_cardiaca']
+                triage.signos_fr = form.cleaned_data['frecuencia_respiratoria']
+                triage.signos_pa = form.cleaned_data['presion_diastolica']
+                triage.signos_pb = form.cleaned_data['presion_sistolica']
+                triage.signos_saod = form.cleaned_data['saturacion_oxigeno']
+                triage.signos_avpu = form.cleaned_data['avpu']
+                triage.signos_dolor = form.cleaned_data['intensidad_dolor']
+                triage.save()
+
+        return render_to_response(
+            self.template_name,
+            {
+                'form': form,
+                'triage': triage,
+                'idE': emergencia.id
+
+            },
+            context_instance=RequestContext(self.request))
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                get=True,
+                idE=emergencia.id,
+            )
         )
