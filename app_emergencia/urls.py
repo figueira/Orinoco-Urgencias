@@ -98,4 +98,9 @@ urlpatterns = urlpatterns + patterns(
         views.formulario_busqueda_nombre.as_view(),
         name='buscar_por_nombre'
     ),
+    url(
+        r'^emergencia/(?P<id_emergencia>\d+)/triage/calculo/$',
+        views.TriageView.as_view(),
+        name='calcular-triage'
+    ),
 )
