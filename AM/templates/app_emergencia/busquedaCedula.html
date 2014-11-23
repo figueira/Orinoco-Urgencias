@@ -49,6 +49,7 @@
             <th>Nombre</th>
             <th>Tiempo de Espera Total</th>
             <th>&Uacute;ltima Fecha de Ingreso</th>
+            <th>Destino</th>
             <th>Acciones</th>
           </tr>
           </thead>
@@ -57,6 +58,7 @@
                 <th>Nombre</th>
                 <th>Tiempo de Espera Total</th>
                 <th>&Uacute;ltima Fecha de Ingreso</th>
+                <th>Destino</th>
                 <th>Acciones</th>
             </tr>
         </tfoot>
@@ -71,15 +73,15 @@
               
               <td>{{l.tiempo_emergenciaT}}</td>
               <td>{{l.horaR}}</td>
+              <td>{{l.destino}}</td>
               <td>
                 <center>
                   <a href="/emergencia/agrega_emer/{{l.id}}" 
-                     rel="tooltip"
+                     rel="tooltip" class="btn btn-primary"
                      data-toggle="tooltip"
                      data-original-title="Ingresar a Emergencias"
                      onclick="return window.confirm('Esta de acuerdo en ingresar al paciente?')"> 
-                    <img src="/static/img/acceso.png"
-                         class = "marginleft5 width40 height40" />
+                    Ingresar Paciente
                   </a>
                 </center>
               </td>
