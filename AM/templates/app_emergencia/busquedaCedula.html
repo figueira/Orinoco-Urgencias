@@ -47,6 +47,7 @@
           <thead>
           <tr>
             <th>Nombre</th>
+            <th>Cedula</th>
             <th>Tiempo de Espera Total</th>
             <th>&Uacute;ltima Fecha de Ingreso</th>
             <th>Destino</th>
@@ -56,6 +57,7 @@
           <tfoot>
             <tr>
                 <th>Nombre</th>
+                <th>Cedula</th>
                 <th>Tiempo de Espera Total</th>
                 <th>&Uacute;ltima Fecha de Ingreso</th>
                 <th>Destino</th>
@@ -70,6 +72,7 @@
                   <a href='/emergencia/{{ l.id }}/perfil'> {{l.paciente}} </a>
                 </span>
               </td>
+              <td>{{l.paciente.cedula}}</td>
               
               <td>{{l.tiempo_emergenciaT}}</td>
               <td>{{l.horaR}}</td>
