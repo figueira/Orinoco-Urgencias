@@ -1,0 +1,116 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+	<title>Triage</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body style="font-size: 12px;">
+
+<table style="width: 100%;">
+	<tr>
+		<td style="text-align:center"><img src="{% static 'img/logoazul.png' %}"  width="60" height="90"/></td>
+		<td style="width:500px">
+			Centro Médico de Caracas<br />
+			Av. Eraso, Plaza El Estanque<br />
+			Urb. San Bernardino, Caracas, Venezuela<br />
+			Tel. +58 212-555-9111 / 555-9486 / 552-2222<br />
+		</td>
+		<td></td>
+		<td></td>
+
+	</tr>
+	</table>
+	<table style="margin-top:20px;font-size: 16px;">
+		
+	<tr>
+		<td style="background-color:lightblue;text-align: center;"> 
+			<br/>
+			<h2>Evaluación de Triage</h2>
+			<br/>
+		</td>
+		<td style="background-color:{{triage.colorTriage}};text-align: center;">
+			<br/>
+			<h2>Nivel de Triage: {{triage.nivel}}</h2>
+			<br/>
+
+		</td>
+	</tr>
+</table>
+<table style="width: 100%;margin-top:40px;">
+	<tr>
+		<td></td>
+		<td style="text-align: left;"><h1>Datos&nbsp;de&nbsp;Identificación</h1></td>
+		<td></td>
+		<td style="text-align: center;"><h1>Signos&nbsp;Vitales</h1></td>
+		<td></td>
+	</tr>
+	<tr>
+		<th style="text-align: right;margin-right:5px;" >Cédula  </th>
+		<td>{{triage.emergencia.paciente.cedula}}</td>
+		<td></td>
+		<th style="text-align: left;" >Temperatura</th>
+		<td>{{triage.signos_tmp}}  °C</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;margin-right:5px;" >Nombre  </th>
+		<td >{{triage.emergencia.paciente.apellidos}},{{triage.emergencia.paciente.nombres}}</td>
+		<td></td>
+		<th style="text-align: left;" >Tensión&nbsp;Arterial</th>
+		<td>{{triage.signos_pb}} / {{triage.signos_pa}} mmHg</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;margin-right:5px;" >Sexo  </th>
+		<td>{{triage.emergencia.paciente.sexoR}}</td>
+		<td></td>
+		<th style="text-align: left;" >Frecuencia&nbsp;Cardíaca</th>
+		<td>{{triage.signos_fc}} ppm</td>
+	</tr>
+	<tr>
+		<th style="text-align: right;margin-right:5px;" >Edad  </th>
+		<td>{{triage.emergencia.paciente.edad}}</td>
+		<td></td>
+		<th style="text-align: left;" >Frecuencia&nbsp;Respiración</th>
+		<td>{{triage.signos_fr}} ppm</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<th style="text-align: left;" >Saturación&nbsp;Oxígeno</th>
+		<td>{{triage.signos_saod}} %</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<th style="text-align: left;" >AVPU</th>
+		<td>{{triage.signos_avpu}}</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<th style="text-align: left;" >Dolor</th>
+		<td>{{triage.signos_dolor}} / 10</td>
+	</tr>
+</table>
+<table style="margin-top:60px">
+	<tr>
+		<td>Triage Aplicado:</td>
+		<td><strong>{{triage.fecha}}</strong></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>
+			Medico Responsable:
+		</td>
+		<td><strong>{{triage.medico.last_name}},  {{triage.medico.first_name}}</strong></td>
+	</tr>
+</table>
+
+
+
+</body>
+</html>

@@ -327,7 +327,6 @@ p.main {
 }
 
 /**/
-
-.top5{
-  margin-top: 5px;
+.progress-bar-inverse {
+  background-color: black;
 }

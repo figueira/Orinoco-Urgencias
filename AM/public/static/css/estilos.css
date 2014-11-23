@@ -1,3 +1,8 @@
+* {
+  padding:0px;
+  margin:0px;
+}
+
 #cabecera {
   padding-top:5px;
   height: 65px;
@@ -691,3 +696,7 @@ td ul,td ol {
 }
 
 
+/**/
+.progress-bar-inverse {
+  background-color: black;
+}

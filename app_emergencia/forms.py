@@ -227,6 +227,12 @@ class FormularioEvaluacionPaciente(forms.Form):
             }
         )
     )
+    areaAtencion = forms.ModelChoiceField(
+        label='Area de Atención',
+        queryset=AreaEmergencia.objects.all().exclude(
+            nombre__icontains="egreso"),
+        initial=AreaEmergencia.objects.get(nombre__startswith=" Ingreso")
+    )
 
     # Validaciones perzonalizadas sobre los campos del formulario
     def clean_frecuencia_cardiaca(self):

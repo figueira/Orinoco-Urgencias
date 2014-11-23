@@ -26,146 +26,147 @@
             <li role="presentation"><a href="#pregunta3" role="tab" data-toggle="tab">Pregunta 3</a></li>
         </ul>
  
-    <div class="tab-content">
-        <input type="hidden" id="corrector" value="{{get}}">
-        <div role="tabpanel" class="tab-pane active tab-evaluacion" id="evaluacion">
-        <form action='.' class='top20 formulario-evaluacion' 
-                  method='post'
-                  name='calcularTriage'>
-                
-                    {% csrf_token %}
+        <div class="tab-content">
+            <input type="hidden" id="corrector" value="{{get}}">
+            <div role="tabpanel" class="tab-pane active tab-evaluacion" id="evaluacion">
+            <form action='.' class='top20 formulario-evaluacion' 
+                      method='post'
+                      name='calcularTriage'>
+                    
+                        {% csrf_token %}
 
-                {{ form.fecha | bootstrap }}
-                {{ form.motivo | bootstrap }}
-                {{ form.ingreso | bootstrap }}
-                <div class="row">
+                    {{ form.fecha | bootstrap }}
+                    {{ form.motivo | bootstrap }}
+                    {{ form.ingreso | bootstrap }}
+                    <div class="row">
 
-                    <div class="col-md-6">
-                        
-                        <div class="form-group">
-                            <label class="control-label  " for="id_temperatura">
-                                {{ form.temperatura.label }}
-                            </label>
-                            {{ form.temperatura.errors }}
-                            <div class="input-group">
-                                {{ form.temperatura }} 
-                                <span class="input-group-addon">
-                                    <strong> &deg;C</strong>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="id_frecuencia_cardiaca">
+                        <div class="col-md-6">
                             
-                                {{ form.frecuencia_cardiaca.label }}
-                            </label>
-                            {{ form.frecuencia_cardiaca.errors }}
-                            <div class="input-group">
-                                {{ form.frecuencia_cardiaca }}
-                                <span class="input-group-addon">
-                                    <strong>ppm</strong>
-                                </span>
+                            <div class="form-group">
+                                <label class="control-label  " for="id_temperatura">
+                                    {{ form.temperatura.label }}
+                                </label>
+                                {{ form.temperatura.errors }}
+                                <div class="input-group">
+                                    {{ form.temperatura }} 
+                                    <span class="input-group-addon">
+                                        <strong> &deg;C</strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="id_frecuencia_cardiaca">
+                                
+                                    {{ form.frecuencia_cardiaca.label }}
+                                </label>
+                                {{ form.frecuencia_cardiaca.errors }}
+                                <div class="input-group">
+                                    {{ form.frecuencia_cardiaca }}
+                                    <span class="input-group-addon">
+                                        <strong>ppm</strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label  " for="id_frecuencia_respiratoria">
+                                    {{ form.frecuencia_respiratoria.label }}
+                                </label>
+                                    {{ form.frecuencia_respiratoria.errors }}
+                                <div class="input-group">
+                                    {{ form.frecuencia_respiratoria }}
+                                    <span class="input-group-addon">
+                                        <strong>rpm</strong>
+                                    </span> 
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label  " for="id_frecuencia_respiratoria">
-                                {{ form.frecuencia_respiratoria.label }}
-                            </label>
-                                {{ form.frecuencia_respiratoria.errors }}
-                            <div class="input-group">
-                                {{ form.frecuencia_respiratoria }}
-                                <span class="input-group-addon">
-                                    <strong>rpm</strong>
-                                </span> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label  " for="id_presion_sistolica">
+                                    {{ form.presion_sistolica.label }}
+                                </label>
+                                {{ form.presion_sistolica.errors }}
+                                <div class="input-group">
+                                    {{ form.presion_sistolica }}
+                                    <span class="input-group-addon">
+                                        <strong>mmHg</strong>
+                                    </span>  
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label  " for="id_presion_diastolica">
+                                {{ form.presion_diastolica.label }}
+                                </label>
+                                {{ form.presion_diastolica.errors }}
+                                <div class="input-group">
+                                    {{ form.presion_diastolica }}
+                                    <span class="input-group-addon">
+                                        <strong>mmHg</strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label  " for="id_saturacion_oxigeno">
+                                {{ form.saturacion_oxigeno.label }}
+                                </label>
+                                {{ form.saturacion_oxigeno.errors }}
+                                <div class="input-group">
+                                    {{ form.saturacion_oxigeno }}
+                                    <span class="input-group-addon">
+                                        <strong>%</strong>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label  " for="id_presion_sistolica">
-                                {{ form.presion_sistolica.label }}
-                            </label>
-                            {{ form.presion_sistolica.errors }}
-                            <div class="input-group">
-                                {{ form.presion_sistolica }}
-                                <span class="input-group-addon">
-                                    <strong>mmHg</strong>
-                                </span>  
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label  " for="id_presion_diastolica">
-                            {{ form.presion_diastolica.label }}
-                            </label>
-                            {{ form.presion_diastolica.errors }}
-                            <div class="input-group">
-                                {{ form.presion_diastolica }}
-                                <span class="input-group-addon">
-                                    <strong>mmHg</strong>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label  " for="id_saturacion_oxigeno">
-                            {{ form.saturacion_oxigeno.label }}
-                            </label>
-                            {{ form.saturacion_oxigeno.errors }}
-                            <div class="input-group">
-                                {{ form.saturacion_oxigeno }}
-                                <span class="input-group-addon">
-                                    <strong>%</strong>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                {{ form.avpu | bootstrap }}
-                {{ form.intensidad_dolor | bootstrap }}
-                <input class='btn btn-primary boton-evaluar' type='submit' value='Registrar' id="boton_Registrar" />
-            </form>
+                    
+                    
+                    {{ form.avpu | bootstrap }}
+                    {{ form.intensidad_dolor | bootstrap }}
+                    {{ form.areaAtencion| bootstrap }}
+                    <input class='btn btn-primary boton-evaluar' type='submit' value='Registrar' id="boton_Registrar" />
+                </form>
 
 
-        </div>
-        <div role="tabpanel" class="tab-pane" id="pregunta1">
-            <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
-            <a class="btn btn-danger" 
-               href='/emergencia/{{ idE }}/aplicar_triage/1'>
-              Si
-            </a> 
-            <a id="no_inmediata" class="btn btn-default">
-              No
-            </a>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="pregunta2">
-            <h4>¿Este Paciente Puede Esperar?</h4>
-            <a id="si_espera" class="btn btn-default">
-              Si
-            </a>
-            <a class="btn btn-warning" 
-               href='/emergencia/{{ idE }}/aplicar_triage/2'>
-              No
-            </a>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="pregunta3">
-            <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
-            <a class="btn btn-primary" 
-               href='/emergencia/{{ idE }}/aplicar_triage/5'>
-              Ninguno
-            </a>
-            <a class="btn btn-success" 
-               href='/emergencia/{{ idE }}/aplicar_triage/4'>
-              Uno
-            </a>
-            <a id="recursos" 
-               class="btn btn-warning" 
-               href='/emergencia/{{ idE }}/aplicar_triage'>
-              Varios
-            </a>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="pregunta1">
+                <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
+                <a class="btn btn-danger" 
+                   href='/emergencia/{{ idE }}/aplicar_triage/1'>
+                  Si
+                </a> 
+                <a id="no_inmediata" class="btn btn-default">
+                  No
+                </a>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="pregunta2">
+                <h4>¿Este Paciente Puede Esperar?</h4>
+                <a id="si_espera" class="btn btn-default">
+                  Si
+                </a>
+                <a class="btn btn-warning" 
+                   href='/emergencia/{{ idE }}/aplicar_triage/2'>
+                  No
+                </a>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="pregunta3">
+                <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
+                <a class="btn btn-primary" 
+                   href='/emergencia/{{ idE }}/aplicar_triage/5'>
+                  Ninguno
+                </a>
+                <a class="btn btn-success" 
+                   href='/emergencia/{{ idE }}/aplicar_triage/4'>
+                  Uno
+                </a>
+                <a id="recursos" 
+                   class="btn btn-warning" 
+                   href='/emergencia/{{ idE }}/aplicar_triage'>
+                  Varios
+                </a>
+            </div>
         </div>
     </div>
-   </div>
     <div class=" col-md-4">
       <h4>Imagen Gu&iacute;a</h4>
       <img src="/static/img/triage.jpg" />
