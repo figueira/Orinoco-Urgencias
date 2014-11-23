@@ -2,9 +2,12 @@
   {% block estilos %}
     <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
     <meta http-equiv="refresh" content="300" >
-  {% endblock %}
+  {% endblock %}    
 
   {% block cuerpo %}
+    {% if cabecera %}
+       <h1 class="text-center bot20">{{ cabecera }}</h1>
+    {% endif %}
     {% if "Logrado:" in mensaje %} 
       <div class= "alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

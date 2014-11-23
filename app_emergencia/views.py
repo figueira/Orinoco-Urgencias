@@ -164,6 +164,7 @@ def emergencia_listar_todas(request, mensaje=''):
 
     form = IniciarSesionForm()
     titulo = "Área de emergencias"
+    cabecera = "Listado General"
     buscar_enfermedad = False
     info = {
         'emergencias': emergencias,
@@ -171,6 +172,7 @@ def emergencia_listar_todas(request, mensaje=''):
         'form': form,
         'mensaje': mensaje,
         'titulo': titulo,
+        'cabecera': cabecera,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
     return render(
@@ -189,12 +191,14 @@ def emergencia_listar_triage(request):
             hora_egreso=None).distinct().order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Área de triage"
+    cabecera = "Área de Triage"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -210,12 +214,14 @@ def emergencia_listar_sinclasificar(request):
         triage__isnull=True).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Sin clasificar"
+    cabecera = "Pacientes por Clasificar"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -235,12 +241,14 @@ def emergencia_listar_clasificados(request):
             )
     form = IniciarSesionForm()
     titulo = "Clasificados"
+    cabecera = "Pacientes Clasificados (No Atendidos)"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -258,12 +266,14 @@ def emergencia_listar_atencion(request):
     ).distinct().order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Clasificados"
+    cabecera = "Área de Atención"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -357,12 +367,14 @@ def emergencia_listar_observacion(request, mensaje=''):
     )
     form = IniciarSesionForm()
     titulo = "Observación"
+    cabecera = "Área de Observación"
     buscarEnfermedad = True
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'mensaje': mensaje,
         'buscadorDeEnfermedad': buscarEnfermedad
@@ -379,12 +391,14 @@ def emergencia_listar_ambulatoria(request, mensaje=''):
         triage__nivel__range=[4, 5]).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Ambulatorio"
+    cabecera = "Área de Atención Ambulatoria"
     buscar_enfermedad = True
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'mensaje': mensaje,
         'buscadorDeEnfermedad': buscar_enfermedad
