@@ -408,6 +408,26 @@ def emergencia_listar_ambulatoria(request, mensaje=''):
         info,
         context_instance=RequestContext(request))
 
+def emergencia_listar_cubiculos(request, mensaje=''):
+    emergencias = Emergencia.objects.filter(
+        hora_egreso=None)
+    asignaciones = AsignarCub.objects.all()
+    form = IniciarSesionForm()
+    titulo = "Cubiculos"
+    cabecera = "Asignaciones de Cubiculos"
+    cubiculos = Cubiculo.objects.all()
+    info = {
+        'emergencias': emergencias,
+        'asignaciones': asignaciones,
+        'form': form,
+        'titulo': titulo,
+        'cabecera': cabecera,
+        'cubiculos': cubiculos
+    }
+    return render_to_response(
+        'listaCubiculos.html',
+        info,
+        context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def emergencia_agregar(request):

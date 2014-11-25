@@ -1,0 +1,578 @@
+{% extends "base.html" %}
+  {% block estilos %}
+    <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
+    <meta http-equiv="refresh" content="300" >
+  {% endblock %}    
+
+  {% block cuerpo %}
+    {% if cabecera %}
+       <h1 class="text-center bot20">{{ cabecera }}</h1>
+    {% endif %}
+    {% if "Logrado:" in mensaje %} 
+      <div class= "alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ mensaje }}
+      </div>
+    {% elif "Error:" in mensaje %}
+      <div class= "alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ mensaje }}
+        </div>
+    {% endif %}
+
+    <script src ="/static/scripts/esperas.js"> </script>
+    <script>
+      // Funcion que modifica cada segundo los tiempos de espera
+      function myTimer() {
+        {% for emergencia in emergencias %}
+          // Se toma el contenido actual del tiempo de espera
+          var tiempo = $("#tiempo_{{ emergencia.id }}").text()
+                                                       .split(":");
+          dias = parseInt(tiempo[0]);
+          horas = parseInt(tiempo[1]);
+          minutos = parseInt(tiempo[2]);
+          segundos = parseInt(tiempo[3]);
+
+          var minutos_en_emergencia = (dias * 24 * 60) + (horas * 60) + minutos;
+
+          // Se incrementa un segundo
+          segundos += 1;
+
+          if (segundos == 60) {
+            segundos = 0;
+            minutos = minutos + 1;
+            if (minutos == 60) {
+              minutos = 0;
+              horas = horas + 1;
+              if (horas == 24) {
+                horas = 0;
+                dias = dias + 1;
+              }
+            }
+          }
+
+          // Se colocan los 0 iniciales
+          if (segundos < 10) segundos = "0" + segundos;
+          if (minutos < 10) minutos = "0" + minutos;
+          if (horas < 10) horas = "0" + horas;
+          if (dias < 10) dias = "0" + dias;
+
+          // Se reimprime el contador
+          nuevo_tiempo = dias + ":" + horas + ":" + minutos + ":" + segundos;
+          $("#tiempo_{{ emergencia.id }}").text(nuevo_tiempo);
+
+          // Se determina el color del contador
+          inicio_negro = 360; // 6 horas (360 minutos)
+          inicio_rojo = 240; // 4 horas (240 minutos)
+          inicio_amarillo = 120; // 2 horas (120 minutos)
+
+          if (minutos_en_emergencia > inicio_negro) {
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-inverse ");
+          } else if (minutos_en_emergencia > inicio_rojo) {
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-danger ");
+          } else if (minutos_en_emergencia > inicio_amarillo) {
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-warning ");
+          }else{
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-success ");
+          }
+
+          // Ahora se calcula cuanto tiempo lleva el paciente esperando
+          tiempo_espera = +($("#emergencia_{{ emergencia.id }}")
+                              .data("tiempoesp"));
+
+          // Si el paciente lleva mas de media hora esperando, cambiar el fondo
+          // de la celda
+          if (tiempo_espera > 1800){
+            $('#emergencia_{{emergencia.id}}')
+              .css("background","rgba(200, 200, 200, 0.4)");
+
+            //$('#circulo_{{ emergencia.id }}').attr("src","/static/img/esperas/circuloBlink.gif")
+
+          } else {
+            // Se modifica el atributo en el DOM solo cuando es necesario
+            tiempo_espera = tiempo_espera + 1
+            $("#emergencia_{{ emergencia.id }}").data("tiempoesp", 
+                                                      tiempo_espera);
+          }
+
+        {% endfor %}
+      }
+
+      function enviaA(emercy){
+        $(function() {
+          $('#'+emercy+'cub').change(function() {
+            this.form.submit();
+          });
+        });
+      }
+
+      {% if user.is_authenticated %}
+
+        function actualizar(emer){
+          $(function() {
+            $('#formCubA_'+emer).show();
+            $('#cubDir_'+emer).replaceWith($('#formCubA_'+emer));
+          });
+        }
+
+      {% endif %}
+
+      // Mueve la causa de espera asignada a la lista correspondiente de causas
+      // no asignadas
+      function mover_a_no_asignada(espera_asignada){
+        var id_espera = espera_asignada.data('id-espera');
+        var no_asignadas = espera_asignada.closest('.tabla-esperas')
+                                          .find('.esperas-no-asignadas')
+                                          .first();
+        var item_lista = $('<li></li>');
+        item_lista.addClass('espera-no-asignada');
+        item_lista.attr('data-id-espera', id_espera);
+        no_asignadas.append(item_lista);
+        
+        // Colocar el logo para eliminar la causa
+        var menos = $('<img> </img>');
+        menos.attr('src', '/static/img/Atencion/masim.png');
+        menos.addClass('espera-mas');
+        item_lista.append(menos);
+
+        // Colocar la imagen de la causa de espera
+        var imagen_espera = espera_asignada.children('.imagen-espera-lista')
+                                           .first();
+        item_lista.append(imagen_espera);
+
+        // Colocar la causa de espera
+        item_lista.append(espera_asignada.text());
+
+        // Eliminar la imagen de la causa de espera del td
+        imagen_td = espera_asignada.closest('.causas-espera')
+                                   .siblings('.imagenes-causas-espera')
+                                   .children('[data-id-espera=' + 
+                                             id_espera + ']')
+                                   .first();
+        imagen_td.remove();
+
+        // Eliminar el elemento
+        espera_asignada.remove()
+      }
+
+      $(document).ready(function(){
+        // Se empieza la funcion que actualiza los contadores
+        var intervalo_tiempo = setInterval(function(){ myTimer() }, 1000);
+
+        // Se inicializan contadores de filas
+        var cont = 1;
+        {% for emergencia in emergencias %}
+          $("#emergencia_{{emergencia.id}}").data("fila",cont);
+          $("#emergencia_{{emergencia.id}}").data("flat","0");
+          cont++;
+        {% endfor %}
+
+        // Evento que oculta el panel de causas de espera cuando se hace click
+        // fuera de el
+        $(document.body).click(function(){
+          $('.causas-espera').fadeOut();
+        })
+
+        // Hacer que al cambiar de cubículo se redireccione apropiadamente
+        $('.select-cubiculos').on('change', function(){
+          var id_emergencia = $(this).closest('.fila-emergencia')
+                                     .data('id-emergencia');
+          window.location = 
+            '/emergencia/guardar_cubi/' + id_emergencia + 
+            '/guardar?id_cubiculo=' + this.options[this.selectedIndex].value
+        });
+
+        // Asociacion del evento click al boton de mantener un grupo  de causas
+        // de espera
+        $('.boton-mantener').click(function(event){
+          event.preventDefault();
+
+          MantenerEsperas($($(this).closest('.fila-emergencia')))
+        })
+
+        // Asociacion del evento click sobre las esperas
+        $('.boton-espera').click(function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          var causas_espera = $(this).children('.causas-espera');
+          // Decidir que hacer dependiendo de si el panel con las causas de
+          // espera esta visible o no
+          if(causas_espera.css('display') == 'none')
+          {
+            $('.causas-espera').fadeOut();
+            causas_espera.fadeIn();
+          } else
+          {
+            $('.causas-espera').fadeOut();
+          }
+        });
+
+        // Esto es para prevenir que el click en el panel de causas de espera
+        // haga que el mismo desaparezca
+        $('.causas-espera').click(function(event){
+          event.stopPropagation();
+        })
+
+        // Método que agrega causas de espera a partir de la lista de causas
+        // no asignadas
+        $('.causas-espera').on('click', '.espera-mas', function(event){
+          // Construir el elemento a agregar a la lista de causas asignadas
+          var mas_activado = $(this);
+          // Ocultar el botón para evitar que se presione numerosas veces,
+          // colocar un ajax loader en su lugar
+          mas_activado.hide();
+          var ajax_loader = $('<img> </img>');
+          ajax_loader.addClass('ajax-loader');
+          ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+          mas_activado.after(ajax_loader);
+
+          var id_espera = mas_activado.parent().data('id-espera');
+          var fila_emergencia = $(mas_activado.closest('.fila-emergencia'));
+          var id_emergencia = fila_emergencia.data('id-emergencia');
+          // Antes que todo se envia una actualizacion a la base de datos para
+          // guardar este cambio
+          $.getJSON('/emergencia/' + id_emergencia + '/agregar_espera/' + 
+                    id_espera, '', function(id_retorno){
+            var asignadas = mas_activado.closest('.tabla-esperas')
+                                         .find('.esperas-asignadas')
+                                         .first();
+            var item_lista = $('<li></li>');
+            item_lista.addClass('espera-asignada');
+            item_lista.attr('data-id-espera', id_espera);
+            item_lista.attr('data-id-espera-emergencia', id_retorno);
+            asignadas.append(item_lista);
+            
+            // Colocar el logo para eliminar la causa
+            var menos = $('<img> </img>');
+            menos.attr('src', '/static/img/Atencion/menosim.png');
+            menos.addClass('espera-menos');
+            item_lista.append(menos);
+
+            // Colocar el checkbox para marcar la causa como atendida
+            var checkbox = $('<input></input>');
+            checkbox.attr('type', 'checkbox');
+            checkbox.addClass('espera-atendida');
+            item_lista.append(checkbox);
+
+            // Colocar la imagen de la causa de espera
+            var imagen_espera = mas_activado.siblings('.imagen-espera-lista')
+                                            .first();
+            item_lista.append(imagen_espera.clone());
+
+            // Colocar la causa de espera
+            item_lista.append(mas_activado.parent().text());
+
+            // Agregar la imagen de la causa de espera al td adyacente
+            imagen_espera.removeClass('imagen-espera-lista');
+            imagen_espera.addClass('imagen-espera-td');
+            mas_activado.closest('.causas-espera')
+                        .siblings('.imagenes-causas-espera')
+                        .append(imagen_espera);              
+
+            // Eliminar el elemento
+            mas_activado.parent().remove();
+
+            // Finalmente indicar que se mantengan las causas de espera
+            MantenerEsperas(fila_emergencia)
+          }).fail(function(){
+            // Si la llamada falla, volver a colocar el mas
+            ajax_loader.remove()
+            mas_activado.show()
+          })
+        });
+
+        // Método que elimina causas de espera a partir de la lista de causas
+        // asignadas
+        $('.causas-espera').on('click', '.espera-menos', function(event){
+          var menos_activado = $(this)
+          if(confirm('¿Esta seguro que desea eliminar "' + 
+                     $.trim(menos_activado.parent().text()) + '"? ' +
+                     "Esto no la marcará como cumplida, para ello use la " +
+                     "caja adyacente"))
+          {
+            // Ocultar el menos y el checkbox y colocar un AJAX loader
+            var checkbox = menos_activado.siblings('.espera-atendida')
+            menos_activado.hide();
+            checkbox.hide();
+            var ajax_loader = $('<img> </img');
+            ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+            menos_activado.after(ajax_loader)
+
+            // Construir el elemento a agregar a la lista de causas no asignadas
+            var id_espera_emergencia = menos_activado.parent()
+                                                     .data('id-espera-emergencia');
+            var id_emergencia = menos_activado.closest('.fila-emergencia')
+                                              .data('id-emergencia');
+
+            // Hacer peticion a la base de datos para eliminar la causa de espera
+            $.get('/emergencia/eliminar_espera_emergencia/' + 
+                  id_espera_emergencia, function(){
+              mover_a_no_asignada(menos_activado.parent())
+            }).fail(function(){
+              // Si la llamada falla, colocar los elementos y quitar el loader
+              ajax_loader.remove();
+              menos_activado.show();
+              checkbox.show();
+            });
+          }
+        });
+
+        // Asociacion del evento sobre el checkbox que marca una causa de espera
+        // como finalizada
+        $('.esperas-asignadas').on('click', '.espera-atendida', function(){
+          var checkbox_activado = $(this);
+          if(confirm('¿Está seguro que desea marcar "' +
+                      $.trim(checkbox_activado.parent().text()) + 
+                      '" como cumplida? Esta acción no es reversible')){
+            // Ocultar el menos y el checkbox y colocar un ajax loader
+            var menos = checkbox_activado.siblings('.espera-menos');
+            checkbox_activado.hide();
+            menos.hide();
+            var ajax_loader = $('<img> </img>');
+            ajax_loader.attr('src', '/static/img/ajax-loader.gif');
+            checkbox_activado.after(ajax_loader)
+
+            var id_espera_emergencia = checkbox_activado
+                                       .parent()
+                                       .data('id-espera-emergencia');
+
+            // Hacer peticion a la base de datos para finalizar la espera
+            $.get('/emergencia/espera_finalizada/' + id_espera_emergencia, 
+                  function(){
+              MantenerEsperas($(checkbox_activado.closest('.fila-emergencia')));
+              mover_a_no_asignada(checkbox_activado.parent());
+            }).fail(function(){
+              // Si la llamada falla, quitar el loader y poner los mandos
+              ajax_loader.remove();
+              menos.show();
+              checkbox_activado.show();
+              checkbox_activado.prop('checked', false)
+            });
+          } else {
+            checkbox_activado.prop('checked', false)
+          }
+        });
+		
+		// Método de confirmacion para dar el alta
+        $('.dar-alta').on('click', function(event){
+			var fila_emergencia = $(this).closest('.fila-emergencia');
+			var id_emergencia = fila_emergencia.data('id-emergencia');					
+
+			var lista_esperas_asignadas = fila_emergencia.find('.esperas-asignadas').children();
+
+			if(lista_esperas_asignadas.length > 0)
+			{
+				if(confirm('Existen causas de espera sin finalizar para este paciente. '
+						+ ' ¿Desea egresarlo igual?'))
+				{
+					window.location = '/emergencia/' + id_emergencia + '/daralta'
+				}
+			}
+			else
+			{
+				window.location = '/emergencia/' + id_emergencia + '/daralta'
+			}
+        });		
+
+        // Especialmente para Firefox, se deben asignar las propiedades
+        // correctas a los checkbox y los option
+        $('.espera-atendida').each(function(){
+          checkbox = $(this)
+          if(checkbox.attr('checked') == 'checked'){
+            checkbox.prop('checked', 'checked')
+          } else {
+            checkbox.removeProp('checked')
+          }
+        });
+
+        $('option').each(function(){
+          option = $(this);
+          if(option.attr('selected') == 'selected'){
+            option.prop('selected', 'selected')
+          }else{
+            option.removeProp('selected')
+          }
+        })
+
+        $(".formCubA").css("display","none");
+        $("[rel='tooltip']").tooltip();
+        $(".tit-list").html("{{titulo}}")
+      });
+    </script>
+
+
+    <div class="row">
+      
+      {% if asignaciones %}
+
+        <table class="table table-bordered fontsize22" >
+          <tr>
+            <th class='encabezado-lista'>
+              <center>UBICACIÓN</center>
+            </th>
+            <th class='encabezado-lista'>
+              <center>PACIENTE</center>
+            </th>
+          </tr>
+
+          {% for emergencia in emergencias %}
+            <tr id="emergencia_{{emergencia.id}}" 
+                class="fila-emergencia" 
+                data-id-emergencia='{{ emergencia.id }}'
+                data-tiempoesp='{{ emergencia.tiempo_espera_causas }}'>
+              <td>
+                {% if emergencia.triage != 0 %}
+                  <div id="formCub">
+                    <center>
+                        <select name="id_cubiculo"
+                                class="select-cubiculos">
+                          <option class='opcion-cubiculo' value="">N/A</option>
+
+                          <!--Se imprime la lista de cubiculos   -->
+                          
+                          {% for c in cubiculos %}
+                            {% if c.nombre == emergencia.cubi %}
+                              <option class='opcion-cubiculo'
+                                      value="{{ c.id }}" 
+                                      selected='selected'>
+                                {{ c.nombre }}
+                              </option>
+                            {% else %}
+                              <option class='opcion-cubiculo'
+                                      value="{{ c.id }}">
+                                {{ c.nombre }} 
+                              </option>
+                            {% endif %}
+                          {% endfor %}
+                        </select>
+                    </center>
+                  </div>
+                {% else %}
+                  <center>SIN TRIAGE</center>
+                {% endif %}
+              </td>
+
+              <td>
+                <span class="nombreLista">
+                  <a href='/paciente/{{ emergencia.paciente.id }}'>
+                    {{emergencia.paciente}}
+                  </a>
+                </span>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        
+      {% else %}
+        <h4>
+          <center>No hay pacientes en esta área </center>
+        </h4>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts2 %}
+<script>
+
+  $(document).ready(function() {
+
+    // Carga las sugerencias de la base de datos 
+    $('.agregarEnfermedad').keyup(function(e) {
+
+      // obtenemos el codigo de la tecla presionada
+      var code = (e.keyCode ? e.keyCode : e.which);
+
+      var raiz = $(this).closest('.raizSugerencias')
+      var nombre_enfermedad= $(this).val();
+
+
+      // no hacer nada si es una flecha
+      if(code == 37 || code == 38 || code == 39 || code == 40) {
+          return;
+        }
+      // Si es ENTER la tecla presionada se procede a agregar la enfermedad al apaciente.
+      else if( code == 13){
+        var se_agrega_enfermedad = window.confirm("¿Esta seguro que desea agregar esta enfermedad a este paciente?")
+        if (se_agrega_enfermedad == true){
+           var codigo_enfermedad =  $(raiz).find('.agregarCodigoEnfermedad').val();
+           var codigo_paciente = $(this).attr('id');
+           if (codigo_enfermedad == ""){
+             codigo_enfermedad ='DOES_NOT_EXIST'
+           }
+
+           $.getJSON("/paciente/agregarEnfermedad/"+ codigo_enfermedad+"/"+codigo_paciente, function( respuesta ) {
+            if (respuesta.result == 1) {
+              var display_enfermedad_agregada = "<tr> \
+                                                  <td class= 'tablaEnfermedadesPaciente' > \
+                                                    <h6 class= 'list-inline'> \
+                                                        "+nombre_enfermedad+" \
+                                                    </h6> \
+                                                  </td> \
+                                                  <td class= 'width5p'> \
+                                                    <img src = '/static/img/Atencion/menosim.png' \
+                                                         data-codigo-enfermedad='"+codigo_enfermedad+"' \
+                                                         data-codigo-paciente='"+codigo_paciente+"' \
+                                                         class='eliminarEnfermedadPaciente' >\
+                                                    </img> \
+                                                  </td> \
+                                                </tr>";
+              $(raiz).find('.listaEnfermedadesPaciente').append(display_enfermedad_agregada);
+            } else {
+              window.alert(respuesta.message)
+            };
+           });
+           $(this).val("");          
+        }
+      }
+      var id_de_la_emergencia= this.list.id;
+      var lista_autocompletar = $('#'+id_de_la_emergencia);
+      var lista_codigo=  $(raiz).find('.CodigoEnfermedad');
+      lista_autocompletar.empty();
+      lista_codigo.empty();
+      $.getJSON("/paciente/buscarEnfermedad/"+ nombre_enfermedad, function( sugerencias ) {
+        var enfermedad = JSON.parse(sugerencias);
+        $.each(enfermedad,function(i){
+          var nombre = this.fields.descripcion
+          var codigo = this.pk
+          var option_autocompletar = "<option value = \'" + nombre + "\'></option>";
+          var option_codigo = "<option id = \'" + nombre + "\' value = \'" + codigo + "\'></option>";
+          lista_autocompletar.append(option_autocompletar);
+          lista_codigo.append(option_codigo);  
+        });
+      });
+    });
+
+    /*Se agrega el codigo de la enfermedad al input invisible 
+      y se reemplaza en el input visible 
+
+      DEPENDE de la carga de sugerencias en el autocompletar
+    */
+    $('.raizSugerencias').on('change','.agregarEnfermedad', function(){
+      var posicion = $(this).closest('.raizSugerencias');
+      var select= $(posicion).find(".CodigoEnfermedad")
+      var codigo = $(select).find("option[id=\'"+this.value+"\']").val();
+      posicion.find('.agregarCodigoEnfermedad').val(codigo);
+
+    }); 
+
+    $('.listaEnfermedadesPaciente').on('click','.eliminarEnfermedadPaciente', function(){
+      var eliminar_enfermedad = window.confirm("¿Esta seguro que desea eliminar esta enfermedad de este paciente?")
+        if (eliminar_enfermedad == true){
+          var codigo_enfermedad = $(this).attr('data-codigo-enfermedad');
+          var codigo_paciente = $(this).attr('data-codigo-paciente');
+          var fila_a_eliminar = $(this).closest('tr');
+          $.getJSON("/paciente/eliminarEnfermedad/"+codigo_enfermedad+"/"+codigo_paciente , function( respuesta ) {
+            if( respuesta.result == 1 ){
+              $(fila_a_eliminar).remove();
+            }
+          });
+        };
+    });
+
+
+    $('.dropdown-toggle').dropdown();
+  });
+</script>
+
+{% endblock %}
