@@ -85,6 +85,8 @@ urlpatterns = patterns(
         'emergencia_buscar'),
     url('^emergencia/(?P<idE>\w+)/perfil$',
         'paciente_perfil_emergencia'),
+    url('^emergencia/cubiculo/(?P<idA>\w+)/liberar',
+        'emergencia_cubiculo_liberar'),
 
 )
 

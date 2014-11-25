@@ -413,61 +413,70 @@
             <th class='encabezado-lista'>
               <center>PACIENTE</center>
             </th>
+            <th class='encabezado-lista'>
+              <center>ACCION</center>
+            </th>
           </tr>
 
-          {% for emergencia in emergencias %}
-            <tr id="emergencia_{{emergencia.id}}" 
-                class="fila-emergencia" 
-                data-id-emergencia='{{ emergencia.id }}'
-                data-tiempoesp='{{ emergencia.tiempo_espera_causas }}'>
-              <td>
-                {% if emergencia.triage != 0 %}
-                  <div id="formCub">
-                    <center>
-                        <select name="id_cubiculo"
-                                class="select-cubiculos">
-                          <option class='opcion-cubiculo' value="">N/A</option>
+          {% for asignacion in asignaciones %}
+              {% for e in emergencias %}
+                 {% if e.id == asignacion.emergencia_id %}
+                <tr id="asignacion_{{ asignacion.id }}" 
+                    class="fila-emergencia" 
+                    data-id-emergencia='{{ e.id }}'>
+                    <td>
+                      <div id="formCub">
+                        <center>
+                          <select name="id_cubiculo"
+                                  class="select-cubiculos">
+                            <option class='opcion-cubiculo' value="">N/A</option>
 
-                          <!--Se imprime la lista de cubiculos   -->
-                          
-                          {% for c in cubiculos %}
-                            {% if c.nombre == emergencia.cubi %}
-                              <option class='opcion-cubiculo'
-                                      value="{{ c.id }}" 
-                                      selected='selected'>
-                                {{ c.nombre }}
-                              </option>
+                            <!--Se imprime la lista de cubiculos   -->
+                            
+                            {% for c in cubiculos %}
+                            {% if c.nombre == e.cubi %}
+                            <option class='opcion-cubiculo'
+                                    value="{{ c.id }}" 
+                                    selected='selected'>
+                              {{ c.nombre }}
+                            </option>
                             {% else %}
-                              <option class='opcion-cubiculo'
-                                      value="{{ c.id }}">
-                                {{ c.nombre }} 
-                              </option>
+                            <option class='opcion-cubiculo'
+                                    value="{{ c.id }}">
+                              {{ c.nombre }} 
+                            </option>
                             {% endif %}
-                          {% endfor %}
-                        </select>
-                    </center>
-                  </div>
-                {% else %}
-                  <center>SIN TRIAGE</center>
-                {% endif %}
-              </td>
+                            {% endfor %}
+                          </select>
+                        </center>
+                      </div>
+                    </td>
+       
+                    <td>
+                      <span class="nombreLista">
+                        <a href='/paciente/{{ e.paciente_id }}'>
+                          {{e.paciente}}
+                        </a>
+                      </span>
+                    </td>
 
-              <td>
-                <span class="nombreLista">
-                  <a href='/paciente/{{ emergencia.paciente.id }}'>
-                    {{emergencia.paciente}}
-                  </a>
-                </span>
-              </td>
-            </tr>
+                    <td>
+                      <a href="/emergencia/cubiculo/{{ asignacion.id }}/liberar"
+                         onclick="return window.confirm('Desea liberar el cubiculo donde esta el paciente {{ e.paciente }}?')">
+                        <img src="/static/img/unlink.png" title="Liberar"/>
+                      </a>
+                    </td>
+                </tr>
+                {% endif %}
+             {% endfor %}
           {% endfor %}
         </table>
         
-      {% else %}
+        {% else %}
         <h4>
           <center>No hay pacientes en esta área </center>
         </h4>
-      {% endif %}
+        {% endif %}
     </div>
   </div>
 {% endblock %}

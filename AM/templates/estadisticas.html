@@ -11,6 +11,8 @@
   <script src="/static/libs/highcharts/highcharts.js"></script>
   <script src="/static/libs/highcharts/modules/exporting.js"></script>
   <script type="text/javascript" src="/static/scripts/jsapi.js"></script>
+  <script type="text/javascript" src="/static/js/raphael-min.js"></script>
+  <script type="text/javascript" src="/static/js/morris.js-0.5.1/morris.min.js"></script>
   <script type="text/javascript">
   
     // Load the Visualization API and the piechart package.
@@ -276,8 +278,21 @@
     </div>
     <div class="col-md-8">
       <h4>Gr&aacute;fica de Triages</h4>
-      <div id="grafica_de_triages">
+      <div id="dona-triage">
+      <!-- <div id="grafica_de_triages"> -->
       </div>
+      <script>
+        var colores = ["#ff0000", "#ffa500", "#ffff00", "#008000", "#0000ff"];
+
+        Morris.Donut({
+            element: 'dona-triage',
+            data: [
+                {% for nivel,cantidad in triages %}
+                {label: "Nivel {{ nivel }}", value: {{ cantidad }}, color: colores[{{nivel}}-1]},
+                {% endfor %}
+            ]
+        });
+      </script>
     </div>
   </div>
   
@@ -293,8 +308,23 @@
     </div>
     <div class="col-md-8">
       <h4>Gr&aacute;fica de Egresos</h4>
-      <div id="grafica_de_egresos">
+      <!-- <div id="grafica_de_egresos"> -->
+      <div id="barra-egreso">
       </div>
+      <script>
+
+        Morris.Bar({
+        element: 'barra-egreso',
+        data: [
+        {% for ascii, cantidad in egresos %}
+        { y: '{{ ascii }}', a: {{ cantidad }}},
+        {% endfor %}
+        ],
+        xkey: 'y',
+        ykeys: 'a',
+        labels: ['Cantidad']
+        });
+      </script>
     </div>
   </div>
   

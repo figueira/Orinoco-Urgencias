@@ -615,6 +615,14 @@ def emergencia_agrega_emer(request, id_emergencia):
 
 
 @login_required(login_url='/')
+def emergencia_cubiculo_liberar(request, idA):
+    asignacion = get_object_or_404(AsignarCub, id=idA)
+    asigCA = AsignarCub.objects.filter(id=idA)
+    if asigCA:
+        asigCA.delete()
+    return HttpResponseRedirect("/emergencia/listar/cubiculos")
+
+@login_required(login_url='/')
 def emergencia_darAlta(request, idE):
     emergencia = get_object_or_404(Emergencia, id=idE)
     try:
