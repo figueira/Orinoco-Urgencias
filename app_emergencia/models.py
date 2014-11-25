@@ -390,6 +390,23 @@ class Triage(models.Model):
     def fechaR(self):
         self.fecha.strftime("%H:%M del %d/%m/%y")
 
+    def colorTriage(self):
+        color = ""
+        if self.nivel == 1:
+            color = 'LightCoral'
+        elif self.nivel == 2:
+            color = 'DarkOrange'
+        elif self.nivel == 3:
+            color = 'Yellow'
+        elif self.nivel == 4:
+            color = 'lightgreen'
+        elif self.nivel == 5:
+            color = 'DarkTurquoise '
+        else:
+            color = ''
+
+        return color
+
 
 class ComentarioTriage(models.Model):
     triage = models.ForeignKey(Triage)

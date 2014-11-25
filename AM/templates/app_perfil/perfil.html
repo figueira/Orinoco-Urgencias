@@ -51,11 +51,12 @@
                    class="btn btn-primary">
                    Realizar Historia M&eacute;dica 
                 </a>
-                {% endcomment %}
 
                 <a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
-                   Informe de Triage {{ ea.triage|length }}
+                   Informe de Triage
                 </a>  
+                {% endcomment %}
+                <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">Informe de Triage</a> 
             {% endif %}
             <a href="/emergencia/{{ ea.id }}/daralta" class="btn btn-primary">
               Egreso
@@ -89,6 +90,10 @@
         
         <a href="/paciente/{{ p.id }}/editar" class="btn btn-primary">
            Editar Perfil
-        </a>  
+        </a> 
+        {% comment %}
+        <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">Imprimir Triage</a> 
+        {% endcomment %}
+
     </div>
 {% endblock %}

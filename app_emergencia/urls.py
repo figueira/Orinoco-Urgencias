@@ -105,4 +105,10 @@ urlpatterns = urlpatterns + patterns(
         views.TriageView.as_view(),
         name='calcular-triage'
     ),
+    url(
+        r'^emergencia/(?P<pk>\d+)/triage/pdf/$',
+        views.triagePDF.as_view(),
+        name='imprimir-triage'
+    ),
+
 )

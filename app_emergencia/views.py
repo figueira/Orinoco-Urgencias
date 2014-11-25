@@ -1482,7 +1482,7 @@ class TriageView(generic.FormView):
             initial['saturacion_oxigeno'] = triage.signos_saod
             initial['avpu'] = triage.signos_avpu
             initial['intensidad_dolor'] = triage.signos_dolor
-        print initial
+            initial['ingreso'] = triage.ingreso
         return initial
 
     def get(self, request, *args, **kwargs):
@@ -1537,9 +1537,7 @@ class TriageView(generic.FormView):
                     medico=medico,
                     fecha=form.cleaned_data['fecha'],
                     motivo=form.cleaned_data['motivo'],
-                    areaAtencion=AreaEmergencia.objects.get(
-                        nombre__startswith=" Ingreso"
-                    ),
+                    areaAtencion=form.cleaned_data['areaAtencion'],
                     signos_tmp=form.cleaned_data['temperatura'],
                     signos_fc=form.cleaned_data['frecuencia_cardiaca'],
                     signos_fr=form.cleaned_data['frecuencia_respiratoria'],
@@ -1547,14 +1545,15 @@ class TriageView(generic.FormView):
                     signos_pb=form.cleaned_data['presion_sistolica'],
                     signos_saod=form.cleaned_data['saturacion_oxigeno'],
                     signos_avpu=form.cleaned_data['avpu'],
-                    signos_dolor=form.cleaned_data['intensidad_dolor']
+                    signos_dolor=form.cleaned_data['intensidad_dolor'],
+                    ingreso=form.cleaned_data['ingreso'],
                 )
             else:
                 triage.medico = medico
                 triage.fecha = form.cleaned_data['fecha']
                 triage.motivo = form.cleaned_data['motivo']
-                triage.areaAtencion = AreaEmergencia.objects.get(
-                    nombre__startswith=" Ingreso")
+                triage.ingreso = form.cleaned_data['ingreso']
+                triage.areaAtencion = form.cleaned_data['areaAtencion']
                 triage.signos_tmp = form.cleaned_data['temperatura']
                 triage.signos_fc = form.cleaned_data['frecuencia_cardiaca']
                 triage.signos_fr = form.cleaned_data['frecuencia_respiratoria']
@@ -1591,3 +1590,95 @@ class TriageView(generic.FormView):
                 idE=emergencia.id,
             )
         )
+
+
+def fetch_resources(uri, rel):
+    """
+    Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
+    `uri` is the href attribute from the html link element.
+    `rel` gives a relative path, but it's not used here.
+
+    """
+    import os
+    from django.conf import settings
+
+    """
+    Callback to allow xhtml2pdf/reportlab to retrieve Images,Stylesheets, etc.
+    `uri` is the href attribute from the html link element.
+    `rel` gives a relative path, but it's not used here.
+
+    """
+    if uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT,
+                            uri.replace(settings.MEDIA_URL, ""))
+    elif uri.startswith(settings.STATIC_URL):
+        path = os.path.join(settings.STATIC_ROOT,
+                            uri.replace(settings.STATIC_URL, ""))
+    else:
+        path = os.path.join(settings.STATIC_ROOT,
+                            uri.replace(settings.STATIC_URL, ""))
+
+        if not os.path.isfile(path):
+            path = os.path.join(settings.MEDIA_ROOT,
+                                uri.replace(settings.MEDIA_URL, ""))
+
+            if not os.path.isfile(path):
+                raise UnsupportedMediaPathException(
+                    'media urls must start with %s or %s' % (
+                        settings.MEDIA_ROOT, settings.STATIC_ROOT))
+
+    return path
+
+
+class triagePDF(generic.DetailView):
+    context_object_name = 'triage'
+    model = Triage
+    template_name = 'app_emergencia/triage_pdf.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        from xhtml2pdf import pisa
+        from django.template.loader import get_template
+        import StringIO
+        from django.template import loader, Context
+
+        template = get_template(self.template_name)
+        ctx = Context({'triage': context['triage']})
+        body_tpl = loader.get_template(self.template_name)
+        html = body_tpl.render(ctx)
+        # html = template.render(ctx)
+        result = StringIO.StringIO()
+        pdf = pisa.pisaDocument(
+            StringIO.StringIO(html.encode("UTF-8")),
+            dest=result,
+            encoding='UTF-8',
+            link_callback=fetch_resources
+            )
+
+        if not pdf.err:
+            response = HttpResponse(
+                result.getvalue(),
+                content_type='application/pdf')
+
+        return response
+
+
+    #     ctx = Context({
+    #     'user': user,
+    #     'ticket': ticket,
+    #     'site': Site.objects.get_current(),
+    # })
+    # subject_tpl = loader.get_template('contact/alerts/emails/'
+    #                                   'ticket_subject.txt')
+    # body_tpl = loader.get_template('contact/alerts/emails/'
+    #                                'ticket_body.txt')
+    # mail.send_mail(
+    #     subject_tpl.render(ctx).strip(),
+    #     body_tpl.render(ctx),
+    #     settings.OSCAR_FROM_EMAIL,
+    #     [ticket.submitter_email],
+    # )
+
+
+        return self.render_to_response(context)
