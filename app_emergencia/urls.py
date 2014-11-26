@@ -48,7 +48,7 @@ urlpatterns = patterns(
 
     # Agregar/Modificar Cubiculo:
     url(
-        '^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<accion>.*)$',
+        '^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<admin>\d+)/(?P<accion>.*)$',
         'emergencia_guardar_cubi'
     ),
     url(
@@ -68,7 +68,7 @@ urlpatterns = patterns(
     url('^emergencia/listar/ambulatoria$',
         'emergencia_listar_ambulatoria'),
     url('^emergencia/listar/cubiculos$',
-        'emergencia_listar_cubiculos'),
+        'emergencia_listar_cubiculos', name="listar_cubiculos"),
     url('^emergencia/listar/observacion$',
         'emergencia_listar_observacion'),
     url('^emergencia/listar/atencion$',

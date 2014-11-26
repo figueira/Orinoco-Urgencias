@@ -1269,7 +1269,7 @@ def emergencia_espera_finalizada(request, id_espera_emergencia):
 # Funciones para agregar un cubiculo
 
 
-def emergencia_guardar_cubi(request, id_emergencia, accion):
+def emergencia_guardar_cubi(request, id_emergencia, admin, accion):
     emergencia = get_object_or_404(Emergencia, id=id_emergencia)
     id_cubiculo = request.GET['id_cubiculo']
     if id_cubiculo == '':
@@ -1349,7 +1349,10 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
                 )
         if cubiculo is None:
             return emergencia_listar_todas(request, mensaje=None)
-    return HttpResponseRedirect(reverse_lazy('listar_todas'))
+    if admin == '1':
+        return HttpResponseRedirect(reverse_lazy('listar_cubiculos'))
+    else:
+        return HttpResponseRedirect(reverse_lazy('listar_todas'))
 
 
 # - Funciones para agregar un cubiculo

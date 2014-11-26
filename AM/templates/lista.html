@@ -181,7 +181,7 @@
           var id_emergencia = $(this).closest('.fila-emergencia')
                                      .data('id-emergencia');
           window.location = 
-            '/emergencia/guardar_cubi/' + id_emergencia + 
+            '/emergencia/guardar_cubi/' + id_emergencia + '/0' +
             '/guardar?id_cubiculo=' + this.options[this.selectedIndex].value
         });
 

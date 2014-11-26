@@ -5,6 +5,45 @@
   {% endblock %}    
 
   {% block cuerpo %}
+    <script src ="/static/scripts/esperas.js"> </script>
+    <script>
+
+      function enviaA(emercy){
+        $(function() {
+          $('#'+emercy+'cub').change(function() {
+            this.form.submit();
+          });
+        });
+      }
+
+      {% if user.is_authenticated %}
+
+        function actualizar(emer){
+          $(function() {
+            $('#formCubA_'+emer).show();
+            $('#cubDir_'+emer).replaceWith($('#formCubA_'+emer));
+          });
+        }
+
+      {% endif %}
+
+      $(document).ready(function(){
+        // Hacer que al cambiar de cubículo se redireccione apropiadamente
+        $('.select-cubiculos').on('change', function(){
+          var id_emergencia = $(this).closest('.fila-emergencia')
+                                     .data('id-emergencia');
+          window.location = 
+            '/emergencia/guardar_cubi/' + id_emergencia + '/1' +
+            '/guardar?id_cubiculo=' + this.options[this.selectedIndex].value
+        });
+
+        $(".formCubA").css("display","none")
+      });
+    </script>
+
+    <h1 class="text-center bot20">
+        Adminitracion de Cubiculos
+    </h1>
     <div class="row">
       {% if asignaciones %}
 
@@ -23,7 +62,8 @@
 
             {% for asignacion in asignaciones %}
                 <tr id="asignacion_{{ asignacion.id }}" 
-                    class="fila-emergencia" 
+                    class="fila-emergencia"
+                    data-id-emergencia='{{ asignacion.emergencia_id }}'
                     >
                     <td>
                         <div id="formCub">
