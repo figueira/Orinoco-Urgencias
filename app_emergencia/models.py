@@ -284,7 +284,8 @@ class Cubiculo(models.Model):
         Emergencia,
         default=None,
         null=True,
-        unique=True
+        unique=True,
+        blank=True,
     )
 
     def __unicode__(self):

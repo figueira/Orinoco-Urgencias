@@ -415,7 +415,7 @@ def emergencia_listar_ambulatoria(request, mensaje=''):
 def emergencia_listar_cubiculos(request, mensaje=''):
     emergencias = Emergencia.objects.filter(
         hora_egreso=None)
-    asignaciones = Cubiculo.objects.exclude(emergencia=None)
+    asignaciones = Cubiculo.objects.all().exclude(emergencia=None)
     titulo = "Cubiculos"
     cabecera = "Asignaciones de Cubiculos"
     cubiculos = Cubiculo.objects.all()
@@ -656,9 +656,10 @@ def emergencia_darAlta(request, idE):
                     emergencia.save()
 
                     # Liberar el cubiculo que estaba asignado
-                    asigCA = AsignarCub.objects.filter(emergencia=emergencia)
+                    cubiculo = Cubiculo.objects.filter(emergencia=emergencia)
                     if asigCA:
-                        asigCA.delete()
+                        cubiculo.emergencia = None
+                        cubiculo.save()
                     else:
                         print "Dando de alta sin cubiculo asignado"
 
