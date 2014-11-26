@@ -313,16 +313,17 @@
       </div>
       <script>
 
+        var ylabels = ['t','v','a','r','n']; 
+
         Morris.Bar({
         element: 'barra-egreso',
         data: [
-        {% for ascii, cantidad in egresos %}
-        { y: '{{ ascii }}', a: {{ cantidad }}},
-        {% endfor %}
+          { y: 'Egresos' {% for ascii, cantidad in egresos %} , {{ forloop.counter }}: {{ cantidad }} {% endfor %}}
         ],
         xkey: 'y',
-        ykeys: 'a',
-        labels: ['Cantidad']
+        ykeys: [1,2,3,4,5],
+        labels: ['Total','Verde (0 a 2 horas)','Amarillo (2 a 4 horas)','Rojo (4 a 6 horas)','Negro (6 o + horas)'],
+        barColors: ["#0000ff", "#008000", "#ffff00","#ff0000","#000"]
         });
       </script>
     </div>
