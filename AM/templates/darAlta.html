@@ -27,9 +27,6 @@
             {{emergencia.paciente}}
         </div>
         {{form.destino | bootstrap_horizontal}}
-        <div id="oculto">
-            {{form.area | bootstrap_horizontal}}
-        </div>
         {{form.darAlta | bootstrap_horizontal }} 
 
         <input class="btn btn-primary" style="margin-top:60px;" type="submit" value="Confirmar" />
@@ -54,16 +51,6 @@
         }
     $(document).ready(
         function() {
-            $("#oculto").hide()
-  
-            $("#id_destino").change(function() {
-                var opcion = parseInt(($(this).val()))
-                if (opcion == 1) {
-                  $("#oculto").slideDown("slow");
-                } else {
-                  $("#oculto").slideUp("slow")
-                }
-            });
             $('#id_darAlta').datetimepicker(dp_options);
 
         });

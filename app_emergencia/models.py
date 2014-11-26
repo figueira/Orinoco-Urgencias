@@ -91,19 +91,6 @@ class AreaAdmision(models.Model):
         return "%s" % self.nombre
 
 
-class Cubiculo(models.Model):
-    nombre = models.CharField(max_length=48)
-    area = models.ForeignKey(AreaEmergencia)
-
-    def __unicode__(self):
-        return "%s" % self.nombre
-
-    def esta_asignado(self):
-        asignaciones = AsignarCub.objects.filter(
-            cubiculo_id=self.id)
-        return asignaciones.count() > 0
-
-
 class Destino(models.Model):
     nombre = models.CharField(max_length=48)
 
@@ -283,11 +270,41 @@ class Emergencia(models.Model):
         return str(horas)+":"+str(minutos)+":"+str(segundos)
 
     def cubi(self):
-        result = AsignarCub.objects.filter(emergencia=self)
+        result = Cubiculo.objects.filter(emergencia=self)
         if result:
-            return "%s" % (result[0].cubiculo)
+            return "%s" % (result[0])
         else:
             return "%s" % ("NO ASIGNADO")
+
+
+class Cubiculo(models.Model):
+    nombre = models.CharField(max_length=48)
+    area = models.ForeignKey(AreaEmergencia)
+    emergencia = models.ForeignKey(
+        Emergencia,
+        default=None,
+        null=True,
+        unique=True
+    )
+
+    def __unicode__(self):
+        return "%s" % self.nombre
+
+    class Meta:
+        ordering = ('nombre',)
+
+    def esta_asignado(self):
+        # asignaciones = AsignarCub.objects.filter(
+        #     cubiculo_id=self.id)
+        return self.emergencia is not None
+
+    def get_cubiculo(self, id_emergencia):
+        cubiculo = Cubiculo.objects.filter(emergencia_id=id_emergencia).last()
+        return cubiculo
+
+    def emergencia_asignada(self, id_emergencia):
+        return Cubiculo.objects.filter(
+            emergencia_id=id_emergencia).count() > 0
 
 
 class AsignarCub(models.Model):

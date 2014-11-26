@@ -8,7 +8,8 @@
     {% if cabecera %}
        <h1 class="text-center bot20">{{ cabecera }}</h1>
     {% endif %}
-    {% if "Logrado:" in mensaje %} 
+    {% comment %}
+<!--     {% if "Logrado:" in mensaje %} 
       <div class= "alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ mensaje }}
@@ -18,7 +19,9 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
           {{ mensaje }}
         </div>
-    {% endif %}
+    {% endif %} -->
+    {% endcomment %}
+
 
     <script src ="/static/scripts/esperas.js"> </script>
     <script>

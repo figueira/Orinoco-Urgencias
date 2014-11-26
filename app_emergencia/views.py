@@ -4,6 +4,8 @@
 # Manejo de Sesion
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
+
 
 # Formularios
 from django.core.context_processors import csrf
@@ -39,11 +41,11 @@ from django.db import transaction
 
 #####################################################
 # Imports Atencion
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.platypus import Table, TableStyle
-from reportlab.platypus.flowables import *
-from reportlab.lib.colors import pink, black, red, lightblue, white
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.units import inch
+# from reportlab.platypus import Table, TableStyle
+# from reportlab.platypus.flowables import *
+# from reportlab.lib.colors import pink, black, red, lightblue, white
 
 import cgi
 import json
@@ -51,7 +53,7 @@ from django.template.loader import render_to_string
 
 from app_enfermedad.models import *
 from app_paciente.models import *
-from itertools import izip
+# from itertools import izip
 from app_emergencia.pdf import *
 from app_historiaMedica.views import paciente_perfil_emergencia
 ######################################################
@@ -178,7 +180,8 @@ def emergencia_listar_todas(request, mensaje=''):
     return render(
         request,
         'lista.html',
-        info
+        info,
+        context_instance=RequestContext(request)
         )
 
 
@@ -408,18 +411,17 @@ def emergencia_listar_ambulatoria(request, mensaje=''):
         info,
         context_instance=RequestContext(request))
 
+
 def emergencia_listar_cubiculos(request, mensaje=''):
     emergencias = Emergencia.objects.filter(
         hora_egreso=None)
-    asignaciones = AsignarCub.objects.all()
-    form = IniciarSesionForm()
+    asignaciones = Cubiculo.objects.exclude(emergencia=None)
     titulo = "Cubiculos"
     cabecera = "Asignaciones de Cubiculos"
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'asignaciones': asignaciones,
-        'form': form,
         'titulo': titulo,
         'cabecera': cabecera,
         'cubiculos': cubiculos
@@ -428,6 +430,7 @@ def emergencia_listar_cubiculos(request, mensaje=''):
         'listaCubiculos.html',
         info,
         context_instance=RequestContext(request))
+
 
 @login_required(login_url='/')
 def emergencia_agregar(request):
@@ -616,10 +619,13 @@ def emergencia_agrega_emer(request, id_emergencia):
 
 @login_required(login_url='/')
 def emergencia_cubiculo_liberar(request, idA):
-    asignacion = get_object_or_404(AsignarCub, id=idA)
-    asigCA = AsignarCub.objects.filter(id=idA)
-    if asigCA:
-        asigCA.delete()
+    cubiculo = Cubiculo.objects.filter(emergencia=idA).first()
+    # cubiculo = get_object_or_404(Cubiculo, id=idA)
+    cubiculo.emergencia = None
+    cubiculo.save()
+    # asigCA = AsignarCub.objects.filter(id=idA)
+    # if asigCA:
+    #     asigCA.delete()
     return HttpResponseRedirect("/emergencia/listar/cubiculos")
 
 @login_required(login_url='/')
@@ -646,6 +652,7 @@ def emergencia_darAlta(request, idE):
                     emergencia.hora_egreso = f_darAlta
                     emergencia.hora_egresoReal = datetime.now()
                     emergencia.destino = f_destino
+
                     emergencia.save()
 
                     # Liberar el cubiculo que estaba asignado
@@ -1263,7 +1270,6 @@ def emergencia_espera_finalizada(request, id_espera_emergencia):
 
 def emergencia_guardar_cubi(request, id_emergencia, accion):
     emergencia = get_object_or_404(Emergencia, id=id_emergencia)
-
     id_cubiculo = request.GET['id_cubiculo']
     if id_cubiculo == '':
         cubiculo = None
@@ -1271,15 +1277,18 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
         cubiculo = get_object_or_404(Cubiculo, id=id_cubiculo)
 
     if (cubiculo is not None) and (cubiculo.esta_asignado()):
-        mensaje = "Error: El cubiculo " + cubiculo.nombre + \
-            " esta asignado a otro paciente"
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'El cubiculo ya  se encuentra asignado',
+            extra_tags='danger'
+        )
     else:
-        tiene_cubiculo = AsignarCub.objects.filter(
-            emergencia=emergencia).count() > 0
-        if (cubiculo is not None) and (not tiene_cubiculo):
-            emergencia.fecha_Esp_act = datetime.now()
-            emergencia.save()
-
+        if (
+            (cubiculo is not None)
+            and
+            (not cubiculo.emergencia_asignada(id_emergencia))
+        ):
             # Actualizar la causa de espera por ubicacion
             espera = get_object_or_404(Espera, nombre='Ubicacion')
             espera_emergencia = EsperaEmergencia.objects.filter(
@@ -1287,9 +1296,9 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
                 hora_fin=datetime.now())
 
             triage = Triage.objects.filter(
-                emergencia=id_emergencia).order_by("-fechaReal")
+                emergencia=id_emergencia).order_by("-fechaReal").first()
 
-            triage = triage[0]
+            # triage = triage[0]
             atencion = Atencion.objects.create(
                 emergencia=emergencia,
                 medico=emergencia.responsable,
@@ -1301,39 +1310,46 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
             # Aqui se garantiza que el 'cubiculo' no va a ser None,
             # puesto que se tuvo
             # que haber seleccionado un cubiculo para llegar aqui
-            asignacion_cubiculo = AsignarCub.objects.create(
-                emergencia=emergencia,
-                cubiculo=cubiculo
+            # asignacion_cubiculo = AsignarCub.objects.create(
+            #     emergencia=emergencia,
+            #     cubiculo=cubiculo
+            # )
+            cubiculo.emergencia = emergencia
+            cubiculo.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Cubiculo asignado con exito'
             )
-            mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
+            # mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
         else:
-            # Aqui necesariamente hay un cubiculo asignado
-            asignacion_cubiculo = AsignarCub.objects \
-                .filter(emergencia=emergencia)[0]
+            cubiculo_asignado = Cubiculo.objects.filter(
+                emergencia_id=id_emergencia).last()
             if cubiculo is None:
                 # Aqui se pidio no asignar ningun cubiculo
-                asignacion_cubiculo.delete()
-                mensaje = 'Logrado: Eliminación de asignación de cubículo'
+                # asignacion_cubiculo.delete()
+                if cubiculo_asignado:
+                    cubiculo_asignado.emergencia = None
+                    cubiculo_asignado.save()
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        'Cubiculo liberado con exito'
+                    )
             else:
-                asignacion_cubiculo.cubiculo = cubiculo
-                asignacion_cubiculo.save()
-                mensaje = "Logrado: Cubiculo " + \
-                    cubiculo.nombre + " actualizado"
-
+                cubiculo_asignado.emergencia = None
+                cubiculo_asignado.save()
+                cubiculo.emergencia = emergencia
+                cubiculo.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Cubiculo asignado con exito'
+                )
         if cubiculo is None:
-            return emergencia_listar_todas(request, mensaje=mensaje)
-        # else:
-        #     mensaje = mensaje
-        # if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
-        #    print 'Enviando a ambulatoria'
-        #    return emergencia_listar_ambulatoria(request, mensaje = mensaje)
-        #  else:
-        #    print 'Enviando a observación'
-        #    return emergencia_listar_observacion(request, mensaje)
+            return emergencia_listar_todas(request, mensaje=None)
+    return HttpResponseRedirect(reverse_lazy('listar_todas'))
 
-    return emergencia_listar_todas(
-        request, mensaje=mensaje
-    )
 
 # - Funciones para agregar un cubiculo
 
@@ -1670,23 +1686,6 @@ class triagePDF(generic.DetailView):
                 content_type='application/pdf')
 
         return response
-
-
-    #     ctx = Context({
-    #     'user': user,
-    #     'ticket': ticket,
-    #     'site': Site.objects.get_current(),
-    # })
-    # subject_tpl = loader.get_template('contact/alerts/emails/'
-    #                                   'ticket_subject.txt')
-    # body_tpl = loader.get_template('contact/alerts/emails/'
-    #                                'ticket_body.txt')
-    # mail.send_mail(
-    #     subject_tpl.render(ctx).strip(),
-    #     body_tpl.render(ctx),
-    #     settings.OSCAR_FROM_EMAIL,
-    #     [ticket.submitter_email],
-    # )
-
-
+        # Se deja esta linea para poder trabajar el HTML
+        # en caso de ser necesario
         return self.render_to_response(context)

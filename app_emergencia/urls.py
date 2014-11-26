@@ -58,7 +58,7 @@ urlpatterns = patterns(
 
     url('^emergencia/agregar$', 'emergencia_agregar'),
     url('^emergencia/listar/todas$',
-        'emergencia_listar_todas'),
+        'emergencia_listar_todas', name="listar_todas"),
     url('^emergencia/listar/sinclasificar$',
         'emergencia_listar_sinclasificar'),
     url('^emergencia/listar/clasificados$',

@@ -461,7 +461,7 @@
                     </td>
 
                     <td>
-                      <a href="/emergencia/cubiculo/{{ asignacion.id }}/liberar"
+                      <a href="/emergencia/cubiculo/{{ e.id }}/liberar"
                          onclick="return window.confirm('Desea liberar el cubiculo donde esta el paciente {{ e.paciente }}?')">
                         <img src="/static/img/unlink.png" title="Liberar"/>
                       </a>
@@ -474,7 +474,7 @@
         
         {% else %}
         <h4>
-          <center>No hay pacientes en esta área </center>
+          <center>No hay cubiculos asignados actualmente </center>
         </h4>
         {% endif %}
     </div>
