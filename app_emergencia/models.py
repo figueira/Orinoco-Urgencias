@@ -425,6 +425,32 @@ class Triage(models.Model):
 
         return color
 
+    def get_avpu(self):
+        try:
+            avpu = str(self.signos_avpu)
+        except:
+            avpu = 'A'
+
+        resultado = ''
+
+        if avpu == 'A':
+            resultado = AVPU[0][1]
+        elif avpu == 'V':
+            resultado = AVPU[1][1]
+        elif avpu == 'P':
+            resultado = AVPU[2][1]
+        elif avpu == 'U':
+            resultado = AVPU[3][1]
+
+        return resultado
+
+    def get_ingreso(self):
+        try:
+            ingreso = int(self.ingreso)
+        except:
+            ingreso = 0
+        return ICAUSA[ingreso][1]
+
 
 class ComentarioTriage(models.Model):
     triage = models.ForeignKey(Triage)

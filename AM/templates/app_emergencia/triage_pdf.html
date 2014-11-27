@@ -150,8 +150,8 @@
     <tr>
         <td>
             <table>
-                <td></td>
-                <td></td>
+                <tr></tr>
+                <tr></tr>
             </table>
         </td>
         <td>
@@ -168,8 +168,8 @@
     <tr>
         <td>
             <table>
-                <td></td>
-                <td></td>
+                <tr></tr>
+                <tr></tr>
             </table>
         </td>
         <td>
@@ -177,9 +177,10 @@
                 <th style="text-align: left;" >
                     AVPU
                 </th>
-                <td>
-                    {{triage.signos_avpu}}
+                <td style="text-align: left;margin-left:-60px">
+                    {{triage.get_avpu}}
                 </td>
+                
             </table>
         </td>
     </tr>
@@ -202,8 +203,34 @@
         </td>
     </tr>
 </table>
-
-<table style="margin-top:100px;width:50%">
+            
+<table style="margin-top:20px;">
+    <tr>
+        <th style="text-align:left;margin-botton:20px;">
+            <h1>Datos&nbsp;de&nbsp;Ingreso</h1>
+        </th>
+    </tr>
+    </table>
+    <table style="margin-top:20px;">
+    <tr>
+        <th style="text-align: left;">
+            Motivo&nbsp;de&nbsp;Ingreso
+        </th>
+        <td style="text-align: left;margin-left:-240px">
+            {{triage.motivo}}
+        </td>
+    </tr>
+    <tr>
+        <th style="text-align: left;">
+            Tipo&nbsp;de&nbsp;Ingreso
+        </th>
+        <td style="text-align: left;margin-left:-240px">
+            {{triage.get_ingreso}}
+        </td>
+    </tr>
+</table>
+                
+<table style="margin-top:50px;width:50%">
     <tr>
         <td>
             <table>

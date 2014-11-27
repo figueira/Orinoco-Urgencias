@@ -514,8 +514,20 @@ def emergencia_agregar(request):
             e_activa = len(Emergencia.objects.filter(
                 paciente=p).filter(hora_egreso__isnull=True))
             if e_activa == 0:
-                e_ingreso = Usuario.objects.get(
-                    username=request.user)
+                try:
+                    e_ingreso = Usuario.objects.get(
+                        username=request.user)
+                except:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        'No tiene permisos para agregar un nuevo paciente',
+                        extra_tags='danger'
+                    )
+                    return render_to_response(
+                        'agregarPaciente.html',
+                        {'form': form},
+                        context_instance=RequestContext(request))
                 e_responsable = e_ingreso
                 e_horaIngreso = pcd['ingreso']
                 e_horaIngresoReal = datetime.now()

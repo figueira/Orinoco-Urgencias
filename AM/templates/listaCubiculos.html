@@ -101,10 +101,13 @@
                         </span>
                     </td>
                     <td>
+                    <center>
+                      
                         <a href="/emergencia/cubiculo/{{ asignacion.emergencia_id }}/liberar"
                         onclick="return window.confirm('Desea liberar el cubiculo donde esta el paciente {{ e.paciente }}?')">
                             <img src="/static/img/unlink.png" title="Liberar"/>
                         </a>
+                    </center>
                     </td>
                 </tr>
             {% endfor %}
