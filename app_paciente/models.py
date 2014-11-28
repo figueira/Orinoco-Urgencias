@@ -96,6 +96,8 @@ class Paciente(models.Model):
                 resp = "/static/img/pacientes/mujer.png"
         return resp
 
+    def fecha(self):
+        return self.fecha_nacimiento.strftime("%d/%m/%Y")
 
 class Antecedente(models.Model):
     tipo = models.CharField(max_length=64)

@@ -29,14 +29,14 @@ UNDIDAD = (
 
 
 def validate_nombre(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
+    if re.match('^[\D \']+$', value) is None:
         raise ValidationError(
             u'\"%s\" no es un nombre valido, debe estar\
             compuesto solo por letras.' % value)
 
 
 def validate_apellido(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
+    if re.match('^[\D \']+$', value) is None:
         raise ValidationError(u'\"%s\" no es un apellido valido,\
         debe estar compuesto solo por letras' % value)
 

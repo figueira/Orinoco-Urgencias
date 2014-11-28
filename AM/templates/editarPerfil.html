@@ -1,92 +1,66 @@
 {% extends "base.html" %} 
 {% load bootstrap %}
 {% block cuerpo %}
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <center>
-        <h3>
-          Editar Perfil
-        </h3>
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+    src="/static/libs/moment/js/moment.min.js"></script>
+  <script type="text/javascript"
+    src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet"
+    href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+{% endblock %} 
+  	<div class="row">
+      	<center>
+        	<h3>
+          		Editar Perfil
+    		</h3>
         
         <form class="" 
               method="post"
               action="/paciente/{{paciente.pk}}/editar">
           {% csrf_token %}
-         {% comment %}
-          <table>         
-            <tr>
-              <td><font size=5><B> Paciente </B></font></td>
-              <td></td>
-				<td>
-					<font size=4 style="text-transform: uppercase;">
-						<strong>{{paciente.nombres}}</strong></font>
-					<font size=4 style="text-transform: uppercase;">
-						<strong>{{paciente.apellidos}}</strong></font>
-				</td>
-            </tr>
-            <tr> <br><br> <td> <br><br> </td> </tr>
-		
-			<tr>
-				<td>C&eacute;dula</td>
-				<td></td>
-				<td><input type="text" name="cedula" value="{{paciente.cedula}}"/></td>
+          	
+         <div class="col-md-12">
+	         <div class="col-md-6">
+	         	{{form.cedula | bootstrap}}
+	         	{{form.nombres | bootstrap}}
+	         	{{form.apellidos | bootstrap}}
+	         </div>
+	         <div class="col-md-6">
+	         	{{form.fecha_nacimiento | bootstrap}}
+	         	{{form.email  | bootstrap}}
+	         </div>
+
+     	</div>
+  	</div>
+			<div class="col-md-6 col-md-offset-3">
 				
-				<td>
-					<span class="msj-error"> 
-						<font color="red">{{form.cedula.errors}}</font>
-					</span>
-				</td>
-			</tr>
-      
-            <tr>
-				<td>Nombres</td>
-				<td></td>
-				<td><input type="text" name="nombres" value="{{paciente.nombres}}"/></td>
-				<td>
-					<span class="msj-error"> 
-						<font color="red">{{form.nombres.errors}}</font>
-					</span>
-				</td>
-            </tr>
-            
-            <tr>
-				<td>Apellidos</td>
-				<td></td>
-				<td><input type="text" name="apellidos" value="{{paciente.apellidos}}"/></td>
-				<td>
-					<span class="msj-error"> 
-						<font color="red">{{form.apellidos.errors}}</font> 
-					</span>
-				</td>
-            </tr>                                                                 
-            
-            <tr>
-				<td>Correo</td>
-				<td></td>
-				<td><input type="text" name="email" size="35" value="{{paciente.email}}"/></td>
-				<td>
-					<span class="msj-error"> 
-						<font color="red">{{form.email.errors}}</font> 
-					</span>
-				</td>
-            </tr>
-             
-            
-            <tr>
-              <td></td>
-              <td>
-                <input class="btn btn-primary" type="submit" value="Guardar" />
-              </td>
-            </tr>
-          </table>
-         {% endcomment %}
-         <div class="col-md-12 top20">{{ form.cedula|bootstrap_horizontal }}</div>
-         <div class="col-md-12 top20">{{ form.nombres|bootstrap_horizontal }}</div>
-         <div class="col-md-12 top20">{{ form.apellidos|bootstrap_horizontal }}</div>
-         <div class="col-md-12 top20">{{ form.email|bootstrap_horizontal }}</div>
-			<input class="btn btn-primary top20" type="submit" value="Guardar" />
+			<input class="btn btn-primary top20 btn-block" type="submit" value="Guardar" />
+			</div>
         </form>
     </div>
   </div> 
   
+{% endblock %}
+{% block scripts2 %}
+  <script>
+    var dp_options = {
+    	pickTime: false,
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
+    $(document).ready(
+        function() {
+            $('#id_fecha_nacimiento').datetimepicker(dp_options);
+
+        });
+  </script>
 {% endblock %}
