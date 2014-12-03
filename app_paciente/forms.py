@@ -1,8 +1,11 @@
+import re
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django import forms
 from models import *
-import re
+
+from app_emergencia.forms import validate_nombre, validate_apellido,\
+    validate_telefono
 
 COD_TELEFONICOS = (
     ('0212', '0212'),
@@ -14,23 +17,23 @@ COD_TELEFONICOS = (
 )
 
 
-def validate_nombre(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
-        raise ValidationError(
-            u'\"%s\" no es un nombre valido,\
-                debe estar compuesto solo por letras.' % value)
+# def validate_nombre(value):
+#     if re.match('^[a-zA-Z \']+$', value) is None:
+#         raise ValidationError(
+#             u'\"%s\" no es un nombre valido,\
+#                 debe estar compuesto solo por letras.' % value)
 
 
-def validate_apellido(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
-        raise ValidationError(
-            u'\"%s\" no es un apellido valido,\
-                debe estar compuesto solo por letras' % value)
+# def validate_apellido(value):
+#     if re.match('^[a-zA-Z \']+$', value) is None:
+#         raise ValidationError(
+#             u'\"%s\" no es un apellido valido,\
+#                 debe estar compuesto solo por letras' % value)
 
 
-def validate_telefono(value):
-    if re.match('^[0-9]+[-]?[0-9]+$', value) is None:
-        raise ValidationError(u'\"%s\" no es un telefono valido' % value)
+# def validate_telefono(value):
+#     if re.match('^[0-9]+[-]?[0-9]+$', value) is None:
+#         raise ValidationError(u'\"%s\" no es un telefono valido' % value)
 
 
 class AgregarPacienteForm(forms.Form):
@@ -60,7 +63,9 @@ class AgregarPacienteForm(forms.Form):
 
 
 class EditarPacienteForm(forms.Form):
-    cedula = forms.CharField(max_length=11)
+    cedula = forms.CharField(
+        required=True,
+        label="Documento de Identidad")
     nombres = forms.CharField(
         max_length=64,
         validators=[validate_nombre])
@@ -73,4 +78,12 @@ class EditarPacienteForm(forms.Form):
         error_messages={
             'invalid': ('La direccion de correo es invalida')
         }
+    )
+    fecha_nacimiento = forms.DateField(
+        label="Fecha de Nacimiento",
+        widget=forms.TextInput(
+            attrs={
+                'data-date-format': 'DD/MM/YYYY',
+                }
+            )
     )

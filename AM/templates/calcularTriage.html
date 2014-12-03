@@ -1,31 +1,79 @@
 {% extends "base.html" %} 
+{% load bootstrap %}
 {% block scripts %}
   <!--Datetime Picker -->
   <script type="text/javascript"
-          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
-  </script>
-
+    src="/static/libs/moment/js/moment.min.js"></script>
   <script type="text/javascript"
-    src="/static/libs/bootstrap/js/bootstrap-tab.js">
-  </script>
-
-  <script type="text/javascript"
-          src="/static/js/scriptDatePicker.js">
-  </script>
+    src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet"
+    href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
 {% endblock %} 
 {% block estilos %}
-  <link rel="stylesheet"
-        href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
   <link rel='stylesheet' href='/static/css/triage.css'>
 {% endblock %}
 {% block cuerpo %}
   {% if mensaje %} 
     {{ mensaje }} 
   {% endif %}
-  <div class="row">
-    <div class="cuadroGrande span7 centrar">
-      <h4>Calcular Triage</h4>
+  <div class="row" id="top">
+    <div class=" col-md-7">
+        <h4>Calcular Triage</h4>
   
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active"><a href="#evaluacion" role="tab" data-toggle="tab">Evaluaci&oacute;n</a></li>
+            <li role="presentation"><a href="#pregunta1" role="tab" data-toggle="tab">Pregunta 1</a></li>
+            <li role="presentation"><a href="#pregunta2" role="tab" data-toggle="tab">Pregunta 2</a></li>
+            <li role="presentation"><a href="#pregunta3" role="tab" data-toggle="tab">Pregunta 3</a></li>
+        </ul>
+ 
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active tab-evaluacion" id="evaluacion">
+            <p class='triage-asignado'>{{ triage_asignado }}</p>
+            {% include 'formularios/evaluacionPaciente.html' %}
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="pregunta1">
+            <h4>¿Este Paciente requiere atenci&oacute;n inmediata?</h4>
+            <a class="btn btn-danger" 
+               href='/emergencia/{{ idE }}/aplicar_triage/1'>
+              Si
+            </a> 
+            <a id="no_inmediata" class="btn btn-default">
+              No
+            </a>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="pregunta2">
+            <h4>¿Este Paciente Puede Esperar?</h4>
+            <a id="si_espera" class="btn btn-default">
+              Si
+            </a>
+            <a class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage/2'>
+              No
+            </a>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="pregunta3">
+            <h4>¿Cu&aacute;ntos recursos necesita el paciente?</h4>
+            <a class="btn btn-primary" 
+               href='/emergencia/{{ idE }}/aplicar_triage/5'>
+              Ninguno
+            </a>
+            <a class="btn btn-success" 
+               href='/emergencia/{{ idE }}/aplicar_triage/4'>
+              Uno
+            </a>
+            <a id="recursos" 
+               class="btn btn-warning" 
+               href='/emergencia/{{ idE }}/aplicar_triage'>
+              Varios
+            </a>
+        </div>
+    </div>
+   </div>
+        {% comment %}
       <div class="tabbable">
         <!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs" id="myTab">
@@ -92,9 +140,65 @@
       </div>
   
     </div>
-    <div class="cuadroGrande span4 centrar">
+        {% endcomment %}
+
+    <div class=" col-md-4">
       <h4>Imagen Gu&iacute;a</h4>
       <img src="/static/img/triage.jpg" />
     </div>
   </div>
+
 {% endblock %} 
+{% block scripts2 %}
+  <script>
+    var dp_options = {
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
+    $(document).ready(
+            $('#id_fecha').datetimepicker(dp_options)
+            
+
+        )
+    // $('#boton_Registrar').on('click', function(event) {
+    //     event.preventDefault();
+    //     /* Act on the event */
+    //     $('#myTab a[href="#pregunta1"]').tab('show')
+    //     $('html, body').animate({
+    //     scrollTop: $("#top").offset().top
+    // }, 100);        
+    // });
+    // Se pide la submision del formulario de manera asincrona
+    $('.tab-evaluacion').on('click',
+                          '.boton-evaluar',
+                          function(event){
+    var formulario = $('.formulario-evaluacion');
+    event.preventDefault();
+    $.ajax({
+            data: formulario.serialize(),
+            dataType: 'script',
+            type: formulario.attr('method'),
+            url: formulario.attr('action')
+           })
+    })
+
+  // Evento sobre respuesta negativa en la primera pregunta
+  $("#no_inmediata").click(function() {
+    $('a[href = #pregunta2]').click();
+  });
+  $("#si_espera").click(function() {
+    $('a[href = #pregunta3]').click();
+  });
+  // $("#si_espera").click(function() {
+  //   // $('#litab3').fadeIn();
+  //   $('a[href = #pregunta4]').click();
+  // });
+  </script>
+{% endblock %}

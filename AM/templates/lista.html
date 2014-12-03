@@ -2,10 +2,14 @@
   {% block estilos %}
     <link rel="stylesheet" type="text/css" href="/static/css/lista.css">
     <meta http-equiv="refresh" content="300" >
-  {% endblock %}
+  {% endblock %}    
 
   {% block cuerpo %}
-    {% if "Logrado:" in mensaje %} 
+    {% if cabecera %}
+       <h1 class="text-center bot20">{{ cabecera }}</h1>
+    {% endif %}
+    {% comment %}
+<!--     {% if "Logrado:" in mensaje %} 
       <div class= "alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ mensaje }}
@@ -15,7 +19,9 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
           {{ mensaje }}
         </div>
-    {% endif %}
+    {% endif %} -->
+    {% endcomment %}
+
 
     <script src ="/static/scripts/esperas.js"> </script>
     <script>
@@ -64,13 +70,13 @@
           inicio_amarillo = 120; // 2 horas (120 minutos)
 
           if (minutos_en_emergencia > inicio_negro) {
-            $("#barra_{{emergencia.id}}").attr("class","bar bar-inverse");
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-inverse ");
           } else if (minutos_en_emergencia > inicio_rojo) {
-            $("#barra_{{emergencia.id}}").attr("class","bar bar-danger");
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-danger ");
           } else if (minutos_en_emergencia > inicio_amarillo) {
-            $("#barra_{{emergencia.id}}").attr("class","bar bar-warning");
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-warning ");
           }else{
-            $("#barra_{{emergencia.id}}").attr("class","bar bar-success");
+            $("#barra_{{emergencia.id}}").addClass("progress-bar-success ");
           }
 
           // Ahora se calcula cuanto tiempo lleva el paciente esperando
@@ -175,7 +181,7 @@
           var id_emergencia = $(this).closest('.fila-emergencia')
                                      .data('id-emergencia');
           window.location = 
-            '/emergencia/guardar_cubi/' + id_emergencia + 
+            '/emergencia/guardar_cubi/' + id_emergencia + '/0' +
             '/guardar?id_cubiculo=' + this.options[this.selectedIndex].value
         });
 
@@ -398,7 +404,7 @@
     </script>
 
 
-    <div class="container row">
+    <div class="row">
       
       {% if emergencias %}
 
@@ -548,7 +554,7 @@
 
                 <td class='tdTriage'>
                   {% if emergencia.triage != 0 %}
-                    <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
+                    <a href="/emergencia/{{emergencia.id}}/triage/calculo" 
                        rel="tooltip" 
                        data-toggle="tooltip" 
                        data-original-title="Recalcular">
@@ -557,6 +563,9 @@
                       title="Nivel {{ emergencia.triage }}"/>
                     </a>
                   {% else %}
+                  {% comment %}
+                  NOTA:
+                  HEMOS DESACTIVADO ESTO COMO PARTE DE LAS MEJORAS DEL SISTEMA
                     <a href="/emergencia/{{ emergencia.id }}/triage/calcular/1">
                       <img src="/static/img/estados/nivel1.png" 
                            rel="tooltip" 
@@ -569,7 +578,9 @@
                            data-toggle="tooltip" 
                            data-original-title="Colocar en Nivel 2"/>
                     </a>
-                    <a href="/emergencia/{{emergencia.id}}/triage/calcular" 
+                  {% endcomment %}
+
+                    <a href="/emergencia/{{emergencia.id}}/triage/calculo" 
                        rel="tooltip" 
                        data-toggle="tooltip" 
                        data-original-title="Calcular">
@@ -652,10 +663,10 @@
 
               <td>
                 <div class="progress progress-striped active">
-                  <div id="barra_{{ emergencia.id }}" >
-                    <span id="tiempo_{{ emergencia.id }}" class = "fontsize22">
+                  <div id="barra_{{ emergencia.id }}" class="progress-bar active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" >
+                    <p id="tiempo_{{ emergencia.id }}">
                       {{ emergencia.tiempo_esperaR }}
-                    </span>
+                    </p>
                   </div>
                 </div>
               </td>

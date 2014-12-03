@@ -1,6 +1,9 @@
 {% extends "base.html" %} 
+{% load bootstrap %}
 {% block scripts %}
   <!--Datetime Picker -->
+  <script type="text/javascript"
+    src="/static/libs/moment/js/moment.min.js"></script>
   <script type="text/javascript"
     src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
   <link rel="stylesheet"
@@ -16,6 +19,37 @@
             method="post"
             action="/emergencia/agregar">
         {% csrf_token %}
+        <div class="row">
+            
+            <div class="col-md-6">
+
+            
+                <div class="row">
+                    <div class="col-md-6">
+                        {{form.ingreso | bootstrap }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        
+                    {{form.documento | bootstrap }}
+                    </div>
+                    <div class="col-md-8">
+                        {{form.cedula | bootstrap }}
+                    </div>
+                    
+                </div>
+                {{form.sexo | bootstrap }}
+                
+            </div>
+            <div class="col-md-6">
+                {{form.fecha_nacimiento | bootstrap }}
+                {{form.nombres | bootstrap }}
+                {{form.apellidos | bootstrap }}
+            </div>
+        </div>
+        <input class=" btn-block btn btn-primary" style="margin-top:30px;" type="submit" value="Ingresar"/>
+        {% comment %}
         <table>
           {% for e in form %}
             <tr>
@@ -190,6 +224,7 @@
             <td></td>
           </tr>
         </table>
+        {% endcomment %}
       </form>
     </div>
   </div>
@@ -197,67 +232,98 @@
  
 {% block scripts2 %}
 <script>
-  function documentoId(){
-    var tipo = $("#id_cedula1").val();
-    var documento = $("#id_cedula2").val();
-    if (documento != ""){
-      $("#id_cedula").attr("value",tipo+"-"+documento);
-    }else{
-      $("#id_cedula").attr("value","");
-    }
-  }
+    var dp_options = {
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
+    var db_options2 ={
+        pickTime: false,
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
 
-  function justNumbers(e){
-    var keynum = window.event ? window.event.keyCode : e.which;
-    if ((keynum == 8) || (keynum == 46)) return true;   
-    return /\d/.test(String.fromCharCode(keynum));
-  }
+  // $('#id_ingreso').attr('data-date-format', 'DD/MM/YYYY');
+  // $('#id_fecha_nacimiento').attr('data-date-format', 'DD/MM/YYYY');
+  $('#id_ingreso').datetimepicker(dp_options);
+  $('#id_fecha_nacimiento').datetimepicker(db_options2);
 
-  function cambioFecha(){
-    var dia = $("#dia").val();
-    var mes = $("#mes").val();
-    var ano = $("#ano").val();
-    $("#id_fecha_nacimiento").attr("value",dia+"/"+mes+"/"+ano);
-  }
 
-  $(document).ready(function() {  
-	  $("#ahora").click(function() {
-	    var currentTime = new Date();
-	    var mes = currentTime.getMonth() + 1;
-	    var dia = currentTime.getDate();
-	    var año = currentTime.getFullYear();
+
+  // function documentoId(){
+  //   var tipo = $("#id_cedula1").val();
+  //   var documento = $("#id_cedula2").val();
+  //   if (documento != ""){
+  //     $("#id_cedula").attr("value",tipo+"-"+documento);
+  //   }else{
+  //     $("#id_cedula").attr("value","");
+  //   }
+  // }
+
+  // function justNumbers(e){
+  //   var keynum = window.event ? window.event.keyCode : e.which;
+  //   if ((keynum == 8) || (keynum == 46)) return true;   
+  //   return /\d/.test(String.fromCharCode(keynum));
+  // }
+
+  // function cambioFecha(){
+  //   var dia = $("#dia").val();
+  //   var mes = $("#mes").val();
+  //   var ano = $("#ano").val();
+  //   $("#id_fecha_nacimiento").attr("value",dia+"/"+mes+"/"+ano);
+  // }
+
+  // $(document).ready(function() {  
+	 //  $("#ahora").click(function() {
+	 //    var currentTime = new Date();
+	 //    var mes = currentTime.getMonth() + 1;
+	 //    var dia = currentTime.getDate();
+	 //    var año = currentTime.getFullYear();
 	
-	    var horas    = currentTime.getHours()
-	    var minutos  = currentTime.getMinutes()
-	    var segundos = currentTime.getSeconds()
-	    $("#id_ingreso").val(dia + "/" + mes +"/" + año + " " + horas + ":" + 
-	                         minutos+":"+segundos)});
-  });   
+	 //    var horas    = currentTime.getHours()
+	 //    var minutos  = currentTime.getMinutes()
+	 //    var segundos = currentTime.getSeconds()
+	 //    $("#id_ingreso").val(dia + "/" + mes +"/" + año + " " + horas + ":" + 
+	 //                         minutos+":"+segundos)});
+  // });   
    
-  var dia  = 1,mes = 1,ano = 1990;
-  $("#dia").html("<option value='nada'>--</option>");
-  $("#dia > option[value='nada']").after("<option value='"+ 1 +"'>"+ 1 
-                                        +"</option>");
-  for (dia =2;dia<=31;dia++){
-    $("#dia > option[value='" + (dia-1) +"']").after("<option value='" + dia 
-     + "'>"+dia+"</option>");      
-  }
-  $("#mes").html("<option value='nada'>--</option>");
-  $("#mes > option[value='nada']").after("<option value='"+1+"'>"+1+"</option>");
-  for (mes =2;mes<=12;mes++){
-    $("#mes > option[value='"+(mes-1)+"']").after("<option value='"+mes+"'>"+
-                                                 mes+"</option>");      
-  }
-  var currentTime = new Date();
-  $("#ano").html("<option value='nada'>--</option>");
-  //alert(currentTime.getFullYear());
-  $("#ano > option[value='nada']").after("<option value='" +
-                                         currentTime.getFullYear() + "'>" +
-                                         currentTime.getFullYear()+"</option>");
-  for (ano =currentTime.getFullYear();ano>=1900;ano--){
-    $("#ano > option[value='"+(ano+1)+"']").after("<option value='" + ano +
-                                                  "'>"+ano+"</option>");
-  }
+  // var dia  = 1,mes = 1,ano = 1990;
+  // $("#dia").html("<option value='nada'>--</option>");
+  // $("#dia > option[value='nada']").after("<option value='"+ 1 +"'>"+ 1 
+  //                                       +"</option>");
+  // for (dia =2;dia<=31;dia++){
+  //   $("#dia > option[value='" + (dia-1) +"']").after("<option value='" + dia 
+  //    + "'>"+dia+"</option>");      
+  // }
+  // $("#mes").html("<option value='nada'>--</option>");
+  // $("#mes > option[value='nada']").after("<option value='"+1+"'>"+1+"</option>");
+  // for (mes =2;mes<=12;mes++){
+  //   $("#mes > option[value='"+(mes-1)+"']").after("<option value='"+mes+"'>"+
+  //                                                mes+"</option>");      
+  // }
+  // var currentTime = new Date();
+  // $("#ano").html("<option value='nada'>--</option>");
+  // //alert(currentTime.getFullYear());
+  // $("#ano > option[value='nada']").after("<option value='" +
+  //                                        currentTime.getFullYear() + "'>" +
+  //                                        currentTime.getFullYear()+"</option>");
+  // for (ano =currentTime.getFullYear();ano>=1900;ano--){
+  //   $("#ano > option[value='"+(ano+1)+"']").after("<option value='" + ano +
+  //                                                 "'>"+ano+"</option>");
+  // }
 
 </script>
 {% endblock %}

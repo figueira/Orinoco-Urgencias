@@ -4,10 +4,14 @@
 # Manejo de Sesion
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
+
 
 # Formularios
 from django.core.context_processors import csrf
 from django.template import RequestContext
+from django.contrib import messages
+from django.views import generic
 
 # General HTML
 from django.shortcuts import render_to_response, redirect,\
@@ -37,11 +41,11 @@ from django.db import transaction
 
 #####################################################
 # Imports Atencion
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.platypus import Table, TableStyle
-from reportlab.platypus.flowables import *
-from reportlab.lib.colors import pink, black, red, lightblue, white
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.units import inch
+# from reportlab.platypus import Table, TableStyle
+# from reportlab.platypus.flowables import *
+# from reportlab.lib.colors import pink, black, red, lightblue, white
 
 import cgi
 import json
@@ -49,11 +53,12 @@ from django.template.loader import render_to_string
 
 from app_enfermedad.models import *
 from app_paciente.models import *
-from itertools import izip
+# from itertools import izip
 from app_emergencia.pdf import *
 from app_historiaMedica.views import paciente_perfil_emergencia
 ######################################################
 
+from django.views import generic
 
 # Cantidad de segundos en 1,2,..,6 horas
 # hora_en_segundos[0] -> Segundos en 0 horas
@@ -156,11 +161,12 @@ def emergencia_buscar(request):
 
 def emergencia_listar_todas(request, mensaje=''):
     emergencias = Emergencia.objects.filter(hora_egreso=None) \
-        .order_by('hora_ingreso')
+        .order_by('paciente__apellidos')
     cubiculos = Cubiculo.objects.all()
 
     form = IniciarSesionForm()
     titulo = "Área de emergencias"
+    cabecera = "Listado General"
     buscar_enfermedad = False
     info = {
         'emergencias': emergencias,
@@ -168,12 +174,14 @@ def emergencia_listar_todas(request, mensaje=''):
         'form': form,
         'mensaje': mensaje,
         'titulo': titulo,
+        'cabecera': cabecera,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
     return render(
         request,
         'lista.html',
-        info
+        info,
+        context_instance=RequestContext(request)
         )
 
 
@@ -186,12 +194,14 @@ def emergencia_listar_triage(request):
             hora_egreso=None).distinct().order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Área de triage"
+    cabecera = "Área de Triage"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -207,12 +217,14 @@ def emergencia_listar_sinclasificar(request):
         triage__isnull=True).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Sin clasificar"
+    cabecera = "Pacientes por Clasificar"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -232,12 +244,14 @@ def emergencia_listar_clasificados(request):
             )
     form = IniciarSesionForm()
     titulo = "Clasificados"
+    cabecera = "Pacientes Clasificados (No Atendidos)"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -255,12 +269,14 @@ def emergencia_listar_atencion(request):
     ).distinct().order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Clasificados"
+    cabecera = "Área de Atención"
     buscar_enfermedad = False
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
@@ -354,12 +370,14 @@ def emergencia_listar_observacion(request, mensaje=''):
     )
     form = IniciarSesionForm()
     titulo = "Observación"
+    cabecera = "Área de Observación"
     buscarEnfermedad = True
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'mensaje': mensaje,
         'buscadorDeEnfermedad': buscarEnfermedad
@@ -376,18 +394,40 @@ def emergencia_listar_ambulatoria(request, mensaje=''):
         triage__nivel__range=[4, 5]).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Ambulatorio"
+    cabecera = "Área de Atención Ambulatoria"
     buscar_enfermedad = True
     cubiculos = Cubiculo.objects.all()
     info = {
         'emergencias': emergencias,
         'form': form,
         'titulo': titulo,
+        'cabecera': cabecera,
         'cubiculos': cubiculos,
         'mensaje': mensaje,
         'buscadorDeEnfermedad': buscar_enfermedad
     }
     return render_to_response(
         'lista.html',
+        info,
+        context_instance=RequestContext(request))
+
+
+def emergencia_listar_cubiculos(request, mensaje=''):
+    emergencias = Emergencia.objects.filter(
+        hora_egreso=None)
+    asignaciones = Cubiculo.objects.all().exclude(emergencia=None)
+    titulo = "Cubiculos"
+    cabecera = "Asignaciones de Cubiculos"
+    cubiculos = Cubiculo.objects.all()
+    info = {
+        'emergencias': emergencias,
+        'asignaciones': asignaciones,
+        'titulo': titulo,
+        'cabecera': cabecera,
+        'cubiculos': cubiculos
+    }
+    return render_to_response(
+        'listaCubiculos.html',
         info,
         context_instance=RequestContext(request))
 
@@ -402,15 +442,37 @@ def emergencia_agregar(request):
         if form.is_valid():
             pcd = form.cleaned_data
             p_cedula = pcd['cedula']
+            p_documento = pcd['documento']
             p_nombres = pcd['nombres']
             p_apellidos = pcd['apellidos']
             p_sexo = pcd['sexo']
             p_fecha_nacimiento = pcd['fecha_nacimiento']
+            #
+            # NOTA:
+            # Codigo viejo, cambiado por uno mas efeciente.
+            # Todavia se puede optimizar con un modelFORM
+            #
             # print p_fecha_nacimiento
-            prueba = Paciente.objects.filter(cedula=p_cedula)
-            if len(prueba) == 0:
-                p = Paciente(
-                    cedula=p_cedula,
+            # prueba = Paciente.objects.filter(cedula=p_cedula)
+            # if len(prueba) == 0:
+            #     p = Paciente(
+            #         cedula=p_documento + str(p_cedula),
+            #         nombres=p_nombres,
+            #         apellidos=p_apellidos,
+            #         sexo=p_sexo,
+            #         fecha_nacimiento=p_fecha_nacimiento,
+            #         tlf_cel="",
+            #         email="",
+            #         direccion="",
+            #         tlf_casa="",
+            #         contacto_rel=11,
+            #         contacto_nom="",
+            #         contacto_tlf="")
+            #     p.save()
+            try:
+
+                p, creado = Paciente.objects.get_or_create(
+                    cedula=p_documento + str(p_cedula),
                     nombres=p_nombres,
                     apellidos=p_apellidos,
                     sexo=p_sexo,
@@ -421,41 +483,93 @@ def emergencia_agregar(request):
                     tlf_casa="",
                     contacto_rel=11,
                     contacto_nom="",
-                    contacto_tlf="")
-                p.save()
+                    contacto_tlf=""
+                )
+            except:
+                creado = False
+                paciente = Paciente.objects.get(
+                    cedula=p_documento + str(p_cedula)
+                )
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Ya existe un paciente con esta cedula. &nbsp;&nbsp;'
+                    +
+                    '<a target="_blank" href="/paciente/'
+                    + str(paciente.id) +
+                    '" class="btn btn-xs '
+                    +
+                    'btn-warning" > Ir al paciente </a>',
+                    extra_tags='danger'
+                )
+                info = {
+                    'form': form
+                }
+                return render_to_response(
+                    'agregarPaciente.html',
+                    info,
+                    context_instance=RequestContext(request))
+            # else:
+            #     p = prueba[0]
+            e_activa = len(Emergencia.objects.filter(
+                paciente=p).filter(hora_egreso__isnull=True))
+            if e_activa == 0:
+                try:
+                    e_ingreso = Usuario.objects.get(
+                        username=request.user)
+                except:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        'No tiene permisos para agregar un nuevo paciente',
+                        extra_tags='danger'
+                    )
+                    return render_to_response(
+                        'agregarPaciente.html',
+                        {'form': form},
+                        context_instance=RequestContext(request))
+                e_responsable = e_ingreso
+                e_horaIngreso = pcd['ingreso']
+                e_horaIngresoReal = datetime.now()
+                e = Emergencia(
+                    paciente=p,
+                    responsable=e_responsable,
+                    ingreso=e_ingreso,
+                    hora_ingreso=e_horaIngreso,
+                    hora_ingresoReal=e_horaIngresoReal,
+                    hora_egreso=None
+                )
+                e.save()
+                espe = get_object_or_404(Espera, nombre='Ubicacion')
+                espera1 = EsperaEmergencia(
+                    espera=espe,
+                    emergencia=e,
+                    estado='0'
+                )
+                espera1.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Paciente agregado con éxito'
+                )
+                return HttpResponseRedirect('/emergencia/listar/todas')
             else:
-                p = prueba[0]
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Este usuario ya tiene una \
+                    emergencia actual sin atender',
+                    extra_tags='danger'
+                )
+                msj_tipo = "error"
+                msj_info = "Ya este usuario esta en una emergencia.\
+                    No puede ingresar a un usuario 2 veces a la emergencia"
 
-        e_activa = len(Emergencia.objects.filter(
-            paciente=p).filter(hora_egreso__isnull=True))
-        if e_activa == 0:
-            e_ingreso = Usuario.objects.get(
-                username=request.user)
-            e_responsable = e_ingreso
-            e_horaIngreso = pcd['ingreso']
-            e_horaIngresoReal = datetime.now()
-            e = Emergencia(
-                paciente=p,
-                responsable=e_responsable,
-                ingreso=e_ingreso,
-                hora_ingreso=e_horaIngreso,
-                hora_ingresoReal=e_horaIngresoReal,
-                hora_egreso=None
-            )
-            e.save()
-            espe = get_object_or_404(Espera, nombre='Ubicacion')
-            espera1 = EsperaEmergencia(espera=espe, emergencia=e, estado='0')
-            espera1.save()
-            return redirect('/emergencia/listar/todas')
-        else:
-            msj_tipo = "error"
-            msj_info = "Ya este usuario esta en una emergencia.\
-                No puede ingresar a un usuario 2 veces a la emergencia"
         info = {
             'form': form,
             'msj_tipo': msj_tipo,
             'msj_info': msj_info
-        }
+            }
         return render_to_response(
             'agregarPaciente.html',
             info,
@@ -516,6 +630,17 @@ def emergencia_agrega_emer(request, id_emergencia):
 
 
 @login_required(login_url='/')
+def emergencia_cubiculo_liberar(request, idA):
+    cubiculo = Cubiculo.objects.filter(emergencia=idA).first()
+    # cubiculo = get_object_or_404(Cubiculo, id=idA)
+    cubiculo.emergencia = None
+    cubiculo.save()
+    # asigCA = AsignarCub.objects.filter(id=idA)
+    # if asigCA:
+    #     asigCA.delete()
+    return HttpResponseRedirect("/emergencia/listar/cubiculos")
+
+@login_required(login_url='/')
 def emergencia_darAlta(request, idE):
     emergencia = get_object_or_404(Emergencia, id=idE)
     try:
@@ -539,12 +664,14 @@ def emergencia_darAlta(request, idE):
                     emergencia.hora_egreso = f_darAlta
                     emergencia.hora_egresoReal = datetime.now()
                     emergencia.destino = f_destino
+
                     emergencia.save()
 
                     # Liberar el cubiculo que estaba asignado
-                    asigCA = AsignarCub.objects.filter(emergencia=emergencia)
+                    cubiculo = Cubiculo.objects.filter(emergencia=emergencia)
                     if asigCA:
-                        asigCA.delete()
+                        cubiculo.emergencia = None
+                        cubiculo.save()
                     else:
                         print "Dando de alta sin cubiculo asignado"
 
@@ -576,7 +703,7 @@ def emergencia_darAlta(request, idE):
                 'darAlta.html',
                 info,
                 context_instance=RequestContext(request))
-    return redirect("/emergencia/listar/todas")
+    return HttpResponseRedirect("/emergencia/listar/todas")
 
 
 @login_required(login_url='/')
@@ -675,10 +802,14 @@ def actualizarSignos(request, idE):
 
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
+    if triage_asignado:
+        triage_inicial = None
+    else:
+        triage_inicial = None
     mensaje = ""
     form = FormularioEvaluacionPaciente()
     info = {
-        'form': FormularioEvaluacionPaciente(),
+        'form': FormularioEvaluacionPaciente(initial=triage_inicial),
         'idE': idE,
         'triage_asignado': triage_asignado
     }
@@ -1020,7 +1151,7 @@ def estadisticas_per(request, dia, mes, anho, dia2, mes2, anho2):
 def estadisticas_sem(request, dia, mes, anho):
     fecha_fin = datetime(int(anho), int(mes), int(dia))
     fecha_inicio = fecha_fin - timedelta(weeks=1)
-    return redirect(
+    return HttpResponseRedirect(
         '/estadisticas/' + str(fecha_inicio.day) + '-' +
         str(fecha_inicio.month) + '-' + str(fecha_inicio.year) +
         '/' + dia + '-' + mes + '-' + anho)
@@ -1028,8 +1159,19 @@ def estadisticas_sem(request, dia, mes, anho):
 
 def estadisticas(request):
     hoy = datetime.today()
-    return redirect('/estadisticas/' + str(hoy.day) + '-' + str(hoy.month) +
-                    '-' + str(hoy.year))
+    return HttpResponseRedirect(
+        '/estadisticas/'
+        +
+        str(hoy.day)
+        +
+        '-'
+        +
+        str(hoy.month)
+        +
+        '-'
+        +
+        str(hoy.year)
+    )
 
 
 #########################################################
@@ -1139,9 +1281,8 @@ def emergencia_espera_finalizada(request, id_espera_emergencia):
 # Funciones para agregar un cubiculo
 
 
-def emergencia_guardar_cubi(request, id_emergencia, accion):
+def emergencia_guardar_cubi(request, id_emergencia, admin, accion):
     emergencia = get_object_or_404(Emergencia, id=id_emergencia)
-
     id_cubiculo = request.GET['id_cubiculo']
     if id_cubiculo == '':
         cubiculo = None
@@ -1149,15 +1290,18 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
         cubiculo = get_object_or_404(Cubiculo, id=id_cubiculo)
 
     if (cubiculo is not None) and (cubiculo.esta_asignado()):
-        mensaje = "Error: El cubiculo " + cubiculo.nombre + \
-            " esta asignado a otro paciente"
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'El cubiculo ya  se encuentra asignado',
+            extra_tags='danger'
+        )
     else:
-        tiene_cubiculo = AsignarCub.objects.filter(
-            emergencia=emergencia).count() > 0
-        if (cubiculo is not None) and (not tiene_cubiculo):
-            emergencia.fecha_Esp_act = datetime.now()
-            emergencia.save()
-
+        if (
+            (cubiculo is not None)
+            and
+            (not cubiculo.emergencia_asignada(id_emergencia))
+        ):
             # Actualizar la causa de espera por ubicacion
             espera = get_object_or_404(Espera, nombre='Ubicacion')
             espera_emergencia = EsperaEmergencia.objects.filter(
@@ -1165,9 +1309,9 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
                 hora_fin=datetime.now())
 
             triage = Triage.objects.filter(
-                emergencia=id_emergencia).order_by("-fechaReal")
+                emergencia=id_emergencia).order_by("-fechaReal").first()
 
-            triage = triage[0]
+            # triage = triage[0]
             atencion = Atencion.objects.create(
                 emergencia=emergencia,
                 medico=emergencia.responsable,
@@ -1179,39 +1323,49 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
             # Aqui se garantiza que el 'cubiculo' no va a ser None,
             # puesto que se tuvo
             # que haber seleccionado un cubiculo para llegar aqui
-            asignacion_cubiculo = AsignarCub.objects.create(
-                emergencia=emergencia,
-                cubiculo=cubiculo
+            # asignacion_cubiculo = AsignarCub.objects.create(
+            #     emergencia=emergencia,
+            #     cubiculo=cubiculo
+            # )
+            cubiculo.emergencia = emergencia
+            cubiculo.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Cubiculo asignado con exito'
             )
-            mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
+            # mensaje = "Logrado: Cubiculo " + cubiculo.nombre + " asignado"
         else:
-            # Aqui necesariamente hay un cubiculo asignado
-            asignacion_cubiculo = AsignarCub.objects \
-                .filter(emergencia=emergencia)[0]
+            cubiculo_asignado = Cubiculo.objects.filter(
+                emergencia_id=id_emergencia).last()
             if cubiculo is None:
                 # Aqui se pidio no asignar ningun cubiculo
-                asignacion_cubiculo.delete()
-                mensaje = 'Logrado: Eliminación de asignación de cubículo'
+                # asignacion_cubiculo.delete()
+                if cubiculo_asignado:
+                    cubiculo_asignado.emergencia = None
+                    cubiculo_asignado.save()
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        'Cubiculo liberado con exito'
+                    )
             else:
-                asignacion_cubiculo.cubiculo = cubiculo
-                asignacion_cubiculo.save()
-                mensaje = "Logrado: Cubiculo " + \
-                    cubiculo.nombre + " actualizado"
-
+                cubiculo_asignado.emergencia = None
+                cubiculo_asignado.save()
+                cubiculo.emergencia = emergencia
+                cubiculo.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Cubiculo asignado con exito'
+                )
         if cubiculo is None:
-            return emergencia_listar_todas(request, mensaje=mensaje)
-        # else:
-        #     mensaje = mensaje
-        # if re.search('ambulatoria', cubiculo.area.nombre, flags = re.I):
-        #    print 'Enviando a ambulatoria'
-        #    return emergencia_listar_ambulatoria(request, mensaje = mensaje)
-        #  else:
-        #    print 'Enviando a observación'
-        #    return emergencia_listar_observacion(request, mensaje)
+            return emergencia_listar_todas(request, mensaje=None)
+    if admin == '1':
+        return HttpResponseRedirect(reverse_lazy('listar_cubiculos'))
+    else:
+        return HttpResponseRedirect(reverse_lazy('listar_todas'))
 
-    return emergencia_listar_todas(
-        request, mensaje=mensaje
-    )
 
 # - Funciones para agregar un cubiculo
 
@@ -1226,3 +1380,328 @@ def emergencia_tiene_cubiculo(request, id_emergencia):
     else:
         mensaje = "no"
         return HttpResponse(mensaje)
+
+
+class formulario_busqueda_cedula(generic.ListView):
+
+    def get_data(self, cedula=None):
+        if not cedula:
+            cedula = None
+            return None
+        data = []
+        resultados = []
+        pacientes = Paciente.objects.filter(
+            cedula=cedula).order_by('apellidos')
+
+        if len(pacientes) > 0:
+            for paciente in pacientes:
+                resultados.append(paciente)
+
+        for resultado in resultados:
+            emergencias = Emergencia.objects.filter(
+                paciente=resultado).order_by('paciente__apellidos')
+            for emergencia in emergencias:
+                    if emergencia not in data:
+                        data.append(emergencia)
+        return data
+
+    def get(self, request, *args, **kwargs):
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'get': True,
+                'formulario': buscar_por_cedulaForm()
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+        formulario = buscar_por_cedulaForm(request.POST)
+
+        if formulario.is_valid():
+            cedula = formulario.cleaned_data['cedula']
+            documento = formulario.cleaned_data['documento']
+            cedula = documento+str(cedula)
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'lista': self.get_data(cedula=cedula),
+                'formulario': formulario,
+            },
+            context_instance=RequestContext(request)
+        )
+
+
+class formulario_busqueda_nombre(generic.ListView):
+
+    def get_data(self, nombre=None, apellido=None):
+        resultados = []
+        pacientes = ''
+        data = []
+        if nombre and apellido:
+            print 'Nombre y Apellido'
+            pacientes = Paciente.objects.filter(
+                nombres__icontains=nombre,
+                apellidos__icontains=apellido).order_by('apellidos')
+
+        elif nombre:
+            print'Nombre'
+            pacientes = Paciente.objects.filter(
+                nombres__icontains=nombre).order_by('apellidos')
+        elif apellido:
+            print 'Apellido'
+            pacientes = Paciente.objects.filter(
+                apellidos__icontains=apellido).order_by('apellidos')
+
+        # print pacientes
+        if len(pacientes) > 0:
+            for paciente in pacientes:
+                resultados.append(paciente)
+        # print resultados
+        for paciente in resultados:
+            emergencias = Emergencia.objects.filter(
+                paciente=paciente).order_by('paciente__apellidos')
+            for emergencia in emergencias:
+                    if emergencia not in data:
+                        data.append(emergencia)
+        return data
+
+    def get(self, request, *args, **kwargs):
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'get': True,
+                'formulario': buscar_por_nombreForm()
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+        formulario = buscar_por_nombreForm(request.POST)
+        nombre = None
+        apellido = None
+        if formulario.is_valid():
+            nombre = formulario.cleaned_data['nombre']
+            apellido = formulario.cleaned_data['apellido']
+
+        return render_to_response(
+            'app_emergencia/busquedaCedula.html',
+            {
+                'lista': self.get_data(nombre=nombre, apellido=apellido),
+                'formulario': formulario,
+            },
+            context_instance=RequestContext(request)
+        )
+
+
+class TriageView(generic.FormView):
+
+    form_class = FormularioEvaluacionPaciente
+    template_name = 'triage.html'
+
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        initial = {
+        }
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        triage = Triage.objects.filter(emergencia=emergencia).last()
+        if triage is None:
+            return initial
+        else:
+            initial['motivo'] = triage.motivo
+            initial['temperatura'] = triage.signos_tmp
+            initial['frecuencia_cardiaca'] = triage.signos_fc
+            initial['frecuencia_respiratoria'] = triage.signos_fr
+            initial['presion_diastolica'] = triage.signos_pa
+            initial['presion_sistolica'] = triage.signos_pb
+            initial['saturacion_oxigeno'] = triage.signos_saod
+            initial['avpu'] = triage.signos_avpu
+            initial['intensidad_dolor'] = triage.signos_dolor
+            initial['ingreso'] = triage.ingreso
+        return initial
+
+    def get(self, request, *args, **kwargs):
+        """
+        Handles GET requests and instantiates a blank version of the form.
+        """
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        try:
+            medico = Usuario.objects.get(username=request.user)
+        except:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'No tiene permisos para \
+                ver esta pagina',
+                extra_tags='danger'
+            )
+            return HttpResponseRedirect('/')
+        if not ((medico.tipo == "1") or (medico.tipo == "2")):
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'No tiene permisos para \
+                ver esta pagina',
+                extra_tags='danger'
+            )
+            return HttpResponseRedirect('/')
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                get=True,
+                idE=emergencia.id,
+            )
+        )
+
+    def form_valid(self, form):
+        medico = Usuario.objects.get(username=self.request.user)
+        if 'id_emergencia' in self.kwargs:
+            emergencia = get_object_or_404(
+                Emergencia,
+                id=self.kwargs['id_emergencia']
+            )
+            triage = Triage.objects.filter(emergencia=emergencia).last()
+            if triage is None:
+                Triage.objects.create(
+                    emergencia=emergencia,
+                    medico=medico,
+                    fecha=form.cleaned_data['fecha'],
+                    motivo=form.cleaned_data['motivo'],
+                    areaAtencion=form.cleaned_data['areaAtencion'],
+                    signos_tmp=form.cleaned_data['temperatura'],
+                    signos_fc=form.cleaned_data['frecuencia_cardiaca'],
+                    signos_fr=form.cleaned_data['frecuencia_respiratoria'],
+                    signos_pa=form.cleaned_data['presion_diastolica'],
+                    signos_pb=form.cleaned_data['presion_sistolica'],
+                    signos_saod=form.cleaned_data['saturacion_oxigeno'],
+                    signos_avpu=form.cleaned_data['avpu'],
+                    signos_dolor=form.cleaned_data['intensidad_dolor'],
+                    ingreso=form.cleaned_data['ingreso'],
+                )
+            else:
+                triage.medico = medico
+                triage.fecha = form.cleaned_data['fecha']
+                triage.motivo = form.cleaned_data['motivo']
+                triage.ingreso = form.cleaned_data['ingreso']
+                triage.areaAtencion = form.cleaned_data['areaAtencion']
+                triage.signos_tmp = form.cleaned_data['temperatura']
+                triage.signos_fc = form.cleaned_data['frecuencia_cardiaca']
+                triage.signos_fr = form.cleaned_data['frecuencia_respiratoria']
+                triage.signos_pa = form.cleaned_data['presion_diastolica']
+                triage.signos_pb = form.cleaned_data['presion_sistolica']
+                triage.signos_saod = form.cleaned_data['saturacion_oxigeno']
+                triage.signos_avpu = form.cleaned_data['avpu']
+                triage.signos_dolor = form.cleaned_data['intensidad_dolor']
+                triage.save()
+
+        return render_to_response(
+            self.template_name,
+            {
+                'form': form,
+                'triage': triage,
+                'idE': emergencia.id
+
+            },
+            context_instance=RequestContext(self.request))
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        emergencia = get_object_or_404(
+            Emergencia,
+            id=self.kwargs['id_emergencia']
+        )
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                get=True,
+                idE=emergencia.id,
+            )
+        )
+
+
+def fetch_resources(uri, rel):
+    """
+    Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
+    `uri` is the href attribute from the html link element.
+    `rel` gives a relative path, but it's not used here.
+
+    """
+    import os
+    from django.conf import settings
+
+    """
+    Callback to allow xhtml2pdf/reportlab to retrieve Images,Stylesheets, etc.
+    `uri` is the href attribute from the html link element.
+    `rel` gives a relative path, but it's not used here.
+
+    """
+    if uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT,
+                            uri.replace(settings.MEDIA_URL, ""))
+    elif uri.startswith(settings.STATIC_URL):
+        path = os.path.join(settings.STATIC_ROOT,
+                            uri.replace(settings.STATIC_URL, ""))
+    else:
+        path = os.path.join(settings.STATIC_ROOT,
+                            uri.replace(settings.STATIC_URL, ""))
+
+        if not os.path.isfile(path):
+            path = os.path.join(settings.MEDIA_ROOT,
+                                uri.replace(settings.MEDIA_URL, ""))
+
+            if not os.path.isfile(path):
+                raise UnsupportedMediaPathException(
+                    'media urls must start with %s or %s' % (
+                        settings.MEDIA_ROOT, settings.STATIC_ROOT))
+
+    return path
+
+
+class triagePDF(generic.DetailView):
+    context_object_name = 'triage'
+    model = Triage
+    template_name = 'app_emergencia/triage_pdf.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        from xhtml2pdf import pisa
+        from django.template.loader import get_template
+        import StringIO
+        from django.template import loader, Context
+
+        template = get_template(self.template_name)
+        ctx = Context({'triage': context['triage']})
+        body_tpl = loader.get_template(self.template_name)
+        html = body_tpl.render(ctx)
+        # html = template.render(ctx)
+        result = StringIO.StringIO()
+        pdf = pisa.pisaDocument(
+            StringIO.StringIO(html.encode("UTF-8")),
+            dest=result,
+            encoding='UTF-8',
+            link_callback=fetch_resources
+            )
+
+        if not pdf.err:
+            response = HttpResponse(
+                result.getvalue(),
+                content_type='application/pdf')
+
+        return response
+        # Se deja esta linea para poder trabajar el HTML
+        # en caso de ser necesario
+        return self.render_to_response(context)

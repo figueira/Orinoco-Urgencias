@@ -5,10 +5,10 @@
   {% endif %}
   <div class="row">
     <div class="cuadroGrande span12 centrar">
-      <div class="titulo">
+      <h1 class="text-center ">
         Lista de usuarios
-      </div>
-      <table class="table table-bordered table-striped">
+      </h1>
+      <table class="table table-bordered table-striped top20">
         <tr>
         <th>C&eacute;dula</th>
         <th>Nombre</th>
@@ -53,7 +53,7 @@
                 </span>
               </td>
             {% endif %}
-            {% if l.is_active != True %}
+            {% if l.habilitado != True %}
               <td>
                 <span class="nombreLista">
                   No
@@ -67,13 +67,13 @@
               </td>
             {% endif %}
             <td>
-            {% if l.is_active != True %}
+            {% if l.habilitado != True %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/habilitar">
-                <img src="/static/img/usuarios/aprobar.png" title="Habilitar"/>
+                <img src="/static/img/usuarios/negar.png" title="Habilitar"/>
               </a>
             {% else %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/deshabilitar">
-                <img src="/static/img/usuarios/negar.png" title="Deshabilitar"/>
+                <img src="/static/img/usuarios/aprobar.png" title="Deshabilitar"/>
               </a>
             {% endif %}
               <a href="/usuario/listar/{{l.usuario.cedula}}/examinar">

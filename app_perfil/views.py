@@ -30,11 +30,11 @@ def paciente_perfil(request, idP):
     # tam = len(es)
     ea = es.last()
     # ea = ea[0]
-    t = Triage.objects.filter(emergencia=ea)
-    if len(t) != 0:
-        t = t[0]
-    else:
-        t = None
+    t = Triage.objects.filter(emergencia=ea).last()
+    # if t is not None:
+    #     t = t[0]
+    # else:
+    #     t = None
     info = {
         'p': paciente,
         'ea': ea,

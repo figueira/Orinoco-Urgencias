@@ -3,10 +3,10 @@
   {% if mensaje %}
     {{mensaje}}
   {% endif %}
-  <div class="container row">
-    <div class="span12">
+  <div class="row">
+    <div class="col-md-12">
       <h4>Examinar Usuario</h4>
-      <div class="span5 offset1" >
+      <div class="col-md-5 col-md-offset11" >
         <p class ="categoria"> C&eacute;dula de Identidad:</p> 
         <p> {{usuario.cedula}}</p></br>
         <p class ="categoria"> Nombre: </p>
@@ -16,7 +16,7 @@
         <p class ="categoria"> Tipo de Usuario: </p>
         <p> {{usuario.tipoR}}</p></br>
       </div>  
-      <div class="span4">
+      <div class="col-md-4">
         <p class ="categoria"> Direcci&oacute;n: </p>
         <p> {{usuario.direccion}}</p></br>
         <p class ="categoria"> Email: </p>
@@ -25,7 +25,7 @@
         <p> M&oacute;vil: {{usuario.tlf_cel}} </p>
         <p> Casa: {{usuario.tlf_casa}} </p>
         <div class="iconos">
-          {% if usuario.is_active != True %}
+          {% if usuario.habilitado != True %}
             <a href="/usuario/listar/{{usuario.cedula}}/habilitar">
               <img src="/static/img/usuarios/aprobar.png" title="Habilitar"/>
             </a>
@@ -41,5 +41,33 @@
         </div>
       </div>
     </div>
+    {% if user.is_staff %}
+    <div class="col-md-6">
+      
+      <h2>Activar/Desactivar Usuario</h2>
+      {% if usuario.is_active != True %}
+            <a class="btn btn-success" href="/usuario/activar/{{usuario.cedula}}/">
+              Activar
+            </a>
+           {% else %}
+            <a class="btn btn-danger" href="/usuario/desactivar/{{usuario.cedula}}/">
+              Desactivar
+            </a>
+           {% endif %}
+           </div>
+           <div class="col-md-6">
+             
+       <h2>Promover Usuario</h2>
+      {% if usuario.is_staff != True %}
+            <a class="btn btn-success" href="/usuario/promover/{{usuario.cedula}}/">
+              Promover
+            </a>
+           {% else %}
+            <a class="btn btn-danger" href="/usuario/despromover/{{usuario.cedula}}/">
+              Despromover
+            </a>
+           {% endif %}    
+        </div>
+    {% endif %}
   </div>
 {% endblock %}

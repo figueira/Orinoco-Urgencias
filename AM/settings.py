@@ -16,9 +16,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cmsb',
-        'USER': 'emergencia_cmsb',
-        'PASSWORD': '123',
+        'NAME': 'cmsb-new',
+        'USER': 'postgres',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -138,7 +138,8 @@ INSTALLED_APPS = INSTALLED_APPS + [
 # Utilidades third party
 INSTALLED_APPS = INSTALLED_APPS+[
     'django_extensions',
-    'south'
+    'south',
+    'bootstrapform'
 
 ]
 

@@ -11,6 +11,12 @@ from models import *
 
 import re
 
+DocumentoIdentidad = (
+    ('V-', 'Cedula'),
+    ('E-', 'Extranjero'),
+    ('P-', 'Pasaporte'),
+)
+
 ATENCION = (
     (True, 'Si'),
     (False, 'No'),
@@ -23,14 +29,14 @@ UNDIDAD = (
 
 
 def validate_nombre(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
+    if re.match('^[\D \']+$', value) is None:
         raise ValidationError(
             u'\"%s\" no es un nombre valido, debe estar\
             compuesto solo por letras.' % value)
 
 
 def validate_apellido(value):
-    if re.match('^[a-zA-Z \']+$', value) is None:
+    if re.match('^[\D \']+$', value) is None:
         raise ValidationError(u'\"%s\" no es un apellido valido,\
         debe estar compuesto solo por letras' % value)
 
@@ -47,23 +53,28 @@ def validate_dolor(value):
 
 class AgregarEmergenciaForm(forms.Form):
     ingreso = forms.DateTimeField(
+        required=True,
         label="FECHA Y HORA DE INGRESO",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'dd/MM/aaaa hh:mm:ss',
-                'data-format': 'dd/MM/yyyy hh:mm:ss',
-                'class': 'span2'}
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
             )
     )
+    documento = forms.ChoiceField(choices=DocumentoIdentidad)
     cedula = forms.CharField(
+        required=True,
         label="DOCUMENTO DE IDENTIDAD")
     nombres = forms.CharField(
         label="NOMBRE",
+        required=True,
         max_length=64,
         validators=[validate_nombre]
     )
     apellidos = forms.CharField(
         label="APELLIDO",
+        required=True,
         max_length=64,
         validators=[validate_apellido]
     )
@@ -73,7 +84,12 @@ class AgregarEmergenciaForm(forms.Form):
         required=False
     )
     fecha_nacimiento = forms.DateField(
-        label="FECHA DE NACIMIENTO"
+        label="FECHA DE NACIMIENTO",
+        widget=forms.TextInput(
+            attrs={
+                'data-date-format': 'DD/MM/YYYY',
+                }
+            )
     )
 
 
@@ -83,12 +99,18 @@ class darAlta(forms.Form):
         queryset=Destino.objects.all()
     )
     area = forms.ModelChoiceField(
-        label="Área de la Clínica a la que va",
+        label="Area",
         required=False,
         queryset=AreaAdmision.objects.all()
     )
     darAlta = forms.DateTimeField(
-        label="Fecha y Hora en que se da De Alta"
+        label="Fecha y Hora",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
+        )
     )
     traslado = forms.DateTimeField(required=False)
 
@@ -122,24 +144,33 @@ class FormularioEvaluacionPaciente(forms.Form):
             choices=AVPU)
     )
     fecha = forms.DateTimeField(
-        label="Fecha y hora a la que se realiza la Evaluación",
+        label="Fecha y Hora",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'dd/MM/aaaa hh:mm:ss',
-                'data-format': 'dd/MM/yyyy hh:mm:ss',
-                'class': 'span2'
-            }
+                'placeholder': 'DD/MM/YYYY hh:mm:ss',
+                'data-date-format': 'DD/MM/YYYY HH:mm:ss',
+                }
         )
     )
     frecuencia_cardiaca = forms.IntegerField(
         label="Frecuencia cardíaca",
         min_value=0,
-        max_value=200
+        max_value=200,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     frecuencia_respiratoria = forms.IntegerField(
         label="Frecuencia respiratoria",
         min_value=0,
-        max_value=30
+        max_value=30,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     ingreso = forms.CharField(
         label="Tipo de ingreso",
@@ -160,21 +191,47 @@ class FormularioEvaluacionPaciente(forms.Form):
     presion_sistolica = forms.IntegerField(
         label="Presión sistólica",
         min_value=0,
-        max_value=300
+        max_value=300,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     presion_diastolica = forms.IntegerField(
         label="Presión diastólica",
         min_value=0,
-        max_value=200
+        max_value=200,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     saturacion_oxigeno = forms.IntegerField(
         label="Saturación de oxígeno",
         min_value=0,
-        max_value=100
+        max_value=100,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
     temperatura = forms.FloatField(
         min_value=36,
-        max_value=42
+        max_value=42,
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    areaAtencion = forms.ModelChoiceField(
+        label='Area de Atención',
+        queryset=AreaEmergencia.objects.all().exclude(
+            nombre__icontains="egreso"),
+        initial=AreaEmergencia.objects.get(nombre__startswith=" Ingreso")
     )
 
     # Validaciones perzonalizadas sobre los campos del formulario
@@ -457,3 +514,38 @@ class AgregarIndEndosForm(forms.Form):
         # Para quitar la linea inicial (-----) del widget:
         self.fields['endoscopico'].empty_label = None
         self.fields['endoscopico'].label = "Exámenes Especiales:"
+
+
+class buscar_por_cedulaForm(forms.Form):
+    documento = forms.ChoiceField(choices=DocumentoIdentidad)
+    cedula = forms.IntegerField(required=True, min_value=999)
+
+
+class buscar_por_nombreForm(forms.Form):
+    nombre = forms.CharField(
+        min_length=4,
+        max_length=20,
+        required=False
+    )
+    apellido = forms.CharField(
+        min_length=4,
+        max_length=20,
+        required=False
+    )
+
+    def clean(self):
+        # run the standard clean method first
+        super(buscar_por_nombreForm, self).clean()
+
+        nombre = self.cleaned_data.get('nombre')
+        apellido = self.cleaned_data.get('apellido')
+
+        if not nombre:
+            if not apellido:
+                raise forms.ValidationError('Debe rellenar alguno de los dos')
+        if not apellido:
+            if not nombre:
+                raise forms.ValidationError('Debe rellenar alguno de los dos')
+
+        # always return the cleaned data
+        return self.cleaned_data

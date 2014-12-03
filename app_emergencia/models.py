@@ -91,19 +91,6 @@ class AreaAdmision(models.Model):
         return "%s" % self.nombre
 
 
-class Cubiculo(models.Model):
-    nombre = models.CharField(max_length=48)
-    area = models.ForeignKey(AreaEmergencia)
-
-    def __unicode__(self):
-        return "%s" % self.nombre
-
-    def esta_asignado(self):
-        asignaciones = AsignarCub.objects.filter(
-            cubiculo_id=self.id)
-        return asignaciones.count() > 0
-
-
 class Destino(models.Model):
     nombre = models.CharField(max_length=48)
 
@@ -283,11 +270,42 @@ class Emergencia(models.Model):
         return str(horas)+":"+str(minutos)+":"+str(segundos)
 
     def cubi(self):
-        result = AsignarCub.objects.filter(emergencia=self)
+        result = Cubiculo.objects.filter(emergencia=self)
         if result:
-            return "%s" % (result[0].cubiculo)
+            return "%s" % (result[0])
         else:
             return "%s" % ("NO ASIGNADO")
+
+
+class Cubiculo(models.Model):
+    nombre = models.CharField(max_length=48)
+    area = models.ForeignKey(AreaEmergencia)
+    emergencia = models.ForeignKey(
+        Emergencia,
+        default=None,
+        null=True,
+        unique=True,
+        blank=True,
+    )
+
+    def __unicode__(self):
+        return "%s" % self.nombre
+
+    class Meta:
+        ordering = ('nombre',)
+
+    def esta_asignado(self):
+        # asignaciones = AsignarCub.objects.filter(
+        #     cubiculo_id=self.id)
+        return self.emergencia is not None
+
+    def get_cubiculo(self, id_emergencia):
+        cubiculo = Cubiculo.objects.filter(emergencia_id=id_emergencia).last()
+        return cubiculo
+
+    def emergencia_asignada(self, id_emergencia):
+        return Cubiculo.objects.filter(
+            emergencia_id=id_emergencia).count() > 0
 
 
 class AsignarCub(models.Model):
@@ -389,6 +407,49 @@ class Triage(models.Model):
 
     def fechaR(self):
         self.fecha.strftime("%H:%M del %d/%m/%y")
+
+    def colorTriage(self):
+        color = ""
+        if self.nivel == 1:
+            color = 'LightCoral'
+        elif self.nivel == 2:
+            color = 'DarkOrange'
+        elif self.nivel == 3:
+            color = 'Yellow'
+        elif self.nivel == 4:
+            color = 'lightgreen'
+        elif self.nivel == 5:
+            color = 'DarkTurquoise '
+        else:
+            color = ''
+
+        return color
+
+    def get_avpu(self):
+        try:
+            avpu = str(self.signos_avpu)
+        except:
+            avpu = 'A'
+
+        resultado = ''
+
+        if avpu == 'A':
+            resultado = AVPU[0][1]
+        elif avpu == 'V':
+            resultado = AVPU[1][1]
+        elif avpu == 'P':
+            resultado = AVPU[2][1]
+        elif avpu == 'U':
+            resultado = AVPU[3][1]
+
+        return resultado
+
+    def get_ingreso(self):
+        try:
+            ingreso = int(self.ingreso)
+        except:
+            ingreso = 0
+        return ICAUSA[ingreso][1]
 
 
 class ComentarioTriage(models.Model):
@@ -524,7 +585,7 @@ class Asignar(models.Model):
         # Solo hora
         # return self.fechaReal.strftime("%H:%M:%S")
 
-    #-- Para mostrar la informacion adicional cuando el tipo_Frec es SOS:
+    # -- Para mostrar la informacion adicional cuando el tipo_Frec es SOS:
     # Situacion SOS:
     def med_SOS_sit(self):
         result = EspMedics.objects.filter(asignacion=self)

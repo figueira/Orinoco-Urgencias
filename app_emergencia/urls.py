@@ -48,7 +48,7 @@ urlpatterns = patterns(
 
     # Agregar/Modificar Cubiculo:
     url(
-        '^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<accion>.*)$',
+        '^emergencia/guardar_cubi/(?P<id_emergencia>.*)/(?P<admin>\d+)/(?P<accion>.*)$',
         'emergencia_guardar_cubi'
     ),
     url(
@@ -58,7 +58,7 @@ urlpatterns = patterns(
 
     url('^emergencia/agregar$', 'emergencia_agregar'),
     url('^emergencia/listar/todas$',
-        'emergencia_listar_todas'),
+        'emergencia_listar_todas', name="listar_todas"),
     url('^emergencia/listar/sinclasificar$',
         'emergencia_listar_sinclasificar'),
     url('^emergencia/listar/clasificados$',
@@ -67,6 +67,8 @@ urlpatterns = patterns(
         'emergencia_listar_triage'),
     url('^emergencia/listar/ambulatoria$',
         'emergencia_listar_ambulatoria'),
+    url('^emergencia/listar/cubiculos$',
+        'emergencia_listar_cubiculos', name="listar_cubiculos"),
     url('^emergencia/listar/observacion$',
         'emergencia_listar_observacion'),
     url('^emergencia/listar/atencion$',
@@ -83,4 +85,32 @@ urlpatterns = patterns(
         'emergencia_buscar'),
     url('^emergencia/(?P<idE>\w+)/perfil$',
         'paciente_perfil_emergencia'),
+    url('^emergencia/cubiculo/(?P<idA>\w+)/liberar',
+        'emergencia_cubiculo_liberar'),
+
+)
+
+urlpatterns = urlpatterns + patterns(
+    '',
+    url(
+        r'^emergencia/buscar/cedula/$',
+        views.formulario_busqueda_cedula.as_view(),
+        name='buscar_por_cedula'
+    ),
+    url(
+        r'^emergencia/buscar/nombre/$',
+        views.formulario_busqueda_nombre.as_view(),
+        name='buscar_por_nombre'
+    ),
+    url(
+        r'^emergencia/(?P<id_emergencia>\d+)/triage/calculo/$',
+        views.TriageView.as_view(),
+        name='calcular-triage'
+    ),
+    url(
+        r'^emergencia/(?P<pk>\d+)/triage/pdf/$',
+        views.triagePDF.as_view(),
+        name='imprimir-triage'
+    ),
+
 )

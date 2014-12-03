@@ -147,11 +147,13 @@ def editarPaciente(request, idP):
             nombre = data['nombres']
             apellido = data['apellidos']
             correo = data['email']
+            fecha_nacimiento = data['fecha_nacimiento']
 
             paciente.cedula = cedulas
             paciente.nombres = nombre
             paciente.apellidos = apellido
             paciente.email = correo
+            paciente.fecha_nacimiento = fecha_nacimiento
 
             paciente.save()
         else:
@@ -163,7 +165,13 @@ def editarPaciente(request, idP):
                 info,
                 context_instance=RequestContext(request))
     else:
-        form = EditarPacienteForm()
+        form = EditarPacienteForm(initial={
+            'cedula': paciente.cedula,
+            'nombres': paciente.nombres,
+            'apellidos': paciente.apellidos,
+            'email': paciente.email,
+            'fecha_nacimiento': paciente.fecha()
+            })
         info = {
             'form': form,
             'paciente': paciente

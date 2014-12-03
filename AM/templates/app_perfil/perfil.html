@@ -3,16 +3,16 @@
   {% if mensaje %}
   {{mensaje}}
   {% endif %}
-  <div class="container row">
-    <div class="span12">
+  <div class="row">
+    <div class="col-md-12">
       <h3>Información</h3> 
     </div>
     
-    <div class="span2">
+    <div class="col-md-2">
       <img src="{{p.src_foto}}">
     </div>
     
-    <div class="span4">
+    <div class="col-md-6">
       <h4> {{p.apellidos}}, {{p.nombres}}</h4>
       <strong>C&eacute;dula:</strong> {{p.cedula}} <br/>
       <strong>Nombre:</strong> {{p.nombres}} <br/>
@@ -21,7 +21,7 @@
       <strong>Edad:</strong> {{p.edad}}<br/>
     </div>
   
-    <div class="span3">
+    <div class="col-md-4">
       <h4>Signos Vitales</h4>
       {% if t == None %}
           Todav&iacute;a no se han tomado los signos.
@@ -37,11 +37,11 @@
     </div>
   
   
-    <div class="span12">  
+    <div class="col-md-12">  
         <h3>Acciones</h3>
         {% if ea.hora_egreso == None %}       
             {% if ea.triage == 0 %}
-                <a href="/emergencia/{{ ea.id }}/triage/calcular" 
+                <a href="/emergencia/{{ ea.id }}/triage/calculo" 
                    class="btn btn-primary">
                     Aplicar Triage
                 </a>
@@ -51,11 +51,12 @@
                    class="btn btn-primary">
                    Realizar Historia M&eacute;dica 
                 </a>
-                {% endcomment %}
 
                 <a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
-                   Informe de Triage {{ ea.triage|length }}
+                   Informe de Triage
                 </a>  
+                {% endcomment %}
+                <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">Informe de Triage</a> 
             {% endif %}
             <a href="/emergencia/{{ ea.id }}/daralta" class="btn btn-primary">
               Egreso
@@ -79,7 +80,7 @@
                 </a> 
             {% endif %} 
             {% if ea.triage %}
-                <a href="/emergencia/descarga/{{ea.id}}/triage" class="btn btn-primary">
+                <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">
                    Informe de Triage 
                 </a> 
             {% endif %}
@@ -89,6 +90,10 @@
         
         <a href="/paciente/{{ p.id }}/editar" class="btn btn-primary">
            Editar Perfil
-        </a>  
+        </a> 
+        {% comment %}
+        <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">Imprimir Triage</a> 
+        {% endcomment %}
+
     </div>
 {% endblock %}

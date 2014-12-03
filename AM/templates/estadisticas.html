@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block scripts %}
-  <!--Datetime Picker -->
-  <script type="text/javascript" 
-          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
-  </script>
-  <link rel="stylesheet" 
-        href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-  </script>
+  <!--Daterange Picker -->
+    <script type="text/javascript"
+    src="/static/libs/moment/js/moment.min.js"></script>
+    <script type="text/javascript" src="/static/libs/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/libs/daterangepicker/daterangepicker.min.css" />
   <link rel="stylesheet" href="/static/css/estadisticas.css">
   <!--Load the AJAX API-->
   <script src="/static/libs/highcharts/highcharts.js"></script>
   <script src="/static/libs/highcharts/modules/exporting.js"></script>
   <script type="text/javascript" src="/static/scripts/jsapi.js"></script>
+  <script type="text/javascript" src="/static/js/raphael-min.js"></script>
+  <script type="text/javascript" src="/static/js/morris.js-0.5.1/morris.min.js"></script>
   <script type="text/javascript">
   
     // Load the Visualization API and the piechart package.
@@ -72,7 +72,42 @@
       chart.draw(data, options);
       chart2.draw(data2,options2);
     }
+    $(document).ready(function() { 
+    $('.filtrarFecha').daterangepicker({ timePicker: false,
+        format: 'DD-MM-YYYY',
+        ranges: {
+            'Hoy': [moment(), moment()],
+            'Ayer': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Ultimos 7 Days': [moment().subtract('days', 6), moment()],
+            'Ultimos 30 Days': [moment().subtract('days', 29), moment()],
+            'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+            'Mes Pasado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        },
+        separator: '/',
+        locale: {
+            applyLabel: 'Enviar',
+            cancelLabel: 'Borrar',
+            fromLabel: 'Desde',
+            toLabel: 'Hasta',
+            customRangeLabel: 'Especifico',
+            daysOfWeek: ['D', 'L', 'M', 'M', 'J', 'V','S'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            firstDay: 0
+                    }
+    });
+   $('.filtrarFecha').on('cancel.daterangepicker', function(ev, picker) {
+  //do something, like clearing an input
+  $('.filtrarFecha').val('');
+  });
+  $('.filtrarFecha').on('apply.daterangepicker', function(ev, picker) {
+  //do something, like clearing an input
+    window.location.href = "/estadisticas/"+picker.startDate.format('DD-MM-YYYY')+"/"+picker.endDate.format('DD-MM-YYYY');
+  });
+
+   });
+
   
+
   </script>
 {% endblock %}
 
@@ -91,7 +126,25 @@
     </div>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="container">
+    <div class="col-md-6" style="">
+       <div class='col-md-5'>
+          <form>
+              <div class="form-group">
+                <label for="filtrarFecha">Filtrar por fecha:</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  <input type="text"  class=" filtrarFecha form-control" />
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+    {% comment %}
+
+    <div class="col-md-6">
       <h3>B&uacute;squeda Espec&iacute;fica</h3>
       Desde:
       <span id="fecha_inicio" class="input-append">
@@ -199,8 +252,9 @@
           });      
         </script>
       </div>
+    {% endcomment %}
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h5> Datos Generales </h5>
       Generado: <strong>{{fecha}}</strong><br/>
       Primer D&iacute;a: <strong>{{inicio}}</strong><br/>
@@ -214,7 +268,7 @@
   <hr/>
   
   <div class="row">
-    <div class="span4">
+    <div class="col-md-4">
       <h4>Triages Realizados</h4>
       <ul>
         {% for nivel,cantidad in triages %}
@@ -222,16 +276,29 @@
         {% endfor %}
       </ul>
     </div>
-    <div class="span8">
+    <div class="col-md-8">
       <h4>Gr&aacute;fica de Triages</h4>
-      <div id="grafica_de_triages">
+      <div id="dona-triage">
+      <!-- <div id="grafica_de_triages"> -->
       </div>
+      <script>
+        var colores = ["#ff0000", "#ffa500", "#ffff00", "#008000", "#0000ff"];
+
+        Morris.Donut({
+            element: 'dona-triage',
+            data: [
+                {% for nivel,cantidad in triages %}
+                {label: "Nivel {{ nivel }}", value: {{ cantidad }}, color: colores[{{nivel}}-1]},
+                {% endfor %}
+            ]
+        });
+      </script>
     </div>
   </div>
   
   <hr/>
   <div class ="row">
-    <div class="span4">
+    <div class="col-md-4">
       <h4>Egresos Realizados</h4>
       <ul>
         {% for nivel,cantidad in egresos %}
@@ -239,10 +306,26 @@
         {% endfor %}
       </ul>
     </div>
-    <div class="span8">
+    <div class="col-md-8">
       <h4>Gr&aacute;fica de Egresos</h4>
-      <div id="grafica_de_egresos">
+      <!-- <div id="grafica_de_egresos"> -->
+      <div id="barra-egreso">
       </div>
+      <script>
+
+        var ylabels = ['t','v','a','r','n']; 
+
+        Morris.Bar({
+        element: 'barra-egreso',
+        data: [
+          { y: 'Egresos' {% for ascii, cantidad in egresos %} , {{ forloop.counter }}: {{ cantidad }} {% endfor %}}
+        ],
+        xkey: 'y',
+        ykeys: [1,2,3,4,5],
+        labels: ['Total','Verde (0 a 2 horas)','Amarillo (2 a 4 horas)','Rojo (4 a 6 horas)','Negro (6 o + horas)'],
+        barColors: ["#0000ff", "#008000", "#ffff00","#ff0000","#000"]
+        });
+      </script>
     </div>
   </div>
   
