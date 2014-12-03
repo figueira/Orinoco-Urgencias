@@ -82,7 +82,15 @@
             {% if ea.triage %}
                 <a href="{% url 'imprimir-triage' t.id %}" class="btn btn-primary">
                    Informe de Triage 
-                </a> 
+                </a>
+                <a href="/emergencia/agrega_emer/{{ea.id}}" 
+                     rel="tooltip" class="btn btn-primary"
+                     data-toggle="tooltip"
+                     data-original-title="Ingresar a Emergencias"
+                     onclick="return window.confirm('Esta de acuerdo en ingresar al paciente?')"> 
+                    Ingresar Paciente
+                  </a>
+                </center> 
             {% endif %}
             
             

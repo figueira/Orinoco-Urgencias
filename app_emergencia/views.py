@@ -615,18 +615,26 @@ def emergencia_agrega_emer(request, id_emergencia):
             estado='0')
         espera1.save()
         # print "Creando nueva emergencia objeto creado: ",e
-        return redirect('/emergencia/listar/todas')
+        return HttpResponseRedirect('/emergencia/listar/todas')
     else:
-        msj_tipo = "error"
-        msj_info = "Ya este usuario esta en una emergencia. No puede ingresar \
-            a un usuario 2 veces a la emergencia"
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'Ya este usuario esta en una emergencia.'
+            +
+            'No puede ingresar a un usuario 2 veces a la emergencia',
+            extra_tags='danger'
+        )
+        # msj_tipo = "error"
+        # msj_info = "Ya este usuario esta en una emergencia.Nopuede ingresar \
+        #     a un usuario 2 veces a la emergencia"
         # mensaje = "Ya este usuario esta en una emergencia.\
         # No puede ingresar a un usuario 2 veces a la emergencia"
         # print " ya este paciente tiene una emergencia activa"
         # info = {'mensaje':mensaje}
         # return render_to_response(
         #       'listaB.html',info,context_instance=RequestContext(request))
-        return redirect('/emergencia/listar/todas')
+        return HttpResponseRedirect('/emergencia/listar/todas')
 
 
 @login_required(login_url='/')
@@ -668,8 +676,9 @@ def emergencia_darAlta(request, idE):
                     emergencia.save()
 
                     # Liberar el cubiculo que estaba asignado
-                    cubiculo = Cubiculo.objects.filter(emergencia=emergencia)
-                    if asigCA:
+                    cubiculo = Cubiculo.objects.filter(
+                        emergencia=emergencia).first()
+                    if cubiculo is not None:
                         cubiculo.emergencia = None
                         cubiculo.save()
                     else:
