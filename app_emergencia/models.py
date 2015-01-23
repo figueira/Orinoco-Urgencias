@@ -276,6 +276,9 @@ class Emergencia(models.Model):
         else:
             return "%s" % ("NO ASIGNADO")
 
+    def nivel_emergencia(self):
+        return self.triages_em.last().nivel
+
 
 class Cubiculo(models.Model):
     nombre = models.CharField(max_length=48)
@@ -286,6 +289,7 @@ class Cubiculo(models.Model):
         null=True,
         unique=True,
         blank=True,
+        related_name='cubiculo'
     )
 
     def __unicode__(self):
@@ -374,7 +378,7 @@ class Admision(models.Model):
 
 
 class Triage(models.Model):
-    emergencia = models.ForeignKey(Emergencia)
+    emergencia = models.ForeignKey(Emergencia, related_name='triages_em')
     medico = models.ForeignKey(Usuario)
     fecha = models.DateTimeField(blank=True, null=True)
     fechaReal = models.DateTimeField(auto_now_add=True)

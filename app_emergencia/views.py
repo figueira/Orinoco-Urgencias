@@ -161,7 +161,7 @@ def emergencia_buscar(request):
 
 def emergencia_listar_todas(request, mensaje=''):
     emergencias = Emergencia.objects.filter(hora_egreso=None) \
-        .order_by('paciente__apellidos')
+        .order_by('hora_ingreso')
     cubiculos = Cubiculo.objects.all()
 
     form = IniciarSesionForm()
@@ -214,7 +214,7 @@ def emergencia_listar_triage(request):
 def emergencia_listar_sinclasificar(request):
     emergencias = Emergencia.objects.filter(
         hora_egreso=None,
-        triage__isnull=True).order_by('hora_ingreso')
+        triages_em__isnull=True).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Sin clasificar"
     cabecera = "Pacientes por Clasificar"
@@ -238,10 +238,11 @@ def emergencia_listar_clasificados(request):
     emergencias = Emergencia.objects \
         .filter(
             hora_egreso=None,
-            triage__isnull=False,
-            asignarcub__isnull=True).distinct().order_by(
+            triages_em__isnull=False,
+            cubiculo__isnull=True).distinct().order_by(
             'hora_ingreso'
-            )
+            ).order_by('triages_em__nivel')
+
     form = IniciarSesionForm()
     titulo = "Clasificados"
     cabecera = "Pacientes Clasificados (No Atendidos)"
@@ -365,7 +366,7 @@ def emergencia_buscar_historia_medica(request):
 
 def emergencia_listar_observacion(request, mensaje=''):
     emergencias = Emergencia.objects.filter(
-        hora_egreso=None, triage__nivel__range=[1, 3]).order_by(
+        hora_egreso=None, triages_em__nivel__range=[1, 3]).order_by(
         'hora_ingreso'
     )
     form = IniciarSesionForm()
@@ -391,7 +392,7 @@ def emergencia_listar_observacion(request, mensaje=''):
 def emergencia_listar_ambulatoria(request, mensaje=''):
     emergencias = Emergencia.objects.filter(
         hora_egreso=None,
-        triage__nivel__range=[4, 5]).order_by('hora_ingreso')
+        triages_em__nivel__range=[4, 5]).order_by('hora_ingreso')
     form = IniciarSesionForm()
     titulo = "Ambulatorio"
     cabecera = "Área de Atención Ambulatoria"
