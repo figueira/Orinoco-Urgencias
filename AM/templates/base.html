@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Atenci&oacute;n M&eacute;dica</title>
+  
+  <!-- jQuery -->
+  <script type="text/javascript" src="/static/libs/js/jquery.min.js"></script>
+  
+  <!-- Bootstrap -->
+    <link rel="stylesheet"
+        href="/static/libs/bootstrap3/css/bootstrap.min.css">
+    <script type="text/javascript"
+        src="/static/libs/bootstrap3/js/bootstrap.min.js"></script>
+  
+  <!-- Propios -->
+  <link rel="stylesheet" href="/static/css/estilo.css">
+  <link rel="stylesheet" href="/static/css/masEstilos.css">
+  <link type="icon" href="/static/img/icon.ico" rel="icon"/>
+  {% block estilos %}
+  {% endblock %}
+  
+  {% block scripts %}
+  
+  {% endblock %}
+  
+  <script>
+      {% block en_scripts %}
+      {% endblock %}
+  </script>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Navegación</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="/">
+            <img src="/static/img/logo.png" class="brand-image">
+        </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+        {% if user.is_authenticated %}
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pacientes<span class="caret"></span></a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li><a href="/emergencia/agregar">Agregar Paciente</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Buscar</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a tabindex="-1" href="{% url 'buscar_por_cedula' %}">
+                                    Buscar por Cédula
+                                </a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="{% url 'buscar_por_nombre' %}">
+                                    Buscar por Nombre
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li>
+                <a href="/emergencia/buscar">Paciente</a>
+            </li>
+            <li>
+                <a href="/emergencia/listar/todas">Ver emergencias</a>
+            </li>
+        {% endif %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Listas<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a href="/emergencia/listar/todas">Listado General</a>
+                    </li>
+                    
+
+ 
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="/emergencia/listar/triage">
+                            Área de Triage
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a tabindex="-1" href="/emergencia/listar/sinclasificar">
+                                    Pacientes por Clasificar
+                                </a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="/emergencia/listar/clasificados">
+                                    Pacientes Clasificados, no Atendidos
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a  tabindex="-1" href="/emergencia/listar/atencion">
+                            Área de Atención
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/emergencia/listar/observacion">
+                                    Área de Observación
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/emergencia/listar/ambulatoria">
+                                    Área de Atención Ambulatoria
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            {% if user.is_staff %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Usuarios<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a href="/usuario/crear">Crear</a>
+                    </li>
+                    <li>
+                        <a href="/usuario/listar">Listar</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Administración<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a href="/usuario/pendientes">Usuarios pendientes</a>
+                    </li>
+                    <li>
+                      <a href="/emergencia/listar/cubiculos">Administrar cubiculos</a>
+                    </li>
+                    <li>
+                        <a href="/estadisticas">Estadísticas</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {{user}}<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="/sesion/cerrar">Cerrar sesión</a></li>
+            </ul>
+
+        </li>
+        {% else %}
+        <form class="navbar-form form-inline navbar-left" method='POST' action="/sesion/iniciar/">
+            {% csrf_token %}
+            <div class="form-group">
+                
+                    <input id="id_unombre" class="form-control top5" maxlength="64" name="unombre" placeholder="Cedula de identidad:" type="text">
+            </div>
+            <div class="form-group">
+                
+                    <input id="id_uclave" class="form-control top5" maxlength="32" name="uclave" placeholder="Clave:" type="password">
+            </div> 
+            <button type="submit" class="btn btn-primary top5">Iniciar Sesión</button>
+        </form>
+            <li class="dropdown">
+                <a role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Opciones<span class="caret"></span>
+                </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="/usuario/restablecer">Recuperar clave</a></li>
+                <li><a href="/usuario/solicitar">Solicitar cuenta</a></li>
+            </ul>
+
+        </li>
+        {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+    <div id="cuerpo" class="container">
+        {% if msj_info %}
+          <div class="row">
+            <div id="mensaje" class="span12 alert alert-{{msj_tipo}}">
+              {{msj_info}}
+            </div>
+          </div>
+        {% endif %} 
+    
+        {% if not user.is_authenticated %}
+
+            <h3 class="tit-list"></h3>
+        {% endif %} 
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% block cuerpo %} 
+        {% endblock %} 
+
+        <br />
+    </div>
+    <div class="footer">
+        <div class="container">
+            <p class="muted credit">
+                MEDMATRIC. VERSION 2.0. Derechos reservados
+            </p>
+            <p class="muted credit">&copy; 2013-2014, Desarrollado por la 
+              <a href="http://www.usb.ve/"> Universidad Sim&oacute;n
+                Bol&iacute;var</a>
+              <img class="logo-cebolla"
+                   style="width: 24px; heigth:auto; vertical-align: top;"
+                   src="/static/img/logo-cebolla.png">
+            </p>
+        </div>
+    </div>
+
+  
+  {% block scripts2 %} 
+  {% endblock %}
+  
+</body>
+
+</html>
+

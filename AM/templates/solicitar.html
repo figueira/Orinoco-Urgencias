@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+  {% block cuerpo %}
+  {% if mensaje %}
+    {{ mensaje }}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+      <h4>
+        Solicitar Cuenta
+      </h4>
+      <form class= "" method="post" action="/usuario/solicitar">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6">
+                {{ form.nombres | bootstrap }}
+                {{ form.apellidos | bootstrap }}
+                {{ form.tipo | bootstrap }}
+          </div>
+        </div>
+        <div class="row">
+          
+            <div class="col-md-6">
+                {{ form.email | bootstrap }}
+                {{ form.sexo | bootstrap }}
+
+            </div>
+            <div class="col-md-6">
+
+          
+                    <div class="col-md-6">
+                        {{ form.cod_cel | bootstrap }}
+                        {{ form.cod_casa | bootstrap }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.num_cel | bootstrap }}
+                        {{ form.num_casa | bootstrap }}
+                    </div>
+                    
+
+            </div>
+            <div class="col-md-12">
+                        {{ form.direccion | bootstrap }}
+                    </div>
+        </div>
+        <div class="row">
+                <h2>Datos de Login:</h2>
+                {{ form.cedula | bootstrap }}
+                {{ form.clave | bootstrap }}
+                {{ form.clave0 | bootstrap }}
+        </div>
+        <input class="btn btn-primary" 
+                     type="submit" 
+                     value="Crear Usuario" />
+
+      </form>
+    </div>
+  </div>
+{% endblock %}

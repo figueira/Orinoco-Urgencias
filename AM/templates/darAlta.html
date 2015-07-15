@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+    src="/static/libs/moment/js/moment.min.js"></script>
+  <script type="text/javascript"
+    src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet"
+    href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+{% endblock %} 
+
+{% block cuerpo %}
+  <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-12">
+
+        <h3>
+          Destino
+        </h3>
+        
+        <form 
+        method="post"
+        action="/emergencia/{{emergencia.pk}}/daralta">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label col-sm-2 col-lg-2" for="_paciente">Paciente</label>
+            {{emergencia.paciente}}
+        </div>
+        {{form.destino | bootstrap_horizontal}}
+        {{form.darAlta | bootstrap_horizontal }} 
+
+        <input class="btn btn-primary" style="margin-top:60px;" type="submit" value="Confirmar" />
+
+        </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts2 %}
+  <script>
+    var dp_options = {
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
+    $(document).ready(
+        function() {
+            $('#id_darAlta').datetimepicker(dp_options);
+
+        });
+  </script>
+{% endblock %}

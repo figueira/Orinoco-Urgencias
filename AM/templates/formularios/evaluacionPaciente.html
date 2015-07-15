@@ -1,0 +1,156 @@
+{% load bootstrap %}
+
+<!-- 
+  Esta plantilla imprime el formulario con el que se puede realizar la 
+  evaluación de un paciente.
+  
+  Entrada:
+    form -> El formulario de Python que contiene la información
+-->
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+          src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js">
+  </script>
+
+  <script type="text/javascript"
+    src="/static/libs/bootstrap/js/bootstrap-tab.js">
+  </script>
+{% endblock %}
+
+<script>
+ var dp_options = {
+        dateFormat: 'DD/MM/YYYY',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-110:c',
+        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+        dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiember", "Octubre", "Noviember", "Diciembre" ]
+        }
+    $(document).ready(
+            $('#id_fecha').datetimepicker(dp_options)
+            
+
+        )
+    $('.tab-evaluacion').on('click',
+                          '.boton-evaluar',
+                          function(event){
+    var formulario = $('.formulario-evaluacion');
+    event.preventDefault();
+    $.ajax({
+            data: formulario.serialize(),
+            dataType: 'script',
+            type: formulario.attr('method'),
+            url: formulario.attr('action')
+           })
+    })
+</script>
+
+
+<form action='/emergencia/{{ idE }}/evaluar_paciente'
+                  class='top20 formulario-evaluacion' 
+                  method='post'
+                  name='calcularTriage'>
+                {% if csrf_token_value == None %}
+                    {% csrf_token %}
+                {% else %}
+                    <div style='display:none'>
+                    <input type='hidden' 
+                        name='csrfmiddlewaretoken' 
+                        value='{{ csrf_token_value }}'/>
+                    </div>
+                {% endif %}
+
+                {{ form.fecha | bootstrap }}
+                {{ form.motivo | bootstrap }}
+                {{ form.ingreso | bootstrap }}
+                <div class="row">
+
+                    <div class="col-md-6">
+                        
+                        <div class="form-group">
+                            <label class="control-label  " for="id_temperatura">
+                                {{ form.temperatura.label }}
+                            </label>
+                            {{ form.temperatura.errors }}
+                            <div class="input-group">
+                                {{ form.temperatura }} 
+                                <span class="input-group-addon">
+                                    <strong> &deg;C</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="id_frecuencia_cardiaca">
+                            
+                                {{ form.frecuencia_cardiaca.label }}
+                            </label>
+                            {{ form.frecuencia_cardiaca.errors }}
+                            <div class="input-group">
+                                {{ form.frecuencia_cardiaca }}
+                                <span class="input-group-addon">
+                                    <strong>ppm</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label  " for="id_frecuencia_respiratoria">
+                                {{ form.frecuencia_respiratoria.label }}
+                            </label>
+                                {{ form.frecuencia_respiratoria.errors }}
+                            <div class="input-group">
+                                {{ form.frecuencia_respiratoria }}
+                                <span class="input-group-addon">
+                                    <strong>rpm</strong>
+                                </span> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label  " for="id_presion_sistolica">
+                                {{ form.presion_sistolica.label }}
+                            </label>
+                            {{ form.presion_sistolica.errors }}
+                            <div class="input-group">
+                                {{ form.presion_sistolica }}
+                                <span class="input-group-addon">
+                                    <strong>mmHg</strong>
+                                </span>  
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label  " for="id_presion_diastolica">
+                            {{ form.presion_diastolica.label }}
+                            </label>
+                            {{ form.presion_diastolica.errors }}
+                            <div class="input-group">
+                                {{ form.presion_diastolica }}
+                                <span class="input-group-addon">
+                                    <strong>mmHg</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label  " for="id_saturacion_oxigeno">
+                            {{ form.saturacion_oxigeno.label }}
+                            </label>
+                            {{ form.saturacion_oxigeno.errors }}
+                            <div class="input-group">
+                                {{ form.saturacion_oxigeno }}
+                                <span class="input-group-addon">
+                                    <strong>%</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                {{ form.avpu | bootstrap }}
+                {{ form.intensidad_dolor | bootstrap }}
+                <input class='btn btn-primary boton-evaluar' type='button' value='Registrar' id="boton_Registrar" />
+            </form>

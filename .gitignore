@@ -1,6 +1,9 @@
 # Archivos de configuracion #
 #############################
-AM/settings.py
+.DS_Store
+recursos/.DS_Store
+recursos/manuales/.DS_Store
+recursos/configuracion/settings.py
 
 # Compiled source #
 ###################

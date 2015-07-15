@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+  {% block cuerpo %}
+  {% if mensaje %}
+    {{mensaje}}
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <h1 class="text-center">Lista de solicitudes de usuarios pendientes</h1>
+      {% if listaP %}
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th>C&eacute;dula</th>
+          <th>Nombre</th>
+          <th>Sexo</th>
+          <th>Tipo</th>
+          <th>Acciones</th>
+        </tr>
+          {% for l in listaP %}
+            <tr>
+              <td>
+                <span class="nombreLista">{{l.cedula}}</span>
+              </td>
+              <td>
+                <span class="nombreLista">{{l.first_name}} {{l.last_name}}</span>
+              </td>
+              <td>
+                <span class="nombreLista">{{l.sexoR}}</span>
+              </td>
+              <td>
+                <span class="nombreLista">{{l.tipoR}}</span>
+              </td>
+              <td>
+                <a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobar" >
+                  <img src="/static/img/usuarios/aprobar.png" title="Autorizar"/>
+                </a>
+                <a href="/usuario/pendientes/{{l.usuario.cedula}}/aprobarAdmin" >
+                  <img src="/static/img/usuarios/personal.png" title="Autorizar como administrador"/>
+                </a>                
+                <a href="/usuario/pendientes/{{l.usuario.cedula}}/rechazar">
+                  <img src="/static/img/usuarios/negar.png" title="Rechazar"/>
+                </a>
+                <a href="/usuario/pendientes/{{l.usuario.cedula}}/examinar">
+                  <img src="/static/img/usuarios/lupa.png" title="Examinar"/>
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+              <tr>
+                <td>VACIA</td>
+              </tr>
+          {% endfor %}
+      </table>
+      {% else %}
+        <center>
+          <br><br><br>
+          <h4>No hay solicitudes de usuarios pendientes</h4>
+        </center>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
