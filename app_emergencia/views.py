@@ -51,7 +51,7 @@ from itertools import izip
 from app_emergencia.pdf import *
 ######################################################
 
-    
+
 # Cantidad de segundos en 1,2,..,6 horas
 # hora_en_segundos[0] -> Segundos en 0 horas
 # hora_en_segundos[1] -> Segundos en 1 hora
@@ -59,7 +59,7 @@ from app_emergencia.pdf import *
 # .
 # .
 # hora_en_segundos[6] -> Segundos en 6 horas
-hora_en_segundos = [0,3600,7200,10800,14400,18000,21600] 
+hora_en_segundos = [0,3600,7200,10800,14400,18000,21600]
 
 def emergencia_buscar(request):
     mensaje = ""
@@ -79,7 +79,7 @@ def emergencia_buscar(request):
             if len(p_cedula) > 0:
                 print "Se busco por cedula"
                 print p_cedula
-                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos') 
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos')
                 if len(pacientes) > 0:
                     for p in pacientes:
                         resultados.append(p)
@@ -106,7 +106,7 @@ def emergencia_buscar(request):
                             resultados.append(p)
             lista = []
             for p in resultados:
-                emergencias = Emergencia.objects.filter(paciente=p).order_by('-hora_ingreso')  
+                emergencias = Emergencia.objects.filter(paciente=p).order_by('-hora_ingreso')
                 for e in emergencias:
                     if e not in lista:
                       lista.append(e)
@@ -118,11 +118,11 @@ def emergencia_buscar(request):
         return render_to_response('listaB.html',info,context_instance=RequestContext(request))
     else:
         busqueda = BuscarEmergenciaForm()
-    
+
     info = {'form':form,'busqueda':busqueda,'titulo':titulo,'boton':boton}
     return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
-#   Busca en la base de datos las emergencias y los 
+#   Busca en la base de datos las emergencias y los
 #   cubiculos que seran utilizados en la vista lista.hmtl
 #
 def emergencia_listar_todas(request, mensaje = ''):
@@ -135,12 +135,12 @@ def emergencia_listar_todas(request, mensaje = ''):
   buscar_enfermedad = False
   info = { 'emergencias': emergencias,
            'cubiculos': cubiculos,
-           'form': form, 
+           'form': form,
            'mensaje': mensaje,
-           'titulo': titulo, 
+           'titulo': titulo,
            'buscadorDeEnfermedad': buscar_enfermedad }
   return render(request,
-                'lista.html', 
+                'lista.html',
                 info)
 
 def emergencia_listar_triage(request):
@@ -155,8 +155,8 @@ def emergencia_listar_triage(request):
   titulo = "Área de triage"
   buscar_enfermedad = False
   cubiculos = Cubiculo.objects.all()
-  info = {'emergencias': emergencias, 
-          'form': form, 
+  info = {'emergencias': emergencias,
+          'form': form,
           'titulo': titulo,
           'cubiculos': cubiculos,
           'buscadorDeEnfermedad': buscar_enfermedad }
@@ -164,7 +164,7 @@ def emergencia_listar_triage(request):
                             info,
                             context_instance = RequestContext(request))
 
-def emergencia_listar_sinclasificar(request):    
+def emergencia_listar_sinclasificar(request):
   emergencias = Emergencia.objects.filter(hora_egreso = None,
                                           triage__isnull = True) \
                                   .order_by('hora_ingreso')
@@ -172,8 +172,8 @@ def emergencia_listar_sinclasificar(request):
   titulo = "Sin clasificar"
   buscar_enfermedad = False
   cubiculos = Cubiculo.objects.all()
-  info = {'emergencias': emergencias, 
-          'form': form, 
+  info = {'emergencias': emergencias,
+          'form': form,
           'titulo': titulo,
           'cubiculos': cubiculos,
           'buscadorDeEnfermedad': buscar_enfermedad }
@@ -193,7 +193,7 @@ def emergencia_listar_clasificados(request):
   buscar_enfermedad = False
   cubiculos = Cubiculo.objects.all()
   info = {'emergencias': emergencias,
-          'form': form, 
+          'form': form,
           'titulo': titulo,
           'cubiculos': cubiculos,
           'buscadorDeEnfermedad': buscar_enfermedad }
@@ -201,7 +201,7 @@ def emergencia_listar_clasificados(request):
                             info,
                             context_instance = RequestContext(request))
 
-							
+
 def emergencia_listar_atencion(request):
   emergencias = Emergencia.objects \
                           .filter(hora_egreso = None,
@@ -214,14 +214,14 @@ def emergencia_listar_atencion(request):
   buscar_enfermedad = False
   cubiculos = Cubiculo.objects.all()
   info = {'emergencias': emergencias,
-          'form': form, 
+          'form': form,
           'titulo': titulo,
           'cubiculos': cubiculos,
           'buscadorDeEnfermedad': buscar_enfermedad }
   return render_to_response('lista.html',
                             info,
                             context_instance = RequestContext(request))
-							
+
 
 def emergencia_buscar_historia_medica(request):
     titulo = "Búsqueda de Pacientes"
@@ -238,23 +238,23 @@ def emergencia_buscar_historia_medica(request):
             p_apellidos = pcd['apellidos']
 
             if len(p_cedula) > 0:
-                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos') 
+                pacientes = Paciente.objects.filter(cedula__icontains=p_cedula).order_by('apellidos')
                 if len(pacientes) > 0:
                     for p in pacientes:
                         resultados.append(p)
             else:
                 if len(p_nombres) > 0 and len(p_apellidos) > 0:
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos).order_by('apellidos') 
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres,apellidos__icontains=p_apellidos).order_by('apellidos')
                     if len(pacientes) > 0:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_apellidos) == 0:
-                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres).order_by('apellidos') 
+                    pacientes = Paciente.objects.filter(nombres__icontains=p_nombres).order_by('apellidos')
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
                 elif len(p_nombres) == 0:
-                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos).order_by('apellidos') 
+                    pacientes = Paciente.objects.filter(apellidos__icontains=p_apellidos).order_by('apellidos')
                     if pacientes:
                         for p in pacientes:
                             resultados.append(p)
@@ -263,16 +263,16 @@ def emergencia_buscar_historia_medica(request):
                 emergencias = Emergencia.objects.filter(paciente=p,
                                                         triage__isnull = False) \
                                                         .distinct() \
-                                                        .order_by('-hora_ingreso')              
+                                                        .order_by('-hora_ingreso')
                 for e in emergencias:
                     if e not in lista:
                         lista.append(e)
-                    
+
         info = {'form':form,'lista':lista,'titulo':titulo}
         return render_to_response('listaC.html',info,context_instance=RequestContext(request))
     else:
         busqueda = BuscarEmergenciaForm()
-    
+
     info = {'form':form,'busqueda':busqueda,'titulo':titulo,'boton':boton}
     return render_to_response('busqueda.html',info,context_instance=RequestContext(request))
 
@@ -358,7 +358,9 @@ def emergencia_agregar(request):
         e_ingreso = Usuario.objects.get(username = request.user)
         e_responsable = e_ingreso
         e_horaIngreso = pcd['ingreso']
-        e_horaIngresoReal = datetime.now()
+
+        e_horaIngresoReal = datetime.utcnow() - timedelta(seconds=int(request.POST['delta_from_now']))
+
         e  =  Emergencia(paciente = p,
                        responsable = e_responsable,
                        ingreso = e_ingreso,
@@ -388,7 +390,7 @@ def emergencia_agrega_emer(request,id_emergencia):
         e_ingreso = Usuario.objects.get(username=request.user)
         e_responsable= e_ingreso
         e_horaIngreso = datetime.now()
-        e_horaIngresoReal = datetime.now()
+        e_horaIngresoReal = datetime.utcnow()
         e = Emergencia(paciente=p[0],responsable=e_responsable,ingreso=e_ingreso,hora_ingreso=e_horaIngreso,hora_ingresoReal=e_horaIngresoReal,hora_egreso=None)
         e.save()
         espe = get_object_or_404(Espera,nombre = 'Ubicacion')
@@ -404,7 +406,7 @@ def emergencia_agrega_emer(request,id_emergencia):
         # info = {'mensaje':mensaje}
         # return render_to_response('listaB.html',info,context_instance=RequestContext(request))
         return redirect('/emergencia/listar/todas')
-        
+
 
 @login_required(login_url='/')
 def emergencia_darAlta(request,idE):
@@ -448,7 +450,7 @@ def emergencia_darAlta(request,idE):
     else:
       form = darAlta()
       info = {'form':form,'emergencia':emergencia}
-      return render_to_response('darAlta.html',info,context_instance = RequestContext(request))  
+      return render_to_response('darAlta.html',info,context_instance = RequestContext(request))
   return redirect("/emergencia/listar/todas")
 
 @login_required(login_url='/')
@@ -468,8 +470,8 @@ def emergencia_aplicarTriage(request, idE, vTriage):
          (triage.signos_saod < 95 or 100 < triage.signos_saod)):
 			vTriage = "2"
 		else:
-			vTriage = "3"	
-		
+			vTriage = "3"
+
 	if (vTriage == "1"):
 		atencion = True
 	elif (vTriage == "2"):
@@ -481,8 +483,8 @@ def emergencia_aplicarTriage(request, idE, vTriage):
 		elif (vTriage == "5"):
 			recursos = 0
 		atencion = False
-		esperar = True	
-	
+		esperar = True
+
 	triage.atencion = atencion
 	triage.esperar = esperar
 	triage.recursos = recursos
@@ -490,12 +492,12 @@ def emergencia_aplicarTriage(request, idE, vTriage):
 	triage.save()
 	return redirect('/emergencia/listar/todas')
 
-	
+
 @login_required(login_url='/')
 def actualizarSignos(request,idE):
 	emergencia = get_object_or_404(Emergencia, id = idE)
 	triage = get_object_or_404(Triage, emergencia = emergencia)
-	
+
 	if request.method == 'POST':
 		form = ActualizarSignosForm(request.POST)
 		if form.is_valid():
@@ -509,7 +511,7 @@ def actualizarSignos(request,idE):
 			so	  = data['saturacion_oxigeno']
 			temp  = data['temperatura']
 			dolor = data['intensidad_dolor']
-			
+
 			triage.signos_avpu  = avpus
 			triage.signos_fc    = fc
 			triage.signos_fr    = fr
@@ -518,7 +520,7 @@ def actualizarSignos(request,idE):
 			triage.signos_saod  = so
 			triage.signos_tmp   = temp
 			triage.signos_dolor = dolor
-			
+
 			triage.save()
 		else:
 			info = {'form':form,'emergencia':emergencia,'triage':triage}
@@ -527,10 +529,10 @@ def actualizarSignos(request,idE):
 		form = ActualizarSignosForm()
 		info = {'form':form,'emergencia':emergencia,'triage':triage}
 		return render_to_response('actualizarSignos.html', info,context_instance = RequestContext(request))
-	
-	return redirect('/emergencia/atencion/'+idE+'/historia')		
-	
-		
+
+	return redirect('/emergencia/atencion/'+idE+'/historia')
+
+
 @login_required(login_url='/')
 def emergencia_calcular_triage(request, idE, triage_asignado):
   mensaje = ""
@@ -587,12 +589,12 @@ def obtener_causas_de_espera(emergencias):
     # Ej: '[[Ubicacion, [0,2,3,1]], [Laboratorio, [2,0,4,4]]]'
     causas_de_espera = {}
     causas_transicion = {}
-    
+
     objetos_causas_de_espera = Espera.objects.all()
     for causa in objetos_causas_de_espera:
       causas_de_espera[causa.nombre] = ([0,0,0,0], causa.url_imagen())
       causas_transicion[causa.nombre] = ([0,0,0], causa.url_imagen())
-      
+
     for emergencia in emergencias:
       espera_emergencias = EsperaEmergencia.objects.filter(emergencia=emergencia)
       hora_inicio_emergencia = emergencia.hora_ingreso
@@ -612,10 +614,10 @@ def obtener_causas_de_espera(emergencias):
           grupo = 2
         else:
           grupo = 3
-          
+
         dif_inicio = (espera_emergencia.hora_comienzo - hora_inicio_emergencia).seconds
         dif_fin = (espera_emergencia.hora_fin - hora_inicio_emergencia).seconds
-        
+
         if dif_inicio < hora_en_segundos[2]:
           grupo_trans_inicio = -1
         elif hora_en_segundos[2] <= dif_inicio and \
@@ -626,7 +628,7 @@ def obtener_causas_de_espera(emergencias):
           grupo_trans_inicio = 1
         else:
           grupo_trans_inicio = 2
-          
+
         if dif_fin < hora_en_segundos[2]:
           grupo_trans_fin = -1
         elif hora_en_segundos[2] <= dif_fin and dif_fin < hora_en_segundos[4]:
@@ -634,33 +636,33 @@ def obtener_causas_de_espera(emergencias):
         elif hora_en_segundos[4] <= dif_fin and dif_fin < hora_en_segundos[6]:
           grupo_trans_fin = 1
         else:
-          grupo_trans_fin = 2 
-        
+          grupo_trans_fin = 2
+
         (valores, img) = causas_de_espera[causa]
         valores[grupo] += 1
-        
+
         if (grupo_trans_fin == grupo_trans_inicio):
           continue
-        
+
         grupo_trans = max(grupo_trans_fin, grupo_trans_inicio)
         (valores_trans, img_trans) = causas_transicion[causa]
         valores_trans[grupo_trans] += 1
-        
+
     return (causas_de_espera, causas_transicion)
-          
+
 
 def invertir_orden_de_diccionario(diccionario, colores):
     pos_negro = len(colores)-1
-  
+
     intermedio = []
     for causa in diccionario.keys():
       intermedio.append((causa, diccionario[causa]))
     intermedio = sorted(intermedio, key=lambda t: -t[1][0][pos_negro])
-        
+
     causas_invertidas = []
     for color in colores:
       causas_invertidas.append((color,[]))
-     
+
     aux = [x[0] for x in causas_invertidas]
     for causa in intermedio:
       (valores,img) = causa[1]
@@ -678,7 +680,7 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
                             hora_ingreso__range=[fecha_inicio,fecha_fin])
     egresos_emergencia = Emergencia.objects.filter(
                             hora_egreso__range=[fecha_inicio,fecha_fin])
-    
+
     # Cantidad de emergencias por duracion
     # horas[0] -> 0 a 2 horas
     # horas[1] -> 2 a 4 horas
@@ -686,14 +688,14 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     # horas[3] -> 6 o + horas
     horas = [0,0,0,0]
 
-    
+
     # Emergencias por duracion
     # emergencias_por_horas[0] -> 0 a 2 horas
     # emergencias_por_horas[1] -> 2 a 4 horas
     # emergencias_por_horas[2] -> 4 a 6 horas
     # emergencias_por_horas[3] -> 6 o + horas
     emergencias_por_horas = [[],[],[],[]]
-    
+
     for egreso in egresos_emergencia:
 	t = egreso.tiempo_emergencia()
 	if t < hora_en_segundos[2]:
@@ -706,9 +708,9 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
 	    grupo = 3
 	horas[grupo] += 1
 	emergencias_por_horas[grupo].append(egreso)
-            
+
     total_egresos = sum(horas)
-    
+
     # Causas de espera por grupo
     (causas_pacientes_en_negro, causas_transicion_negro) = \
       obtener_causas_de_espera(emergencias_por_horas[3])
@@ -740,15 +742,15 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     causas_transicion = [('Amarillo', ordenar_por_causas(causas_transicion_amarillo)),
 			 ('Rojo', ordenar_por_causas(causas_transicion_rojo)),
 			 ('Negro', ordenar_por_causas(causas_transicion_negro))]
-    
+
     imaganes = obtener_imagenes()
-    
+
     lista_auxiliar = [causas_pacientes_en_verde,\
       causas_pacientes_en_amarillo, causas_pacientes_en_rojo, \
 	causas_pacientes_en_negro]
     lista_auxiliar_transicion = [causas_transicion_amarillo, \
       causas_transicion_rojo, causas_transicion_negro]
-    
+
     colores = ['Verde','Amarillo','Rojo','Negro']
     colores_transicion = ['Amarillo','Rojo','Negro']
     causas_invertidas = []
@@ -758,7 +760,7 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
     for x, y in zip(lista_auxiliar_transicion, colores_transicion):
       causas_transicion_invertidas.append((y,\
 	  invertir_orden_de_diccionario(x,colores_transicion)))
-    
+
     causas_invertidas=[('General',invertir_orden_de_diccionario(\
 	causas_pacientes_total,colores))] + causas_invertidas
     # Resultados de los Triages
@@ -775,9 +777,9 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
                 ['Amarillo (2 a 4 horas)',horas[1]],['Rojo (4 a 6 horas)',horas[2]],
                 ['Negro (6 o + horas)',horas[3]]
               ]
-    
+
     prueba = invertir_orden_de_diccionario(lista_auxiliar[3],colores)
-    
+
     info = {'triages':triages,'fecha':date.today(),'inicio':fecha_inicio,
             'fin':fecha_fin,'sig':siguiente_semana,
              'total_ingresos':len(ingresos_emergencia),
@@ -798,10 +800,10 @@ def estadisticas_per(request,dia,mes,anho,dia2,mes2,anho2):
 def estadisticas_sem(request,dia,mes,anho):
     fecha_fin = datetime(int(anho),int(mes),int(dia))
     fecha_inicio = fecha_fin - timedelta(weeks=1)
-    return redirect('/estadisticas/' + str(fecha_inicio.day) + '-' + 
+    return redirect('/estadisticas/' + str(fecha_inicio.day) + '-' +
                       str(fecha_inicio.month) + '-' + str(fecha_inicio.year) +
                       '/' + dia + '-' + mes + '-' + anho)
-    
+
 def estadisticas(request):
     hoy = datetime.today()
     return redirect('/estadisticas/' + str(hoy.day) + '-' + str(hoy.month) +
@@ -815,7 +817,7 @@ def estadisticas(request):
 #########################################################
 def emergencia_espera_mantener(request,id_emergencia):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
-    emer.fecha_Esp_act = datetime.now()
+    emer.fecha_Esp_act = datetime.utcnow()
     emer.save()
     return HttpResponse()
 
@@ -824,7 +826,7 @@ def emergencia_espera_mantener(request,id_emergencia):
 # creada
 def emergencia_agregar_espera(request, id_emergencia, id_espera):
     emergencia = get_object_or_404(Emergencia, id = id_emergencia)
-    emergencia.fecha_Esp_act = datetime.now()
+    emergencia.fecha_Esp_act = datetime.utcnow()
     emergencia.save()
     espera = get_object_or_404(Espera, id = id_espera)
     espera_emergencia = EsperaEmergencia(emergencia = emergencia,
@@ -838,19 +840,19 @@ def emergencia_eliminar_espera_emergencia(request, id_espera_emergencia):
     espera_emergencia = get_object_or_404(EsperaEmergencia,
                                           id = id_espera_emergencia)
     emergencia = espera_emergencia.emergencia
-    emergencia.fecha_Esp_act = datetime.now()
+    emergencia.fecha_Esp_act = datetime.utcnow()
     emergencia.save()
-    espera_emergencia.delete() 
+    espera_emergencia.delete()
     return HttpResponse()
 
 def emergencia_espera_estado(request,id_emergencia,id_espera,espera):
     emer               = get_object_or_404(Emergencia,id=id_emergencia)
-    emer.fecha_Esp_act = datetime.now()
+    emer.fecha_Esp_act = datetime.utcnow()
     emer.save()
     espe               = get_object_or_404(Espera,id=id_espera)
     espera1            = EsperaEmergencia.objects.get(espera=espe,emergencia=emer)
     espera1.estado     = str(espera)
-    espera1.save() 
+    espera1.save()
     return HttpResponse()
 
 def emergencia_espera_asignadasCheck(request,id_emergencia):
@@ -883,13 +885,13 @@ def emergencia_espera_idN(request,id_emergencia):
         esp = esp+i+","
     return HttpResponse(esp)
 
-# Se agrega a la base de datos la fechay hora en que se marco check (finalizo) 
-# para una causa de espera para una emergencia 
+# Se agrega a la base de datos la fechay hora en que se marco check (finalizo)
+# para una causa de espera para una emergencia
 #
 def emergencia_espera_finalizada(request,id_espera_emergencia):
     espera_emergencia = EsperaEmergencia.objects.get(id = id_espera_emergencia)
     espera_emergencia.hora_fin = datetime.now()
-    espera_emergencia.save() 
+    espera_emergencia.save()
     return HttpResponse('')
 
 #########################################################
@@ -915,7 +917,7 @@ def emergencia_guardar_cubi(request, id_emergencia, accion):
     tiene_cubiculo = AsignarCub.objects.filter(emergencia = emergencia) \
                                        .count() > 0
     if (cubiculo != None) and (not tiene_cubiculo):
-      emergencia.fecha_Esp_act = datetime.now()
+      emergencia.fecha_Esp_act = datetime.utcnow()
       emergencia.save()
 
       # Actualizar la causa de espera por ubicacion
@@ -984,7 +986,7 @@ def emergencia_tiene_cubiculo(request,id_emergencia):
 #                                                       #
 #########################################################
 
-# A cada una le paso el id de emergencia para mantener la 
+# A cada una le paso el id de emergencia para mantener la
 # informacion constante en el sidebar izquierdo
 
 def emergencia_descarga(request,id_emergencia,tipo_doc):
@@ -994,7 +996,7 @@ def emergencia_descarga(request,id_emergencia,tipo_doc):
     atList2=atList[0]
     diags = Diagnostico.objects.filter(atencion=atList2)
     medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
-    
+
     if tipo_doc == 'historia':
         return historia_med_pdf(request, id_emergencia)
     elif tipo_doc == 'constancia':
@@ -1015,12 +1017,12 @@ def emergencia_enfermedad_actual(request,id_emergencia):
     mensaje = ""
     ya=""
     atList = Atencion.objects.filter(emergencia=id_emergencia)
-    
+
     # if len(atList) == 0:
     #     atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion)
     #     atencion.save()
     #     atList = Atencion.objects.filter(emergencia=id_emergencia)
-    
+
     if request.method == 'POST':
         form = AgregarEnfActual(request.POST)
         if form.is_valid():
@@ -1032,7 +1034,7 @@ def emergencia_enfermedad_actual(request,id_emergencia):
             if enfA:
                 enfA[0].narrativa=narrativa
                 enfA[0].save()
-                
+
             else:
                 enfA = EnfermedadActual(atencion=atList[0],narrativa=narrativa)
                 enfA.save()
@@ -1047,14 +1049,14 @@ def emergencia_enfermedad_actual(request,id_emergencia):
             return render_to_response('atencion_enfA.html',info,context_instance=RequestContext(request))
 
     enfa= EnfermedadActual.objects.filter(atencion=atList[0])
-    
+
     if enfa:
         mensaje = "Ya se ha establecido una narrativa para este paciente"
         form = AgregarEnfActual(initial={'narrativa':enfa[0].narrativa})
         ya="si"
     else:
         form = AgregarEnfActual()
-    
+
     info = {'form':form,'emergencia':emer,'triage':triage, 'mensaje':mensaje, 'ya':ya}
     return render_to_response('atencion_enfA.html',info,context_instance=RequestContext(request))
 
@@ -1064,21 +1066,21 @@ def emergencia_enfermedad_actual(request,id_emergencia):
 def emergencia_atencion(request,id_emergencia,tipo):
     emer   = get_object_or_404(Emergencia,id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
-    
+
     if len(triage) != 0:
-      triage = triage[0]     
+      triage = triage[0]
       paci = Paciente.objects.filter(emergencia__id=id_emergencia)
       paci = paci[0]
       atList = Atencion.objects.filter(emergencia=id_emergencia)
-      
+
       if len(atList) == 0:
           atencion = Atencion(emergencia=emer,medico=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),area_atencion=triage.areaAtencion_id)
           atencion.save()
           atList = Atencion.objects.filter(emergencia=id_emergencia)
 
       if tipo == "listado":
-          return redirect('/emergencia/listar/atencion')	
-		  
+          return redirect('/emergencia/listar/atencion')
+
       elif tipo == "historia":
 	      # Operaciones para determinar si se muestran los botones de descarga
           historia_medica = False
@@ -1089,19 +1091,19 @@ def emergencia_atencion(request,id_emergencia,tipo):
             diags = Diagnostico.objects.filter(atencion = atList)
             enfA = EnfermedadActual.objects.filter(atencion = atList)
             indic = Asignar.objects.filter(emergencia = id_emergencia)
-			
+
             if len(enfA)>0 and len(diags)>0:
               historia_medica = True
-			
+
             if len(diags)>0:
               constancia = True
-			 
+
             if len(indic)>0:
               indicaciones = True
-			 
+
           ctx = {'emergencia':emer,'triage':triage,'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
           return render_to_response('atencion.html',ctx,context_instance=RequestContext(request))
-    
+
 
 def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     emer    = get_object_or_404(Emergencia,id=id_emergencia)
@@ -1109,37 +1111,37 @@ def emergencia_antecedentes_agregar(request,id_emergencia,tipo_ant):
     triage  = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage  = triage[0]
     vacio   = ""
-    
+
     if request.method == 'POST':
         nombres  = request.POST.getlist('nuevoNombre')
         fechas   = request.POST.getlist('nuevoFecha')
         atributo = request.POST.getlist('nuevoAtributo3')
-        for i in range(len(nombres)-1): 
+        for i in range(len(nombres)-1):
             ant       = Antecedente(tipo=tipo_ant,nombre=nombres[i])
             ant.save()
             pertenece = Pertenencia(paciente=paci,antecedente=ant)
             pertenece.save()
             if tipo_ant =='medica' or tipo_ant =='quirurgica':
-                dia,mes,ano = fechas[i].split("/") 	
+                dia,mes,ano = fechas[i].split("/")
                 fechaF = ano + "-" + mes + "-" + dia
-                fecha = Fecha(fecha=fechaF,pertenencia=pertenece) 
+                fecha = Fecha(fecha=fechaF,pertenencia=pertenece)
                 fecha.save()
                 if tipo_ant == 'medica':
                     tratamiento = Tratamiento(nombre=atributo[i])
                     tratamiento.save()
                     trataPerte  = TratamientoPertenencia(pertenencia=pertenece,tratamiento=tratamiento)
-                    trataPerte.save() 
+                    trataPerte.save()
                 if tipo_ant == 'quirurgica':
                     lugar      = Lugar(nombre=atributo[i])
                     lugar.save()
                     lugarperte = LugarPertenencia(lugar=lugar,pertenencia=pertenece)
                     lugarperte.save()
-                    
+
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
-    
+
     if antecedentes:
 		vacio = "no"
-                    
+
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
@@ -1150,15 +1152,15 @@ def emergencia_antecedentes_modificar(request,id_emergencia,tipo_ant):
     paci         = Paciente.objects.get(emergencia__id=id_emergencia)
     triage       = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage       = triage[0]
-    
+
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
     for ant in antecedentes:
         ant.nombre = request.POST[str(ant.id)+"nombre"]
         if tipo_ant == 'medica' or tipo_ant == 'quirurgica':
             pertenece = Pertenencia.objects.filter(paciente=paci,antecedente=ant)
             if pertenece:
-                fecha             = Fecha.objects.get(pertenencia=pertenece[0])				
-                dia,mes,ano 	  = request.POST[str(ant.id)+"fecha"].split("/") 					
+                fecha             = Fecha.objects.get(pertenencia=pertenece[0])
+                dia,mes,ano 	  = request.POST[str(ant.id)+"fecha"].split("/")
                 fecha.fecha       = ano + "-" + mes + "-" + dia
                 fecha.pertenencia = pertenece[0]
                 fecha.save()
@@ -1173,10 +1175,10 @@ def emergencia_antecedentes_modificar(request,id_emergencia,tipo_ant):
                     lugar[0].nombre = request.POST[str(ant.id)+"atributo3"]
                     lugar[0].save()
         ant.save()
-        
+
     if antecedentes:
 		vacio ="no"
-    
+
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
@@ -1186,7 +1188,7 @@ def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
     paci   = Paciente.objects.get(emergencia__id=id_emergencia)
     triage = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
     triage = triage[0]
-    
+
     if request.method == 'POST':
         checkes = request.POST.getlist(u'check')
         for id_ant in checkes:
@@ -1200,20 +1202,20 @@ def emergencia_antecedentes_eliminar(request,id_emergencia,tipo_ant):
                     lugar = Lugar.objects.filter(id=lugarpertence)
                     if lugar:
                         lugar.delete()
-                    lugarpertence.delete()					
-                tratamientoPert = TratamientoPertenencia.objects.filter(pertenencia=pertenece[0])				
-                if tratamientoPert:                    
+                    lugarpertence.delete()
+                tratamientoPert = TratamientoPertenencia.objects.filter(pertenencia=pertenece[0])
+                if tratamientoPert:
                     tratamiento = Tratamiento.objects.filter(id=tratamientoPert)
                     if tratamiento:
-                        tratamiento.delete() 
-                    tratamientoPert.delete() 					
+                        tratamiento.delete()
+                    tratamientoPert.delete()
             pertenece.delete()
             ant.delete();
-    
+
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
     if antecedentes:
-		vacio = "no" 
-    
+		vacio = "no"
+
     pertenece = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     ctx = {'emergencia':emer,'triage':triage,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
@@ -1238,10 +1240,10 @@ def emergencia_antecedentes_tipo(request,id_emergencia,tipo_ant):
     vacio = ""
     pertenece    = Pertenencia.objects.filter(paciente=paci,antecedente__tipo=tipo_ant)
     antecedentes = Antecedente.objects.filter(pertenencia__paciente=paci,tipo=tipo_ant)
-    
+
     if antecedentes:
 		vacio = "no"
-    
+
     ctx = {'emergencia':emer,'triage':triage,'antecedentes':antecedentes,'pertenece':pertenece,'tipo_ant':tipo_ant,'vacio':vacio}
     return render_to_response('atencion_ant_medica.html',ctx,context_instance=RequestContext(request))
 
@@ -1319,8 +1321,8 @@ def emergencia_enfermedad_enviarcuerpo(request,id_emergencia,parte_cuerpo):
             anomalia         = Anomalia.objects.filter(aspectoatencion=aspAten)
             descripcion      = request.POST['A'+str(aspAten.aspecto.id)]
             if anomalia:
-                anomalia.descripcion = descripcion 
-                anomalia.save() 
+                anomalia.descripcion = descripcion
+                anomalia.save()
             else:
                 anomalia = Anomalia(descripcion=descripcion,aspectoatencion=aspAten)
                 anomalia.save()
@@ -1331,7 +1333,7 @@ def emergencia_enfermedad_enviarcuerpo(request,id_emergencia,parte_cuerpo):
             if anomalia:
                 anomalia.delete()
             aspAten.save()
-        
+
     return HttpResponse()
 # --- RGV
 
@@ -1348,7 +1350,7 @@ def emergencia_indicaciones_ini(request,id_emergencia):
     info = {'emergencia':emer,'triage':triage,'indicaciones':indicaciones, 'ingreso':ingreso}
     return render_to_response('atencion_ind.html',info,context_instance=RequestContext(request))
 
-#Agrega las indicaciones dependiendo de la categoria: 
+#Agrega las indicaciones dependiendo de la categoria:
 @login_required(login_url='/')
 def emergencia_indicaciones(request,id_emergencia,tipo_ind):
     emer = get_object_or_404(Emergencia,id=id_emergencia)
@@ -1377,7 +1379,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind,status=0)
         info = {'emergencia':emer,'triage':triage,'indicaciones':indicaciones, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_ind_tera.html',info,context_instance=RequestContext(request))
-    
+
     #------------ Gestion de indicaciones con interfaz de forms de Django-------------------#
     else:
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
@@ -1386,7 +1388,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
             if tipo_ind == 'dieta':
                 print "estoy en post de dieta"
                 form = AgregarIndDietaForm(request.POST)
-                
+
             elif tipo_ind == 'hidrata':
                 form = AgregarIndHidrataForm(request.POST)
 
@@ -1398,14 +1400,14 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
 
             elif tipo_ind == 'endoscopico':
                 form = AgregarIndEndosForm(request.POST)
-    
+
             if form.is_valid():
                 pcd = form.cleaned_data
                 nombre = pcd[tipo_ind]
                 print "IMprime lo que me retorna el form %s: "% (tipo_ind),nombre
                 print "nombreeee %s"%tipo_ind
                 print request.POST
-                
+
                 # Condicional para validar/agregar indicaciones de tipo lab/endoscopicos:
                 if tipo_ind == 'lab' or tipo_ind == 'endoscopico':
                     agregado = False
@@ -1413,9 +1415,9 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
 					# Es multichoice entonces hago un for por todas las opciones elegidas
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
-                        
+
                         if indicacionesQ:
-                            modificado = True				
+                            modificado = True
                         else:
                             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
@@ -1423,7 +1425,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             a = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
                             a.save()
                             agregado = True
-							
+
                     if tipo_ind == 'endoscopico':
                       if request.POST.get('c_214',False):
                         i= Indicacion.objects.get(nombre = "Arterografia")
@@ -1436,38 +1438,38 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                       if request.POST.get('c_215',False):
                         i= Indicacion.objects.get(nombre = "Otros")
                         asig = Asignar(emergencia=emer,indicacion=i,persona=emer.responsable,fecha=datetime.now(),fechaReal=datetime.now(),status=0)
-                        asig.save()                            
+                        asig.save()
                         p_cuerpo = request.POST['c_215']
                         ex = EspImg(asignacion=asig,parte_cuerpo=p_cuerpo)
                         ex.save()
                         agregado = True
-							
+
                     print tipo_ind
-                    print agregado					
+                    print agregado
                     if tipo_ind == 'lab' and agregado:
                         espe = get_object_or_404(Espera,nombre = 'Laboratorio')
                         espera_lab = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
-						
+
                         # Se verifica que ya la causa de espera de lab no este agregada
                         if len(espera_lab) == 0:
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
-						
+
                     elif tipo_ind == 'endoscopico' and agregado:
                         espe = get_object_or_404(Espera,nombre = 'Estudios')
                         espera_est = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
-						
+
                         # Se verifica que ya la causa de espera de estudio no este agregada
                         if len(espera_est) == 0:
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
-					
-                    if modificado:							
+
+                    if modificado:
                         ya="si"
                         mensaje = "Laboratorios Modificados Exitosamente"
                         info = {'form':form,'mensaje':mensaje,'emergencia':emer,'tipo_ind':tipo_ind, 'ya':ya}
                         return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-							
+
                     mensaje = "Procedimientos Guardados Exitosamente"
                     info = {'form':form,'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
@@ -1478,7 +1480,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                     for i in range(len(nombre)):
                         indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre[i])
                         if indicacionesQ:
-                            modificado = True                        
+                            modificado = True
                         else:
                             indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                             # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
@@ -1489,17 +1491,17 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             ex = EspImg(asignacion=a,parte_cuerpo=p_cuerpo)
                             ex.save()
                             agregado = True
-							
+
                     if agregado:
                         espe = get_object_or_404(Espera,nombre = 'Imagenologia')
                         espera_img = EsperaEmergencia.objects.filter(emergencia = id_emergencia, espera = espe, hora_fin = None)
-						
+
                         # Se verifica que ya la causa de espera de imagenologia no este agregada
                         if len(espera_img) == 0:
                             espera1 = EsperaEmergencia(espera = espe, emergencia = emer, estado = '0')
                             espera1.save()
-							
-                    if modificado:							
+
+                    if modificado:
                         ya="si"
                         mensaje = "Imagenologia Modificada Exitosamente"
                         info = {'form':form,'mensaje':mensaje,'emergencia':emer,'tipo_ind':tipo_ind, 'ya':ya}
@@ -1510,7 +1512,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                     return render_to_response('atencion_ind_listar.html',info,context_instance=RequestContext(request))
 
                 # Condicional para validar/agregar indicaciones de tipo dieta e hidratacion
-                else:                    
+                else:
                     # indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombre)
                     indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__tipo = tipo_ind)
                     if indicacionesQ:		# MODIFICAR DIETA E HIDTRACION
@@ -1536,26 +1538,26 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                             h.save()
                             a.indicacion = Indicacion.objects.get(nombre = nombre)
                             a.status = 0
-                            a.save()	
+                            a.save()
                             comb = CombinarHidrata.objects.filter(hidratacion1__asignacion__indicacion = indicacionesQ)
                             if pcd['combina'] == "True":
                                 ex_sol = pcd ['combina_sol']
                                 i2 = Indicacion.objects.get(nombre = ex_sol)
                                 if len(comb)>0:
-                                    comb = comb[0]         
+                                    comb = comb[0]
                                     comb.hidratacion2 = i2
-                                    comb.save()	
+                                    comb.save()
                                 else:
                                     combi = CombinarHidrata(hidratacion1= h,hidratacion2=i2)
-                                    combi.save()								
+                                    combi.save()
                             else:
                                 if len(comb)>0:
-                                    comb.delete()	
+                                    comb.delete()
                         ya= "si"
                         mensaje = "Indicacion Modificada Exitosamente"
                         info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
                         return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-						
+
                     else:		# AGREGAR DIETA E HIDTRACION
                         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,status=0)
                         # indicaciones = Asignar.objects.filter(emergencia = id_emergencia)
@@ -1590,7 +1592,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
         #---------Renderizado de formularios al ingresar por primera vez-----#
         if tipo_ind == 'dieta':
             d = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta")
-            
+
             if d:
                 e = EspDieta.objects.filter(asignacion=d[0])
                 print "ver observacion: ",e[0].observacion
@@ -1599,7 +1601,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 form = AgregarIndDietaForm(initial={'dieta':d[0].indicacion.pk,'observacion':e[0].observacion})
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
                 ya= "si"
-                
+
             else:
                 form = AgregarIndDietaForm()
 
@@ -1623,7 +1625,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 lab_list=[]
                 for l in labi:
                     lab_list.append(l.indicacion.pk)
-                
+
                 form = AgregarIndLabForm(initial={'lab':lab_list})
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
                 ya= "si"
@@ -1636,7 +1638,7 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 img_list=[]
                 for im in img:
                     img_list.append(im.indicacion.pk)
-                
+
                 form = AgregarIndImgForm(initial={'imagen':img_list})
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
                 ya= "si"
@@ -1649,13 +1651,13 @@ def emergencia_indicaciones(request,id_emergencia,tipo_ind):
                 end_list=[]
                 for e in end:
                     end_list.append(e.indicacion.pk)
-                
+
                 form = AgregarIndEndosForm(initial={'endoscopico':end_list})
                 mensaje = "Ya tiene agregadas las siguientes indicaciones"
                 ya= "si"
             else:
                 form = AgregarIndEndosForm()
-        
+
         info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
         return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
 
@@ -1689,7 +1691,7 @@ def emergencia_indicacion_info(request,id_asignacion,tipo_ind):
         final = Indicacion.objects.get(id=asig.indicacion_id)
         print "finaaaaal %s"%final.nombre
         extra2 = final.nombre
-        
+
     info = {'tipo_ind':tipo_ind, 'extra':extra, 'extra2':extra2}
     return render_to_response('atencion_ind_listExtra.html',info,context_instance=RequestContext(request))
 
@@ -1704,7 +1706,7 @@ def emergencia_indicaciones_agregar(request,id_emergencia,tipo_ind):
     triage = triage[0]
     mensaje = ""
     atencion = Atencion.objects.filter(emergencia= emer)
-    
+
     if request.method == 'POST':
         if tipo_ind == 'diagnostico':
             diags = Diagnostico.objects.filter(atencion=atencion[0])
@@ -1763,7 +1765,7 @@ def emergencia_indicaciones_agregar(request,id_emergencia,tipo_ind):
             print "Comentarios", comentario
 
             print "verr rango: "+str(ver)
-            
+
             for i in ver:
                 # Condicional para saber si existe en las indicaciones:
                 indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia,asignar__indicacion__nombre = nombres[i])
@@ -1792,7 +1794,7 @@ def emergencia_indicaciones_agregar(request,id_emergencia,tipo_ind):
                         print comentario[i]
                         tSos= tieneSOS(espMed=eMed,situacion=situacion[i],comentario=comentario[i])
                         tSos.save()
-                    
+
             mensaje = "Medicaciones guardadas Exitosamente"
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'indicaciones':indicaciones,'tipo_ind':tipo_ind}
             return render_to_response('atencion_ind_medica.html',info,context_instance=RequestContext(request))
@@ -1812,10 +1814,10 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
     triage = triage[0]
     mensaje = ""
     atencion = Atencion.objects.filter(emergencia= emer)
-	
+
     if request.method == 'POST':
         checkes = request.POST.getlist(u'check')
-        
+
         if tipo_ind == "diagnostico":
             # obj tiene el id de la relacion
             for obj in checkes:
@@ -1826,13 +1828,13 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
             mensaje = "Diagnosticos eliminado Exitosamente"
             info = {'mensaje':mensaje,'emergencia':emer,'triage':triage,'tipo_ind':tipo_ind,'diags':diags}
             return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
-        
+
         elif tipo_ind == "dieta":
             indicacionesQ = Indicacion.objects.filter(asignar__emergencia = id_emergencia, asignar__indicacion__tipo = tipo_ind)
             a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
             d = EspDieta.objects.filter(asignacion = a)
-            d.delete()  
-            a.delete()				
+            d.delete()
+            a.delete()
             ya= ""
             mensaje = "Indicacion Eliminada Exitosamente"
             form = AgregarIndDietaForm()
@@ -1844,16 +1846,16 @@ def emergencia_indicaciones_eliminar(request,id_emergencia,tipo_ind):
             a = Asignar.objects.filter(emergencia = id_emergencia, indicacion = indicacionesQ)
             h = EspHidrata.objects.filter(asignacion = a)
             h.delete()
-            a.delete()	
+            a.delete()
             comb = CombinarHidrata.objects.filter(hidratacion1__asignacion__indicacion = indicacionesQ)
             if len(comb)>0:
-                comb.delete()				
+                comb.delete()
             ya= ""
             mensaje = "Indicacion Eliminada Exitosamente"
             form = AgregarIndHidrataForm()
             info = {'form':form,'mensaje':mensaje,'tipo_ind':tipo_ind, 'ya':ya,'emergencia':emer}
             return render_to_response('atencion_ind_hidrata.html',info,context_instance=RequestContext(request))
-		
+
         elif tipo_ind == "normal":
             for obj in checkes:
                 asig = Asignar.objects.get(id=obj)
@@ -1883,10 +1885,10 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
         at = Atencion.objects.filter(emergencia=id_emergencia)
         diags = Diagnostico.objects.filter(atencion=at[0])
         for d in diags:
-            enfermedad = Enfermedad.objects.get(id = request.POST[str(d.id)+"nombre"])			
+            enfermedad = Enfermedad.objects.get(id = request.POST[str(d.id)+"nombre"])
             d.enfermedad = enfermedad
-            d.save()			
-            
+            d.save()
+
         mensaje = " Modificado Exitosamente "
         info = {'mensaje':mensaje, 'emergencia':emer,'diags':diags, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_diag.html',info,context_instance=RequestContext(request))
@@ -1906,7 +1908,7 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
         mensaje = " Modificado Exitosamente "
         info = {'mensaje':mensaje, 'emergencia':emer,'indicaciones':indsN, 'tipo_ind':tipo_ind}
         return render_to_response('atencion_ind_tera.html',info,context_instance=RequestContext(request))
-    
+
     elif tipo_ind =="medicamento":
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind)
         for ind in indicaciones:
@@ -1925,7 +1927,7 @@ def emergencia_indicaciones_modificar(request,id_emergencia,tipo_ind):
             # extraO.tipo_frec = request.POST[str(ind.id)+"t_frec"]
             extraO.via_admin = request.POST[str(ind.id)+"via_adm"]
             extraO.save()
-            
+
         indicaciones = Asignar.objects.filter(emergencia = id_emergencia,indicacion__tipo=tipo_ind)
         print "Pastillas asignadas",indicaciones
         mensaje = " Modificado Exitosamente"
@@ -1962,11 +1964,11 @@ def evaluar_paciente(request, id_emergencia):
 			if es_valido:
 				fechaReal  = datetime.now()
 				motivo = Motivo.objects.get(nombre__startswith = " Ingreso")
-				area = AreaEmergencia.objects.get(nombre__startswith = " Ingreso")				
+				area = AreaEmergencia.objects.get(nombre__startswith = " Ingreso")
 				evaluacion = form.cleaned_data
-				
+
 				# Si no existe triage para esa emergencia crea uno
-				if len(triage)==0:			
+				if len(triage)==0:
 					t = Triage(emergencia = emergencia,
 							   medico = medico,
 							   fecha = fechaReal,
@@ -1977,9 +1979,9 @@ def evaluar_paciente(request, id_emergencia):
 							   signos_fr = evaluacion['frecuencia_respiratoria'],
 							   signos_pa = evaluacion['presion_diastolica'],
 							   signos_pb = evaluacion['presion_sistolica'],
-							   signos_saod = evaluacion['saturacion_oxigeno'],					   
+							   signos_saod = evaluacion['saturacion_oxigeno'],
 							   signos_avpu = evaluacion['avpu'],
-							   signos_dolor = evaluacion['intensidad_dolor'])			
+							   signos_dolor = evaluacion['intensidad_dolor'])
 					t.save()
 				# Si existe triage para esa emergencia lo actualiza
 				else:
@@ -1993,7 +1995,7 @@ def evaluar_paciente(request, id_emergencia):
 					triage.signos_fr = evaluacion['frecuencia_respiratoria']
 					triage.signos_pa = evaluacion['presion_diastolica']
 					triage.signos_pb = evaluacion['presion_sistolica']
-					triage.signos_saod = evaluacion['saturacion_oxigeno']				   
+					triage.signos_saod = evaluacion['saturacion_oxigeno']
 					triage.signos_avpu = evaluacion['avpu']
 					triage.signos_dolor = evaluacion['intensidad_dolor']
 					triage.save()
@@ -2001,7 +2003,7 @@ def evaluar_paciente(request, id_emergencia):
 		csrf_token_value = request.COOKIES['csrftoken']
 		plantilla_formulario = render_to_string(
 								 'formularios/evaluacionPaciente.html',
-								 { 'idE': id_emergencia, 
+								 { 'idE': id_emergencia,
 								   'csrf_token_value': csrf_token_value,
 								   'form': form })
 		return render(request,
@@ -2010,9 +2012,9 @@ def evaluar_paciente(request, id_emergencia):
 						'id_emergencia': id_emergencia,
 						'plantilla_formulario': plantilla_formulario },
                   content_type = 'text/javascript')
-				  
+
 	return redirect("/")
-		
+
 def agregarEnfermedad(request,nombre_enfermedad):
   string = nombre_enfermedad
   Sugerencias= serializers.serialize("json",Enfermedad.objects.filter(descripcion__icontains = string)[:5])
@@ -2035,15 +2037,15 @@ def paciente_perfil_emergencia(request, idE):
         if len(atList)>0:
             diags = Diagnostico.objects.filter(atencion = atList)
             enfA = EnfermedadActual.objects.filter(atencion = atList)
-            indic = Asignar.objects.filter(emergencia = idE)			
+            indic = Asignar.objects.filter(emergencia = idE)
             if len(enfA)>0 and len(diags)>0:
-              historia_medica = True			
+              historia_medica = True
             if len(diags)>0:
-              constancia = True			 
+              constancia = True
             if len(indic)>0:
-              indicaciones = True	
+              indicaciones = True
     else:
-        t=None  
-		
+        t=None
+
     info = {'p':p,'ea':ea, 't':t, 'hm_habilitado':historia_medica,'const_habilitado':constancia, 'ind_habilitado':indicaciones}
     return render_to_response('perfil.html',info,context_instance=RequestContext(request))

@@ -1,21 +1,22 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block scripts %}
   <!--Datetime Picker -->
   <script type="text/javascript"
     src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
   <link rel="stylesheet"
     href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-{% endblock %} 
+{% endblock %}
 
 {% block cuerpo %}
   <div class="row">
     <div class="cuadroGrande span12 centrar">
       <h4>Agregar Paciente</h4>
-      <form id="formulario" 
-            class="tablaAgregar" 
+      <form id="formulario"
+            class="tablaAgregar"
             method="post"
             action="/emergencia/agregar">
         {% csrf_token %}
+        <input type="hidden" id="delta_from_now" name="delta_from_now" />
         <table>
           {% for e in form %}
             <tr>
@@ -24,15 +25,15 @@
                 {{e.label}}
                 </td>
                 <td>
-                  <div id="ingreso_picker" 
+                  <div id="ingreso_picker"
                        class="input-append">
                     {{e}}
-                    <span id="ahora" 
+                    <span id="ahora"
                           class="btn">Ahora
-                    </span> 
+                    </span>
                     <span  class="add-on">
                       <i data-time-icon="icon-time"
-                         data-date-icon="icon-calendar"> 
+                         data-date-icon="icon-calendar">
                        </i>
                     </span>
                   </div>
@@ -41,22 +42,22 @@
                         $('#ingreso_picker').datetimepicker({
                           language: 'pt-BR'
                         });
-						
-						// Se cierra el calendario al seleccionar fecha
-						$('#ingreso_picker').on('changeDate', function(e) {
-						  $('#ingreso_picker').datetimepicker('hide');
-						});
+
+                        // Se cierra el calendario al seleccionar fecha
+                        $('#ingreso_picker').on('changeDate', function(e) {
+                          $('#ingreso_picker').datetimepicker('hide');
+                        });
                       });
                     </script>
                 </td>
                 <td>
                   {{e.errors}}
-                </td> 
+                </td>
               {% elif e.label == "DOCUMENTO DE IDENTIDAD" %}
                 <td>{{e.label}}</td>
                 <td>
-                  <select id="id_cedula1" 
-                          name="dia" 
+                  <select id="id_cedula1"
+                          name="dia"
                           class = "width60"
                           onchange="cambioFecha()">
                     <option value='V'>
@@ -70,18 +71,18 @@
                     </option>
                   </select>
                   &nbsp;&nbsp;
-                  <input id="id_cedula2" 
-                         maxlength="9" 
+                  <input id="id_cedula2"
+                         maxlength="9"
                          name="cedula"
-                         type="text" 
+                         type="text"
                          class = "width170"
                          onblur="documentoId()"
-                         onkeypress="return justNumbers(event);" 
-                   /> 
+                         onkeypress="return justNumbers(event);"
+                   />
                    <input id="id_cedula"
-                          maxlength="9" 
-                          name="cedula" 
-                          type="hidden" 
+                          maxlength="9"
+                          name="cedula"
+                          type="hidden"
                    />
                 </td>
                 <td>
@@ -92,31 +93,31 @@
                   {{e.label}}
                 </td>
                 <td>
-                  <input id="id_nombres" 
-                         maxlength="64" 
+                  <input id="id_nombres"
+                         maxlength="64"
                          name="nombres"
-                         type="text" 
-                         onkeyup="this.value=this.value.toUpperCase()" 
+                         type="text"
+                         onkeyup="this.value=this.value.toUpperCase()"
                   />
                 </td>
                 <td>
                   {{e.errors}}
-                </td> 
+                </td>
               {% elif e.label == "APELLIDO" %}
                 <td>
                   {{e.label}}
                 </td>
                 <td>
-                  <input id="id_apellidos" 
-                         maxlength="64" 
+                  <input id="id_apellidos"
+                         maxlength="64"
                          name="apellidos"
-                         type="text" 
-                         onkeyup="this.value=this.value.toUpperCase()" 
+                         type="text"
+                         onkeyup="this.value=this.value.toUpperCase()"
                   />
                 </td>
                 <td>
                   {{e.errors}}
-                </td> 
+                </td>
               {% elif e.label == "FECHA DE NACIMIENTO" %}
                 <td></td>
                 <td>
@@ -142,30 +143,30 @@
                   {{e.label}}
                 </td>
                 <td>
-                  <select id="dia" 
-                          name="dia" 
+                  <select id="dia"
+                          name="dia"
                           class = "width60"
                           onchange="cambioFecha()">
                   </select>
-                  &nbsp;&nbsp; 
-                  <select id="mes" 
-                          name="mes" 
+                  &nbsp;&nbsp;
+                  <select id="mes"
+                          name="mes"
                           class = "width60"
                           onchange="cambioFecha()">
-                  </select> 
-                  &nbsp;&nbsp; 
-                  <select id="ano" 
-                          name="ano" 
+                  </select>
+                  &nbsp;&nbsp;
+                  <select id="ano"
+                          name="ano"
                           class = "width80"
                           onchange="cambioFecha()">
-                  </select> 
-                  <input id="id_fecha_nacimiento" 
+                  </select>
+                  <input id="id_fecha_nacimiento"
                          name="fecha_nacimiento"
                          type="hidden">
                 </td>
                 <td>
                   {{e.errors}}
-                </td> 
+                </td>
               {% else %}
                 <td>
                   {{e.label}}
@@ -175,16 +176,16 @@
                 </td>
                 <td>
                   {{e.errors}}
-                </td> 
+                </td>
               {% endif %}
               </tr>
           {% endfor %}
           <tr>
             <td></td>
             <td>
-              <input class="btn btn-primary" 
+              <input class="btn btn-primary"
                      type="submit"
-                     value="Ingresar" 
+                     value="Ingresar"
               />
             </td>
             <td></td>
@@ -194,7 +195,7 @@
     </div>
   </div>
 {% endblock %}
- 
+
 {% block scripts2 %}
 <script>
   function documentoId(){
@@ -209,7 +210,7 @@
 
   function justNumbers(e){
     var keynum = window.event ? window.event.keyCode : e.which;
-    if ((keynum == 8) || (keynum == 46)) return true;   
+    if ((keynum == 8) || (keynum == 46)) return true;
     return /\d/.test(String.fromCharCode(keynum));
   }
 
@@ -217,36 +218,54 @@
     var dia = $("#dia").val();
     var mes = $("#mes").val();
     var ano = $("#ano").val();
-    $("#id_fecha_nacimiento").attr("value",dia+"/"+mes+"/"+ano);
+    $("#id_fecha_nacimiento").attr("value", dia + "/" + mes + "/" + ano);
   }
 
-  $(document).ready(function() {  
-	  $("#ahora").click(function() {
-	    var currentTime = new Date();
-	    var mes = currentTime.getMonth() + 1;
-	    var dia = currentTime.getDate();
-	    var año = currentTime.getFullYear();
-	
-	    var horas    = currentTime.getHours()
-	    var minutos  = currentTime.getMinutes()
-	    var segundos = currentTime.getSeconds()
-	    $("#id_ingreso").val(dia + "/" + mes +"/" + año + " " + horas + ":" + 
-	                         minutos+":"+segundos)});
-  });   
-   
+  $(document).ready(function() {
+    $("#ahora").click(function() {
+      var currentTime = new Date();
+      var mes = currentTime.getMonth() + 1;
+      var dia = currentTime.getDate();
+      var año = currentTime.getFullYear();
+
+      var horas    = currentTime.getHours()
+      var minutos  = currentTime.getMinutes()
+      var segundos = currentTime.getSeconds()
+      $("#id_ingreso").val(dia + "/" + mes +"/" + año + " " + horas + ":" + minutos + ":" + segundos)
+    });
+
+    $('#formulario').on('submit', function()
+    {
+      var now = new Date();
+      var selectedDateMatch = $('#id_ingreso').val().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/);
+      if (selectedDateMatch.length === 7)
+      {
+        var selectedDate = new Date(
+          selectedDateMatch[3],
+          selectedDateMatch[2] - 1,
+          selectedDateMatch[1],
+          selectedDateMatch[4],
+          selectedDateMatch[5],
+          selectedDateMatch[6]);
+        var dateDifference = (now - selectedDate) / 1000;
+        $('#delta_from_now').attr('value', parseInt(dateDifference));
+      }
+    })
+  });
+
   var dia  = 1,mes = 1,ano = 1990;
   $("#dia").html("<option value='nada'>--</option>");
-  $("#dia > option[value='nada']").after("<option value='"+ 1 +"'>"+ 1 
+  $("#dia > option[value='nada']").after("<option value='"+ 1 +"'>"+ 1
                                         +"</option>");
   for (dia =2;dia<=31;dia++){
-    $("#dia > option[value='" + (dia-1) +"']").after("<option value='" + dia 
-     + "'>"+dia+"</option>");      
+    $("#dia > option[value='" + (dia-1) +"']").after("<option value='" + dia
+     + "'>"+dia+"</option>");
   }
   $("#mes").html("<option value='nada'>--</option>");
   $("#mes > option[value='nada']").after("<option value='"+1+"'>"+1+"</option>");
   for (mes =2;mes<=12;mes++){
     $("#mes > option[value='"+(mes-1)+"']").after("<option value='"+mes+"'>"+
-                                                 mes+"</option>");      
+                                                 mes+"</option>");
   }
   var currentTime = new Date();
   $("#ano").html("<option value='nada'>--</option>");

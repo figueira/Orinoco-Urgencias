@@ -42,7 +42,7 @@ def header1_pdf(c):
   c.drawString(10, 710, "Tel. 58+ 212-555-9111 / 555-9486 / 552-2222")
 
 def header_pdf(c,h1,h2):
-  header1_pdf(c)   
+  header1_pdf(c)
   c.setFont("Helvetica", 22)
   # choose some colors
   c.setStrokeColor(lightblue)                  #borde del rectangulo
@@ -52,19 +52,19 @@ def header_pdf(c,h1,h2):
   c.setFillColor(black)
   c.drawString(-0.5*inch, 9.1*inch, h1)
   c.drawString(0.5*inch, 8.7*inch, h2)
-  
-# chequea si se debe agregar una pagina mas al pdf despues de restar 
+
+# chequea si se debe agregar una pagina mas al pdf despues de restar
 def restar(c,i,x):
-  i = i-x 
+  i = i-x
   if i <= 0:
-    c.showPage()	
+    c.showPage()
     header1_pdf(c)
     c.setFont("Helvetica", 10)
     return 9.4
   else:
     return i
 
-# dibuja string de parte de cuerpo	
+# dibuja string de parte de cuerpo
 def dibujarParteZonaCuerpo(c,i,parte,listExamen,titulo,busqueda):
   i= restar(c,i,0.3)
   c.setFont("Helvetica", 11)
@@ -76,13 +76,13 @@ def dibujarParteZonaCuerpo(c,i,parte,listExamen,titulo,busqueda):
     c.drawString(0*inch, i*inch, titulo)
     c.setFont("Helvetica", 10)
     for e in lista:
-      i= restar(c,i,0.2)		
+      i= restar(c,i,0.2)
       c.drawString(0.3*inch, i*inch, "- "+ e.aspecto.nombre + ":  " + e.anomaliaR())
   else:
     c.drawString(0*inch, i*inch, titulo +"  Sin alteraciones")
   return i
 
-  
+
 def historia_med_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
   response = HttpResponse(content_type='application/pdf')
@@ -92,21 +92,21 @@ def historia_med_pdf(request, id_emergencia):
   c = canvas.Canvas(response)
 
   header_pdf(c, "Historial Médico", "Electrónico")
-  
-  # Consultas de informacion para la Historia Medica 
+
+  # Consultas de informacion para la Historia Medica
   emer  = get_object_or_404(Emergencia,id=id_emergencia)  	# Emergencia
   triage = emer.triages()
   t = triage[len(triage)-1]		# Triaje
   atList = Atencion.objects.filter(emergencia=id_emergencia)	# Lista Atencion
   aten = atList[0]	# Atencion
-    
+
   # Fechar y hora de llegada
   c.setFont("Helvetica", 10)
-  c.drawString(3*inch, 9.2*inch, "Fecha: " +  str(emer.hora_ingresoReal.strftime("%d/%m/%y")))
-  c.drawString(3*inch, 8.9*inch, "Hora de Llegada: " + str(emer.hora_ingresoReal.strftime("%H:%M")))
-    
+  c.drawString(3*inch, 9.2*inch, "Fecha: " +  str(emer.hora_ingreso.strftime("%d/%m/%y")))
+  c.drawString(3*inch, 8.9*inch, "Hora de Llegada: " + str(emer.hora_ingreso.strftime("%H:%M")))
+
   # SECCION DATOS DEL PACIENTE
-  i = 7.6 
+  i = 7.6
   c.setStrokeColor(lightblue)                  #borde del rectangulo
   c.setFillColor(lightblue)                    #color de fondo
   c.rect(-inch,i*inch,6*inch,0.3*inch, fill=1)
@@ -114,20 +114,20 @@ def historia_med_pdf(request, id_emergencia):
   c.setFont("Helvetica-Bold", 14)
   i = i+0.08
   c.drawString(-0.3*inch, i*inch, "Datos del Paciente" )
-    
+
   c.setFont("Helvetica", 10)
-  i = i-0.42 
+  i = i-0.42
   c.drawString(-0.3*inch, i*inch, "Nombre:  " + emer.paciente.nombres + " " + emer.paciente.apellidos )
-  i = i-0.2 
+  i = i-0.2
   c.drawString(-0.3*inch, i*inch, "C.I.:  "+ emer.paciente.cedula )
   c.drawString(1.5*inch, i*inch, "Sexo:  "+ emer.paciente.sexoR() )
   c.drawString(3.2*inch, i*inch, "Edad:  " + str(emer.paciente.edad()))
-  i = i-0.2 
+  i = i-0.2
   c.drawString(-0.3*inch, i*inch, "Nombre del Médico:   " + emer.responsable.first_name + " " + emer.responsable.last_name)
-  
-  
+
+
   #  SECCION MODULO DE ATENCION
-  i = i-0.7	
+  i = i-0.7
   c.setStrokeColor(lightblue)                  #borde del rectangulo
   c.setFillColor(lightblue)                    #color de fondo
   c.rect(-inch,i*inch,6*inch,0.3*inch, fill=1)
@@ -135,26 +135,26 @@ def historia_med_pdf(request, id_emergencia):
   c.setFont("Helvetica-Bold", 14)
   i = i+0.08
   c.drawString(-0.3*inch, i*inch, "Módulo de Atención" )
-  
+
   c.setFont("Helvetica", 10)
-  i = i-0.42   
-  c.drawString(-0.3*inch, i*inch, "Nivel de Triage:  " + str(t.nivel)) 
+  i = i-0.42
+  c.drawString(-0.3*inch, i*inch, "Nivel de Triage:  " + str(t.nivel))
   c.drawString(1.5*inch, i*inch, "Motivo de Consulta:  " + str(t.motivo))
-  
-  
+
+
   #		ENFERMEDAD ACTUAL
-  i = i-0.4 
+  i = i-0.4
   c.setFont("Helvetica-Bold", 11)
-  c.drawString(-0.3*inch, i*inch, "I. Enfermedad Actual:  ")  
+  c.drawString(-0.3*inch, i*inch, "I. Enfermedad Actual:  ")
   # busco info en BD
-  enfA = EnfermedadActual.objects.get(atencion=aten.id)  
+  enfA = EnfermedadActual.objects.get(atencion=aten.id)
   i= i-0.2
   c.setFont("Helvetica", 10)
   c.drawString(0*inch, i*inch, enfA.narrativa)
-  
-  
+
+
   #		ANTECEDENTES   A partir de aqui se resta chequeando para una nueva hoja
-  i =  restar(c,i,0.4) 
+  i =  restar(c,i,0.4)
   c.setFont("Helvetica-Bold", 11)
   c.drawString(-0.3*inch, i*inch, "II. Antecedentes:  ")
 
@@ -163,41 +163,41 @@ def historia_med_pdf(request, id_emergencia):
   i= restar(c,i,0.2)
   c.setFont("Helvetica", 11)
   c.drawString(0*inch, i*inch, "Médicos:")
-  c.setFont("Helvetica", 10)  
+  c.setFont("Helvetica", 10)
   if len(antMed) > 0:
-    for a in antMed: 
+    for a in antMed:
         i=restar(c,i,0.2)
         c.drawString(0.3*inch, i*inch, "- "+ a.antecedente)
   else:
     c.drawString(0.8*inch, i*inch, "No existen")
 
-  # quirurgicos  
+  # quirurgicos
   antQui = Pertenencia.objects.filter(paciente=emer.paciente, antecedente__tipo = "quirurgica")	 # busco info en BD
   i=restar(c,i,0.3)
   c.setFont("Helvetica", 11)
   c.drawString(0*inch, i*inch, "Quirúrgicos:")
-  c.setFont("Helvetica", 10)  
+  c.setFont("Helvetica", 10)
   if len(antQui) > 0:
-    for a in antQui: 
+    for a in antQui:
         i=restar(c,i,0.2)
         c.drawString(0.3*inch, i*inch, "- "+ a.antecedente)
   else:
     c.drawString(1*inch, i*inch, "No existen")
-	
-  # alergicos  
+
+  # alergicos
   antAler = Pertenencia.objects.filter(paciente=emer.paciente, antecedente__tipo = "alergia")	 # busco info en BD
   i=restar(c,i,0.3)
   c.setFont("Helvetica", 11)
   c.drawString(0*inch, i*inch, "Alérgicos:")
-  c.setFont("Helvetica", 10)  
+  c.setFont("Helvetica", 10)
   if len(antAler) > 0:
-    for a in antAler: 
+    for a in antAler:
         i=restar(c,i,0.2)
         c.drawString(0.3*inch, i*inch, "- " + a.antecedente)
   else:
     c.drawString(0.9*inch, i*inch, "No existen")
 
-  
+
   #		EXAMEN FISICO
   i =restar(c,i,0.4)
   c.setFont("Helvetica-Bold", 11)
@@ -208,39 +208,39 @@ def historia_med_pdf(request, id_emergencia):
   i=restar(c,i,0.2)
   c.setFont("Helvetica", 10)
   c.drawString(0.3*inch, i*inch, "Ta:  " + str(t.signos_pb) + " / " + str(t.signos_pa) + " mmHg")
-  c.drawString(2.0*inch, i*inch, "Pulso:  " + str(t.signos_fc) + " ppm") 
-  c.drawString(3.6*inch, i*inch, "Resp:  " + str(t.signos_fr) + " ppm") 
+  c.drawString(2.0*inch, i*inch, "Pulso:  " + str(t.signos_fc) + " ppm")
+  c.drawString(3.6*inch, i*inch, "Resp:  " + str(t.signos_fr) + " ppm")
   c.drawString(5*inch, i*inch, "Temp:  " + str(t.signos_tmp) + " °C")
   i =restar(c,i,0.2)
   c.drawString(0.3*inch, i*inch, "Sat. Oxí.:  " + str(t.signos_saod) + " %")
   c.drawString(2.0*inch, i*inch, "AVPU:  " + str(t.signos_avpu))
   c.drawString(3.6*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
-  
+
   # busco info en BD
   examen = AspectoAtencion.objects.filter(atencion=aten, revisado = "1")	# Lista Atencion
   examen = list(examen)
   examen = filter(lambda x: x.estadoR()=="anormal", examen)	# filtro para obtener solo las partes alteradas
-  
+
   i= dibujarParteZonaCuerpo(c,i,True,examen,"Piel:","PIEL")
   i= dibujarParteZonaCuerpo(c,i,True,examen,"Neurológico:","NEUROLOGICO")
-  i= dibujarParteZonaCuerpo(c,i,False,examen,"Cabeza y Cuello:","Cabeza")  
-  i= dibujarParteZonaCuerpo(c,i,False,examen,"Cardiopulmonar:","Pecho")  
-  i= dibujarParteZonaCuerpo(c,i,True,examen,"Abdomen:","ABDOMEN")  
-  i= dibujarParteZonaCuerpo(c,i,False,examen,"Genitales:","Pelvis")  
-  i= dibujarParteZonaCuerpo(c,i,True,examen,"Extremidad Superior:","EXTREMIDADES_SUPERIORES")  
-  i= dibujarParteZonaCuerpo(c,i,True,examen,"Extremidad Inferior:","EXTREMIDADES_INFERIORES")  
-	
-	
+  i= dibujarParteZonaCuerpo(c,i,False,examen,"Cabeza y Cuello:","Cabeza")
+  i= dibujarParteZonaCuerpo(c,i,False,examen,"Cardiopulmonar:","Pecho")
+  i= dibujarParteZonaCuerpo(c,i,True,examen,"Abdomen:","ABDOMEN")
+  i= dibujarParteZonaCuerpo(c,i,False,examen,"Genitales:","Pelvis")
+  i= dibujarParteZonaCuerpo(c,i,True,examen,"Extremidad Superior:","EXTREMIDADES_SUPERIORES")
+  i= dibujarParteZonaCuerpo(c,i,True,examen,"Extremidad Inferior:","EXTREMIDADES_INFERIORES")
+
+
   #		IMPRESION DIAGNOSTICA
   i =restar(c,i,0.4)
   c.setFont("Helvetica-Bold", 11)
-  c.drawString(-0.3*inch, i*inch, "IV. Impresión Diagnóstica:  ")	
-  
+  c.drawString(-0.3*inch, i*inch, "IV. Impresión Diagnóstica:  ")
+
   # busco en BD
   diags = Diagnostico.objects.filter(atencion=aten)
-  c.setFont("Helvetica", 10)  
+  c.setFont("Helvetica", 10)
   if len(diags) > 0:
-    for d in diags: 
+    for d in diags:
         i=restar(c,i,0.2)
         c.drawString(0*inch, i*inch, "- " + d.enfermedad.descripcion)
 
@@ -248,8 +248,8 @@ def historia_med_pdf(request, id_emergencia):
   c.showPage()
   c.save()
   return response
-  
-  
+
+
 def constancia_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
   response = HttpResponse(content_type='application/pdf')
@@ -266,7 +266,7 @@ def constancia_pdf(request, id_emergencia):
   diags = Diagnostico.objects.filter(atencion=atList2)
   medicamento = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "medicamento")
   ingreso = datetime.now()
-  #Consultas de informacion para la Historia Medica 
+  #Consultas de informacion para la Historia Medica
   triageList = Triage.objects.filter(emergencia=id_emergencia).order_by("-fechaReal")
   triage = triageList[0]
 
@@ -294,17 +294,17 @@ def constancia_pdf(request, id_emergencia):
   c.save()
   return response
 
-  
-# Usado para dibujar ciertas indicaciones  
+
+# Usado para dibujar ciertas indicaciones
 def dibujarIndicacion(c,i,nombre,lista):
 	c.setFont("Helvetica", 11)
 	c.drawString(0*inch, i*inch, nombre)
-	c.setFont("Helvetica", 10) 
-	for l in lista:		 
+	c.setFont("Helvetica", 10)
+	for l in lista:
 		i=restar(c,i,0.2)
-		c.drawString(0.3*inch, i*inch, l.indicacion.nombre)  
-	return i	
-  
+		c.drawString(0.3*inch, i*inch, l.indicacion.nombre)
+	return i
+
 def indicaciones_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
   response = HttpResponse(content_type='application/pdf')
@@ -319,59 +319,59 @@ def indicaciones_pdf(request, id_emergencia):
   emer  = get_object_or_404(Emergencia,id=id_emergencia)
   indicaciones = Asignar.objects.filter(emergencia = id_emergencia).order_by("fechaReal")
   ultIndicacion = indicaciones[len(indicaciones)-1]
-  
+
   c.setFont("Helvetica", 10)
   c.drawString(3*inch, 9.3*inch, "Paciente: " + emer.paciente.apellidos + ", " + emer.paciente.nombres)
   c.drawString(3*inch, 9.1*inch, "C.I.: " + str(emer.paciente.cedula))
   c.drawString(3*inch, 8.7*inch, "Medico: " + emer.responsable.first_name + " " + emer.responsable.last_name)
   c.drawString(3*inch, 8.5*inch, "Fecha: " + str(ultIndicacion.fechaReal.strftime("%d/%m/%y")) + "      Hora: " + str(ultIndicacion.fechaReal.strftime("%H:%M:%S")))
-  
+
   c.setFont("Helvetica-Bold", 14)
   c.drawString(2.4*inch, 7.8*inch, "INDICACIONES")
-  
+
   i=7.7
   j=1
   # dieta
   dieta = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo = "dieta") 	# busco info en BD
-  if len(dieta) > 0:  
+  if len(dieta) > 0:
 	dieta = dieta[0]
 	i=restar(c,i,0.3)
 	c.setFont("Helvetica-Bold", 11)
-	c.drawString(-0.3*inch, i*inch, str(j) + ".- Dieta:")		
-	c.setFont("Helvetica", 10)  
+	c.drawString(-0.3*inch, i*inch, str(j) + ".- Dieta:")
+	c.setFont("Helvetica", 10)
 	i=restar(c,i,0.2)
 	c.drawString(0*inch, i*inch, dieta.indicacion.nombre + ".  " +  dieta.dieta_OB())
 	j=j+1
-  
+
   # hidratacion
   hidrata = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo= "hidrata") 	# busco info en BD
-  if len(hidrata) > 0: 
+  if len(hidrata) > 0:
 	hidrata = hidrata[0]
 	i=restar(c,i,0.4)
 	c.setFont("Helvetica-Bold", 11)
 	c.drawString(-0.3*inch, i*inch, str(j) + ".- Hidratación:")
 	temp = EspHidrata.objects.filter(asignacion = hidrata)[0]
 	comp = CombinarHidrata.objects.filter(hidratacion1 = temp)
-	c.setFont("Helvetica", 10)  
+	c.setFont("Helvetica", 10)
 	i=restar(c,i,0.2)
 	if len(comp) > 0:
 		c.drawString(0*inch, i*inch, str(temp.volumen) + "cc de " + hidrata.indicacion.nombre + " alternada con " + comp[0].hidratacion2.nombre + " a " + str(temp.vel_infusion) + " gotas/min.")
 	else:
 		c.drawString(0*inch, i*inch, str(temp.volumen) + "cc de " + hidrata.indicacion.nombre + " a " + str(temp.vel_infusion) + " gotas/min.")
-		
-	if temp.complementos !="":	
+
+	if temp.complementos !="":
 		i=restar(c,i,0.2)
 		c.drawString(0*inch, i*inch, "Complementos: " + (temp.complementos))
 	j=j+1
-	
+
  # medicamento
   med = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo= "medicamento") 	# busco info en BD
-  if len(med) > 0: 
+  if len(med) > 0:
 	i=restar(c,i,0.4)
 	c.setFont("Helvetica-Bold", 11)
 	c.drawString(-0.3*inch, i*inch, str(j) + ".- Medicamento:")
-	c.setFont("Helvetica", 10) 
-	for m in med:		 
+	c.setFont("Helvetica", 10)
+	for m in med:
 		i=restar(c,i,0.2)
 		c.drawString(0*inch, i*inch,"- " + m.indicacion.nombre + ":  " + str(m.med_Dosis()) + m.med_Conc() + " vía " + m.med_Viad() + " cada " + m.med_Frec() + " horas" + ", " + m.med_TFrec() )
 	j=j+1
@@ -382,13 +382,13 @@ def indicaciones_pdf(request, id_emergencia):
   end = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo= "endoscopico") 	# busco info en BD
   val = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo= "valora") 	# busco info en BD
   otr = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo= "otros") 	# busco info en BD
-      
-  if len(lab)>0 or len(img)>0 or len(end)>0 or len(val)>0 or len(otr)>0 : 
+
+  if len(lab)>0 or len(img)>0 or len(end)>0 or len(val)>0 or len(otr)>0 :
 	i=restar(c,i,0.4)
 	c.setFont("Helvetica-Bold", 11)
 	c.drawString(-0.3*inch, i*inch, str(j) + ".- Indicaciones Diagnósticas:")
 	j=j+1
-	
+
 	if len(lab)>0:
 		i=restar(c,i,0.2)
 		i=dibujarIndicacion(c,i,"- Laboratorios:",lab)
@@ -397,8 +397,8 @@ def indicaciones_pdf(request, id_emergencia):
 		i=restar(c,i,0.3)
 		c.setFont("Helvetica", 11)
 		c.drawString(0*inch, i*inch, "- Imagenología:")
-		c.setFont("Helvetica", 10) 
-		for l in img:		 
+		c.setFont("Helvetica", 10)
+		for l in img:
 			frase = l.indicacion.nombre
 			part = EspImg.objects.filter(asignacion = l)
 			if len(part)>0 and part[0].parte_cuerpo!='':
@@ -421,28 +421,28 @@ def indicaciones_pdf(request, id_emergencia):
   # el resto de las indicaciones (terapeutico y otras)
   ind = Asignar.objects.filter(emergencia = id_emergencia, indicacion__tipo__in = ["terapeutico", "otras"] ).order_by("-indicacion__tipo") 	# busco info en BD
   tipo_ind = ""
-  if len(ind) > 0: 
-	for l in ind: 
+  if len(ind) > 0:
+	for l in ind:
 		if tipo_ind != l.indicacion.tipo:
 			tipo_ind = l.indicacion.tipo
 			i=restar(c,i,0.3)
 			c.setFont("Helvetica-Bold", 11)
-			if tipo_ind == "terapeutico":	
+			if tipo_ind == "terapeutico":
 				c.drawString(-0.3*inch, i*inch, str(j) + ".- Terapia:")
 				j=j+1
 			elif tipo_ind == "otras":
 				c.drawString(-0.3*inch, i*inch, str(j) + ".- Otras:")
 				j=j+1
-			
-		c.setFont("Helvetica", 10)  
+
+		c.setFont("Helvetica", 10)
 		i=restar(c,i,0.2)
 		c.drawString(0*inch, i*inch, "- " + l.indicacion.nombre)
-  
+
   c.showPage()
   c.save()
   return response
 
-  
+
 
 def reporte_triage_pdf(request, id_emergencia):
   # Create the HttpResponse object with the appropriate PDF headers.
@@ -456,43 +456,43 @@ def reporte_triage_pdf(request, id_emergencia):
   t=t[0]
 
   header_pdf(c, "Evaluación de", "Triage")
-  
-  i = 8  
+
+  i = 8
   c.setFont("Helvetica-Bold", 14)
   c.drawString(-0.3*inch, i*inch, "Datos de Identificación" )
   c.drawString(3.5*inch, i*inch, "Signos Vitales ")
-    
+
   c.setFont("Helvetica", 10)
-  i = i-0.3 
+  i = i-0.3
   c.drawString(-0.3*inch, i*inch, "Nombre:  " + emer.paciente.apellidos +", " +emer.paciente.nombres )
-  i = i-0.2 
+  i = i-0.2
   c.drawString(-0.3*inch, i*inch, "C.I.:  "+ emer.paciente.cedula )
-  i = i-0.2 
+  i = i-0.2
   c.drawString(-0.3*inch, i*inch, "Sexo:  "+ emer.paciente.sexoR() )
-  i = i-0.2 
+  i = i-0.2
   c.drawString(-0.3*inch, i*inch, "Edad:  " + str(emer.paciente.edad()))
-  i = i-0.5 
+  i = i-0.5
   c.drawString(-0.3*inch, i*inch, "NIVEL DE TRIAGE:  " + str(t.nivel))
-  
-  i = 8 -0.3 
+
+  i = 8 -0.3
   c.drawString(3.5*inch, i*inch, "Temperatura:  " + str(t.signos_tmp) + " °C")
   i = i -0.2
   c.drawString(3.5*inch, i*inch, "Tensión Arterial:  " + str(t.signos_pb) + " / " + str(t.signos_pa) + " mmHg")
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Cardíaca:  " + str(t.signos_fc) + " ppm") 
+  c.drawString(3.5*inch, i*inch, "Frecuencia Cardíaca:  " + str(t.signos_fc) + " ppm")
   i = i -0.2
-  c.drawString(3.5*inch, i*inch, "Frecuencia Respiración:  " + str(t.signos_fr) + " ppm") 
+  c.drawString(3.5*inch, i*inch, "Frecuencia Respiración:  " + str(t.signos_fr) + " ppm")
   i = i -0.2
   c.drawString(3.5*inch, i*inch, "Saturación Oxígeno:  " + str(t.signos_saod) + " %")
   i = i -0.2
   c.drawString(3.5*inch, i*inch, "AVPU:  " + str(t.signos_avpu))
   i = i -0.2
   c.drawString(3.5*inch, i*inch, "Dolor:  " + str(t.signos_dolor))
-  
+
   i = i -0.6
   c.drawString(-0.3*inch, i*inch, "Atendido:  " + str(t.fechaReal.strftime("%d/%m/%y a las %H:%M")))
   c.drawString(3.5*inch, i*inch, "Médico: " + t.medico.last_name + ", " + t.medico.first_name)
-  
+
   c.showPage()
   c.save()
   return response

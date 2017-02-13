@@ -111,8 +111,8 @@ class Emergencia(models.Model):
   responsable = models.ForeignKey(Usuario,related_name = "A cargo+")
   ingreso = models.ForeignKey(Usuario,related_name = "Ingresado por+")
   hora_ingreso = models.DateTimeField()
-  fecha_Esp_act = models.DateTimeField(auto_now_add = True)
-  hora_ingresoReal = models.DateTimeField(auto_now_add = True)
+  fecha_Esp_act = models.DateTimeField(default = datetime.utcnow)
+  hora_ingresoReal = models.DateTimeField(default = datetime.utcnow)
   hora_egreso = models.DateTimeField(blank = True,null = True)
   hora_egresoReal = models.DateTimeField(blank = True,null = True)
   egreso = models.ForeignKey(Usuario,
@@ -202,15 +202,19 @@ class Emergencia(models.Model):
     return ceil(tiempo.total_seconds())
 
   def tiempo_espera_causas(self):
-    tiempo  = self.fecha_Esp_act.replace(tzinfo=None)
     if self.fecha_Esp_act:
-      tiempo  = datetime.now() - tiempo
-    else:
-      tiempo  = datetime.now()
-    return int(ceil(tiempo.total_seconds()))
+      tiempo_esperando = datetime.utcnow() - self.fecha_Esp_act
+      return int(ceil(tiempo_esperando.total_seconds()))
+    return 0
+
+  def tiempo_espera_utc(self):
+    if self.hora_ingresoReal:
+      tiempo_esperando = datetime.utcnow() - self.hora_ingresoReal
+      return int(ceil(tiempo_esperando.total_seconds()))
+    return 0
 
   def tiempo_esperaR(self):
-    tiempo = self.tiempo_espera()
+    tiempo = self.tiempo_espera_utc()
     dias = int(floor(((tiempo/60)/60)/24))
     tiempo2 = tiempo - (dias*24*60*60)
     horas = int(floor((tiempo2/60)/60))
