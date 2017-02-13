@@ -3,8 +3,8 @@
 from django.db import models
 from django.db.models import Q
 from app_paciente.models import *
-from app_usuario.models import * 
-from app_enfermedad.models import * 
+from app_usuario.models import *
+from app_enfermedad.models import *
 from math import ceil, floor
 from datetime import datetime
 
@@ -108,19 +108,19 @@ class Motivo(models.Model):
 
 class Emergencia(models.Model):
   paciente = models.ForeignKey(Paciente)
-  responsable = models.ForeignKey(Usuario,related_name = "A cargo")
-  ingreso = models.ForeignKey(Usuario,related_name = "Ingresado por")
+  responsable = models.ForeignKey(Usuario,related_name = "A cargo+")
+  ingreso = models.ForeignKey(Usuario,related_name = "Ingresado por+")
   hora_ingreso = models.DateTimeField()
   fecha_Esp_act = models.DateTimeField(auto_now_add = True)
   hora_ingresoReal = models.DateTimeField(auto_now_add = True)
   hora_egreso = models.DateTimeField(blank = True,null = True)
   hora_egresoReal = models.DateTimeField(blank = True,null = True)
   egreso = models.ForeignKey(Usuario,
-                             related_name = "De alta por",
+                             related_name = "De alta por+",
                              blank = True,
                              null = True)
   destino = models.ForeignKey(Destino,blank = True,null = True)
-  
+
   def __unicode__(self):
     return "%s - %s " % (self.id, self.paciente)
 
@@ -138,7 +138,7 @@ class Emergencia(models.Model):
                          ).order_by('espera__nombre')
     return esperas_emergencia
 
-  # Dado un objeto Emergencia, encuentra todas las causas de espera que aún no 
+  # Dado un objeto Emergencia, encuentra todas las causas de espera que aún no
   # le han sido asignadas
   #
   # Salida: Lista de Espera que aun no han sido asignadas a la emergencia
@@ -187,7 +187,7 @@ class Emergencia(models.Model):
 
   def horaR(self):
     return self.hora_ingreso.strftime("%H:%M del %d/%m/%y")
-    
+
   def numEsperasNoAtendidas(self):
     emerEspera = EsperaEmergencia.objects.filter(emergencia=self)
     NoAten = 0
@@ -195,7 +195,7 @@ class Emergencia(models.Model):
       if esp.estado == '0':
         NoAten = NoAten + 1
     return NoAten
-  
+
   def tiempo_espera(self):
     tiempo = self.hora_ingreso.replace(tzinfo=None)
     tiempo = datetime.now() - tiempo
@@ -203,7 +203,7 @@ class Emergencia(models.Model):
 
   def tiempo_espera_causas(self):
     tiempo  = self.fecha_Esp_act.replace(tzinfo=None)
-    if self.fecha_Esp_act:    
+    if self.fecha_Esp_act:
       tiempo  = datetime.now() - tiempo
     else:
       tiempo  = datetime.now()
@@ -216,7 +216,7 @@ class Emergencia(models.Model):
     horas = int(floor((tiempo2/60)/60))
     tiempo3 = tiempo2 - (horas*60*60)
     minutos = int(floor(tiempo3/60))
-    segundos = int(floor(tiempo3%60))    
+    segundos = int(floor(tiempo3%60))
     return str(dias)+":"+str(horas)+":"+str(minutos)+":"+str(segundos)
 
   def tiempo_espera_causasR(self):
@@ -226,7 +226,7 @@ class Emergencia(models.Model):
     horas = int(floor((tiempo2/60)/60))
     tiempo3 = tiempo2 - (horas*60*60)
     minutos = int(floor(tiempo3/60))
-    segundos = int(floor(tiempo3%60))    
+    segundos = int(floor(tiempo3%60))
     return str(dias)+":"+str(horas)+":"+str(minutos)+":"+str(segundos)
 
 
@@ -261,7 +261,7 @@ class Emergencia(models.Model):
     result = AsignarCub.objects.filter(emergencia=self)
     if result:
       return "%s" %(result[0].cubiculo)
-    else: 
+    else:
       return "%s" % ("NO ASIGNADO")
 
 class AsignarCub(models.Model):
@@ -281,7 +281,7 @@ class Espera(models.Model):
   def url_imagen(self):
     return '/static/img/esperas/espera_' + str(self.id) + '.png'
 
-  # Retorna una reresentacion del objeto en froma de diccionario, para que 
+  # Retorna una reresentacion del objeto en froma de diccionario, para que
   # pueda ser fácilmente convertido a JSON
   def json_dict(self):
     json = {}
@@ -295,7 +295,7 @@ class EsperaEmergencia(models.Model):
   emergencia = models.ForeignKey(Emergencia)
   estado = models.CharField(max_length = 1,choices = REALIZADO)
   # Hora en la que se comienza a contabilizar esa causa de espera para esa
-  # emergencia	
+  # emergencia
   hora_comienzo = models.DateTimeField(auto_now_add = True)
   hora_fin = models.DateTimeField(blank = True, null = True)
 
@@ -323,15 +323,15 @@ class Triage(models.Model):
   medico     = models.ForeignKey(Usuario)
   fecha      = models.DateTimeField(blank=True,null=True)
   fechaReal    = models.DateTimeField(auto_now_add=True)
-  
+
   motivo     = models.ForeignKey(Motivo,blank=True)
   areaAtencion   = models.ForeignKey(AreaEmergencia,blank=True)
   ingreso    = models.CharField(max_length=1,blank=True,choices=ICAUSA)
-  
+
   atencion     = models.BooleanField(default=False,blank=True)
   esperar    = models.BooleanField(default=False,blank=True)
   recursos     = models.IntegerField(default=0,choices=RECURSOS,blank=True)
-  
+
   # Valores a tomar
   signos_tmp   = models.FloatField(default=0,blank=True)
   signos_fc    = models.IntegerField(default=0,blank=True)
@@ -395,7 +395,7 @@ class Asignar(models.Model):
   fecha    = models.DateTimeField()
   fechaReal  = models.DateTimeField()
   status   = models.IntegerField(choices=AFIRMACION)
-  
+
   def __unicode__(self):
     return "Paciente:%s- Nombre:%s- Tipo:%s - Status:%s" % (self.emergencia.paciente.apellidos,self.indicacion.nombre,self.indicacion.tipo,self.status)
 
@@ -410,7 +410,7 @@ class Asignar(models.Model):
   #   if (self.status == 1):
   #     resp = "Completado"
   #   return resp
-  
+
   #------------------------------------- Definiciones para atributos extra:
 
   # Especificaciones Dieta
@@ -418,16 +418,16 @@ class Asignar(models.Model):
     result = EspDieta.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].observacion)
-    else: 
+    else:
       return "%s" % ("no hay observacion")
-  
+
   # Especificaciones Medicamento
   # Dosis
   def med_Dosis(self):
     result = EspMedics.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].dosis)
-    else: 
+    else:
       return "%s" % ("no hay dosis")
 
   # Tipo de Concentracion
@@ -435,7 +435,7 @@ class Asignar(models.Model):
     result = EspMedics.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].tipo_conc)
-    else: 
+    else:
       return "%s" % ("no hay asociada un tipo de concentracion")
 
   # Frecuencia
@@ -443,7 +443,7 @@ class Asignar(models.Model):
     result = EspMedics.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].frecuencia)
-    else: 
+    else:
       return "%s" % ("no hay frec")
 
   # Tipo de Frecuencia
@@ -451,7 +451,7 @@ class Asignar(models.Model):
     result = EspMedics.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].tipo_frec)
-    else: 
+    else:
       return "%s" % ("no hay tipo frec")
 
   # Via de administracion
@@ -459,7 +459,7 @@ class Asignar(models.Model):
     result = EspMedics.objects.filter(asignacion=self)
     if result:
       return "%s" %(result[0].via_admin)
-    else: 
+    else:
       return "%s" % ("no hay via de administracion")
 
   # Hora de asignacion
@@ -468,7 +468,7 @@ class Asignar(models.Model):
     return self.fechaReal.strftime("%d/%m/%y a las %H:%M:%S")
     # Solo hora
     #return self.fechaReal.strftime("%H:%M:%S")
-  
+
   #--- Para mostrar la informacion adicional cuando el tipo_Frec es SOS:
   # Situacion SOS:
   def med_SOS_sit(self):
@@ -477,16 +477,16 @@ class Asignar(models.Model):
     if result2:
       print "que encuentro en situacion: "(result2[0].situacion)
       return "%s" %(result2[0].situacion)
-    else: 
+    else:
       return "%s" % ("NO")
-  
+
   # Comentario SOS:
   def med_SOS_com(self):
     result = EspMedics.objects.filter(asignacion=self)
     result2 = tieneSOS.objects.filter(espMed=result)
     if result2:
       return "%s" %(result2[0].comentario)
-    else: 
+    else:
       return "%s" % ("NO")
 
 # Especificaciones para las indicaciones de Dietas

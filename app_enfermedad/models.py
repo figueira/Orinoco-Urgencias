@@ -1,6 +1,4 @@
 from django.db import models
-from app_emergencia.models import Atencion
-
 
 REVISADO = (
     ('0','no'),
@@ -27,27 +25,27 @@ class Aspecto(models.Model):
 class AspectoAtencion(models.Model):
     revisado = models.CharField(max_length=1,choices=REVISADO)
     aspecto  = models.ForeignKey(Aspecto)
-    atencion = models.ForeignKey(Atencion)
+    atencion = models.ForeignKey('app_emergencia.Atencion')
     def __unicode__(self):
         return "%s" % (self.aspecto.nombre)
     def partecuerpoR(self):
         result = ParteAspecto.objects.filter(aspecto=self.aspecto)
         if result:
             return "%s" %(result[0].partecuerpo.nombre)
-        else: 
+        else:
             return "%s" % ("no hay parte del cuerpo")
     def zonacuerpoR(self):
         asp = ParteAspecto.objects.filter(aspecto=self.aspecto)[0]
         result = ZonaParte.objects.filter(partecuerpo=asp.partecuerpo)
         if result:
             return "%s" %(result[0].zonacuerpo.nombre)
-        else: 
+        else:
             return "%s" % ("no hay parte del cuerpo")
     def estadoR(self):
         result = Anomalia.objects.filter(aspectoatencion=self)
         if result:
             return "anormal"
-        elif self.revisado == '1': 
+        elif self.revisado == '1':
             return "normal"
         else:
             return 'no'
@@ -55,7 +53,7 @@ class AspectoAtencion(models.Model):
         result = Anomalia.objects.filter(aspectoatencion=self)
         if result:
             return "%s" %(result[0].descripcion)
-        else: 
+        else:
             return "%s" % ("")
 
 class Anomalia(models.Model):
